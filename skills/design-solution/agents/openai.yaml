@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design solution"
+  short_description: "Turn a brief into a reviewed design handoff"
+  default_prompt: "Use $design-solution to turn this brief into a DESIGN.md, browser preview, and handoff."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review design"
+  short_description: "Review design quality, states, and originality"
+  default_prompt: "Use $review-design to inspect this DESIGN.md and preview before handoff."

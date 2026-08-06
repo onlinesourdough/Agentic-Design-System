@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workspace preview</title>
+    <style>
+      :root {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        background: #f3efe6;
+        color: #25241f;
+      }
+      body {
+        margin: 0;
+      }
+      .skip-link {
+        position: absolute;
+        left: -999px;
+      }
+      .skip-link:focus {
+        left: 16px;
+        top: 16px;
+        background: white;
+        padding: 12px;
+      }
+      main {
+        width: min(760px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 80px 0;
+      }
+      .card {
+        background: #fffdf8;
+        border: 1px solid #d8d1c3;
+        border-radius: 22px;
+        padding: clamp(24px, 5vw, 56px);
+      }
+      h1 {
+        font-size: clamp(40px, 8vw, 72px);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        margin-top: 0;
+      }
+      p {
+        color: #666257;
+        line-height: 1.65;
+      }
+      button {
+        border: 0;
+        border-radius: 12px;
+        background: #2f5d50;
+        color: white;
+        padding: 14px 18px;
+        font: inherit;
+        font-weight: 700;
+      }
+      button:hover {
+        background: #24493f;
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      button:focus-visible {
+        outline: 3px solid #e4572e;
+        outline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <main id="content">
+      <section class="card">
+        <h1>Replace this preview.</h1>
+        <p>
+          Use the brief and DESIGN.md to make one inspectable direction with
+          real content and relevant states.
+        </p>
+        <button type="button">Primary action</button>
+      </section>
+    </main>
+  </body>
+</html>

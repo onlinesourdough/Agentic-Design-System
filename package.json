@@ -1,0 +1,23 @@
+{
+  "name": "onlinesourdough-design-template",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "A small workbench for turning a brief into a reviewed design handoff.",
+  "repository": "github:onlinesourdough/Design-template",
+  "type": "module",
+  "scripts": {
+    "check": "npm run format:check && node scripts/check.mjs",
+    "format": "prettier --write \"**/*.{md,html,json,mjs,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{md,html,json,mjs,yml,yaml}\"",
+    "handoff": "node scripts/create-handoff.mjs",
+    "preview": "node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "@google/design.md": "0.3.0",
+    "prettier": "3.6.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
