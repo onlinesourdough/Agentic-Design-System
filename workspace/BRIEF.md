@@ -8,4 +8,4 @@
 - **States:** Which loading, empty, error, success, permission, or offline states matter?
 - **Constraints:** Brand, accessibility, device, legal, technology, or timing boundaries.
 - **Proof:** What observable evidence makes the design acceptable?
-- **Receiving repository:** Solution-template, PowerBI-template, or another named owner.
+- **Receiving project or repository:** The project selected to implement the accepted design.

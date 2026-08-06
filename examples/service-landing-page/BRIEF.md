@@ -15,4 +15,4 @@
   claims, responsive from 360px, reduced-motion friendly.
 - **Proof:** A first-time visitor can explain the offer and find the booking
   action within ten seconds.
-- **Receiving repository:** Solution-template.
+- **Receiving project or repository:** The implementation project selected by its owner.

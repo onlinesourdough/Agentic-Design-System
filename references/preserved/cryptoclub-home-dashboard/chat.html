@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="da" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta
+      name="description"
+      content="Crypto Club Chat — kanaler, signaler og fællesskab samlet ét sted."
+    />
+    <link rel="icon" href="assets/favicon-32x32.png" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <title>Crypto Club — Chat</title>
+  </head>
+  <body data-page="chat">
+    <div class="app" id="app-shell"></div>
+    <script src="assets/mock-data.js?v=20260713"></script>
+    <script src="assets/app.js?v=20260713"></script>
+    <script>
+      const UI = CryptoClubUI;
+      UI.mountShell();
+      UI.bindShell();
+
+      const chatIcons = {
+        search: UI.icons.search,
+        back: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>`,
+        pin: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-3 1-4 4-1 5-2-2-2-2 5-1 4-4 1-3-6-6Z"/></svg>`,
+        send: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 16 7-16 7 3-7-3-7Z"/><path d="M7 12h13"/></svg>`,
+        attach: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 12 5.8-5.8a3 3 0 0 1 4.2 4.2l-7.5 7.5a4.5 4.5 0 0 1-6.4-6.4l7.2-7.2"/></svg>`,
+        more: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>`,
+        broadcast: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4l10 4V6L5 10Z"/><path d="M8 15.2 9 20h3l-1-3.6M18 9a5 5 0 0 1 0 6"/></svg>`,
+      };
+
+      const channels = [
+        {
+          id: "inner-circle",
+          avatar: "IC",
+          tone: "navy",
+          name: "Inner Circle",
+          kind: "Privat kanal",
+          preview: "Sofia: Risk On er fortsat intakt…",
+          time: "18:42",
+          unread: 3,
+        },
+        {
+          id: "heatmap",
+          avatar: "HM",
+          tone: "green",
+          name: "Heatmap-signaler",
+          kind: "Automatiseret",
+          preview: "BTC heatmap · F&G er faldet til 42",
+          time: "08:15",
+          unread: 1,
+        },
+        {
+          id: "scanner",
+          avatar: "MS",
+          tone: "amber",
+          name: "Market Scanner",
+          kind: "Automatiseret",
+          preview: "Top-10: SOL og ETH fører momentum",
+          time: "07:02",
+          unread: 0,
+        },
+        {
+          id: "general",
+          avatar: "CC",
+          tone: "gray",
+          name: "Crypto Club",
+          kind: "Fællesskab",
+          preview: "Mikkel: Er der live-session tirsdag?",
+          time: "I går",
+          unread: 0,
+        },
+        {
+          id: "announcements",
+          avatar: "",
+          tone: "blue",
+          name: "Meddelelser",
+          kind: "Kun administratorer",
+          preview: "Nyt Classroom-modul er udgivet",
+          time: "Fre",
+          unread: 0,
+          broadcast: true,
+        },
+      ];
+
+      const threads = {
+        "inner-circle": {
+          title: "Inner Circle",
+          subtitle: "128 medlemmer · 14 online",
+          avatar: "IC",
+          tone: "navy",
+          pinned:
+            "Ugens fokus: Følg BTC/SPY-ratioen og undgå forhastede entries.",
+          messages: [
+            {
+              who: "Sofia",
+              initials: "SO",
+              tone: "rose",
+              time: "18:31",
+              text: "Aftenens makro-note er klar. Risk On er fortsat intakt, men momentum er mere moderat end mandag.",
+            },
+            {
+              who: "Mikkel",
+              initials: "MK",
+              tone: "gray",
+              time: "18:36",
+              text: "Hvordan ser I på deployerbar kontant lige nu? Stadig afventende?",
+            },
+            {
+              who: "Sofia",
+              initials: "SO",
+              tone: "rose",
+              time: "18:42",
+              text: "Ja — ingen ændring endnu. Vi følger især BTC mod SPY og bekræfter først, hvis volumen kommer med.",
+              reaction: "👍  8",
+            },
+            {
+              who: "Dig",
+              initials: "MK",
+              tone: "navy",
+              time: "18:51",
+              text: "Godt, jeg holder min nuværende allokering indtil næste signal.",
+              mine: true,
+              state: "Læst",
+            },
+          ],
+        },
+        heatmap: {
+          title: "Heatmap-signaler",
+          subtitle: "Automatiseret kanal",
+          avatar: "HM",
+          tone: "green",
+          pinned:
+            "Signaldata er vejledende og udgør ikke finansiel rådgivning.",
+          messages: [
+            {
+              who: "Heatmap Bot",
+              initials: "HM",
+              tone: "green",
+              time: "08:15",
+              text: "Dagens BTC heatmap er klar. Fear & Greed er 42 (Frygt), mens 7-dages momentum fortsat er positivt.",
+            },
+            {
+              who: "Heatmap Bot",
+              initials: "HM",
+              tone: "green",
+              time: "08:15",
+              card: true,
+              text: "BTC · Dagligt signal",
+              stat: "HOLD",
+              detail: "RSI 48 · Neutral zone · Volumen stabil",
+            },
+          ],
+        },
+        scanner: {
+          title: "Market Scanner",
+          subtitle: "Automatiseret kanal",
+          avatar: "MS",
+          tone: "amber",
+          pinned: "Scanneren opdateres hver morgen kl. 07:00.",
+          messages: [
+            {
+              who: "Market Scanner",
+              initials: "MS",
+              tone: "amber",
+              time: "07:02",
+              text: "Morgenscanningen er færdig. SOL og ETH scorer højest på momentum i dagens top-10.",
+            },
+            {
+              who: "Market Scanner",
+              initials: "MS",
+              tone: "amber",
+              time: "07:02",
+              card: true,
+              text: "Momentum top 3",
+              stat: "SOL · ETH · BTC",
+              detail: "Baseret på trend, volumen og relativ styrke",
+            },
+          ],
+        },
+        general: {
+          title: "Crypto Club",
+          subtitle: "842 medlemmer · 37 online",
+          avatar: "CC",
+          tone: "gray",
+          pinned:
+            "Hold tonen konstruktiv og del aldrig personlige wallet-oplysninger.",
+          messages: [
+            {
+              who: "Mikkel",
+              initials: "MI",
+              tone: "gray",
+              time: "I går 16:20",
+              text: "Er der live-session på tirsdag som normalt?",
+            },
+            {
+              who: "Laura",
+              initials: "LA",
+              tone: "blue",
+              time: "I går 16:28",
+              text: "Ja, 19:30. Emnet er makro og portefølje — kalenderlinket ligger på Home.",
+            },
+          ],
+        },
+        announcements: {
+          title: "Meddelelser",
+          subtitle: "842 abonnenter",
+          avatar: "",
+          tone: "blue",
+          broadcast: true,
+          pinned: "Officielle opdateringer fra Crypto Club-teamet.",
+          messages: [
+            {
+              who: "Crypto Club",
+              initials: "CC",
+              tone: "blue",
+              time: "Fredag 12:00",
+              text: "Nyt Classroom-modul: Makro & markedscyklus er nu tilgængeligt. Du finder fire korte lektioner og en afsluttende case.",
+            },
+          ],
+        },
+      };
+
+      const channelHtml = (channel) => `
+        <button class="channel-item${channel.id === "inner-circle" ? " is-active" : ""}" type="button" data-channel="${channel.id}">
+          <span class="chat-avatar ${channel.tone}">${channel.broadcast ? chatIcons.broadcast : channel.avatar}</span>
+          <span class="channel-copy"><span class="channel-line"><strong>${channel.name}</strong><time>${channel.time}</time></span><small>${channel.kind}</small><span class="channel-preview">${channel.preview}</span></span>
+          ${channel.unread ? `<em>${channel.unread}</em>` : ""}
+        </button>`;
+
+      document.getElementById("page-content").innerHTML = `
+        <header class="chat-page-head">
+          <div><p class="eyebrow">Fællesskab</p><h1>Chat</h1><p>Kanaler, markedsdialog og signaler samlet ét sted.</p></div>
+          <div class="chat-page-actions">
+            <a class="btn btn-ghost" href="https://app.cryptoclub.dk" target="_blank" rel="noopener">Åbn AI Matthæus ${UI.icons.external}</a>
+            <button class="icon-btn mobile-menu" id="chatMobileMenu" type="button" aria-label="Åbn navigation">${UI.icons.menu}</button>
+          </div>
+        </header>
+
+        <section class="chat-workspace" id="chatWorkspace" aria-label="Crypto Club Chat">
+          <aside class="channel-pane" aria-label="Kanaler og chats">
+            <div class="channel-toolbar">
+              <div><strong>Beskeder</strong><span>4 ulæste</span></div>
+              <button class="chat-icon-btn" type="button" aria-label="Flere muligheder">${chatIcons.more}</button>
+            </div>
+            <label class="channel-search">${chatIcons.search}<input type="search" id="channelSearch" placeholder="Søg i chats" autocomplete="off" /></label>
+            <div class="chat-filters" role="tablist" aria-label="Filtrer chats">
+              <button type="button" class="is-active" data-filter="all">Alle</button>
+              <button type="button" data-filter="unread">Ulæste <span>4</span></button>
+              <button type="button" data-filter="signals">Signaler</button>
+            </div>
+            <div class="channel-list" id="channelList">${channels.map(channelHtml).join("")}</div>
+            <div class="channel-foot"><span><i></i> Forbundet</span><small>home.cryptoclub.dk/chat</small></div>
+          </aside>
+
+          <article class="conversation" id="conversation" aria-live="polite"></article>
+        </section>`;
+
+      function renderConversation(id) {
+        const thread = threads[id];
+        if (!thread) return;
+        document
+          .querySelectorAll(".channel-item")
+          .forEach((item) =>
+            item.classList.toggle("is-active", item.dataset.channel === id),
+          );
+        document.getElementById("chatWorkspace").dataset.threadOpen = "true";
+        document.getElementById("conversation").innerHTML = `
+          <header class="conversation-head">
+            <button class="chat-icon-btn conversation-back" type="button" id="conversationBack" aria-label="Tilbage til kanaler">${chatIcons.back}</button>
+            <span class="chat-avatar ${thread.tone}">${thread.broadcast ? chatIcons.broadcast : thread.avatar}</span>
+            <div><strong>${thread.title}</strong><span>${thread.subtitle}</span></div>
+            <button class="chat-icon-btn" type="button" data-demo="Søgning i ${thread.title} åbnes i den færdige chat">${chatIcons.search}</button>
+            <button class="chat-icon-btn" type="button" data-demo="Kanalindstillinger åbnes i den færdige chat">${chatIcons.more}</button>
+          </header>
+          <div class="pinned-message"><span>${chatIcons.pin}</span><div><strong>Fastgjort besked</strong><p>${thread.pinned}</p></div></div>
+          <div class="message-stream">
+            <div class="day-marker"><span>I dag</span></div>
+            ${thread.messages
+              .map((message) =>
+                message.card
+                  ? `
+              <div class="message-row">
+                <span class="chat-avatar small ${message.tone}">${message.initials}</span>
+                <div class="message-content"><div class="message-meta"><strong>${message.who}</strong><time>${message.time}</time></div>
+                  <div class="signal-message"><small>${message.text}</small><strong>${message.stat}</strong><span>${message.detail}</span></div>
+                </div>
+              </div>`
+                  : `
+              <div class="message-row${message.mine ? " is-mine" : ""}">
+                ${message.mine ? "" : `<span class="chat-avatar small ${message.tone}">${message.initials}</span>`}
+                <div class="message-content"><div class="message-meta"><strong>${message.who}</strong><time>${message.time}</time></div>
+                  <div class="message-bubble"><p>${message.text}</p>${message.state ? `<small>${message.state}</small>` : ""}</div>
+                  ${message.reaction ? `<button class="message-reaction" type="button">${message.reaction}</button>` : ""}
+                </div>
+              </div>`,
+              )
+              .join("")}
+          </div>
+          <form class="message-composer" id="messageComposer">
+            <button class="chat-icon-btn" type="button" data-demo="Vedhæftninger er ikke aktive i previewet" aria-label="Vedhæft fil">${chatIcons.attach}</button>
+            <label><span class="sr-only">Skriv en besked</span><textarea id="messageInput" rows="1" placeholder="Skriv en besked…"></textarea></label>
+            <button class="send-button" type="submit" aria-label="Send besked">${chatIcons.send}</button>
+          </form>`;
+
+        document
+          .getElementById("conversationBack")
+          ?.addEventListener("click", () => {
+            document.getElementById("chatWorkspace").dataset.threadOpen =
+              "false";
+          });
+        document
+          .getElementById("messageComposer")
+          ?.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const input = document.getElementById("messageInput");
+            if (!input.value.trim()) return;
+            UI.showToast("Beskeden er kun en preview-handling");
+            input.value = "";
+          });
+        UI.bindDemoActions(document.getElementById("conversation"));
+      }
+
+      document
+        .querySelectorAll("[data-channel]")
+        .forEach((button) =>
+          button.addEventListener("click", () =>
+            renderConversation(button.dataset.channel),
+          ),
+        );
+
+      document
+        .getElementById("channelSearch")
+        ?.addEventListener("input", (event) => {
+          const query = event.target.value.toLowerCase().trim();
+          document.querySelectorAll(".channel-item").forEach((item) => {
+            item.hidden =
+              query && !item.textContent.toLowerCase().includes(query);
+          });
+        });
+
+      document.querySelectorAll("[data-filter]").forEach((button) =>
+        button.addEventListener("click", () => {
+          document
+            .querySelectorAll("[data-filter]")
+            .forEach((item) =>
+              item.classList.toggle("is-active", item === button),
+            );
+          document.querySelectorAll(".channel-item").forEach((item) => {
+            const channel = channels.find(
+              (entry) => entry.id === item.dataset.channel,
+            );
+            item.hidden =
+              button.dataset.filter === "unread"
+                ? !channel.unread
+                : button.dataset.filter === "signals"
+                  ? !["heatmap", "scanner"].includes(channel.id)
+                  : false;
+          });
+        }),
+      );
+
+      const initialChannel = location.hash.replace("#", "") || "inner-circle";
+      renderConversation(
+        threads[initialChannel] ? initialChannel : "inner-circle",
+      );
+      document
+        .getElementById("chatMobileMenu")
+        ?.addEventListener("click", () =>
+          document.querySelector(".sidebar")?.classList.toggle("is-open"),
+        );
+    </script>
+  </body>
+</html>

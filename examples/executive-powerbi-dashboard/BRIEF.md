@@ -16,4 +16,4 @@
   suitable for projection and laptop use.
 - **Proof:** Leadership can name the largest actionable margin gap and its owner
   in under two minutes.
-- **Receiving repository:** PowerBI-template.
+- **Receiving project or repository:** The project selected to implement this dashboard.

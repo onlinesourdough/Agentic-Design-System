@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Why onlinesourdough connects business development, software, and AI."
+    />
+    <title>About onlinesourdough</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="assets/onlinesourdough-mark-large-pixel-v3.svg"
+    />
+    <script>
+      (() => {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+
+        const navigation = performance.getEntriesByType("navigation")[0];
+        const isReload =
+          navigation?.type === "reload" || performance.navigation?.type === 1;
+
+        if (!isReload) return;
+
+        try {
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.hash = "";
+          history.replaceState(history.state, "", cleanUrl.href);
+        } catch {}
+
+        const resetScroll = () => window.scrollTo(0, 0);
+        resetScroll();
+        window.addEventListener("DOMContentLoaded", resetScroll, {
+          once: true,
+        });
+        window.addEventListener("load", resetScroll, { once: true });
+      })();
+    </script>
+    <style>
+      @font-face {
+        font-family: "Geist Sans";
+        src: url("assets/fonts/geist-sans-variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("assets/fonts/geist-mono-variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Pixel";
+        src: url("assets/fonts/geist-pixel-square.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      :root {
+        color-scheme: light;
+        --bg: #f8f2e8;
+        --panel: #fffaf1;
+        --text: #2b1b12;
+        --muted: #806c5c;
+        --line: #e5d7c6;
+        --line-strong: #d4bd9f;
+        --accent: #b86f36;
+        --hover: #f1eadf;
+        --focus: #2b6f98;
+        --font-sans:
+          "Geist Sans", Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;
+        --font-mono: "Geist Mono", SFMono-Regular, Consolas, monospace;
+        --font-pixel: "Geist Pixel", "Geist Mono", monospace;
+        --container: 1240px;
+        background: var(--bg);
+        font-family: var(--font-sans);
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #18120e;
+        --panel: #221813;
+        --text: #fff2df;
+        --muted: #c6ad94;
+        --line: #3c2b21;
+        --line-strong: #69462d;
+        --accent: #d58a48;
+        --hover: #2a1f18;
+        --focus: #6db8df;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-width: 320px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        overflow-x: hidden;
+        color: var(--text);
+        background:
+          linear-gradient(rgba(116, 88, 65, 0.027) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(116, 88, 65, 0.027) 1px, transparent 1px),
+          var(--bg);
+        background-size: 52px 52px;
+        font-family: var(--font-sans);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body.menu-open {
+        overflow: hidden;
+      }
+
+      a,
+      button {
+        color: inherit;
+        font: inherit;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      button {
+        border: 0;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      .site-header {
+        position: sticky;
+        z-index: 50;
+        top: 0;
+        min-height: 68px;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 0 max(18px, calc((100vw - var(--container)) / 2));
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--bg) 96%, transparent);
+        backdrop-filter: blur(12px);
+      }
+
+      .brand-name {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        justify-self: start;
+        font-family: var(--font-pixel);
+        font-size: 22px;
+        letter-spacing: -0.025em;
+      }
+
+      .os-mark {
+        display: block;
+        width: 44px;
+        height: 34px;
+        flex: 0 0 auto;
+        object-fit: contain;
+        image-rendering: pixelated;
+      }
+
+      html[data-theme="dark"] .site-header .os-mark,
+      .site-footer .os-mark {
+        filter: brightness(0) invert(1);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        gap: 22px;
+      }
+
+      .studio-trigger,
+      .nav-link {
+        position: relative;
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.045em;
+      }
+
+      .studio-trigger {
+        padding: 0 11px;
+        border-radius: 8px;
+      }
+
+      .studio-trigger::after {
+        width: 5px;
+        height: 5px;
+        margin-left: 8px;
+        border-right: 1px solid currentColor;
+        border-bottom: 1px solid currentColor;
+        content: "";
+        transform: translateY(-2px) rotate(45deg);
+      }
+
+      .nav-link::after {
+        position: absolute;
+        right: 0;
+        bottom: -2px;
+        left: 0;
+        height: 1px;
+        background: var(--accent);
+        content: "";
+        transform: scaleX(0);
+        transform-origin: left;
+      }
+
+      .studio-trigger:hover,
+      .studio-trigger:focus-visible,
+      .studio-trigger[aria-expanded="true"] {
+        color: var(--text);
+        background: var(--hover);
+      }
+
+      .nav-link:hover,
+      .nav-link:focus-visible,
+      .nav-link[aria-current="page"] {
+        color: var(--text);
+      }
+
+      .nav-link[aria-current="page"]::after {
+        transform: scaleX(1);
+      }
+
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        justify-self: end;
+        padding: 0;
+        border-radius: 9px;
+        place-items: center;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .theme-toggle:hover,
+      .theme-toggle:focus-visible {
+        color: var(--text);
+        background: var(--hover);
+      }
+
+      .studio-menu {
+        position: absolute;
+        z-index: 60;
+        top: calc(100% + 10px);
+        left: 50%;
+        width: min(620px, calc(100vw - 36px));
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: color-mix(in srgb, var(--panel) 96%, transparent);
+        box-shadow: 0 28px 84px rgba(60, 36, 19, 0.14);
+        backdrop-filter: blur(18px);
+        transform: translateX(-50%);
+      }
+
+      .studio-menu[aria-hidden="true"] {
+        display: none;
+      }
+
+      .studio-paths {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .studio-path {
+        min-height: 146px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: var(--panel);
+      }
+
+      .studio-path.current {
+        background: var(--hover);
+      }
+
+      .path-number,
+      .path-action {
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 8px;
+        font-weight: 650;
+        letter-spacing: 0.05em;
+      }
+
+      .studio-path strong {
+        margin: 10px 0 7px;
+        font-family: var(--font-pixel);
+        font-size: 24px;
+        font-weight: 400;
+      }
+
+      .studio-path small {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .path-action {
+        align-self: end;
+        margin-top: 16px;
+      }
+
+      .about-page {
+        width: min(100% - 36px, var(--container));
+        margin: 0 auto;
+        padding: clamp(70px, 9vw, 118px) 0 clamp(86px, 10vw, 130px);
+      }
+
+      .about-hero {
+        max-width: 790px;
+        margin: 0 auto clamp(76px, 9vw, 116px);
+        text-align: center;
+      }
+
+      .about-hero > p:first-child {
+        margin-bottom: 16px;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 650;
+        letter-spacing: 0.065em;
+      }
+
+      .about-hero h1 {
+        margin-bottom: 24px;
+        font-family: var(--font-pixel);
+        font-size: clamp(48px, 7vw, 76px);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+      }
+
+      .about-hero > p:last-child {
+        max-width: 720px;
+        margin: 0 auto;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.68;
+      }
+
+      .about-section {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.18fr);
+        gap: clamp(42px, 7vw, 84px);
+        padding: 40px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .about-heading {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        align-items: start;
+        gap: 12px;
+      }
+
+      .about-heading span {
+        padding-top: 8px;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        font-weight: 650;
+      }
+
+      .about-section h2 {
+        margin-bottom: 0;
+        font-family: var(--font-pixel);
+        font-size: clamp(30px, 4vw, 43px);
+        font-weight: 400;
+        line-height: 1.02;
+        letter-spacing: -0.028em;
+      }
+
+      .about-copy p {
+        margin-bottom: 17px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.68;
+      }
+
+      .about-copy p:last-child {
+        margin-bottom: 0;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 42px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--line-strong);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 650;
+        letter-spacing: 0.045em;
+      }
+
+      .back-link:hover,
+      .back-link:focus-visible {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .site-footer {
+        min-height: 310px;
+        display: flex;
+        align-items: flex-end;
+        padding: 58px max(18px, calc((100vw - var(--container)) / 2)) 34px;
+        color: #fff2df;
+        background:
+          linear-gradient(rgba(255, 242, 223, 0.035) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 242, 223, 0.035) 1px,
+            transparent 1px
+          ),
+          #281a13;
+        background-size: 26px 26px;
+      }
+
+      .footer-inner {
+        width: min(100%, var(--container));
+        margin: 0 auto;
+      }
+
+      .footer-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 64px;
+        font-family: var(--font-pixel);
+        font-size: clamp(34px, 5vw, 56px);
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+
+      .footer-brand .os-mark {
+        width: 44px;
+        height: 34px;
+      }
+
+      .footer-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 242, 223, 0.18);
+        color: rgba(255, 242, 223, 0.68);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.045em;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .footer-links a:hover,
+      .footer-links a:focus-visible {
+        color: #fff2df;
+      }
+
+      @media (max-width: 620px) {
+        .site-header {
+          min-height: 62px;
+          padding-right: 14px;
+          padding-left: 14px;
+        }
+
+        .brand-name {
+          font-size: 19px;
+        }
+
+        .nav-link[href^="index.html#menu"] {
+          display: none;
+        }
+
+        .header-actions {
+          gap: 16px;
+        }
+
+        .studio-trigger {
+          padding: 0 8px;
+        }
+
+        .studio-menu {
+          width: calc(100vw - 24px);
+        }
+
+        .studio-paths {
+          grid-template-columns: 1fr;
+        }
+
+        .about-page {
+          padding-top: 54px;
+        }
+
+        .about-hero {
+          margin-bottom: 66px;
+        }
+
+        .about-hero h1 {
+          font-size: clamp(45px, 13vw, 58px);
+        }
+
+        .about-hero > p:last-child {
+          font-size: 15px;
+        }
+
+        .about-section {
+          grid-template-columns: 1fr;
+          gap: 22px;
+          padding: 34px 0;
+        }
+
+        .site-footer {
+          min-height: 270px;
+          padding-right: 18px;
+          padding-left: 18px;
+        }
+
+        .footer-brand {
+          margin-bottom: 52px;
+        }
+
+        .footer-brand .os-mark {
+          width: 44px;
+          height: 34px;
+        }
+
+        .footer-bottom {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 13px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a
+        class="brand-name"
+        href="index.html"
+        aria-label="onlinesourdough, menu"
+      >
+        <img
+          class="os-mark"
+          src="assets/onlinesourdough-mark-large-pixel-v3.svg"
+          alt=""
+          aria-hidden="true"
+        />
+        <span>onlinesourdough</span>
+      </a>
+      <nav class="header-actions" aria-label="Primary navigation">
+        <button
+          class="studio-trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="studio-menu"
+        >
+          Offers
+        </button>
+        <a class="nav-link" href="index.html#menu">Menu</a>
+        <a class="nav-link" href="about.html" aria-current="page">About</a>
+      </nav>
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Switch to dark theme"
+      >
+        ◐
+      </button>
+
+      <div class="studio-menu" id="studio-menu" aria-hidden="true" inert>
+        <div class="studio-paths">
+          <a class="studio-path" href="../arcitai-hero-lab/index.html">
+            <span class="path-number">DONE FOR YOU</span>
+            <strong>Arc'IT AI</strong>
+            <small>Business understanding carried into working software.</small>
+            <span class="path-action">Explore offer ↗</span>
+          </a>
+          <a class="studio-path current" href="index.html" aria-current="page">
+            <span class="path-number">DIY + DONE WITH YOU</span>
+            <strong>onlinesourdough</strong>
+            <small
+              >Learn the method, use the resources, or build with direct
+              guidance.</small
+            >
+            <span class="path-action">Current offer</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="about-page">
+      <section class="about-hero" aria-labelledby="about-title">
+        <p>ABOUT / THE METHOD</p>
+        <h1 id="about-title">About onlinesourdough</h1>
+        <p>
+          onlinesourdough is my way of explaining how I think software,
+          business, and AI should work together. It started with sourdough,
+          because the best systems are not only fast to make. They need
+          structure, care, and people who understand what keeps them alive.
+        </p>
+      </section>
+
+      <div class="about-sections">
+        <section class="about-section">
+          <header class="about-heading">
+            <span>01</span>
+            <h2>From demo to production</h2>
+          </header>
+          <div class="about-copy">
+            <p>
+              AI can help you build something useful very quickly. That is a
+              good thing. The problem is not speed, and it is not AI-generated
+              code by itself.
+            </p>
+            <p>
+              The problem starts when a quick demo turns into production,
+              customers need to use it, and the business has to rely on it. Then
+              the work around the code matters: architecture, documentation,
+              monitoring, security, handover, and someone taking technical
+              ownership.
+            </p>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <header class="about-heading">
+            <span>02</span>
+            <h2>Why sourdough</h2>
+          </header>
+          <div class="about-copy">
+            <p>
+              I love sourdough, but I cannot really bake it. My girlfriend can.
+              I learn a lot from her every time we end up talking about what
+              makes it work: ingredients, timing, structure, feel, and patience.
+            </p>
+            <p>
+              That became the picture behind onlinesourdough. A supermarket mix
+              can be useful, but it is not the same as understanding the bake.
+              Software is similar. A tool can get you started, but the result
+              still needs judgment, structure, and care.
+            </p>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <header class="about-heading">
+            <span>03</span>
+            <h2>Where the brands meet</h2>
+          </header>
+          <div class="about-copy">
+            <p>
+              gustavonline is my personal brand. It is where I share content,
+              ideas, and the way I think about IT, software, AI, and business.
+            </p>
+            <p>
+              arcitai is my IT architecture consultancy. That is the business
+              side: helping companies design, build, review, and maintain
+              software that has to work in the real world.
+            </p>
+            <p>
+              onlinesourdough sits between the two. It is the simple language I
+              use to explain the method, the services, and where AI fits when
+              software becomes part of a business.
+            </p>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <header class="about-heading">
+            <span>04</span>
+            <h2>The point</h2>
+          </header>
+          <div class="about-copy">
+            <p>
+              AI does not replace you, your responsibility, or the need to
+              understand what you are building. It can help you work faster,
+              think better, and become more productive, but it still needs
+              direction.
+            </p>
+            <p>
+              The goal is to make complex technology simple enough to use
+              responsibly. Not just code that runs, but software people can
+              understand, decisions the business can stand behind, and a
+              codebase AI can safely help extend.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <a class="back-link" href="index.html#menu"
+        >Back to menu <span aria-hidden="true">→</span></a
+      >
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a
+          class="footer-brand"
+          href="index.html"
+          aria-label="onlinesourdough, menu"
+        >
+          <img
+            class="os-mark"
+            src="assets/onlinesourdough-mark-large-pixel-v3.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <span>onlinesourdough</span>
+        </a>
+        <div class="footer-bottom">
+          <span>© 2026 onlinesourdough</span>
+          <nav class="footer-links" aria-label="Ecosystem links">
+            <a href="https://gustavonline.com">gustavonline ↗</a>
+            <a href="../arcitai-hero-lab/index.html">Arc'IT AI ↗</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const root = document.documentElement;
+      const body = document.body;
+      const toggle = document.querySelector(".theme-toggle");
+      const studioTrigger = document.querySelector(".studio-trigger");
+      const studioMenu = document.querySelector(".studio-menu");
+
+      const setStudioMenu = (open) => {
+        studioTrigger.setAttribute("aria-expanded", String(open));
+        studioMenu.setAttribute("aria-hidden", String(!open));
+        studioMenu.inert = !open;
+        body.classList.toggle("menu-open", open && window.innerWidth <= 620);
+      };
+
+      studioTrigger.addEventListener("click", () => {
+        setStudioMenu(studioTrigger.getAttribute("aria-expanded") !== "true");
+      });
+
+      document.addEventListener("click", (event) => {
+        if (
+          studioMenu.getAttribute("aria-hidden") === "false" &&
+          !studioMenu.contains(event.target) &&
+          !studioTrigger.contains(event.target)
+        ) {
+          setStudioMenu(false);
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          studioMenu.getAttribute("aria-hidden") === "false"
+        ) {
+          setStudioMenu(false);
+          studioTrigger.focus();
+        }
+      });
+
+      toggle.addEventListener("click", () => {
+        const dark = root.dataset.theme !== "dark";
+        root.dataset.theme = dark ? "dark" : "light";
+        toggle.setAttribute(
+          "aria-label",
+          dark ? "Switch to light theme" : "Switch to dark theme",
+        );
+      });
+    </script>
+  </body>
+</html>

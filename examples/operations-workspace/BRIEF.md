@@ -15,4 +15,4 @@
   next action rather than reproducing the full table.
 - **Proof:** A dispatcher identifies overdue or blocked work and records an
   owner without leaving the workspace.
-- **Receiving repository:** Solution-template.
+- **Receiving project or repository:** The implementation project selected by its owner.

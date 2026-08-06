@@ -1,0 +1,2941 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A static design preview for the resources.onlinesourdough course library."
+    />
+    <meta name="theme-color" content="#f8f2e8" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="assets/resources-folder-transparent.png"
+    />
+    <link rel="canonical" href="https://resources.onlinesourdough.com/" />
+    <title>resources.onlinesourdough — course library</title>
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem(
+            "resources-onlinesourdough-theme",
+          );
+          if (savedTheme === "dark" || savedTheme === "light") {
+            document.documentElement.dataset.theme = savedTheme;
+          }
+        } catch {}
+      })();
+    </script>
+    <style>
+      @font-face {
+        font-family: "Geist Sans";
+        src: url("assets/fonts/geist-sans-variable.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("assets/fonts/geist-mono-variable.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Pixel";
+        src: url("assets/fonts/geist-pixel-square.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      :root {
+        color-scheme: light;
+        --bg: #f8f2e8;
+        --panel: #fffaf1;
+        --paper: #fffdf7;
+        --text: #2b1b12;
+        --muted: #806c5c;
+        --line: #e5d7c6;
+        --line-strong: #d4bd9f;
+        --accent: #b86f36;
+        --accent-dark: #663715;
+        --hover: #f1eadf;
+        --focus: #2b6f98;
+        --free: #3b6f55;
+        --paid: #7b4d26;
+        --folder: #75401f;
+        --folder-hover: #8d522c;
+        --folder-text: #fffaf1;
+        --shadow: rgba(60, 36, 19, 0.12);
+        --shadow-soft: rgba(60, 36, 19, 0.07);
+        --sidebar-width: 240px;
+        --topbar-height: 52px;
+        --font-sans:
+          "Geist Sans", Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;
+        --font-mono: "Geist Mono", SFMono-Regular, Consolas, monospace;
+        --font-pixel: "Geist Pixel", "Geist Mono", monospace;
+        --font-emoji:
+          "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", emoji,
+          sans-serif;
+        font-family: var(--font-sans);
+        background: var(--bg);
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #18120e;
+        --panel: #221813;
+        --paper: #2a1e17;
+        --text: #fff2df;
+        --muted: #c6ad94;
+        --line: #3c2b21;
+        --line-strong: #69462d;
+        --accent: #d58a48;
+        --accent-dark: #f0c48a;
+        --hover: #2a1f18;
+        --focus: #6db8df;
+        --free: #8bc29d;
+        --paid: #e0ac79;
+        --folder: #75401f;
+        --folder-hover: #925732;
+        --folder-text: #fff2df;
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-soft: rgba(0, 0, 0, 0.18);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-width: 320px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100dvh;
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--bg);
+        color: var(--text);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button,
+      a {
+        color: inherit;
+      }
+
+      button {
+        border: 0;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        clip-path: inset(50%);
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 8px;
+        left: 8px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: var(--text);
+        color: var(--bg);
+        transform: translateY(-150%);
+        transition: transform 160ms ease;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .app-shell {
+        min-height: 100dvh;
+        display: grid;
+        grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+        background:
+          linear-gradient(rgba(116, 88, 65, 0.027) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(116, 88, 65, 0.027) 1px, transparent 1px),
+          var(--bg);
+        background-size: 52px 52px;
+        transition: grid-template-columns 180ms ease;
+      }
+
+      .app-shell.sidebar-collapsed {
+        grid-template-columns: 0 minmax(0, 1fr);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        min-width: 0;
+        height: 100dvh;
+        display: grid;
+        grid-template-rows: auto auto minmax(0, 1fr) auto;
+        overflow: hidden;
+        border-right: 1px solid var(--line);
+        background: color-mix(in srgb, var(--panel) 82%, var(--bg));
+        opacity: 1;
+        transition: opacity 120ms ease;
+      }
+
+      .sidebar-collapsed .sidebar {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .sidebar-brand-block {
+        min-height: var(--topbar-height);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        border-bottom: 1px solid var(--line);
+        padding: 8px 12px;
+      }
+
+      .sidebar-brand {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: 27px minmax(0, 1fr);
+        align-items: center;
+        gap: 8px;
+      }
+
+      .brand-mark {
+        width: 26px;
+        height: 24px;
+        display: block;
+        color: var(--accent);
+        shape-rendering: crispEdges;
+      }
+
+      .sidebar-brand-name {
+        min-width: 0;
+        overflow: hidden;
+        color: var(--text);
+        font-family: var(--font-pixel);
+        font-size: 14px;
+        letter-spacing: -0.025em;
+        line-height: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sidebar-close {
+        display: none;
+        width: 30px;
+        height: 30px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 19px;
+      }
+
+      .sidebar-search {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding: 6px 9px;
+      }
+
+      .search-trigger {
+        width: 100%;
+        min-height: 31px;
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 7px;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 12px;
+        text-align: left;
+        padding: 0 7px;
+      }
+
+      .search-trigger:hover,
+      .search-trigger:focus-visible,
+      .sidebar-link:hover,
+      .sidebar-link:focus-visible,
+      .sidebar-disclosure:hover,
+      .sidebar-disclosure:focus-visible {
+        background: var(--hover);
+        color: var(--text);
+      }
+
+      .shortcut {
+        border: 1px solid var(--line-strong);
+        border-radius: 4px;
+        background: var(--bg);
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        line-height: 1;
+        padding: 4px 5px;
+      }
+
+      .sidebar-scroll {
+        min-height: 0;
+        overflow-y: auto;
+        padding: 13px 9px 20px;
+      }
+
+      .sidebar-section + .sidebar-section {
+        margin-top: 17px;
+      }
+
+      .sidebar-section-title {
+        margin: 0 7px 5px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        font-weight: 560;
+        letter-spacing: 0.08em;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+
+      .sidebar-list,
+      .tree-list,
+      .tree-children {
+        display: grid;
+        gap: 1px;
+      }
+
+      .sidebar-link,
+      .tree-link,
+      .sidebar-disclosure {
+        min-width: 0;
+        min-height: 29px;
+        display: grid;
+        align-items: center;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 590;
+        line-height: 1.25;
+      }
+
+      .sidebar-link {
+        grid-template-columns: 19px minmax(0, 1fr);
+        gap: 6px;
+        padding: 0 7px;
+      }
+
+      .sidebar-link.active,
+      .tree-row.active {
+        background: color-mix(in srgb, var(--accent) 10%, transparent);
+        color: var(--text);
+        font-weight: 690;
+      }
+
+      .sidebar-link-label,
+      .tree-link-label {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .pixel-icon {
+        width: 17px;
+        height: 17px;
+        display: block;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: square;
+        stroke-linejoin: miter;
+        stroke-width: 1.7;
+        shape-rendering: crispEdges;
+      }
+
+      .sidebar-link .pixel-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .tree-row {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 25px;
+        align-items: center;
+        border-radius: 6px;
+      }
+
+      .tree-link {
+        grid-template-columns: 19px minmax(0, 1fr);
+        gap: 6px;
+        padding: 0 0 0 7px;
+      }
+
+      .tree-row:hover,
+      .tree-row:focus-within {
+        background: var(--hover);
+        color: var(--text);
+      }
+
+      .tree-row.active .tree-link {
+        color: var(--text);
+      }
+
+      .tree-number {
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        line-height: 1;
+      }
+
+      .tree-toggle {
+        width: 25px;
+        height: 27px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .tree-toggle .pixel-icon {
+        width: 13px;
+        height: 13px;
+        transition: transform 160ms ease;
+      }
+
+      .tree-toggle[aria-expanded="true"] .pixel-icon {
+        transform: rotate(90deg);
+      }
+
+      .tree-children {
+        padding: 1px 0 3px 9px;
+      }
+
+      .tree-children .tree-children {
+        padding-left: 8px;
+      }
+
+      .tree-link.lesson {
+        grid-template-columns: 19px minmax(0, 1fr);
+        padding-left: 7px;
+        font-size: 11px;
+        font-weight: 520;
+      }
+
+      .tree-link.lesson .tree-number {
+        color: var(--muted);
+      }
+
+      .sidebar-bottom {
+        border-top: 1px solid var(--line);
+        padding: 7px 9px;
+      }
+
+      .site-main {
+        min-width: 0;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        min-height: var(--topbar-height);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--bg) 94%, transparent);
+        backdrop-filter: blur(12px);
+        padding: 0 18px;
+      }
+
+      .topbar-left,
+      .topbar-actions {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+
+      .topbar-actions {
+        justify-self: end;
+      }
+
+      .topbar-button,
+      .topbar-search,
+      .topbar-login,
+      .theme-toggle {
+        min-height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .topbar-button,
+      .theme-toggle {
+        width: 32px;
+      }
+
+      .topbar-search {
+        gap: 7px;
+        padding: 0 9px;
+        font-size: 12px;
+      }
+
+      .topbar-login {
+        padding: 0 9px;
+        font-size: 12px;
+        font-weight: 650;
+      }
+
+      .topbar-button:hover,
+      .topbar-button:focus-visible,
+      .topbar-search:hover,
+      .topbar-search:focus-visible,
+      .topbar-login:hover,
+      .topbar-login:focus-visible,
+      .theme-toggle:hover,
+      .theme-toggle:focus-visible {
+        background: var(--hover);
+        color: var(--text);
+      }
+
+      .topbar-history {
+        color: color-mix(in srgb, var(--muted) 72%, transparent);
+      }
+
+      .favorite-button {
+        font-family: var(--font-mono);
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .favorite-button.is-favorite {
+        color: var(--accent);
+      }
+
+      .theme-glyph {
+        width: 16px;
+        height: 16px;
+        display: block;
+        border-radius: 50%;
+        box-shadow: inset -5px -4px 0 currentColor;
+      }
+
+      :root[data-theme="dark"] .theme-glyph {
+        background: currentColor;
+        box-shadow:
+          0 -7px 0 -5px currentColor,
+          0 7px 0 -5px currentColor,
+          7px 0 0 -5px currentColor,
+          -7px 0 0 -5px currentColor,
+          5px 5px 0 -5px currentColor,
+          -5px -5px 0 -5px currentColor,
+          5px -5px 0 -5px currentColor,
+          -5px 5px 0 -5px currentColor;
+      }
+
+      .main-panel {
+        width: min(calc(100% - 64px), 1120px);
+        flex: 1;
+        margin: 0 auto;
+        padding: 48px 0 72px;
+      }
+
+      .home-page,
+      .module-page,
+      .reader-page,
+      .account-page,
+      .help-page,
+      .tasks-page {
+        min-width: 0;
+      }
+
+      .home-intro {
+        max-width: 820px;
+      }
+
+      .home-intro-line,
+      .section-heading,
+      .page-heading-line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .eyebrow,
+      .section-label,
+      .page-kicker,
+      .row-meta,
+      .folder-meta,
+      .access-label,
+      .resource-kind,
+      .duration,
+      .video-meta,
+      .progress-meta,
+      .breadcrumbs {
+        color: color-mix(in srgb, var(--accent) 72%, var(--muted));
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 620;
+        letter-spacing: 0.06em;
+        line-height: 1.3;
+        text-transform: uppercase;
+      }
+
+      .home-intro-line {
+        justify-content: flex-start;
+      }
+
+      .home-intro-rule {
+        width: 64px;
+        height: 1px;
+        display: block;
+        background: var(--line-strong);
+      }
+
+      .home-intro h1 {
+        max-width: 780px;
+        margin: 19px 0 0;
+        color: var(--text);
+        font-family: var(--font-pixel);
+        font-size: clamp(38px, 5vw, 58px);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.02;
+      }
+
+      .home-intro p {
+        max-width: 690px;
+        margin: 17px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.62;
+      }
+
+      .stage-section {
+        margin-top: 48px;
+      }
+
+      .section-heading {
+        min-height: 28px;
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+      }
+
+      .section-heading h2 {
+        margin: 0;
+        color: var(--text);
+        font-size: 20px;
+        font-weight: 680;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+
+      .section-heading p {
+        max-width: 480px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .section-note {
+        flex: 0 0 auto;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        line-height: 1.3;
+        white-space: nowrap;
+      }
+
+      .folder-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .folder-card {
+        min-width: 0;
+        display: grid;
+        gap: 6px;
+        color: var(--text);
+      }
+
+      .folder-card:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 4px;
+      }
+
+      .folder-physical {
+        position: relative;
+        height: 190px;
+        display: block;
+        isolation: isolate;
+      }
+
+      .folder-paper,
+      .folder-front,
+      .folder-shelf {
+        position: absolute;
+        right: 0;
+        left: 0;
+      }
+
+      .folder-paper {
+        z-index: 1;
+        top: 22px;
+        right: 14px;
+        left: 14px;
+        height: 111px;
+        display: grid;
+        align-content: start;
+        gap: 7px;
+        overflow: hidden;
+        border: 1px solid var(--line-strong);
+        border-radius: 8px 8px 4px 4px;
+        background: var(--paper);
+        box-shadow: 0 8px 16px var(--shadow-soft);
+        color: var(--muted);
+        padding: 12px;
+        transform: rotate(-1.5deg);
+        transition:
+          transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 180ms ease;
+      }
+
+      .folder-paper::before {
+        position: absolute;
+        top: -7px;
+        left: 13px;
+        width: 64px;
+        height: 8px;
+        border: 1px solid var(--line-strong);
+        border-bottom: 0;
+        border-radius: 5px 5px 0 0;
+        background: var(--paper);
+        content: "";
+      }
+
+      .folder-card:hover .folder-paper,
+      .folder-card:focus-visible .folder-paper {
+        transform: translateY(-18px) rotate(-1.5deg);
+        box-shadow: 0 12px 20px var(--shadow-soft);
+      }
+
+      .paper-number {
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      .paper-step {
+        min-width: 0;
+        overflow: hidden;
+        color: var(--text);
+        font-size: 10px;
+        font-weight: 660;
+        line-height: 1.25;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .paper-step + .paper-step {
+        color: var(--muted);
+        font-weight: 520;
+      }
+
+      .folder-front {
+        z-index: 2;
+        top: 43px;
+        bottom: 10px;
+        display: grid;
+        align-content: start;
+        gap: 8px;
+        overflow: hidden;
+        border: 1px solid
+          color-mix(in srgb, var(--accent-dark) 65%, var(--line));
+        border-radius: 6px 12px 8px 8px;
+        background: var(--folder);
+        color: var(--folder-text);
+        padding: 14px 13px 16px;
+        transition: background 160ms ease;
+      }
+
+      .folder-front::before {
+        position: absolute;
+        top: -9px;
+        left: -1px;
+        width: 76px;
+        height: 11px;
+        border-radius: 6px 6px 0 0;
+        background: var(--folder);
+        content: "";
+      }
+
+      .folder-front::after {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            transparent 0 17%,
+            rgba(255, 250, 241, 0.07) 17% 18%,
+            transparent 18% 100%
+          ),
+          linear-gradient(
+            165deg,
+            transparent 0 54%,
+            rgba(43, 27, 18, 0.1) 54% 55%,
+            transparent 55% 100%
+          );
+        content: "";
+        pointer-events: none;
+      }
+
+      .folder-front > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .folder-card:hover .folder-front,
+      .folder-card:focus-visible .folder-front {
+        background: var(--folder-hover);
+      }
+
+      .folder-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 6px;
+        color: rgba(255, 250, 241, 0.77);
+        font-size: 9px;
+        letter-spacing: 0.05em;
+      }
+
+      .folder-front strong {
+        max-width: 180px;
+        color: var(--folder-text);
+        font-size: 15px;
+        font-weight: 680;
+        line-height: 1.08;
+      }
+
+      .folder-front p {
+        max-width: 205px;
+        display: -webkit-box;
+        overflow: hidden;
+        margin: 0;
+        color: rgba(255, 250, 241, 0.78);
+        font-size: 10px;
+        line-height: 1.35;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+
+      .folder-shelf {
+        z-index: 3;
+        right: -5px;
+        bottom: 26px;
+        left: -5px;
+        height: 34px;
+        border: 1px solid
+          color-mix(in srgb, var(--line-strong) 72%, transparent);
+        border-radius: 0 0 26px 26px;
+        background: color-mix(in srgb, var(--panel) 26%, transparent);
+        box-shadow: inset 0 1px 0
+          color-mix(in srgb, var(--panel) 68%, transparent);
+        backdrop-filter: blur(4px);
+        pointer-events: none;
+      }
+
+      .folder-label {
+        min-width: 0;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 7px;
+        padding: 0 3px;
+        font-size: 11px;
+        line-height: 1.3;
+      }
+
+      .folder-label strong {
+        min-width: 0;
+        overflow: hidden;
+        font-weight: 650;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .folder-label span {
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 10px;
+      }
+
+      .orientation-panel {
+        display: grid;
+        grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+        gap: 24px;
+        align-items: stretch;
+        margin-top: 48px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--panel) 75%, var(--bg));
+        padding: 16px;
+      }
+
+      .video-frame {
+        position: relative;
+        min-height: 228px;
+        overflow: hidden;
+        border: 1px solid var(--line-strong);
+        border-radius: 8px;
+        background:
+          linear-gradient(rgba(116, 88, 65, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(116, 88, 65, 0.04) 1px, transparent 1px),
+          var(--paper);
+        background-size: 20px 20px;
+        box-shadow: 0 9px 18px var(--shadow-soft);
+      }
+
+      .video-frame::before {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        left: 12px;
+        height: 1px;
+        background: var(--line);
+        content: "";
+      }
+
+      .video-frame img {
+        position: absolute;
+        top: 28px;
+        left: 50%;
+        width: 72%;
+        height: 76%;
+        object-fit: contain;
+        filter: grayscale(1) sepia(0.45) saturate(0.68) contrast(0.92);
+        transform: translateX(-50%);
+      }
+
+      .video-meta {
+        position: absolute;
+        right: 12px;
+        bottom: 10px;
+        left: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      .video-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 45px;
+        height: 45px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--panel) 88%, transparent);
+        color: var(--accent-dark);
+        box-shadow: 0 5px 12px var(--shadow-soft);
+        transform: translate(-50%, -50%);
+        transition:
+          background 160ms ease,
+          color 160ms ease;
+      }
+
+      .video-play:hover,
+      .video-play:focus-visible {
+        background: var(--text);
+        color: var(--bg);
+      }
+
+      .orientation-copy {
+        display: grid;
+        align-content: center;
+        gap: 13px;
+        padding: 8px 8px 8px 0;
+      }
+
+      .orientation-copy h2 {
+        max-width: 480px;
+        margin: 0;
+        color: var(--text);
+        font-size: clamp(24px, 3vw, 32px);
+        font-weight: 680;
+        letter-spacing: -0.03em;
+        line-height: 1.08;
+      }
+
+      .orientation-copy p {
+        max-width: 500px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.58;
+      }
+
+      .orientation-cues {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        margin-top: 1px;
+      }
+
+      .access-label {
+        font-size: 9px;
+      }
+
+      .access-label.free,
+      .access-free {
+        color: var(--free);
+      }
+
+      .access-label.paid,
+      .access-paid {
+        color: var(--paid);
+      }
+
+      .primary-link,
+      .quiet-link,
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 680;
+      }
+
+      .primary-link {
+        min-height: 36px;
+        gap: 8px;
+        border-radius: 7px;
+        background: var(--text);
+        color: var(--bg);
+        padding: 0 13px;
+      }
+
+      .primary-link:hover,
+      .primary-link:focus-visible {
+        background: var(--accent-dark);
+        color: var(--on-primary, #fffaf1);
+      }
+
+      .quiet-link,
+      .back-link {
+        gap: 7px;
+      }
+
+      .quiet-link::after,
+      .back-link::before {
+        color: var(--accent);
+        font-family: var(--font-mono);
+      }
+
+      .quiet-link::after {
+        content: "→";
+      }
+
+      .back-link::before {
+        content: "←";
+      }
+
+      .quiet-link:hover,
+      .back-link:hover {
+        color: var(--accent);
+      }
+
+      .recent-section {
+        max-width: 940px;
+        margin-top: 48px;
+      }
+
+      .resource-list,
+      .lesson-list,
+      .related-list,
+      .blueprint-list {
+        display: grid;
+        border-top: 1px solid var(--line);
+      }
+
+      .resource-row,
+      .lesson-row,
+      .related-row,
+      .blueprint-row {
+        min-width: 0;
+        display: grid;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+        color: inherit;
+        padding: 13px 2px;
+        transition:
+          background 160ms ease,
+          padding 160ms ease;
+      }
+
+      .resource-row {
+        grid-template-columns: 28px minmax(0, 1fr) auto;
+      }
+
+      .resource-row:hover,
+      .resource-row:focus-visible,
+      .lesson-row:hover,
+      .lesson-row:focus-visible,
+      .related-row:hover,
+      .related-row:focus-visible,
+      .blueprint-row:hover,
+      .blueprint-row:focus-visible {
+        background: color-mix(in srgb, var(--accent) 5%, transparent);
+        padding-right: 8px;
+        padding-left: 8px;
+      }
+
+      .row-icon {
+        width: 25px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+      }
+
+      .resource-main,
+      .lesson-main,
+      .related-main {
+        min-width: 0;
+        display: grid;
+        gap: 4px;
+      }
+
+      .resource-main strong,
+      .lesson-main strong,
+      .related-main strong {
+        min-width: 0;
+        overflow: hidden;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 670;
+        line-height: 1.3;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .resource-main p,
+      .lesson-main p,
+      .related-main p {
+        min-width: 0;
+        overflow: hidden;
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .resource-meta,
+      .lesson-meta,
+      .related-meta {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        line-height: 1.3;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .resource-kind,
+      .duration {
+        color: var(--muted);
+        font-size: 9px;
+        letter-spacing: 0.03em;
+      }
+
+      .module-page,
+      .reader-page,
+      .tasks-page,
+      .account-page,
+      .help-page {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      .page-heading {
+        max-width: 740px;
+        margin-top: 28px;
+      }
+
+      .page-heading h1 {
+        margin: 14px 0 0;
+        color: var(--text);
+        font-family: var(--font-pixel);
+        font-size: clamp(36px, 5vw, 58px);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.02;
+      }
+
+      .page-heading p {
+        max-width: 660px;
+        margin: 17px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.62;
+      }
+
+      .page-heading-line {
+        align-items: center;
+        margin-top: 36px;
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+      }
+
+      .page-heading-line h2 {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 680;
+        letter-spacing: -0.02em;
+      }
+
+      .lesson-list,
+      .blueprint-list,
+      .module-list {
+        margin-top: 12px;
+      }
+
+      .lesson-row,
+      .blueprint-row {
+        grid-template-columns: 34px minmax(0, 1fr) auto;
+      }
+
+      .step-index {
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        line-height: 1.3;
+      }
+
+      .module-note {
+        max-width: 670px;
+        margin: 36px 0 0;
+        border-left: 2px solid var(--accent);
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.6;
+        padding-left: 16px;
+      }
+
+      .reader-page {
+        max-width: 780px;
+      }
+
+      .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        color: var(--muted);
+      }
+
+      .reader-header {
+        max-width: 720px;
+        margin-top: 26px;
+      }
+
+      .reader-header h1 {
+        margin: 15px 0 0;
+        color: var(--text);
+        font-family: var(--font-pixel);
+        font-size: clamp(36px, 5vw, 56px);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.02;
+      }
+
+      .reader-header > p {
+        max-width: 680px;
+        margin: 17px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.62;
+      }
+
+      .reader-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin-top: 17px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        line-height: 1.35;
+        text-transform: uppercase;
+      }
+
+      .reader-body {
+        max-width: 680px;
+        margin-top: 40px;
+        border-top: 1px solid var(--line);
+        padding-top: 26px;
+      }
+
+      .reader-body h2 {
+        margin: 0;
+        color: var(--text);
+        font-size: 22px;
+        font-weight: 680;
+        letter-spacing: -0.025em;
+        line-height: 1.2;
+      }
+
+      .reader-body p,
+      .reader-body li {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.68;
+      }
+
+      .reader-body p {
+        margin: 16px 0 0;
+      }
+
+      .reader-body ul {
+        display: grid;
+        gap: 9px;
+        margin: 18px 0 0;
+        padding-left: 20px;
+      }
+
+      .reader-callout,
+      .access-panel,
+      .support-panel,
+      .account-panel,
+      .task-summary {
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--panel) 74%, var(--bg));
+      }
+
+      .reader-callout {
+        margin-top: 24px;
+        border-left: 2px solid var(--accent);
+        padding: 16px 18px;
+      }
+
+      .reader-callout p {
+        margin: 0;
+      }
+
+      .access-panel {
+        max-width: 680px;
+        display: grid;
+        gap: 11px;
+        margin-top: 32px;
+        padding: 20px;
+      }
+
+      .access-panel h2,
+      .support-panel h2,
+      .account-panel h2,
+      .task-summary h2 {
+        margin: 0;
+        color: var(--text);
+        font-size: 22px;
+        font-weight: 680;
+        letter-spacing: -0.025em;
+        line-height: 1.18;
+      }
+
+      .access-panel p,
+      .support-panel p,
+      .account-panel p,
+      .task-summary p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.58;
+      }
+
+      .related-section {
+        max-width: 680px;
+        margin-top: 42px;
+      }
+
+      .related-section h2 {
+        margin: 0 0 12px;
+        color: var(--text);
+        font-size: 19px;
+        font-weight: 680;
+      }
+
+      .related-row {
+        grid-template-columns: 25px minmax(0, 1fr) auto;
+      }
+
+      .tasks-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+        gap: 32px;
+        margin-top: 38px;
+      }
+
+      .task-summary {
+        align-self: start;
+        display: grid;
+        gap: 14px;
+        padding: 20px;
+      }
+
+      .progress-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+      }
+
+      .progress-track {
+        height: 8px;
+        overflow: hidden;
+        border: 1px solid var(--line-strong);
+        background: var(--bg);
+      }
+
+      .progress-track span {
+        display: block;
+        height: 100%;
+        background: var(--accent);
+        transition: width 180ms ease;
+      }
+
+      .task-list {
+        display: grid;
+        border-top: 1px solid var(--line);
+      }
+
+      .task-row {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: 25px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 11px;
+        border-bottom: 1px solid var(--line);
+        padding: 13px 2px;
+      }
+
+      .task-toggle {
+        width: 19px;
+        height: 19px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line-strong);
+        border-radius: 4px;
+        background: transparent;
+        color: var(--accent);
+        cursor: pointer;
+      }
+
+      .task-toggle.done {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      .task-copy {
+        min-width: 0;
+        display: grid;
+        gap: 3px;
+      }
+
+      .task-copy strong {
+        overflow: hidden;
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 660;
+        line-height: 1.3;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .task-copy span {
+        overflow: hidden;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .account-panel,
+      .support-panel {
+        margin-top: 38px;
+        padding: 22px;
+      }
+
+      .account-panel {
+        display: grid;
+        gap: 15px;
+      }
+
+      .account-email {
+        display: grid;
+        gap: 7px;
+      }
+
+      .account-email label {
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .account-email input {
+        width: min(100%, 430px);
+        min-height: 40px;
+        border: 1px solid var(--line-strong);
+        border-radius: 7px;
+        background: var(--paper);
+        color: var(--text);
+        padding: 0 11px;
+      }
+
+      .plan-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .plan {
+        min-height: 238px;
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--panel) 72%, var(--bg));
+        padding: 18px;
+      }
+
+      .plan.annual {
+        border-color: color-mix(in srgb, var(--accent) 66%, var(--line));
+      }
+
+      .plan h2 {
+        margin: 0;
+        color: var(--text);
+        font-size: 19px;
+        font-weight: 680;
+      }
+
+      .plan p,
+      .plan li {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .plan ul {
+        display: grid;
+        gap: 5px;
+        margin: 0;
+        padding-left: 17px;
+      }
+
+      .plan .primary-link {
+        margin-top: auto;
+      }
+
+      .search-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: grid;
+        place-items: start center;
+        background: color-mix(in srgb, var(--text) 18%, transparent);
+        padding: min(12vh, 88px) 20px 20px;
+      }
+
+      .search-dialog {
+        width: min(760px, calc(100vw - 40px));
+        max-height: min(680px, calc(100vh - 56px));
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: 0 24px 80px var(--shadow);
+      }
+
+      .search-dialog-header {
+        min-height: 60px;
+        display: grid;
+        grid-template-columns: 20px minmax(0, 1fr) 30px;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px solid var(--line);
+        padding: 0 14px 0 18px;
+      }
+
+      .search-input {
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: var(--text);
+        font-size: 16px;
+      }
+
+      .search-input::placeholder {
+        color: var(--muted);
+      }
+
+      .search-close {
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      .search-close:hover,
+      .search-close:focus-visible {
+        background: var(--hover);
+        color: var(--text);
+      }
+
+      .search-results {
+        min-height: 220px;
+        overflow-y: auto;
+        padding: 12px;
+      }
+
+      .search-group + .search-group {
+        margin-top: 17px;
+      }
+
+      .search-group h2 {
+        margin: 0 8px 6px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        font-weight: 560;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .search-result {
+        min-width: 0;
+        min-height: 38px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px;
+        border-radius: 7px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 640;
+        text-align: left;
+        padding: 0 10px;
+      }
+
+      .search-result:hover,
+      .search-result:focus-visible {
+        background: var(--hover);
+      }
+
+      .search-result span:first-child {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .search-result span:last-child {
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        text-transform: uppercase;
+      }
+
+      .search-empty {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        padding: 24px 10px;
+      }
+
+      .site-footer {
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        line-height: 1.3;
+        padding: 0 20px;
+      }
+
+      .site-footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 16px;
+      }
+
+      .site-footer a:hover {
+        color: var(--accent);
+      }
+
+      .sidebar-backdrop {
+        display: none;
+      }
+
+      @media (max-width: 980px) {
+        .folder-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          row-gap: 17px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .app-shell,
+        .app-shell.sidebar-collapsed {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .sidebar {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          width: min(86vw, 304px);
+          box-shadow: 18px 0 40px var(--shadow);
+          transform: translateX(0);
+          transition: transform 180ms ease;
+        }
+
+        .sidebar-collapsed .sidebar {
+          opacity: 1;
+          pointer-events: none;
+          transform: translateX(-105%);
+        }
+
+        .sidebar-close {
+          display: inline-flex;
+        }
+
+        .sidebar-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 25;
+          display: block;
+          border: 0;
+          background: color-mix(in srgb, var(--text) 28%, transparent);
+          cursor: pointer;
+        }
+
+        .sidebar-collapsed .sidebar-backdrop {
+          display: none;
+        }
+
+        .main-panel {
+          width: min(calc(100% - 48px), 1120px);
+          padding-top: 42px;
+        }
+
+        .orientation-panel {
+          grid-template-columns: 1fr;
+        }
+
+        .orientation-copy {
+          padding: 0 4px 4px;
+        }
+
+        .tasks-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .main-panel {
+          width: min(calc(100% - 40px), 1120px);
+          padding-top: 36px;
+        }
+
+        .home-intro h1 {
+          font-size: clamp(36px, 10vw, 50px);
+        }
+
+        .section-heading {
+          align-items: flex-start;
+        }
+
+        .section-note {
+          display: none;
+        }
+
+        .resource-row,
+        .lesson-row,
+        .blueprint-row,
+        .related-row {
+          grid-template-columns: 28px minmax(0, 1fr);
+        }
+
+        .resource-meta,
+        .lesson-meta,
+        .related-meta {
+          grid-column: 2;
+          justify-content: flex-start;
+        }
+
+        .plan-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .site-footer {
+          min-height: 100px;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          padding: 18px;
+        }
+
+        .site-footer nav {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .site-header {
+          gap: 8px;
+          padding: 0 10px;
+        }
+
+        .topbar-search {
+          width: 32px;
+          padding: 0;
+        }
+
+        .topbar-search span,
+        .topbar-search .shortcut {
+          display: none;
+        }
+
+        .topbar-login {
+          padding: 0 6px;
+        }
+
+        .main-panel {
+          width: min(calc(100% - 28px), 1120px);
+        }
+
+        .home-intro p {
+          font-size: 15px;
+        }
+
+        .folder-physical {
+          height: 170px;
+        }
+
+        .folder-paper {
+          right: 9px;
+          left: 9px;
+          height: 98px;
+          padding: 10px;
+        }
+
+        .folder-front {
+          top: 39px;
+          padding: 12px 10px 15px;
+        }
+
+        .folder-card:hover .folder-paper,
+        .folder-card:focus-visible .folder-paper {
+          transform: translateY(-12px) rotate(-1.5deg);
+        }
+
+        .folder-front strong {
+          font-size: 13px;
+        }
+
+        .folder-front p {
+          font-size: 9px;
+        }
+
+        .folder-shelf {
+          bottom: 8px;
+        }
+
+        .video-frame {
+          min-height: 190px;
+        }
+
+        .search-dialog {
+          width: calc(100vw - 24px);
+        }
+      }
+
+      @media (max-width: 359px) {
+        .folder-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="app-shell sidebar-collapsed" id="app-shell">
+      <aside
+        class="sidebar"
+        id="sidebar"
+        aria-label="Resources navigation"
+      ></aside>
+      <button
+        class="sidebar-backdrop"
+        id="sidebar-backdrop"
+        type="button"
+        aria-label="Close navigation"
+        data-action="close-sidebar"
+      ></button>
+      <div class="site-main">
+        <header class="site-header">
+          <div class="topbar-left">
+            <button
+              class="topbar-button"
+              id="sidebar-toggle"
+              type="button"
+              aria-label="Show navigation"
+              aria-pressed="false"
+              data-action="toggle-sidebar"
+            ></button>
+            <button
+              class="topbar-button topbar-history"
+              type="button"
+              aria-label="Go back"
+              data-action="back"
+            ></button>
+            <button
+              class="topbar-button topbar-history"
+              type="button"
+              aria-label="Go forward"
+              data-action="forward"
+            ></button>
+          </div>
+          <div class="topbar-actions">
+            <button
+              class="topbar-search"
+              id="topbar-search"
+              type="button"
+              aria-label="Search resources"
+              data-action="open-search"
+            ></button>
+            <button class="topbar-login" type="button" data-action="login">
+              Log in
+            </button>
+            <button
+              class="topbar-button favorite-button"
+              id="favorite-button"
+              type="button"
+              aria-label="Add page to favorites"
+              aria-pressed="false"
+              data-action="favorite"
+            >
+              ☆
+            </button>
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Switch to dark mode"
+              data-action="theme"
+            ></button>
+          </div>
+        </header>
+        <main class="main-panel" id="main-content" tabindex="-1"></main>
+        <footer class="site-footer">
+          <span>© 2026 resources.onlinesourdough</span>
+          <nav aria-label="Footer links">
+            <a
+              href="https://onlinesourdough.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >onlinesourdough ↗</a
+            >
+            <a href="mailto:hello@arcitai.com">contact ↗</a>
+          </nav>
+        </footer>
+      </div>
+    </div>
+
+    <div class="search-overlay" id="search-overlay" hidden>
+      <div
+        class="search-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="search-title"
+      >
+        <div class="search-dialog-header">
+          <span id="search-title" class="sr-only">Search resources</span>
+          <span id="search-icon-slot"></span>
+          <input
+            class="search-input"
+            id="search-input"
+            type="search"
+            autocomplete="off"
+            placeholder="Search resources"
+            aria-label="Search resources"
+          />
+          <button
+            class="search-close"
+            type="button"
+            aria-label="Close search"
+            data-action="close-search"
+          >
+            ×
+          </button>
+        </div>
+        <div class="search-results" id="search-results"></div>
+      </div>
+    </div>
+
+    <script>
+      const ICON_PATHS = {
+        archive:
+          '<path d="M3 7h7l2 2h9v11H3z"/><path d="M3 7V4h8l2 2h8v3"/><path d="M8 13h8"/><path d="M9 16h6"/>',
+        home: '<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>',
+        tasks:
+          '<path d="M6 4h12v16H6z"/><path d="M9 8h6"/><path d="m9 12 1 1 2-2"/><path d="M9 16h6"/>',
+        search: '<circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 5 5"/>',
+        blueprint:
+          '<path d="M4 5h16v14H4z"/><path d="M8 5v14"/><path d="M8 9h12"/><path d="M11 13h5"/><path d="M11 16h3"/>',
+        folder: '<path d="M3 7h7l2 2h9v11H3z"/><path d="M3 7V5h8l2 2"/>',
+        account:
+          '<circle cx="12" cy="8" r="3"/><path d="M5 20c.8-3.4 3.1-5 7-5s6.2 1.6 7 5"/>',
+        help: '<circle cx="12" cy="12" r="8"/><path d="M9.8 9.3a2.4 2.4 0 1 1 3.7 2c-1.1.7-1.5 1.1-1.5 2.2"/><path d="M12 16.5h.01"/>',
+        chevron: '<path d="m9 5 7 7-7 7"/>',
+        menu: '<path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>',
+        back: '<path d="M19 12H5"/><path d="m11 6-6 6 6 6"/>',
+        forward: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+        play: '<path d="m9 6 9 6-9 6z" fill="currentColor" stroke="none"/>',
+        arrow: '<path d="M4 12h15"/><path d="m14 6 6 6-6 6"/>',
+        check: '<path d="m4 12 5 5L20 6"/>',
+        star: '<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+      };
+
+      function icon(name, className = "pixel-icon") {
+        return `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">${ICON_PATHS[name] || ""}</svg>`;
+      }
+
+      function brandMark() {
+        return `<svg class="brand-mark" viewBox="0 0 32 24" aria-hidden="true"><path d="M2 8h7l2-3h11l2 3h6v13H2z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2 8h28M8 12h16M8 16h10" fill="none" stroke="currentColor" stroke-width="2"/></svg>`;
+      }
+
+      const STAGES = [
+        {
+          slug: "stage-01",
+          number: "01",
+          title: "Understand the business",
+          shortTitle: "Understand",
+          purpose: "Name the constraint before you choose a tool.",
+          lessons: [
+            {
+              id: "step-01",
+              number: "01",
+              title: "Find the current constraint",
+              summary:
+                "Name the repeating owner task that is taking the business's freedom.",
+              duration: "18 min",
+              updated: "2026-08-01",
+              access: "Paid",
+              bodyTitle: "Start with the work that keeps coming back",
+              body: "A useful Blueprint does not begin with a tool shortlist. It begins with one repeating piece of work that keeps pulling the owner back into daily operation.",
+              bullets: [
+                "Describe the constraint in the owner's own words.",
+                "Name the signal that proves it is still happening.",
+                "Write the freedom the owner wants back.",
+              ],
+            },
+            {
+              id: "step-02",
+              number: "02",
+              title: "Map the business system",
+              summary:
+                "Trace the people, handoffs, decisions, and evidence around the constraint.",
+              duration: "24 min",
+              updated: "2026-07-29",
+              access: "Paid",
+              bodyTitle: "Make the invisible handoffs visible",
+              body: "The map is small on purpose. Capture the people, inputs, decisions, and outputs that matter to the constraint so a future result has an owner and a boundary.",
+              bullets: [
+                "List the people who touch the work, including the owner.",
+                "Mark the handoff where context is usually lost.",
+                "Keep only evidence that changes the next decision.",
+              ],
+            },
+          ],
+        },
+        {
+          slug: "stage-02",
+          number: "02",
+          title: "Choose the intervention",
+          shortTitle: "Choose",
+          purpose: "Decide what should change and who owns it.",
+          lessons: [
+            {
+              id: "step-03",
+              number: "03",
+              title: "Decide what should change",
+              summary:
+                "Choose eliminate, automate, delegate, or no-build with the evidence in view.",
+              duration: "21 min",
+              updated: "2026-07-25",
+              access: "Paid",
+              bodyTitle: "The intervention is smaller than the ambition",
+              body: "A strong intervention removes a real constraint without creating a second operation to run. Decide what does not need to exist before deciding what to build.",
+              bullets: [
+                "Write the no-build option first.",
+                "Choose the smallest change that can be observed.",
+                "Describe the trade-off the owner is willing to make.",
+              ],
+            },
+            {
+              id: "step-04",
+              number: "04",
+              title: "Place ownership",
+              summary:
+                "Give the result to an existing owner, an AIOS employee, or an independent lifecycle.",
+              duration: "16 min",
+              updated: "2026-07-22",
+              access: "Paid",
+              bodyTitle: "A result needs a person who can say yes and no",
+              body: "Ownership is not a footer detail. Name the person who can accept the result, change it, stop it, and recover it when the context moves.",
+              bullets: [
+                "Name the accountable owner, not just the implementer.",
+                "Set the boundary of the result's authority.",
+                "Record what happens when ownership changes.",
+              ],
+            },
+          ],
+        },
+        {
+          slug: "stage-03",
+          number: "03",
+          title: "Make the result",
+          shortTitle: "Make",
+          purpose: "Specify and prove one complete feedback loop.",
+          lessons: [
+            {
+              id: "step-05",
+              number: "05",
+              title: "Specify the smallest complete result",
+              summary:
+                "Set the outcome, boundaries, guardrails, and evidence before the build starts.",
+              duration: "27 min",
+              updated: "2026-07-18",
+              access: "Paid",
+              bodyTitle: "Complete means someone else can use it",
+              body: "The smallest result is not the smallest demo. It is the smallest loop that a named owner can use, understand, check, and hand over.",
+              bullets: [
+                "Define the outcome in observable language.",
+                "Write the edges where the result must stop.",
+                "Choose evidence that can be checked without guesswork.",
+              ],
+            },
+            {
+              id: "step-06",
+              number: "06",
+              title: "Build and prove it",
+              summary:
+                "Make one usable path and test it against the evidence you named.",
+              duration: "34 min",
+              updated: "2026-07-15",
+              access: "Paid",
+              bodyTitle: "Build the path the owner will actually use",
+              body: "Build one complete path rather than a collection of impressive fragments. Proof is part of the result because the business needs to know when the loop is working.",
+              bullets: [
+                "Use the real constraint as the first test case.",
+                "Keep the feedback loop visible to the owner.",
+                "Write down what the evidence does not prove yet.",
+              ],
+            },
+          ],
+        },
+        {
+          slug: "stage-04",
+          number: "04",
+          title: "Own the system",
+          shortTitle: "Own",
+          purpose: "Review, hand over, operate, and recover.",
+          lessons: [
+            {
+              id: "step-07",
+              number: "07",
+              title: "Review and simplify",
+              summary:
+                "Check correctness, security, simplicity, and the cost of keeping the result alive.",
+              duration: "22 min",
+              updated: "2026-07-11",
+              access: "Paid",
+              bodyTitle: "Remove what the owner cannot carry",
+              body: "A result is not owned when the only person who understands it is still the person who made it. Review it for clarity, security, simplicity, and handover.",
+              bullets: [
+                "Review the result with the owner, not around them.",
+                "Remove steps that do not change the outcome.",
+                "Document the decisions future changes depend on.",
+              ],
+            },
+            {
+              id: "step-08",
+              number: "08",
+              title: "Ship, operate, and recover",
+              summary:
+                "Release with authority, verify operation, and keep a safe stop path.",
+              duration: "29 min",
+              updated: "2026-07-08",
+              access: "Paid",
+              bodyTitle: "Ship with a way back",
+              body: "Shipping is the beginning of operation. The owner needs a clear signal that the result is healthy, a stop path, and a recovery plan that does not depend on the original builder.",
+              bullets: [
+                "Name the signal that says the result is healthy.",
+                "Test the stop and recovery path before handover.",
+                "Return new learning to the next business constraint.",
+              ],
+            },
+          ],
+        },
+      ];
+
+      const FREE_COMPANIONS = [
+        {
+          id: "use-the-blueprint",
+          title: "How to use the Blueprint",
+          summary:
+            "A short orientation to the free layer, the paid sequence, and the working Kits.",
+          duration: "12 min",
+          updated: "2026-08-03",
+          access: "Free",
+          kind: "Free companion",
+          bodyTitle: "One constraint is enough to begin",
+          body: "Use the free layer to name a real repeating task, then open the paid Blueprint only when you are ready to carry that constraint through a complete result.",
+          bullets: [
+            "Start with one business constraint, not a category.",
+            "Use the eight steps in order when the work is paid.",
+            "Open a Kit when a working document will make the next decision easier.",
+          ],
+        },
+        {
+          id: "freedom-companion",
+          title: "The freedom you are trying to buy back",
+          summary:
+            "A plain-language companion for separating owner freedom from faster software.",
+          duration: "9 min",
+          updated: "2026-07-31",
+          access: "Free",
+          kind: "Free companion",
+          bodyTitle: "Faster is not the outcome",
+          body: "The useful outcome is positive bandwidth: more time to work on the business, not inside the daily operation that the result was meant to improve.",
+          bullets: [
+            "Describe the work the owner wants to stop carrying.",
+            "Keep the business outcome ahead of the tool.",
+            "Ask who can operate the result when the context changes.",
+          ],
+        },
+      ];
+
+      const KITS = [
+        {
+          id: "constraint-brief-kit",
+          title: "Current constraint brief",
+          summary:
+            "A copyable one-page brief for the constraint, owner, evidence, and desired freedom.",
+          duration: "Working document",
+          updated: "2026-07-24",
+          access: "Paid",
+          kind: "Kit",
+          bodyTitle: "Keep the next decision small",
+          body: "Use this brief to keep the business constraint visible while the Blueprint moves from understanding to an owned result.",
+          bullets: [
+            "Constraint and evidence",
+            "People and handoffs",
+            "Desired outcome and accountable owner",
+          ],
+        },
+        {
+          id: "handover-review-kit",
+          title: "Handover and recovery checklist",
+          summary:
+            "A working checklist for operation, stop conditions, monitoring, and recovery ownership.",
+          duration: "Working document",
+          updated: "2026-07-19",
+          access: "Paid",
+          kind: "Kit",
+          bodyTitle: "Make the system safe to leave",
+          body: "Use this checklist when a result is nearly ready to ship and the original builder should no longer be the only person who can keep it alive.",
+          bullets: [
+            "Health signal and owner",
+            "Stop, rollback, and recovery path",
+            "Handover notes future changes need",
+          ],
+        },
+      ];
+
+      const LESSONS = STAGES.flatMap((stage) =>
+        stage.lessons.map((lesson) => ({
+          ...lesson,
+          kind: "Blueprint step",
+          stage,
+        })),
+      );
+      const ALL_RESOURCES = [...LESSONS, ...FREE_COMPANIONS, ...KITS];
+      const RECENT_IDS = [
+        "use-the-blueprint",
+        "step-01",
+        "freedom-companion",
+        "constraint-brief-kit",
+      ];
+      const TASKS = LESSONS.map((lesson) => ({
+        id: lesson.id,
+        number: lesson.number,
+        title: lesson.title,
+        summary: lesson.summary,
+      }));
+
+      let currentRoute = parseRoute();
+      let sidebarOpen = currentRoute.kind !== "home";
+      let blueprintExpanded = true;
+      let expandedStages = new Set(STAGES.map((stage) => stage.slug));
+      let searchOpen = false;
+      let searchReturnTarget = null;
+      let favoriteIds = readStoredList("resources-onlinesourdough-favorites");
+      let completedTaskIds = new Set(
+        readStoredList("resources-onlinesourdough-tasks"),
+      );
+
+      const appShell = document.querySelector("#app-shell");
+      const sidebar = document.querySelector("#sidebar");
+      const sidebarToggle = document.querySelector("#sidebar-toggle");
+      const sidebarBackdrop = document.querySelector("#sidebar-backdrop");
+      const mainContent = document.querySelector("#main-content");
+      const favoriteButton = document.querySelector("#favorite-button");
+      const topbarSearchButton = document.querySelector("#topbar-search");
+      const searchOverlay = document.querySelector("#search-overlay");
+      const searchInput = document.querySelector("#search-input");
+      const searchResults = document.querySelector("#search-results");
+      const searchIconSlot = document.querySelector("#search-icon-slot");
+
+      function readStoredList(key) {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+          return Array.isArray(parsed)
+            ? parsed.filter((value) => typeof value === "string")
+            : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function writeStoredList(key, values) {
+        try {
+          localStorage.setItem(key, JSON.stringify(values));
+        } catch {}
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function formatDate(value) {
+        const [year, month, day] = value.split("-").map(Number);
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          day: "numeric",
+        }).format(new Date(Date.UTC(year, month - 1, day)));
+      }
+
+      function getResource(id) {
+        return ALL_RESOURCES.find((resource) => resource.id === id);
+      }
+
+      function parseRoute() {
+        const raw = window.location.hash.replace(/^#/, "") || "home";
+        if (raw === "home") return { kind: "home" };
+        if (raw === "tasks") return { kind: "tasks" };
+        if (raw === "account") return { kind: "account" };
+        if (raw === "help") return { kind: "help" };
+        if (raw === "module/blueprint") return { kind: "blueprint" };
+        if (raw === "module/free-companions") return { kind: "free" };
+        if (raw === "module/kits") return { kind: "kits" };
+        if (raw.startsWith("module/"))
+          return { kind: "stage", slug: raw.slice(7) };
+        if (raw.startsWith("reader/"))
+          return { kind: "reader", id: raw.slice(7) };
+        return { kind: "home" };
+      }
+
+      function routeHref(route) {
+        if (route.kind === "home") return "#home";
+        if (route.kind === "tasks") return "#tasks";
+        if (route.kind === "account") return "#account";
+        if (route.kind === "help") return "#help";
+        if (route.kind === "blueprint") return "#module/blueprint";
+        if (route.kind === "free") return "#module/free-companions";
+        if (route.kind === "kits") return "#module/kits";
+        if (route.kind === "stage") return `#module/${route.slug}`;
+        if (route.kind === "reader") return `#reader/${route.id}`;
+        return "#home";
+      }
+
+      function getStage(slug) {
+        return STAGES.find((stage) => stage.slug === slug);
+      }
+
+      function getActiveResource(route) {
+        return route.kind === "reader" ? getResource(route.id) : null;
+      }
+
+      function isActive(href) {
+        return (
+          window.location.hash === href ||
+          (href === "#home" && !window.location.hash)
+        );
+      }
+
+      function renderSidebar(route) {
+        const activeResource = getActiveResource(route);
+        const favoriteResources = favoriteIds.map(getResource).filter(Boolean);
+        const activeStage =
+          route.kind === "stage" ? route.slug : activeResource?.stage?.slug;
+        const stageTree = STAGES.map((stage) => {
+          const stageActive = activeStage === stage.slug;
+          const stageExpanded = expandedStages.has(stage.slug) || stageActive;
+          return `<div class="tree-item">
+            <div class="tree-row${stageActive ? " active" : ""}">
+              <a class="tree-link" href="#module/${stage.slug}" title="${escapeHtml(`${stage.number} ${stage.title}`)}">
+                <span class="tree-number">${stage.number}</span>
+                <span class="tree-link-label">${escapeHtml(stage.title)}</span>
+              </a>
+              <button class="tree-toggle" type="button" aria-label="${stageExpanded ? "Collapse" : "Expand"} ${escapeHtml(stage.title)}" aria-expanded="${stageExpanded}" data-disclosure-stage="${stage.slug}">${icon("chevron")}</button>
+            </div>
+            ${stageExpanded ? `<div class="tree-children">${stage.lessons.map((lesson) => `<a class="tree-link lesson${activeResource?.id === lesson.id ? " active" : ""}" href="#reader/${lesson.id}" title="${escapeHtml(lesson.title)}"><span class="tree-number">${lesson.number}</span><span class="tree-link-label">${escapeHtml(lesson.title)}</span></a>`).join("")}</div>` : ""}
+          </div>`;
+        }).join("");
+
+        sidebar.innerHTML = `<div class="sidebar-brand-block">
+          <a class="sidebar-brand" href="#home" aria-label="resources.onlinesourdough home">
+            ${brandMark()}
+            <span class="sidebar-brand-name">resources.onlinesourdough</span>
+          </a>
+          <button class="sidebar-close" type="button" aria-label="Close navigation" data-action="close-sidebar">×</button>
+        </div>
+        <div class="sidebar-search"><button class="search-trigger" type="button" aria-label="Search resources" data-action="open-search">${icon("search")}<span>Search</span><kbd class="shortcut">⌘K</kbd></button></div>
+        <nav class="sidebar-scroll" aria-label="Library navigation">
+          <section class="sidebar-section"><div class="sidebar-list">
+            ${sidebarLink("#home", "Home", "home", isActive("#home") && route.kind === "home")}
+            ${sidebarLink("#tasks", "My tasks", "tasks", route.kind === "tasks")}
+          </div></section>
+          ${favoriteResources.length ? `<section class="sidebar-section"><h2 class="sidebar-section-title">Favorites</h2><div class="sidebar-list">${favoriteResources.map((resource) => sidebarLink(`#reader/${resource.id}`, resource.title, "star", activeResource?.id === resource.id)).join("")}</div></section>` : ""}
+          <section class="sidebar-section"><h2 class="sidebar-section-title">Pages</h2><div class="tree-list">
+            <div class="tree-item">
+              <div class="tree-row${route.kind === "blueprint" ? " active" : ""}">
+                <a class="tree-link" href="#module/blueprint"><span class="tree-number">00</span><span class="tree-link-label">Blueprint</span></a>
+                <button class="tree-toggle" type="button" aria-label="${blueprintExpanded ? "Collapse" : "Expand"} Blueprint" aria-expanded="${blueprintExpanded}" data-disclosure="blueprint">${icon("chevron")}</button>
+              </div>
+              ${blueprintExpanded ? `<div class="tree-children">${stageTree}</div>` : ""}
+            </div>
+            ${sidebarLink("#module/free-companions", "Free companions", "folder", route.kind === "free")}
+            ${sidebarLink("#module/kits", "Kits", "folder", route.kind === "kits")}
+          </div></section>
+        </nav>
+        <div class="sidebar-bottom"><div class="sidebar-list">
+          ${sidebarLink("#account", "Account", "account", route.kind === "account")}
+          ${sidebarLink("#help", "Need help?", "help", route.kind === "help")}
+        </div></div>`;
+
+        sidebar.setAttribute("aria-hidden", String(!sidebarOpen));
+        sidebar.inert = !sidebarOpen;
+      }
+
+      function sidebarLink(href, label, iconName, active) {
+        return `<a class="sidebar-link${active ? " active" : ""}" href="${href}">${icon(iconName)}<span class="sidebar-link-label">${escapeHtml(label)}</span></a>`;
+      }
+
+      function renderFolder(stage) {
+        const [first, second] = stage.lessons;
+        return `<a class="folder-card" href="#module/${stage.slug}" aria-label="Open ${escapeHtml(`${stage.number} ${stage.title}`)}">
+          <span class="folder-physical">
+            <span class="folder-paper" aria-hidden="true">
+              <span class="paper-number">${stage.number}</span>
+              <span class="paper-step">${stage.number} ${escapeHtml(first.title)}</span>
+              <span class="paper-step">${escapeHtml(second.number)} ${escapeHtml(second.title)}</span>
+            </span>
+            <span class="folder-front">
+              <span class="folder-meta"><span>Blueprint</span><span>${stage.number} / 04</span></span>
+              <strong>${escapeHtml(stage.shortTitle)}</strong>
+              <p>${escapeHtml(stage.purpose)}</p>
+            </span>
+            <span class="folder-shelf" aria-hidden="true"></span>
+          </span>
+          <span class="folder-label"><strong>${escapeHtml(`${stage.number} ${stage.title}`)}</strong><span aria-hidden="true">→</span></span>
+        </a>`;
+      }
+
+      function renderResourceRow(resource) {
+        return `<a class="resource-row" href="#reader/${resource.id}">
+          <span class="row-icon">${icon(resource.kind === "Kit" ? "blueprint" : resource.access === "Free" ? "play" : "folder")}</span>
+          <span class="resource-main"><strong>${escapeHtml(resource.title)}</strong><p>${escapeHtml(resource.summary)}</p></span>
+          <span class="resource-meta"><span>${formatDate(resource.updated)}</span><span class="${resource.access === "Free" ? "access-free" : "access-paid"}">${escapeHtml(resource.access)}</span></span>
+        </a>`;
+      }
+
+      function renderLessonRow(lesson) {
+        return `<a class="lesson-row" href="#reader/${lesson.id}">
+          <span class="step-index">${lesson.number}</span>
+          <span class="lesson-main"><strong>${escapeHtml(lesson.title)}</strong><p>${escapeHtml(lesson.summary)}</p></span>
+          <span class="lesson-meta"><span class="access-paid">Paid</span><span>${escapeHtml(lesson.duration)}</span><span aria-hidden="true">→</span></span>
+        </a>`;
+      }
+
+      function renderHome() {
+        const recent = RECENT_IDS.map(getResource).filter(Boolean);
+        return `<div class="home-page">
+          <header class="home-intro">
+            <div class="home-intro-line"><span class="eyebrow">resources.onlinesourdough</span><span class="home-intro-rule" aria-hidden="true"></span></div>
+            <h1>Make the result. Own the system.</h1>
+            <p>One paid Blueprint for taking a real business constraint from first understanding to a result someone can operate, recover, and improve.</p>
+          </header>
+          <section class="stage-section" aria-labelledby="stages-heading">
+            <div class="section-heading"><div><span class="section-label">Blueprint / 01–08</span><h2 id="stages-heading">Four folders, one sequence.</h2></div><span class="section-note">4 stages · 8 steps</span></div>
+            <div class="folder-grid">${STAGES.map(renderFolder).join("")}</div>
+          </section>
+          <section class="orientation-panel" aria-labelledby="orientation-heading">
+            <div class="video-frame">
+              <img src="assets/resources-folder-transparent.png" alt="Warm pixel archive folder with working papers and a dough scraper" />
+              <span class="video-meta"><span>ORIENTATION / 12:40</span><span>START HERE</span></span>
+              <a class="video-play" href="#reader/use-the-blueprint" aria-label="Watch How to use the Blueprint">${icon("play")}</a>
+            </div>
+            <div class="orientation-copy">
+              <span class="section-label">Before you open a folder</span>
+              <h2 id="orientation-heading">Name one repeating owner task, then choose the next step.</h2>
+              <p>This orientation helps you write the constraint, trace its handoffs, and decide whether the free layer is enough or the paid Blueprint is the right container.</p>
+              <div class="orientation-cues"><span class="access-label free">Free companion · open</span><span class="access-label paid">Paid Blueprint · 01–08</span></div>
+              <a class="primary-link" href="#reader/use-the-blueprint">Watch the orientation ${icon("arrow")}</a>
+            </div>
+          </section>
+          <section class="recent-section" aria-labelledby="recent-heading">
+            <div class="section-heading"><div><span class="section-label">Library signal</span><h2 id="recent-heading">New &amp; updated</h2></div><span class="section-note">published work</span></div>
+            <div class="resource-list">${recent.map(renderResourceRow).join("")}</div>
+          </section>
+        </div>`;
+      }
+
+      function renderStage(stage) {
+        return `<div class="module-page">
+          <a class="back-link" href="#home">Back to folders</a>
+          <header class="page-heading"><span class="page-kicker">Blueprint stage ${stage.number} / Paid</span><h1>${escapeHtml(stage.title)}</h1><p>${escapeHtml(stage.purpose)} The two steps here keep the sequence moving without turning the library into a checklist of unrelated lessons.</p></header>
+          <div class="page-heading-line"><h2>${stage.number === "01" ? "Start here" : `Stage ${stage.number} lessons`}</h2><span class="section-note">2 steps · paid access</span></div>
+          <div class="lesson-list">${stage.lessons.map(renderLessonRow).join("")}</div>
+          <p class="module-note">Keep the result small enough to understand, but complete enough that an owner can use it without the original builder in the room.</p>
+        </div>`;
+      }
+
+      function renderBlueprint() {
+        return `<div class="module-page">
+          <a class="back-link" href="#home">Back to folders</a>
+          <header class="page-heading"><span class="page-kicker">Paid Blueprint / 01–08</span><h1>From constraint to owned result.</h1><p>Eight steps for understanding the business, choosing the intervention, making one complete result, and owning what happens next.</p></header>
+          <div class="page-heading-line"><h2>The full sequence</h2><span class="section-note">4 stages · 8 steps</span></div>
+          <div class="blueprint-list">${STAGES.map((stage) => `<div class="blueprint-row"><span class="step-index">${stage.number}</span><span class="lesson-main"><strong>${escapeHtml(stage.title)}</strong><p>${escapeHtml(stage.purpose)}</p></span><a class="quiet-link" href="#module/${stage.slug}">Open stage</a></div>${stage.lessons.map(renderLessonRow).join("")}`).join("")}</div>
+        </div>`;
+      }
+
+      function renderCollection(
+        title,
+        kicker,
+        description,
+        resources,
+        accessNote,
+      ) {
+        return `<div class="module-page">
+          <a class="back-link" href="#home">Back to folders</a>
+          <header class="page-heading"><span class="page-kicker">${escapeHtml(kicker)}</span><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p></header>
+          <div class="page-heading-line"><h2>${escapeHtml(accessNote)}</h2><span class="section-note">${resources.length} resources</span></div>
+          <div class="resource-list module-list">${resources.map(renderResourceRow).join("")}</div>
+        </div>`;
+      }
+
+      function renderReader(resource) {
+        const isFree = resource.access === "Free";
+        return `<div class="reader-page">
+          <div class="breadcrumbs"><a href="#home">Home</a><span>/</span><a href="${resource.stage ? `#module/${resource.stage.slug}` : resource.kind === "Kit" ? "#module/kits" : "#module/free-companions"}">${resource.stage ? escapeHtml(resource.stage.title) : escapeHtml(resource.kind === "Kit" ? "Kits" : "Free companions")}</a><span>/</span><span>${escapeHtml(resource.title)}</span></div>
+          <header class="reader-header"><span class="page-kicker">${escapeHtml(resource.kind)} / ${escapeHtml(resource.access)}</span><h1>${escapeHtml(resource.title)}</h1><p>${escapeHtml(resource.summary)}</p><div class="reader-meta"><span>${formatDate(resource.updated)}</span><span>${escapeHtml(resource.duration)}</span><span class="${isFree ? "access-free" : "access-paid"}">${escapeHtml(resource.access)} access</span></div></header>
+          ${isFree ? `<article class="reader-body"><h2>${escapeHtml(resource.bodyTitle)}</h2><p>${escapeHtml(resource.body)}</p><ul>${resource.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}</ul><div class="reader-callout"><p>Keep the next action concrete: write the constraint in one sentence before you open the next resource.</p></div></article>` : `<div class="access-panel"><span class="access-label paid">Paid Blueprint access</span><h2>Continue with the full lesson.</h2><p>${escapeHtml(resource.body)} The private lesson, working notes, and connected Kit open with an active subscription.</p><a class="primary-link" href="#account">Open access options ${icon("arrow")}</a></div>`}
+          <section class="related-section" aria-labelledby="related-heading"><h2 id="related-heading">Keep moving</h2><div class="related-list"><a class="related-row" href="#module/${resource.stage ? resource.stage.slug : resource.kind === "Kit" ? "kits" : "free-companions"}"><span class="row-icon">${icon("folder")}</span><span class="related-main"><strong>Back to ${resource.stage ? escapeHtml(resource.stage.title) : resource.kind === "Kit" ? "Kits" : "Free companions"}</strong><p>Return to the surrounding library surface.</p></span><span class="related-meta">View list →</span></a><a class="related-row" href="#home"><span class="row-icon">${icon("home")}</span><span class="related-main"><strong>Return Home</strong><p>Collapse the sidebar and return to the four-folder view.</p></span><span class="related-meta">Home →</span></a></div></section>
+        </div>`;
+      }
+
+      function renderTasks() {
+        const done = TASKS.filter((task) =>
+          completedTaskIds.has(task.id),
+        ).length;
+        const percent = Math.round((done / TASKS.length) * 100);
+        const next = TASKS.find((task) => !completedTaskIds.has(task.id));
+        return `<div class="tasks-page">
+          <a class="back-link" href="#home">Back to Home</a>
+          <header class="page-heading"><span class="page-kicker">Local progress / Blueprint</span><h1>My tasks</h1><p>Keep the next Blueprint action visible without crowding the sidebar. This preview state stays on this device.</p></header>
+          <div class="tasks-layout"><section class="task-summary" aria-labelledby="progress-heading"><span class="section-label">Current run</span><h2 id="progress-heading">${done} of ${TASKS.length} steps complete</h2><div class="progress-meta"><span>Blueprint progress</span><span>${percent}%</span></div><div class="progress-track" role="progressbar" aria-label="Blueprint task progress" aria-valuemin="0" aria-valuemax="8" aria-valuenow="${done}"><span style="width: ${percent}%"></span></div><p>${next ? `Next: ${escapeHtml(next.number)} ${escapeHtml(next.title)}` : "All preview steps are complete."}</p>${next ? `<a class="quiet-link" href="#reader/${next.id}">Open next step</a>` : `<a class="quiet-link" href="#module/blueprint">Review Blueprint</a>`}</section><section class="task-list" aria-label="Blueprint tasks">${TASKS.map((task) => `<div class="task-row"><button class="task-toggle${completedTaskIds.has(task.id) ? " done" : ""}" type="button" aria-label="${completedTaskIds.has(task.id) ? "Mark incomplete" : "Mark complete"} ${escapeHtml(task.title)}" aria-pressed="${completedTaskIds.has(task.id)}" data-task="${task.id}">${completedTaskIds.has(task.id) ? icon("check") : ""}</button><span class="task-copy"><strong>${escapeHtml(task.number)} ${escapeHtml(task.title)}</strong><span>${escapeHtml(task.summary)}</span></span><span class="resource-kind">Paid</span></div>`).join("")}</section></div>
+        </div>`;
+      }
+
+      function renderAccount() {
+        return `<div class="account-page">
+          <a class="back-link" href="#home">Back to Home</a>
+          <header class="page-heading"><span class="page-kicker">Account / Access</span><h1>Keep the work in one place.</h1><p>Log in to restore your access, or choose the access path that fits the way you want to carry one business constraint through the Blueprint.</p></header>
+          <section class="account-panel"><h2>Log in to resources.onlinesourdough</h2><p>Use the email connected to your access. This static preview does not send a login email.</p><div class="account-email"><label for="account-email">Email address</label><input id="account-email" type="email" placeholder="you@company.com" /></div><button class="primary-link" type="button">Send magic link ${icon("arrow")}</button></section>
+          <div class="plan-grid"><article class="plan"><span class="access-label paid">Paid access</span><h2>Monthly</h2><p>Carry the Blueprint and Kits month to month while the constraint is active.</p><ul><li>All 01–08 lessons</li><li>Working Kits and updates</li><li>Cancel from your account</li></ul><a class="primary-link" href="#account">Choose monthly ${icon("arrow")}</a></article><article class="plan annual"><span class="access-label paid">Best value / paid access</span><h2>Annual</h2><p>Keep the full library close while the result moves from build to operation.</p><ul><li>All 01–08 lessons</li><li>Working Kits and updates</li><li>One year of access</li></ul><a class="primary-link" href="#account">Choose annual ${icon("arrow")}</a></article></div>
+        </div>`;
+      }
+
+      function renderHelp() {
+        return `<div class="help-page">
+          <a class="back-link" href="#home">Back to Home</a>
+          <header class="page-heading"><span class="page-kicker">Support / resources.onlinesourdough</span><h1>Need help?</h1><p>Keep the question small enough to answer. Send the page you were on, the constraint you are working through, and what you expected to happen.</p></header>
+          <section class="support-panel"><h2>What to include</h2><p>Share the resource title, your account email, and a short description of the handoff or access state that needs attention.</p><ul><li>Page or lesson link</li><li>Free or paid access state</li><li>One screenshot or exact error message when relevant</li></ul><a class="primary-link" href="mailto:hello@arcitai.com?subject=resources.onlinesourdough%20help">Email support ${icon("arrow")}</a></section>
+        </div>`;
+      }
+
+      function renderMissing() {
+        return `<div class="empty-state"><span class="page-kicker">Library route</span><h1>That page is not in the shelf.</h1><p>Return to Home and choose a folder or a visible resource.</p><a class="primary-link" href="#home">Return Home ${icon("arrow")}</a></div>`;
+      }
+
+      function renderRoute(route) {
+        if (route.kind === "home") return renderHome();
+        if (route.kind === "stage")
+          return getStage(route.slug)
+            ? renderStage(getStage(route.slug))
+            : renderMissing();
+        if (route.kind === "blueprint") return renderBlueprint();
+        if (route.kind === "free")
+          return renderCollection(
+            "Free companions",
+            "Open layer / Free",
+            "One useful page per public video. Start here when you want the method in plain language before choosing paid access.",
+            FREE_COMPANIONS,
+            "Open companions",
+          );
+        if (route.kind === "kits")
+          return renderCollection(
+            "Kits",
+            "Working documents / Paid",
+            "Copyable briefs and checklists that support the paid Blueprint without becoming a template supermarket.",
+            KITS,
+            "Blueprint working documents",
+          );
+        if (route.kind === "reader")
+          return getResource(route.id)
+            ? renderReader(getResource(route.id))
+            : renderMissing();
+        if (route.kind === "tasks") return renderTasks();
+        if (route.kind === "account") return renderAccount();
+        if (route.kind === "help") return renderHelp();
+        return renderMissing();
+      }
+
+      function updateSidebarState() {
+        appShell.classList.toggle("sidebar-collapsed", !sidebarOpen);
+        sidebarToggle.setAttribute(
+          "aria-label",
+          sidebarOpen ? "Collapse navigation" : "Show navigation",
+        );
+        sidebarToggle.setAttribute("aria-pressed", String(sidebarOpen));
+        sidebarToggle.innerHTML = icon("menu");
+        sidebarBackdrop.hidden = !sidebarOpen;
+        sidebar.setAttribute("aria-hidden", String(!sidebarOpen));
+        sidebar.inert = !sidebarOpen;
+      }
+
+      function updateTopbar(route) {
+        const resource = getActiveResource(route);
+        const theme =
+          document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+        document.querySelector('[data-action="back"]').innerHTML = icon("back");
+        document.querySelector('[data-action="forward"]').innerHTML =
+          icon("forward");
+        topbarSearchButton.innerHTML = `${icon("search")}<span>Search</span><kbd class="shortcut">⌘K</kbd>`;
+        document.querySelector('[data-action="theme"]').innerHTML =
+          '<span class="theme-glyph" aria-hidden="true"></span>';
+        document
+          .querySelector('[data-action="theme"]')
+          .setAttribute(
+            "aria-label",
+            `Switch to ${theme === "light" ? "dark" : "light"} mode`,
+          );
+        const canFavorite = Boolean(resource);
+        const isFavorite = canFavorite && favoriteIds.includes(resource.id);
+        favoriteButton.hidden = !canFavorite;
+        favoriteButton.classList.toggle("is-favorite", isFavorite);
+        favoriteButton.textContent = isFavorite ? "★" : "☆";
+        favoriteButton.setAttribute(
+          "aria-label",
+          isFavorite ? "Remove page from favorites" : "Add page to favorites",
+        );
+        favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      }
+
+      function renderApp({ keepSidebar = false } = {}) {
+        currentRoute = parseRoute();
+        if (!keepSidebar) sidebarOpen = currentRoute.kind !== "home";
+        mainContent.innerHTML = renderRoute(currentRoute);
+        renderSidebar(currentRoute);
+        updateSidebarState();
+        updateTopbar(currentRoute);
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
+      function openSearch() {
+        searchReturnTarget = document.activeElement;
+        searchOpen = true;
+        searchOverlay.hidden = false;
+        searchIconSlot.innerHTML = icon("search");
+        searchInput.value = "";
+        renderSearchResults("");
+        window.setTimeout(() => searchInput.focus(), 0);
+      }
+
+      function closeSearch() {
+        searchOpen = false;
+        searchOverlay.hidden = true;
+        searchInput.value = "";
+        if (
+          searchReturnTarget &&
+          typeof searchReturnTarget.focus === "function"
+        ) {
+          searchReturnTarget.focus();
+        }
+        searchReturnTarget = null;
+      }
+
+      function renderSearchResults(query) {
+        const normalized = query.trim().toLowerCase();
+        const matches = ALL_RESOURCES.filter((resource) => {
+          if (!normalized) return true;
+          return `${resource.title} ${resource.summary} ${resource.kind} ${resource.access}`
+            .toLowerCase()
+            .includes(normalized);
+        }).slice(0, 12);
+        if (!matches.length) {
+          searchResults.innerHTML =
+            '<p class="search-empty">No resources found. Try a stage, a constraint, or a Kit.</p>';
+          return;
+        }
+        const groups = [
+          [
+            "Blueprint",
+            matches.filter((resource) => resource.kind === "Blueprint step"),
+          ],
+          [
+            "Free companions",
+            matches.filter((resource) => resource.kind === "Free companion"),
+          ],
+          ["Kits", matches.filter((resource) => resource.kind === "Kit")],
+        ].filter(([, resources]) => resources.length);
+        searchResults.innerHTML = groups
+          .map(
+            ([label, resources]) =>
+              `<section class="search-group"><h2>${label}</h2>${resources.map((resource) => `<a class="search-result" href="#reader/${resource.id}"><span>${escapeHtml(resource.title)}</span><span>${escapeHtml(resource.access)}</span></a>`).join("")}</section>`,
+          )
+          .join("");
+      }
+
+      function toggleTheme() {
+        const nextTheme =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = nextTheme;
+        try {
+          localStorage.setItem("resources-onlinesourdough-theme", nextTheme);
+        } catch {}
+        updateTopbar(currentRoute);
+      }
+
+      function toggleFavorite() {
+        const resource = getActiveResource(currentRoute);
+        if (!resource) return;
+        favoriteIds = favoriteIds.includes(resource.id)
+          ? favoriteIds.filter((id) => id !== resource.id)
+          : [...favoriteIds, resource.id];
+        writeStoredList("resources-onlinesourdough-favorites", favoriteIds);
+        renderSidebar(currentRoute);
+        updateSidebarState();
+        updateTopbar(currentRoute);
+      }
+
+      document.addEventListener("click", (event) => {
+        const target = event.target.closest(
+          "[data-action], [data-disclosure], [data-disclosure-stage], [data-task]",
+        );
+        if (!target) return;
+        const action = target.dataset.action;
+        if (action === "toggle-sidebar") {
+          sidebarOpen = !sidebarOpen;
+          updateSidebarState();
+          if (sidebarOpen) renderSidebar(currentRoute);
+        }
+        if (action === "close-sidebar") {
+          sidebarOpen = false;
+          updateSidebarState();
+        }
+        if (action === "open-search") openSearch();
+        if (action === "close-search") closeSearch();
+        if (action === "back") window.history.back();
+        if (action === "forward") window.history.forward();
+        if (action === "theme") toggleTheme();
+        if (action === "favorite") toggleFavorite();
+        if (action === "login") {
+          window.location.hash = "account";
+        }
+        if (target.dataset.disclosure === "blueprint") {
+          event.preventDefault();
+          blueprintExpanded = !blueprintExpanded;
+          renderSidebar(currentRoute);
+          updateSidebarState();
+        }
+        if (target.dataset.disclosureStage) {
+          event.preventDefault();
+          const stageSlug = target.dataset.disclosureStage;
+          if (expandedStages.has(stageSlug)) expandedStages.delete(stageSlug);
+          else expandedStages.add(stageSlug);
+          renderSidebar(currentRoute);
+          updateSidebarState();
+        }
+        if (target.dataset.task) {
+          event.preventDefault();
+          const taskId = target.dataset.task;
+          if (completedTaskIds.has(taskId)) completedTaskIds.delete(taskId);
+          else completedTaskIds.add(taskId);
+          writeStoredList("resources-onlinesourdough-tasks", [
+            ...completedTaskIds,
+          ]);
+          renderApp({ keepSidebar: true });
+        }
+      });
+
+      searchInput.addEventListener("input", (event) =>
+        renderSearchResults(event.target.value),
+      );
+      searchOverlay.addEventListener("click", (event) => {
+        if (event.target === searchOverlay) closeSearch();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (
+          (event.metaKey || event.ctrlKey) &&
+          event.key.toLowerCase() === "k"
+        ) {
+          event.preventDefault();
+          openSearch();
+        }
+        if (event.key === "Escape" && searchOpen) closeSearch();
+      });
+      window.addEventListener("hashchange", () => {
+        closeSearch();
+        renderApp();
+      });
+      window.addEventListener("popstate", () => {
+        closeSearch();
+        renderApp();
+      });
+
+      if (!window.location.hash) window.history.replaceState(null, "", "#home");
+      renderApp();
+    </script>
+  </body>
+</html>

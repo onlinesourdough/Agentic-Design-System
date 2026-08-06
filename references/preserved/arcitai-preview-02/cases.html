@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Short, factual case notes for public Arc’It AI software projects."
+    />
+    <title>Case Studies — Arc’It AI</title>
+    <style>
+      @font-face {
+        font-family: "Geist Sans";
+        src: url("../arcitai-shared/assets/fonts/geist-sans-variable.woff2")
+          format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("../arcitai-shared/assets/fonts/geist-mono-variable.woff2")
+          format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Pixel";
+        src: url("../arcitai-shared/assets/fonts/geist-pixel-square.woff2")
+          format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      :root {
+        --background: #f3ead7;
+        --surface: #fffaf0;
+        --ink: #172326;
+        --soft: #626b66;
+        --strong: #0b1813;
+        --primary: #146e59;
+        --border: #d8cfbc;
+        --sun: #e7bf3f;
+        --lavender: #7b6bc2;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--background);
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--background);
+        font-family: "Geist Sans", Arial, sans-serif;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 4px;
+      }
+
+      .page {
+        width: min(calc(100% - 36px), 720px);
+        margin-inline: auto;
+      }
+
+      .mono,
+      .breadcrumb,
+      .case-kicker,
+      .facts,
+      .source,
+      .action,
+      .footer-meta {
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 11px;
+        font-weight: 550;
+        line-height: 1.35;
+        letter-spacing: 0.035em;
+      }
+
+      .brand-header {
+        display: grid;
+        min-height: 138px;
+        place-items: center;
+        padding-top: 24px;
+      }
+
+      .brand-seal {
+        display: grid;
+        width: 76px;
+        height: 76px;
+        place-items: center;
+        border: 1px solid color-mix(in srgb, var(--primary) 42%, var(--border));
+        border-radius: 18px;
+        background: color-mix(in srgb, var(--surface) 82%, transparent);
+        box-shadow: inset 0 0 0 5px var(--background);
+        text-decoration: none;
+      }
+
+      .brand-seal img {
+        width: 43px;
+        height: 43px;
+      }
+
+      .brand-seal span {
+        margin-top: -7px;
+        font-family: "Geist Pixel", monospace;
+        font-size: 9px;
+      }
+
+      .project-dock {
+        position: fixed;
+        z-index: 20;
+        top: 22px;
+        right: 24px;
+      }
+
+      .action {
+        display: inline-flex;
+        min-height: 46px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 12px 15px;
+        border-radius: 10px;
+        color: var(--surface);
+        background: var(--primary);
+        box-shadow: 0 8px 22px rgba(11, 24, 19, 0.14);
+        text-decoration: none;
+      }
+
+      .action:hover {
+        background: #1a8068;
+      }
+
+      .intro {
+        padding: 40px 0 34px;
+      }
+
+      .breadcrumb {
+        margin-bottom: 16px;
+        color: var(--soft);
+      }
+
+      .breadcrumb a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 690px;
+        margin-bottom: 14px;
+        font-family:
+          Iowan Old Style,
+          Baskerville,
+          Georgia,
+          serif;
+        font-size: clamp(48px, 7vw, 68px);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.052em;
+      }
+
+      h1 em {
+        color: var(--primary);
+        font-style: normal;
+      }
+
+      .intro > p:last-child {
+        max-width: 590px;
+        margin: 0;
+        color: var(--soft);
+        font-size: 17px;
+      }
+
+      .case-list {
+        display: grid;
+        gap: 18px;
+        padding: 0 0 76px;
+      }
+
+      .case-card {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: color-mix(in srgb, var(--surface) 75%, var(--background));
+        scroll-margin-top: 28px;
+      }
+
+      .case-image {
+        width: calc(100% - 28px);
+        height: 290px;
+        margin: 14px 14px 0;
+        object-fit: cover;
+        border-radius: 11px;
+        background: var(--strong);
+      }
+
+      #pi-desktop .case-image {
+        object-position: 54% center;
+      }
+
+      #agentic-video-editor .case-image {
+        object-position: center;
+      }
+
+      #design-md-workbench .case-image {
+        object-position: 42% center;
+      }
+
+      .case-body {
+        padding: 24px 22px 22px;
+      }
+
+      .case-kicker {
+        display: block;
+        margin-bottom: 9px;
+        color: var(--primary);
+      }
+
+      h2 {
+        margin-bottom: 13px;
+        font-size: 32px;
+        font-weight: 650;
+        line-height: 1;
+        letter-spacing: -0.045em;
+      }
+
+      .case-summary {
+        max-width: 630px;
+        margin-bottom: 24px;
+        color: var(--soft);
+      }
+
+      .facts {
+        display: grid;
+        grid-template-columns: 106px 1fr;
+        gap: 7px 14px;
+        margin: 0 0 22px;
+      }
+
+      .facts dt {
+        color: var(--soft);
+        text-transform: uppercase;
+      }
+
+      .facts dd {
+        margin: 0;
+        color: var(--ink);
+      }
+
+      .source {
+        display: inline-flex;
+        gap: 8px;
+        padding-bottom: 4px;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+      }
+
+      .source:hover {
+        color: var(--primary);
+      }
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 28px 0 38px;
+        color: var(--soft);
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-brand {
+        font-family: "Geist Pixel", monospace;
+        color: var(--ink);
+      }
+
+      .footer-meta {
+        text-decoration: none;
+      }
+
+      .footer-meta:hover {
+        color: var(--primary);
+      }
+
+      @media (max-width: 960px) {
+        .project-dock {
+          top: auto;
+          right: 10px;
+          bottom: 10px;
+          left: 10px;
+        }
+
+        .project-dock .action {
+          width: 100%;
+          min-height: 52px;
+        }
+
+        body {
+          padding-bottom: 68px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .page {
+          width: min(calc(100% - 24px), 720px);
+        }
+
+        .brand-header {
+          min-height: 116px;
+        }
+
+        .intro {
+          padding-top: 28px;
+        }
+
+        h1 {
+          font-size: clamp(44px, 12vw, 58px);
+        }
+
+        .case-image {
+          height: 230px;
+        }
+
+        .facts {
+          grid-template-columns: 1fr;
+          gap: 3px;
+        }
+
+        .facts dd + dt {
+          margin-top: 8px;
+        }
+
+        footer {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="project-dock">
+      <a class="action" href="index.html#onboard">
+        <span>Start a project</span><span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <header class="brand-header page">
+      <a class="brand-seal" href="index.html" aria-label="Arc’It AI home">
+        <img
+          src="../arcitai-shared/assets/arcitai-mark-cultivated.svg"
+          alt=""
+        />
+        <span>ARC’IT AI</span>
+      </a>
+    </header>
+
+    <main class="page">
+      <section class="intro">
+        <p class="breadcrumb"><a href="index.html">Home</a> / Case studies</p>
+        <h1>What the software is for—and <em>how it is shaped.</em></h1>
+        <p>
+          Short, factual notes on public Arc’It work. No invented clients,
+          outcomes, metrics, or anonymous praise.
+        </p>
+      </section>
+
+      <section class="case-list" aria-label="Public Arc’It case studies">
+        <article class="case-card" id="pi-desktop">
+          <img
+            class="case-image"
+            src="../arcitai-shared/assets/arcitai-world.jpg"
+            alt="An illustrative Arc’It software landscape with a large architectural A"
+          />
+          <div class="case-body">
+            <span class="case-kicker">01 / Developer tooling</span>
+            <h2>Pi Desktop</h2>
+            <p class="case-summary">
+              A desktop workspace for coding agents. The project explores how
+              parallel software work, agent state, and human intervention can
+              become legible without collapsing into terminal output.
+            </p>
+            <dl class="facts">
+              <dt>Purpose</dt>
+              <dd>See and direct parallel agent work</dd>
+              <dt>Shape</dt>
+              <dd>Desktop software and interaction system</dd>
+              <dt>Status</dt>
+              <dd>Public open-source project</dd>
+            </dl>
+            <a
+              class="source"
+              href="https://github.com/gustavonline/pi-desktop"
+              target="_blank"
+              rel="noreferrer"
+              >View source ↗</a
+            >
+          </div>
+        </article>
+
+        <article class="case-card" id="agentic-video-editor">
+          <img
+            class="case-image"
+            src="../arcitai-shared/assets/arcitai-fjord.jpg"
+            alt="An illustrative Arc’It world connecting modular software with a Norwegian fjord"
+          />
+          <div class="case-body">
+            <span class="case-kicker">02 / Agent workflow</span>
+            <h2>Agentic Video Editor</h2>
+            <p class="case-summary">
+              A local video workspace for Codex, Video Use, and HyperFrames. It
+              separates transcript-first editing, motion graphics, reusable
+              brand rules, and packaging into a repeatable production system.
+            </p>
+            <dl class="facts">
+              <dt>Purpose</dt>
+              <dd>Turn source media into a controlled production workflow</dd>
+              <dt>Shape</dt>
+              <dd>Local-first tools, templates, and project memory</dd>
+              <dt>Status</dt>
+              <dd>Public open-source project</dd>
+            </dl>
+            <a
+              class="source"
+              href="https://github.com/gustavonline/ai-agent-youtube-kit"
+              target="_blank"
+              rel="noreferrer"
+              >View source ↗</a
+            >
+          </div>
+        </article>
+
+        <article class="case-card" id="design-md-workbench">
+          <img
+            class="case-image"
+            src="../arcitai-shared/assets/arcitai-harbor.jpg"
+            alt="An illustrative Arc’It harbor where modular software connects to a Danish town"
+          />
+          <div class="case-body">
+            <span class="case-kicker">03 / Design infrastructure</span>
+            <h2>DESIGN.md Workbench</h2>
+            <p class="case-summary">
+              An open, tool-agnostic collection built on Google’s official
+              DESIGN.md format. It combines portable tokens, design reasoning,
+              static previews, and repeatable validation.
+            </p>
+            <dl class="facts">
+              <dt>Purpose</dt>
+              <dd>Help coding agents build from product-specific intent</dd>
+              <dt>Shape</dt>
+              <dd>Portable design source, previews, and verification</dd>
+              <dt>Status</dt>
+              <dd>Public open-source project</dd>
+            </dl>
+            <a
+              class="source"
+              href="https://github.com/gustavonline/design-md-workbench"
+              target="_blank"
+              rel="noreferrer"
+              >View source ↗</a
+            >
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="page">
+      <span class="footer-brand">ARC’IT AI</span>
+      <a class="footer-meta" href="index.html">Return to the landing page ↑</a>
+    </footer>
+  </body>
+</html>

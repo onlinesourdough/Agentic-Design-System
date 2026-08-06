@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="da" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="assets/favicon-32x32.png" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <title>CryptoClub Home — Økosystem</title>
+  </head>
+  <body data-page="ecosystem">
+    <div class="app" id="app-shell"></div>
+    <script src="assets/mock-data.js?v=20260713"></script>
+    <script src="assets/app.js?v=20260713"></script>
+    <script>
+      const UI = CryptoClubUI;
+      UI.mountShell();
+      UI.bindShell();
+
+      const rows = CryptoClubMock.ecosystem
+        .map((svc) => {
+          const id = svc.name.toLowerCase().replace(/\s+/g, "-");
+          return `<tr id="${id}"><td><strong>${svc.name}</strong><br/><small style="color:var(--muted)">${svc.desc}</small></td><td class="meta">${svc.host}</td><td><span class="pill success">${svc.status}</span></td></tr>`;
+        })
+        .join("");
+
+      document.getElementById("page-content").innerHTML = `
+        <header class="page-head">
+          <h1>Økosystem</h1>
+          <p>Oversigt over live services fra <strong>cryptoclub-dk</strong> organisationen. Home dashboard trækker dataviz og status fra disse — den ejer ikke deres forretningslogik.</p>
+          <span class="env-tag">Kilde: infrastructure + ai-matt docs</span>
+        </header>
+
+        <article class="card">
+          <h2>Live services</h2>
+          <table class="table">
+            <thead><tr><th>Service</th><th>Host</th><th>Status</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </article>
+
+        <div class="grid-2" style="margin-top:12px">
+          <article class="card" id="buy-sell">
+            <h2>Køb/salg-softwaren</h2>
+            <p>RSI + Bollinger Bands + Fear &amp; Greed. Leverer HOLD/KØB/SÆLG til portfolio-modulet.</p>
+            <span class="pill">buy-sell-algo-service</span>
+          </article>
+          <article class="card" id="coin-checker">
+            <h2>AI Coin Checker</h2>
+            <p>4-trins analyse (Vision, Team, Tokenomics, Cash flow) — grundlag for Classroom-program.</p>
+            <span class="pill">ai-coin-checker-service</span>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:12px">
+          <h2>AI Matthæus &amp; specialister</h2>
+          <div class="row"><div><strong>Router + Onboarding</strong></div><span class="meta">app.cryptoclub.dk</span></div>
+          <div class="row"><div><strong>Skat · Portefølje · Analyse · Makro · Mentor</strong></div><span class="meta">agents endpoint</span></div>
+        </article>`;
+
+      if (location.hash) {
+        document
+          .querySelector(location.hash)
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    </script>
+  </body>
+</html>

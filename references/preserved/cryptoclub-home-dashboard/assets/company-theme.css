@@ -1,0 +1,29 @@
+:root {
+  --brand-purple: #052b6d;
+  --surface-submit: #052b6d;
+  --surface-submit-hover: #041f4f;
+  --ring-primary: #052b6d;
+}
+
+.dark {
+  --brand-purple: #052b6d;
+  --surface-submit: #052b6d;
+  --surface-submit-hover: #041f4f;
+  --ring-primary: #052b6d;
+}
+
+/* Login logo sizing + position (round + larger, moved down) */
+.mt-6.h-10.w-full {
+  height: 128px !important;
+  width: 128px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 8px !important;
+  background-size: contain !important;
+  transform: translateY(95px);
+}
+
+.mt-6.h-10.w-full img[src*="assets/logo.svg"] {
+  border-radius: 9999px;
+}

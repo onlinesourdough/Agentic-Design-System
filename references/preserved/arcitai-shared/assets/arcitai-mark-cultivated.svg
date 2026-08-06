@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title description">
+  <title id="title">Arc’It AI Cultivated core mark</title>
+  <desc id="description">A sharp cultivated Arc with a small modular signal cluster held in its centre.</desc>
+  <path fill="#146e59" d="M4 56 28.4 8h7.2L60 56H45.8L32 27.7 18.2 56Z" />
+  <path fill="#fffaf0" d="M27 37h5v5h-5zM34 31h4v4h-4z" />
+  <path fill="#d7bd38" d="M34 38h5v5h-5z" />
+  <path fill="#7b6bc2" d="M27 45h4v4h-4z" />
+  <path fill="#0b1813" d="M40 44h4v4h-4z" opacity=".72" />
+</svg>

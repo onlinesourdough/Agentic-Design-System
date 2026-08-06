@@ -1,8 +1,8 @@
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
-import { extname, join, normalize } from "node:path";
+import { extname, join, normalize, resolve } from "node:path";
 
-const root = process.cwd();
+const root = resolve(process.cwd(), process.argv[2] ?? "examples");
 const port = Number(process.env.DESIGN_TEMPLATE_PORT ?? 4173);
 const types = {
   ".css": "text/css",
