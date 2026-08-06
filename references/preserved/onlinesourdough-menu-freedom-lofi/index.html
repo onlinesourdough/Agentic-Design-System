@@ -1,0 +1,1329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>onlinesourdough: Same bake. Different deliveries.</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="assets/onlinesourdough-mark-large-pixel-v3.svg"
+    />
+    <script>
+      (() => {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+
+        const navigation = performance.getEntriesByType("navigation")[0];
+        const isReload =
+          navigation?.type === "reload" || performance.navigation?.type === 1;
+
+        if (!isReload) return;
+
+        try {
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.hash = "";
+          history.replaceState(history.state, "", cleanUrl.href);
+        } catch {}
+
+        const resetScroll = () => window.scrollTo(0, 0);
+        resetScroll();
+        window.addEventListener("DOMContentLoaded", resetScroll, {
+          once: true,
+        });
+        window.addEventListener("load", resetScroll, { once: true });
+      })();
+    </script>
+    <style>
+      @font-face {
+        font-family: "Geist Sans";
+        src: url("assets/fonts/geist-sans-variable.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("assets/fonts/geist-mono-variable.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Pixel";
+        src: url("assets/fonts/geist-pixel-square.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      :root {
+        color-scheme: light;
+        --bg: #f8f2e8;
+        --panel: #fffaf1;
+        --paper: #fffdf7;
+        --text: #2b1b12;
+        --muted: #806c5c;
+        --line: #e5d7c6;
+        --line-strong: #d4bd9f;
+        --accent: #b86f36;
+        --hover: #f1eadf;
+        --focus: #2b6f98;
+        --shadow: rgba(60, 36, 19, 0.11);
+        --font-sans:
+          "Geist Sans", Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;
+        --font-mono: "Geist Mono", SFMono-Regular, Consolas, monospace;
+        --font-pixel: "Geist Pixel", "Geist Mono", monospace;
+        --container: 1240px;
+        font-family: var(--font-sans);
+        background: var(--bg);
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #18120e;
+        --panel: #221813;
+        --paper: #2a1e17;
+        --text: #fff2df;
+        --muted: #c6ad94;
+        --line: #3c2b21;
+        --line-strong: #69462d;
+        --accent: #d58a48;
+        --hover: #2a1f18;
+        --focus: #6db8df;
+        --shadow: rgba(0, 0, 0, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--bg);
+        color: var(--text);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a,
+      button {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      .site-shell {
+        min-height: 100vh;
+        background:
+          linear-gradient(rgba(116, 88, 65, 0.027) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(116, 88, 65, 0.027) 1px, transparent 1px),
+          var(--bg);
+        background-size: 52px 52px;
+      }
+
+      .site-header {
+        position: sticky;
+        z-index: 50;
+        top: 0;
+        min-height: 68px;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding: 0 max(18px, calc((100vw - var(--container)) / 2));
+        background: color-mix(in srgb, var(--bg) 96%, transparent);
+        backdrop-filter: blur(12px);
+      }
+
+      .brand-name {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        justify-self: start;
+        font-family: var(--font-pixel);
+        font-size: 22px;
+        font-weight: 400;
+        letter-spacing: -0.025em;
+      }
+
+      .os-mark {
+        display: block;
+        width: 44px;
+        height: 34px;
+        flex: 0 0 auto;
+        object-fit: contain;
+        image-rendering: pixelated;
+      }
+
+      html[data-theme="dark"] .site-header .os-mark,
+      .site-footer .os-mark {
+        filter: brightness(0) invert(1);
+      }
+
+      .header-context {
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.035em;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        gap: 22px;
+      }
+
+      .studio-trigger,
+      .menu-shortcut {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 11px;
+        border: 0;
+        border-radius: 8px;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.045em;
+      }
+
+      .menu-shortcut {
+        position: relative;
+        min-height: 0;
+        padding: 0;
+      }
+
+      .menu-shortcut::after {
+        position: absolute;
+        right: 0;
+        bottom: -8px;
+        left: 0;
+        height: 1px;
+        background: var(--accent);
+        content: "";
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 160ms ease;
+      }
+
+      .studio-trigger:hover,
+      .studio-trigger:focus-visible,
+      .studio-trigger[aria-expanded="true"],
+      .menu-shortcut:hover,
+      .menu-shortcut:focus-visible {
+        color: var(--text);
+        background: var(--hover);
+      }
+
+      .menu-shortcut:hover,
+      .menu-shortcut:focus-visible {
+        background: transparent;
+      }
+
+      .menu-shortcut[aria-current="location"] {
+        color: var(--text);
+      }
+
+      .menu-shortcut[aria-current="location"]::after {
+        transform: scaleX(1);
+      }
+
+      .studio-trigger::after {
+        width: 5px;
+        height: 5px;
+        margin-left: 8px;
+        border-right: 1px solid currentColor;
+        border-bottom: 1px solid currentColor;
+        content: "";
+        transform: translateY(-2px) rotate(45deg);
+        transition: transform 160ms ease;
+      }
+
+      .studio-trigger[aria-expanded="true"]::after {
+        transform: translateY(2px) rotate(225deg);
+      }
+
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+        justify-self: end;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .theme-toggle:hover {
+        background: var(--hover);
+        color: var(--text);
+      }
+
+      .studio-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 50%;
+        width: min(620px, calc(100vw - 36px));
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: color-mix(in srgb, var(--panel) 96%, transparent);
+        box-shadow: 0 24px 80px var(--shadow);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, -8px);
+        transition:
+          opacity 160ms ease,
+          transform 160ms ease;
+      }
+
+      .studio-menu[aria-hidden="false"] {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, 0);
+      }
+
+      .studio-paths {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .studio-path {
+        display: grid;
+        min-height: 146px;
+        grid-template-rows: auto auto 1fr auto;
+        padding: 17px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel);
+        transition:
+          border-color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .studio-path.current {
+        background: var(--hover);
+      }
+
+      .studio-path:hover,
+      .studio-path:focus-visible {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      .path-number {
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        font-weight: 650;
+        letter-spacing: 0.06em;
+      }
+
+      .studio-path strong {
+        margin-top: 12px;
+        font-family: var(--font-pixel);
+        font-size: 21px;
+        font-weight: 400;
+      }
+
+      .studio-path small {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .path-action {
+        margin-top: 18px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .studio-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        padding: 15px 2px 0;
+      }
+
+      .studio-links a {
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+      }
+
+      .studio-links a:hover,
+      .studio-links a:focus-visible {
+        color: var(--accent);
+      }
+
+      .main-panel {
+        width: min(100% - 32px, var(--container));
+        margin: 0 auto;
+        padding: clamp(52px, 8vh, 82px) 0 72px;
+      }
+
+      .snap-section {
+        scroll-margin-top: 84px;
+      }
+
+      .hero {
+        text-align: center;
+      }
+
+      .hero h1,
+      .manifesto h2 {
+        max-width: 760px;
+        margin: 0 auto;
+        font-family: var(--font-pixel);
+        font-size: clamp(38px, 6vw, 62px);
+        font-weight: 400;
+        line-height: 1.01;
+        letter-spacing: -0.026em;
+      }
+
+      .hero p {
+        max-width: 740px;
+        margin: 22px auto 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.62;
+      }
+
+      .menu-grid {
+        position: relative;
+        width: 100%;
+        scroll-margin-top: 88px;
+        margin-top: 28px;
+        margin-right: auto;
+        margin-left: auto;
+        padding-top: 34px;
+      }
+
+      .menu-grid::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        height: 1px;
+        background: var(--line);
+        transform: translateX(-50%);
+      }
+
+      .menu-stage {
+        display: block;
+      }
+
+      .menu-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 28px;
+      }
+
+      .menu-row-secondary {
+        margin-top: 30px;
+        scroll-margin-top: 24px;
+      }
+
+      .menu-label {
+        grid-column: 1 / -1;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-align: center;
+        margin-bottom: 10px;
+        padding: 0;
+      }
+
+      .offer-card {
+        position: relative;
+        min-width: 0;
+        min-height: 390px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 8px 8px;
+        text-align: center;
+      }
+
+      .offer-card:hover,
+      .offer-card:focus-visible {
+        z-index: 3;
+      }
+
+      .book-stage {
+        position: relative;
+        width: min(100%, 302px);
+        height: 342px;
+        flex: 0 0 auto;
+      }
+
+      .book {
+        position: absolute;
+        z-index: 1;
+        right: 12px;
+        bottom: 16px;
+        left: 12px;
+        height: 322px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid var(--line-strong);
+        border-radius: 12px;
+        background: var(--paper);
+        box-shadow:
+          0 3px 0 color-mix(in srgb, var(--line) 72%, var(--panel)),
+          0 10px 24px var(--shadow),
+          inset 0 1px rgba(255, 255, 255, 0.8);
+        padding: 14px 16px 34px 28px;
+        text-align: left;
+        transition:
+          transform 170ms ease,
+          border-color 170ms ease;
+      }
+
+      .book::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 13px;
+        border-right: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+        background: color-mix(in srgb, var(--panel) 62%, var(--bg));
+      }
+
+      .offer-card:hover .book,
+      .offer-card:focus-visible .book {
+        transform: translateY(-30px);
+        border-color: var(--focus);
+      }
+
+      .book-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .book-number {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .book-title {
+        margin-top: 8px;
+        font-size: 22px;
+        font-weight: 650;
+        line-height: 1.08;
+        letter-spacing: -0.025em;
+      }
+
+      .offer-description {
+        margin-top: 7px;
+        min-height: 42px;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.38;
+      }
+
+      .book-rule {
+        height: 1px;
+        margin: 9px 0;
+        background: var(--line);
+      }
+
+      .book-image {
+        position: relative;
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--line-strong) 48%, #fffaf1);
+        border-radius: 10px;
+        background: #fffaf1;
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.52),
+          inset 0 10px 24px rgba(92, 56, 31, 0.07),
+          0 1px 0 rgba(255, 255, 255, 0.7);
+      }
+
+      .book-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        box-shadow: inset 0 0 18px rgba(92, 56, 31, 0.12);
+        pointer-events: none;
+      }
+
+      .book-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        object-position: center;
+        padding: 9px;
+        filter: saturate(0.94) contrast(0.98);
+      }
+
+      .book-sleeve {
+        position: absolute;
+        z-index: 2;
+        right: -6px;
+        bottom: 0;
+        left: -6px;
+        height: 78px;
+        border: 1px solid
+          color-mix(in srgb, var(--line-strong) 48%, transparent);
+        border-radius: 0 0 26px 26px;
+        background: color-mix(in srgb, var(--panel) 30%, transparent);
+        box-shadow:
+          inset 0 1px color-mix(in srgb, var(--paper) 44%, transparent),
+          0 7px 16px color-mix(in srgb, var(--shadow) 44%, transparent);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        pointer-events: none;
+        transition:
+          background 170ms ease,
+          border-color 170ms ease,
+          backdrop-filter 170ms ease;
+      }
+
+      .offer-card:hover .book-sleeve,
+      .offer-card:focus-visible .book-sleeve {
+        border-color: color-mix(in srgb, var(--line-strong) 32%, transparent);
+        background: color-mix(in srgb, var(--panel) 16%, transparent);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+      }
+
+      .offer-cta {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 13px;
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 550;
+      }
+
+      .offer-arrow {
+        display: inline-block;
+        margin-left: 6px;
+        color: var(--accent);
+        transition: transform 150ms ease;
+      }
+
+      .offer-card:hover .offer-arrow,
+      .offer-card:focus-visible .offer-arrow {
+        transform: translateX(4px);
+      }
+
+      .manifesto {
+        margin-top: 88px;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 70px;
+        border-top: 1px solid var(--line);
+        padding-top: 62px;
+        scroll-margin-top: 88px;
+      }
+
+      .manifesto h2 {
+        font-size: clamp(32px, 4vw, 46px);
+        line-height: 1.05;
+      }
+
+      .manifesto-copy p {
+        margin: 0 0 17px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .manifesto-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid var(--line-strong);
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 650;
+        letter-spacing: 0.045em;
+      }
+
+      .manifesto-link:hover,
+      .manifesto-link:focus-visible {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .site-footer {
+        min-height: 310px;
+        display: flex;
+        align-items: flex-end;
+        margin-top: 24px;
+        padding: 58px max(18px, calc((100vw - var(--container)) / 2)) 34px;
+        color: #fff2df;
+        background:
+          linear-gradient(rgba(255, 242, 223, 0.035) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 242, 223, 0.035) 1px,
+            transparent 1px
+          ),
+          #281a13;
+        background-size: 26px 26px;
+      }
+
+      .footer-inner {
+        width: min(100%, var(--container));
+        margin: 0 auto;
+      }
+
+      .footer-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 64px;
+        font-family: var(--font-pixel);
+        font-size: clamp(34px, 5vw, 56px);
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+
+      .footer-brand .os-mark {
+        width: 44px;
+        height: 34px;
+      }
+
+      .footer-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 242, 223, 0.18);
+        color: rgba(255, 242, 223, 0.68);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.045em;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .footer-links a:hover,
+      .footer-links a:focus-visible {
+        color: #fff2df;
+      }
+
+      @media (max-width: 760px) {
+        .site-header {
+          grid-template-columns: 1fr auto 1fr;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .site-header {
+          min-height: 62px;
+        }
+
+        .brand-name {
+          font-size: 19px;
+        }
+
+        .site-header {
+          padding-right: 14px;
+          padding-left: 14px;
+        }
+
+        .studio-trigger {
+          padding: 0 8px;
+        }
+
+        .studio-menu {
+          left: 50%;
+          width: calc(100vw - 24px);
+        }
+
+        .menu-shortcut {
+          display: none;
+        }
+
+        .menu-shortcut[href="#about"] {
+          display: inline-flex;
+        }
+
+        .studio-paths {
+          grid-template-columns: 1fr;
+        }
+
+        .studio-path {
+          min-height: 148px;
+        }
+
+        .main-panel {
+          padding-top: 44px;
+        }
+
+        .hero p {
+          font-size: 14px;
+        }
+
+        .menu-row {
+          column-gap: 10px;
+        }
+
+        .menu-grid {
+          margin-top: 22px;
+          padding-top: 24px;
+        }
+
+        .menu-row-secondary {
+          margin-top: 28px;
+        }
+
+        .menu-label {
+          font-size: 11px;
+        }
+
+        .offer-card {
+          min-height: 335px;
+          padding: 8px 3px 6px;
+        }
+
+        .book-stage {
+          width: 100%;
+          height: 262px;
+        }
+
+        .book {
+          right: 5px;
+          bottom: 12px;
+          left: 5px;
+          height: 246px;
+          border-radius: 9px;
+          padding: 10px 9px 28px 22px;
+        }
+
+        .offer-card:hover .book,
+        .offer-card:focus-visible .book {
+          transform: translateY(-22px);
+        }
+
+        .book::before {
+          width: 10px;
+        }
+
+        .book-head {
+          gap: 5px;
+          font-size: 7px;
+        }
+
+        .book-title {
+          margin-top: 6px;
+          font-size: 17px;
+        }
+
+        .book-rule {
+          margin: 7px 0;
+        }
+
+        .book-image {
+          border-radius: 6px;
+        }
+
+        .offer-description {
+          margin-top: 5px;
+          min-height: 46px;
+          font-size: 9px;
+          line-height: 1.28;
+        }
+
+        .book-sleeve {
+          right: -3px;
+          left: -3px;
+          height: 57px;
+          border-radius: 0 0 18px 18px;
+        }
+
+        .offer-cta {
+          margin-top: 10px;
+          font-size: 9px;
+        }
+
+        .manifesto {
+          margin-top: 68px;
+          grid-template-columns: 1fr;
+          gap: 24px;
+          padding-top: 48px;
+        }
+
+        .site-footer {
+          min-height: 270px;
+          padding-right: 18px;
+          padding-left: 18px;
+        }
+
+        .footer-brand {
+          margin-bottom: 52px;
+        }
+
+        .footer-brand .os-mark {
+          width: 44px;
+          height: 34px;
+        }
+
+        .footer-bottom {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 13px;
+        }
+      }
+
+      @media (max-width: 340px) {
+        .menu-row {
+          grid-template-columns: 1fr;
+          row-gap: 36px;
+        }
+
+        .menu-row-secondary {
+          margin-top: 36px;
+        }
+
+        .offer-card {
+          min-height: 390px;
+        }
+
+        .book-stage {
+          width: min(100%, 286px);
+          height: 338px;
+        }
+
+        .book {
+          right: 12px;
+          bottom: 16px;
+          left: 12px;
+          height: 318px;
+          padding: 14px 16px 34px 28px;
+        }
+
+        .book::before {
+          width: 13px;
+        }
+
+        .book-head {
+          gap: 12px;
+          font-size: 9px;
+        }
+
+        .book-title {
+          margin-top: 8px;
+          font-size: 22px;
+        }
+
+        .offer-description {
+          margin-top: 7px;
+          min-height: 42px;
+          font-size: 10px;
+          line-height: 1.38;
+        }
+
+        .book-rule {
+          margin: 9px 0;
+        }
+
+        .book-sleeve {
+          right: -6px;
+          left: -6px;
+          height: 78px;
+          border-radius: 0 0 26px 26px;
+        }
+
+        .offer-card:hover .book,
+        .offer-card:focus-visible .book {
+          transform: translateY(-30px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand-name" href="#top" aria-label="onlinesourdough, top">
+          <img
+            class="os-mark"
+            src="assets/onlinesourdough-mark-large-pixel-v3.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <span>onlinesourdough</span>
+        </a>
+        <div class="header-actions">
+          <button
+            class="studio-trigger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="studio-menu"
+          >
+            Offers
+          </button>
+          <a class="menu-shortcut" href="#menu" data-section-link="menu"
+            >Menu</a
+          >
+          <a class="menu-shortcut" href="#about" data-section-link="about"
+            >About</a
+          >
+        </div>
+        <button
+          class="theme-toggle"
+          type="button"
+          aria-label="Switch to dark theme"
+        >
+          ◐
+        </button>
+        <div class="studio-menu" id="studio-menu" aria-hidden="true" inert>
+          <div class="studio-paths">
+            <a class="studio-path" href="../arcitai-hero-lab/index.html">
+              <span class="path-number">DONE FOR YOU</span>
+              <strong>Arc'IT AI</strong>
+              <small
+                >Business understanding carried into working software.</small
+              >
+              <span class="path-action">Explore offer ↗</span>
+            </a>
+            <a class="studio-path current" href="#top" aria-current="page">
+              <span class="path-number">DIY + DONE WITH YOU</span>
+              <strong>onlinesourdough</strong>
+              <small
+                >Learn the method, use the resources, or build with direct
+                guidance.</small
+              >
+              <span class="path-action">Current offer</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-panel" id="top">
+        <section class="hero" aria-labelledby="hero-title">
+          <h1 id="hero-title">Same bake. Different deliveries.</h1>
+          <p>
+            Today, almost anyone can start building software with AI. That opens
+            new possibilities, but it also makes it easy to create complexity,
+            technical debt, and systems nobody knows how to own. Here, business
+            development and software meet to decide what should exist and how it
+            should work. The goal is positive bandwidth: more time to work on
+            the business, not inside it.
+          </p>
+        </section>
+
+        <section
+          class="menu-grid snap-section"
+          id="menu"
+          aria-label="onlinesourdough menu"
+        >
+          <div class="menu-stage menu-stage-primary">
+            <div class="menu-label">Menu</div>
+            <div class="menu-row menu-row-primary">
+              <a
+                class="offer-card"
+                href="https://www.youtube.com/@gustavonline"
+              >
+                <span class="book-stage">
+                  <span class="book">
+                    <span class="book-head"
+                      ><span class="book-number">01</span
+                      ><span>Open now</span></span
+                    >
+                    <span class="book-title">Content</span>
+                    <span class="offer-description"
+                      >Ideas and recipes for connecting business and
+                      software.</span
+                    >
+                    <span class="book-rule"></span>
+                    <span class="book-image"
+                      ><img
+                        src="assets/content-lofi-v3-transparent.png"
+                        alt="Pixel-art publishing desk with a sourdough starter jar"
+                    /></span>
+                  </span>
+                  <span class="book-sleeve" aria-hidden="true"></span>
+                </span>
+                <span class="offer-cta"
+                  >Explore content
+                  <span class="offer-arrow" aria-hidden="true">→</span></span
+                >
+              </a>
+
+              <a
+                class="offer-card"
+                href="https://resources.onlinesourdough.com"
+              >
+                <span class="book-stage">
+                  <span class="book">
+                    <span class="book-head"
+                      ><span class="book-number">02</span
+                      ><span>Open now</span></span
+                    >
+                    <span class="book-title">Resources</span>
+                    <span class="offer-description"
+                      >Practical guides, patterns, and tools to use in your own
+                      business.</span
+                    >
+                    <span class="book-rule"></span>
+                    <span class="book-image"
+                      ><img
+                        src="assets/resources-lofi-v3-transparent.png"
+                        alt="Pixel-art archive folder with bread lame and dough scraper"
+                    /></span>
+                  </span>
+                  <span class="book-sleeve" aria-hidden="true"></span>
+                </span>
+                <span class="offer-cta"
+                  >Open library
+                  <span class="offer-arrow" aria-hidden="true">→</span></span
+                >
+              </a>
+            </div>
+          </div>
+
+          <div class="menu-stage menu-stage-secondary">
+            <div class="menu-row menu-row-secondary">
+              <a
+                class="offer-card"
+                href="mailto:hello@arcitai.com?subject=onlinesourdough%20-%20Inner%20Circle"
+              >
+                <span class="book-stage">
+                  <span class="book">
+                    <span class="book-head"
+                      ><span class="book-number">03</span
+                      ><span>Limited availability</span></span
+                    >
+                    <span class="book-title">Inner Circle</span>
+                    <span class="offer-description"
+                      >Direct access, pair programming, and reviews while we
+                      build together.</span
+                    >
+                    <span class="book-rule"></span>
+                    <span class="book-image"
+                      ><img
+                        src="assets/inner-circle-lofi-v3-transparent.png"
+                        alt="Pixel-art shared worktable with coffee and a slice of sourdough"
+                    /></span>
+                  </span>
+                  <span class="book-sleeve" aria-hidden="true"></span>
+                </span>
+                <span class="offer-cta"
+                  >Work together
+                  <span class="offer-arrow" aria-hidden="true">→</span></span
+                >
+              </a>
+
+              <a class="offer-card" href="../arcitai-hero-lab/index.html">
+                <span class="book-stage">
+                  <span class="book">
+                    <span class="book-head"
+                      ><span class="book-number">04</span
+                      ><span>By request</span></span
+                    >
+                    <span class="book-title">Complete Bake</span>
+                    <span class="offer-description"
+                      >The system built, documented, and handed over, so you can
+                      work on the business instead of inside it.</span
+                    >
+                    <span class="book-rule"></span>
+                    <span class="book-image"
+                      ><img
+                        src="assets/complete-bake-lofi-v3-transparent.png"
+                        alt="Pixel-art computer, server, and oven with bread"
+                    /></span>
+                  </span>
+                  <span class="book-sleeve" aria-hidden="true"></span>
+                </span>
+                <span class="offer-cta"
+                  >Start a project
+                  <span class="offer-arrow" aria-hidden="true">→</span></span
+                >
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="manifesto" id="about" aria-labelledby="manifesto-title">
+          <h2 id="manifesto-title">
+            The supermarket mix is fine. Until the business runs on the bake.
+          </h2>
+          <div class="manifesto-copy">
+            <p>
+              A “supermarket mix” is a template, ready-made tool, or vibe-coded
+              first version. It gets something in the oven quickly, but it does
+              not create the architecture, documentation, monitoring, or
+              ownership the business needs.
+            </p>
+            <p>
+              AI-first means starting with the business and its constraint, then
+              using software and AI to remove work that should not depend on
+              you. Positive bandwidth is the result: the system keeps moving
+              without pulling you back into daily operation. Otherwise the
+              shortcut becomes technical debt and another operation to run.
+            </p>
+            <a class="manifesto-link" href="about.html"
+              >About the method <span aria-hidden="true">→</span></a
+            >
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <a class="footer-brand" href="#top" aria-label="onlinesourdough, top">
+            <img
+              class="os-mark"
+              src="assets/onlinesourdough-mark-large-pixel-v3.svg"
+              alt=""
+              aria-hidden="true"
+            />
+            <span>onlinesourdough</span>
+          </a>
+          <div class="footer-bottom">
+            <span>© 2026 onlinesourdough</span>
+            <nav class="footer-links" aria-label="Ecosystem links">
+              <a href="https://gustavonline.com">gustavonline ↗</a>
+              <a href="../arcitai-hero-lab/index.html">Arc'IT AI ↗</a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const toggle = document.querySelector(".theme-toggle");
+      const studioTrigger = document.querySelector(".studio-trigger");
+      const studioMenu = document.querySelector(".studio-menu");
+
+      const setStudioMenu = (open) => {
+        studioTrigger.setAttribute("aria-expanded", String(open));
+        studioMenu.setAttribute("aria-hidden", String(!open));
+        studioMenu.inert = !open;
+      };
+
+      studioTrigger.addEventListener("click", () => {
+        setStudioMenu(studioTrigger.getAttribute("aria-expanded") !== "true");
+      });
+
+      document.addEventListener("click", (event) => {
+        if (
+          studioMenu.getAttribute("aria-hidden") === "false" &&
+          !studioMenu.contains(event.target) &&
+          !studioTrigger.contains(event.target)
+        ) {
+          setStudioMenu(false);
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          studioMenu.getAttribute("aria-hidden") === "false"
+        ) {
+          setStudioMenu(false);
+          studioTrigger.focus();
+        }
+      });
+
+      toggle.addEventListener("click", () => {
+        const dark = root.dataset.theme !== "dark";
+        root.dataset.theme = dark ? "dark" : "light";
+        toggle.setAttribute(
+          "aria-label",
+          dark ? "Switch to light theme" : "Switch to dark theme",
+        );
+      });
+
+      const sectionLinks = [
+        ...document.querySelectorAll("[data-section-link]"),
+      ];
+      const sectionTargets = sectionLinks
+        .map((link) => document.getElementById(link.dataset.sectionLink))
+        .filter(Boolean);
+
+      const updateActiveSection = () => {
+        const marker = Math.min(window.innerHeight * 0.32, 240);
+        let activeSection = "";
+
+        sectionTargets.forEach((section) => {
+          if (section.getBoundingClientRect().top <= marker) {
+            activeSection = section.id;
+          }
+        });
+
+        if (
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 2
+        ) {
+          activeSection = sectionTargets[sectionTargets.length - 1]?.id || "";
+        }
+
+        sectionLinks.forEach((link) => {
+          if (link.dataset.sectionLink === activeSection) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      };
+
+      updateActiveSection();
+      window.addEventListener("scroll", updateActiveSection, { passive: true });
+      window.addEventListener("resize", updateActiveSection);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1590 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Arc’It AI turns useful ideas and stubborn workflows into focused software."
+    />
+    <title>Arc’It AI — Preview 02</title>
+    <style>
+      @font-face {
+        font-family: "Geist Sans";
+        src: url("../arcitai-shared/assets/fonts/geist-sans-variable.woff2")
+          format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("../arcitai-shared/assets/fonts/geist-mono-variable.woff2")
+          format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Pixel";
+        src: url("../arcitai-shared/assets/fonts/geist-pixel-square.woff2")
+          format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      :root {
+        --background: #f3ead7;
+        --surface: #fffaf0;
+        --ink: #172326;
+        --ink-soft: #626b66;
+        --ink-strong: #0b1813;
+        --primary: #146e59;
+        --border: #d8cfbc;
+        --sun: #e7bf3f;
+        --lavender: #7b6bc2;
+        --success: #426b4b;
+        --error: #b42318;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--background);
+      }
+
+      html.modal-open {
+        overflow: hidden;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--background);
+        font-family: "Geist Sans", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body.modal-open {
+        position: fixed;
+        inset-inline: 0;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 4px;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .page {
+        width: min(calc(100% - 36px), 760px);
+        margin-inline: auto;
+      }
+
+      .mono,
+      .status,
+      .action,
+      .text-link,
+      .video-meta,
+      .case-kicker,
+      .case-link,
+      .principle,
+      .field > span,
+      legend,
+      .form-message,
+      .footer-meta,
+      .dialog-kicker {
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 11px;
+        font-weight: 550;
+        line-height: 1.35;
+        letter-spacing: 0.035em;
+      }
+
+      .brand-header {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        min-height: 126px;
+        place-items: center;
+        padding-top: 24px;
+      }
+
+      .brand-seal {
+        display: grid;
+        width: 78px;
+        height: 78px;
+        place-items: center;
+        border: 1px solid color-mix(in srgb, var(--primary) 42%, var(--border));
+        border-radius: 18px;
+        background: color-mix(in srgb, var(--surface) 82%, transparent);
+        box-shadow: inset 0 0 0 5px var(--background);
+        text-decoration: none;
+      }
+
+      .brand-seal img {
+        width: 44px;
+        height: 44px;
+      }
+
+      .brand-seal span {
+        margin-top: -7px;
+        font-family: "Geist Pixel", monospace;
+        font-size: 9px;
+        letter-spacing: -0.02em;
+      }
+
+      .project-dock {
+        position: fixed;
+        z-index: 20;
+        top: 22px;
+        right: 24px;
+      }
+
+      .action {
+        display: inline-flex;
+        min-height: 46px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 12px 15px;
+        border: 0;
+        border-radius: 10px;
+        color: var(--surface);
+        background: var(--ink-strong);
+        box-shadow: 0 8px 22px rgba(23, 49, 58, 0.12);
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .action:hover {
+        background: #21434c;
+      }
+
+      .action-sun {
+        color: var(--surface);
+        background: var(--primary);
+        box-shadow: 0 8px 22px rgba(11, 24, 19, 0.14);
+      }
+
+      .action-sun:hover {
+        background: #1a8068;
+      }
+
+      .hero {
+        position: relative;
+        z-index: 1;
+        isolation: isolate;
+        min-height: 690px;
+        padding: 64px 0 0;
+        text-align: center;
+      }
+
+      .hero::before {
+        position: absolute;
+        z-index: -1;
+        top: -170px;
+        left: 50%;
+        width: min(1440px, 100vw);
+        height: 700px;
+        transform: translateX(-50%);
+        opacity: 0.28;
+        background: url("../arcitai-shared/assets/arcitai-panorama-v7.jpg")
+          center 54% / cover;
+        filter: saturate(1.04) contrast(0.94);
+        mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          rgba(0, 0, 0, 0.84) 44%,
+          transparent 94%
+        );
+        content: "";
+        pointer-events: none;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        padding: 5px 9px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: var(--ink-soft);
+        background: color-mix(in srgb, var(--surface) 78%, transparent);
+      }
+
+      .status::before {
+        width: 6px;
+        height: 6px;
+        border-radius: 2px;
+        background: var(--sun);
+        content: "";
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 700px;
+        margin: 0 auto 20px;
+        font-family:
+          Iowan Old Style,
+          Baskerville,
+          Georgia,
+          serif;
+        font-size: clamp(50px, 7.2vw, 72px);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.052em;
+      }
+
+      h1 em {
+        color: var(--primary);
+        font-style: normal;
+      }
+
+      .hero-copy {
+        max-width: 600px;
+        margin: 0 auto 25px;
+        color: var(--ink-soft);
+        font-size: 17px;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        margin-bottom: 34px;
+      }
+
+      .text-link {
+        padding: 8px 0;
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--ink-soft);
+      }
+
+      .text-link:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .video {
+        position: relative;
+        display: grid;
+        min-height: 430px;
+        overflow: hidden;
+        align-items: center;
+        border: 1px solid rgba(255, 250, 240, 0.16);
+        border-radius: 18px;
+        color: var(--surface);
+        background:
+          radial-gradient(
+            circle at 50% 32%,
+            rgba(20, 110, 89, 0.56),
+            transparent 44%
+          ),
+          #0b1813;
+        box-shadow: 0 28px 72px rgba(11, 24, 19, 0.2);
+      }
+
+      .video::after {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 250, 240, 0.07) 0,
+          transparent 34%,
+          rgba(255, 250, 240, 0.04) 100%
+        );
+        content: "";
+        pointer-events: none;
+      }
+
+      .video-meta {
+        position: absolute;
+        z-index: 2;
+        inset: 15px 17px auto;
+        display: flex;
+        justify-content: space-between;
+        color: var(--surface);
+      }
+
+      .video-title {
+        position: relative;
+        z-index: 2;
+        max-width: 560px;
+        margin: 48px auto 12px;
+        color: var(--surface);
+        font-size: clamp(31px, 4vw, 46px);
+        font-weight: 640;
+        line-height: 1;
+        letter-spacing: -0.046em;
+        text-align: center;
+      }
+
+      .video-copy {
+        position: relative;
+        z-index: 2;
+        max-width: 490px;
+        margin: 0 auto;
+        padding: 0 20px;
+        color: rgba(255, 250, 240, 0.72);
+        text-align: center;
+      }
+
+      .play {
+        position: relative;
+        z-index: 3;
+        display: grid;
+        width: max-content;
+        min-height: 46px;
+        margin: 24px auto 0;
+        padding: 10px 14px;
+        grid-auto-flow: column;
+        gap: 10px;
+        place-items: center;
+        border: 1px solid rgba(255, 250, 240, 0.28);
+        border-radius: 10px;
+        color: var(--surface);
+        background: rgba(255, 250, 240, 0.08);
+        cursor: pointer;
+      }
+
+      .play:hover {
+        background: rgba(255, 250, 240, 0.16);
+      }
+
+      .play svg {
+        width: 13px;
+        margin-left: 2px;
+      }
+
+      .work {
+        padding-top: 76px;
+      }
+
+      .section-intro {
+        max-width: 630px;
+        margin: 0 auto 28px;
+        text-align: center;
+      }
+
+      .section-intro .mono {
+        display: block;
+        margin-bottom: 13px;
+        color: var(--primary);
+        text-transform: uppercase;
+      }
+
+      .section-intro h2 {
+        margin-bottom: 15px;
+        font-family:
+          Iowan Old Style,
+          Baskerville,
+          Georgia,
+          serif;
+        font-size: clamp(38px, 6vw, 56px);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.048em;
+      }
+
+      .section-intro p {
+        margin-bottom: 0;
+        color: var(--ink-soft);
+      }
+
+      .featured-case {
+        display: grid;
+        grid-template-columns: 0.82fr 1.18fr;
+        min-height: 330px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: color-mix(in srgb, var(--surface) 72%, var(--background));
+      }
+
+      .featured-copy {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 36px 28px;
+      }
+
+      .case-kicker {
+        margin-bottom: 18px;
+        color: var(--primary);
+      }
+
+      .featured-copy h3 {
+        margin-bottom: 13px;
+        font-size: 32px;
+        font-weight: 650;
+        line-height: 1;
+        letter-spacing: -0.045em;
+      }
+
+      .featured-copy p {
+        margin-bottom: 24px;
+        color: var(--ink-soft);
+      }
+
+      .case-link {
+        display: inline-flex;
+        gap: 8px;
+        padding-bottom: 4px;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+      }
+
+      .case-link:hover {
+        color: var(--primary);
+      }
+
+      .featured-image {
+        min-height: 330px;
+        background: url("../arcitai-shared/assets/arcitai-world.jpg") 54%
+          center / cover;
+      }
+
+      .case-notes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .case-note {
+        position: relative;
+        min-height: 168px;
+        padding: 26px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: color-mix(in srgb, var(--surface) 70%, var(--background));
+      }
+
+      .case-note h3 {
+        max-width: 260px;
+        margin: 10px 0 11px;
+        font-size: 23px;
+        font-weight: 640;
+        line-height: 1.03;
+        letter-spacing: -0.035em;
+      }
+
+      .case-note p {
+        margin: 0;
+        padding-right: 30px;
+        color: var(--ink-soft);
+        font-size: 14px;
+      }
+
+      .case-note > a {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        text-decoration: none;
+      }
+
+      .case-note > a:hover {
+        color: var(--surface);
+        background: var(--ink-strong);
+        border-color: var(--ink-strong);
+      }
+
+      .onboard {
+        display: grid;
+        grid-template-columns: 0.86fr 1.14fr;
+        align-items: end;
+        gap: 42px;
+        padding: 110px 0 80px;
+        scroll-margin-top: 28px;
+      }
+
+      .onboard-copy {
+        padding-bottom: 26px;
+      }
+
+      .onboard-copy .mono {
+        display: block;
+        margin-bottom: 16px;
+        color: var(--primary);
+      }
+
+      .onboard-copy h2 {
+        margin-bottom: 22px;
+        font-family:
+          Iowan Old Style,
+          Baskerville,
+          Georgia,
+          serif;
+        font-size: clamp(38px, 5.2vw, 52px);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+
+      .onboard-copy > p {
+        margin-bottom: 28px;
+        color: var(--ink-soft);
+      }
+
+      .principles {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .principle {
+        display: flex;
+        gap: 11px;
+        padding: 13px 0;
+        color: var(--ink-soft);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .principle::before {
+        color: var(--lavender);
+        content: "◇";
+      }
+
+      .intake-card {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--surface);
+        box-shadow: 0 20px 55px rgba(23, 49, 58, 0.1);
+      }
+
+      .intake-status {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 12px 16px;
+        color: var(--ink-soft);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .intake-status::before {
+        width: 6px;
+        height: 6px;
+        border-radius: 2px;
+        background: var(--sun);
+        content: "";
+      }
+
+      .intake-form {
+        display: grid;
+        gap: 14px;
+        padding: 24px;
+      }
+
+      .intake-form h3 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 640;
+        line-height: 1.05;
+        letter-spacing: -0.035em;
+      }
+
+      .intake-form > p {
+        margin: -4px 0 4px;
+        color: var(--ink-soft);
+        font-size: 14px;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .field {
+        display: grid;
+        min-width: 0;
+        gap: 7px;
+      }
+
+      .field-wide,
+      .budget-field,
+      .form-footer {
+        grid-column: 1 / -1;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        min-height: 48px;
+        padding: 11px 13px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--ink);
+        background: var(--surface);
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 1px;
+        border-color: transparent;
+      }
+
+      textarea {
+        min-height: 132px;
+        resize: vertical;
+      }
+
+      .intake-form .action {
+        width: 100%;
+      }
+
+      .form-note {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 10px;
+        text-align: center;
+      }
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 28px 0 38px;
+        color: var(--ink-soft);
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-brand {
+        font-family: "Geist Pixel", monospace;
+        color: var(--ink);
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 16px;
+      }
+
+      .footer-links a {
+        text-decoration: none;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+
+      dialog {
+        width: min(880px, calc(100% - 32px));
+        max-height: calc(100svh - 32px);
+        padding: 0;
+        overflow: auto;
+        border: 1px solid rgba(23, 49, 58, 0.16);
+        border-radius: 20px;
+        color: var(--ink);
+        background: var(--background);
+        box-shadow: 0 30px 100px rgba(10, 26, 31, 0.34);
+      }
+
+      dialog::backdrop {
+        background: rgba(8, 22, 26, 0.62);
+        backdrop-filter: blur(5px);
+      }
+
+      .dialog-shell {
+        padding: clamp(24px, 4vw, 44px);
+      }
+
+      .dialog-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 22px;
+        margin-bottom: 30px;
+      }
+
+      .dialog-kicker {
+        margin-bottom: 10px;
+        color: var(--primary);
+      }
+
+      .dialog-header h2 {
+        max-width: 630px;
+        margin: 0;
+        font-family:
+          Iowan Old Style,
+          Baskerville,
+          Georgia,
+          serif;
+        font-size: clamp(38px, 5vw, 58px);
+        font-weight: 400;
+        line-height: 0.97;
+        letter-spacing: -0.052em;
+      }
+
+      .dialog-close {
+        display: grid;
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .dialog-close:hover {
+        color: var(--surface);
+        background: var(--ink-strong);
+      }
+
+      .film-steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-block: 1px solid var(--border);
+      }
+
+      .film-step {
+        padding: 26px 24px 28px 0;
+      }
+
+      .film-step + .film-step {
+        padding-left: 24px;
+        border-left: 1px solid var(--border);
+      }
+
+      .film-step .mono {
+        display: block;
+        margin-bottom: 34px;
+        color: var(--primary);
+      }
+
+      .film-step h3 {
+        margin-bottom: 10px;
+        font-size: 22px;
+        font-weight: 640;
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+      }
+
+      .film-step p {
+        margin: 0;
+        color: var(--ink-soft);
+      }
+
+      .film-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+        padding-top: 26px;
+      }
+
+      .film-footer p {
+        max-width: 490px;
+        margin: 0;
+        color: var(--ink-soft);
+      }
+
+      .inquiry-intro {
+        max-width: 620px;
+        margin: -12px 0 28px;
+        color: var(--ink-soft);
+      }
+
+      .inquiry-form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .budget-field {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      legend {
+        margin-bottom: 8px;
+      }
+
+      .budget-options {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+
+      .budget-option {
+        position: relative;
+      }
+
+      .budget-option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .budget-option span {
+        display: grid;
+        min-height: 50px;
+        padding: 9px;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--ink-soft);
+        background: var(--surface);
+        cursor: pointer;
+      }
+
+      .budget-option input:checked + span {
+        color: var(--surface);
+        background: var(--ink-strong);
+        border-color: var(--ink-strong);
+      }
+
+      .budget-option input:focus-visible + span {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .form-footer {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 18px;
+        padding-top: 4px;
+      }
+
+      .form-message {
+        margin: 0;
+        color: var(--ink-soft);
+      }
+
+      .form-message[data-state="error"] {
+        color: var(--error);
+      }
+
+      .form-message[data-state="success"] {
+        color: var(--success);
+      }
+
+      @media (max-width: 1040px) {
+        .project-dock {
+          top: auto;
+          right: 10px;
+          bottom: 10px;
+          left: 10px;
+        }
+
+        .project-dock .action {
+          width: 100%;
+          min-height: 52px;
+        }
+
+        body {
+          padding-bottom: 68px;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .page {
+          width: min(calc(100% - 24px), 760px);
+        }
+
+        .brand-header {
+          min-height: 112px;
+        }
+
+        .brand-seal {
+          width: 68px;
+          height: 68px;
+        }
+
+        .brand-seal img {
+          width: 38px;
+          height: 38px;
+        }
+
+        .hero {
+          padding-top: 36px;
+        }
+
+        h1 {
+          font-size: clamp(45px, 13vw, 61px);
+        }
+
+        .hero-copy {
+          font-size: 16px;
+        }
+
+        .hero-actions {
+          align-items: center;
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 26px;
+        }
+
+        .video-title {
+          max-width: 390px;
+          margin-top: 52px;
+          font-size: 26px;
+        }
+
+        .play {
+          margin-top: 18px;
+        }
+
+        .work {
+          padding-top: 66px;
+        }
+
+        .featured-case,
+        .case-notes,
+        .onboard {
+          grid-template-columns: 1fr;
+        }
+
+        .featured-image {
+          min-height: 260px;
+          grid-row: 1;
+        }
+
+        .featured-copy {
+          padding: 28px 22px;
+        }
+
+        .onboard {
+          gap: 28px;
+          padding: 82px 0 64px;
+        }
+
+        .onboard-copy {
+          padding: 0;
+        }
+
+        footer {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        dialog {
+          width: 100%;
+          max-width: none;
+          max-height: 100svh;
+          margin: 0;
+          border: 0;
+          border-radius: 0;
+        }
+
+        .dialog-shell {
+          min-height: 100svh;
+          padding: 22px 15px 82px;
+        }
+
+        .film-steps,
+        .inquiry-form {
+          grid-template-columns: 1fr;
+        }
+
+        .film-step {
+          padding: 22px 0;
+        }
+
+        .film-step + .film-step {
+          padding-left: 0;
+          border-top: 1px solid var(--border);
+          border-left: 0;
+        }
+
+        .film-step .mono {
+          margin-bottom: 14px;
+        }
+
+        .film-footer {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .film-footer .action {
+          width: 100%;
+        }
+
+        .field-wide,
+        .budget-field,
+        .form-footer {
+          grid-column: auto;
+        }
+
+        .budget-options {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .form-footer {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 440px) {
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="project-dock action action-sun" href="#onboard">
+      <span>Start a project</span><span aria-hidden="true">↘</span>
+    </a>
+
+    <header class="brand-header page">
+      <a class="brand-seal" href="#top" aria-label="Arc’It AI home">
+        <img
+          src="../arcitai-shared/assets/arcitai-mark-cultivated.svg"
+          alt=""
+        />
+        <span>ARC’IT AI</span>
+      </a>
+    </header>
+
+    <main class="page" id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="status">Selected capacity · taking on one new build</p>
+        <h1 id="hero-title">
+          Turn useful ideas into software <em>people actually use.</em>
+        </h1>
+        <p class="hero-copy">
+          Arc’It finds where AI creates real leverage, then designs and builds
+          the product around it—from rough workflow to working system.
+        </p>
+        <div class="hero-actions">
+          <a class="action" href="#onboard">
+            <span>Start a project</span><span aria-hidden="true">↘</span>
+          </a>
+          <a class="text-link" href="cases.html">View case studies ↗</a>
+        </div>
+
+        <article class="video" aria-labelledby="video-title">
+          <div class="video-meta">
+            <span>FOUNDER VSL / ARC’IT AI</span><span>01:30–02:30</span>
+          </div>
+          <h2 class="video-title" id="video-title">
+            Gustav explains what Arc’It builds, who it is for, and why the
+            details matter.
+          </h2>
+          <p class="video-copy">
+            This frame is reserved for the real founder video, captions, and a
+            few restrained visuals—never a generated likeness or a generic
+            product montage.
+          </p>
+          <button
+            class="play"
+            type="button"
+            aria-label="Open founder VSL structure"
+            data-open-film
+          >
+            <svg viewBox="0 0 18 20" aria-hidden="true">
+              <path fill="currentColor" d="M0 0 18 10 0 20Z" />
+            </svg>
+            <span>Preview the VSL structure</span>
+          </button>
+        </article>
+      </section>
+
+      <section class="work" aria-labelledby="work-title">
+        <div class="section-intro">
+          <span class="mono">Public work / no invented proof</span>
+          <h2 id="work-title">Systems that started as unfinished ideas.</h2>
+          <p>
+            A small selection of public software. The repositories remain the
+            source of truth; private client work stays private by agreement.
+          </p>
+        </div>
+
+        <article class="featured-case">
+          <div class="featured-copy">
+            <span class="case-kicker">01 / Developer tooling</span>
+            <h3>Pi Desktop</h3>
+            <p>
+              A desktop workspace for seeing, directing, and controlling coding
+              agents without reducing the work to terminal output.
+            </p>
+            <a class="case-link" href="cases.html#pi-desktop"
+              >Read the case note ↗</a
+            >
+          </div>
+          <div
+            class="featured-image"
+            role="img"
+            aria-label="Arc’It software world with a large architectural A and modular systems"
+          ></div>
+        </article>
+
+        <div class="case-notes">
+          <article class="case-note">
+            <span class="case-kicker">02 / Agent workflow</span>
+            <h3>Agentic Video Editor</h3>
+            <p>A repeatable local production system for AI-assisted video.</p>
+            <a
+              href="cases.html#agentic-video-editor"
+              aria-label="Read the Agentic Video Editor case note"
+              >↗</a
+            >
+          </article>
+          <article class="case-note">
+            <span class="case-kicker">03 / Design infrastructure</span>
+            <h3>DESIGN.md Workbench</h3>
+            <p>Portable design direction that coding agents can implement.</p>
+            <a
+              href="cases.html#design-md-workbench"
+              aria-label="Read the DESIGN.md Workbench case note"
+              >↗</a
+            >
+          </article>
+        </div>
+      </section>
+
+      <section class="onboard" id="onboard" aria-labelledby="onboard-title">
+        <div class="onboard-copy">
+          <span class="mono">Project inquiry</span>
+          <h2 id="onboard-title">Start with the rough version.</h2>
+          <p>
+            Share the problem before polishing the pitch. The first step is
+            deciding whether software—and AI—should be part of the answer.
+          </p>
+          <ul class="principles">
+            <li class="principle">Direct access to the person building it</li>
+            <li class="principle">Useful AI only, not AI decoration</li>
+            <li class="principle">A system your team can keep extending</li>
+          </ul>
+        </div>
+
+        <div class="intake-card">
+          <div class="intake-status mono">Step 1 / Project fit</div>
+          <form class="intake-form" id="intake-form" novalidate>
+            <h3>What should exist?</h3>
+            <p>
+              A few details are enough to start. Nothing is sent in this
+              preview.
+            </p>
+            <div class="field-row">
+              <label class="field">
+                <span>First name</span>
+                <input name="firstName" autocomplete="given-name" required />
+              </label>
+              <label class="field">
+                <span>Last name</span>
+                <input name="lastName" autocomplete="family-name" required />
+              </label>
+            </div>
+            <label class="field">
+              <span>Work email</span>
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label class="field">
+              <span>Project type</span>
+              <select name="projectType" required>
+                <option value="" selected disabled>Choose a direction</option>
+                <option>Product or SaaS</option>
+                <option>Internal tool</option>
+                <option>Automation or agent</option>
+                <option>Prototype</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+            <button class="action action-sun" type="submit">
+              <span>Continue the inquiry</span><span aria-hidden="true">→</span>
+            </button>
+            <p class="form-note">
+              Preview only · production will connect to the Arc’It inquiry
+              workflow
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page">
+      <span class="footer-brand">ARC’IT AI</span>
+      <nav class="footer-links footer-meta" aria-label="Footer">
+        <a href="mailto:hello@arcitai.com">Email</a>
+        <a
+          href="https://github.com/gustavonline"
+          target="_blank"
+          rel="noreferrer"
+          >GitHub ↗</a
+        >
+        <a
+          href="https://www.youtube.com/@gustavonline"
+          target="_blank"
+          rel="noreferrer"
+          >YouTube ↗</a
+        >
+        <span>© 2026</span>
+      </nav>
+    </footer>
+
+    <dialog id="film-dialog" aria-labelledby="film-title">
+      <div class="dialog-shell">
+        <header class="dialog-header">
+          <div>
+            <p class="dialog-kicker">Studio overview / concept</p>
+            <h2 id="film-title">Useful AI starts with a useful system.</h2>
+          </div>
+          <button
+            class="dialog-close"
+            type="button"
+            aria-label="Close studio overview"
+            data-close-dialog
+          >
+            ×
+          </button>
+        </header>
+        <ol class="film-steps">
+          <li class="film-step">
+            <span class="mono">00:00 / Find</span>
+            <h3>Find the leverage.</h3>
+            <p>
+              Clarify the job, the real constraint, and where AI can make a
+              measurable difference.
+            </p>
+          </li>
+          <li class="film-step">
+            <span class="mono">00:28 / Build</span>
+            <h3>Build the system.</h3>
+            <p>
+              Shape the product, interface, model behavior, and infrastructure
+              as one coherent piece of software.
+            </p>
+          </li>
+          <li class="film-step">
+            <span class="mono">01:04 / Extend</span>
+            <h3>Leave it usable.</h3>
+            <p>
+              Deliver something people can operate, understand, and continue
+              improving after the first version.
+            </p>
+          </li>
+        </ol>
+        <div class="film-footer">
+          <p>
+            This demonstrates the structure for a future captioned studio film;
+            it is not presented as finished production footage.
+          </p>
+          <button class="action" type="button" data-film-to-onboard>
+            <span>Start a project</span><span aria-hidden="true">↘</span>
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="inquiry-dialog" aria-labelledby="inquiry-title">
+      <div class="dialog-shell">
+        <header class="dialog-header">
+          <div>
+            <p class="dialog-kicker">Project inquiry / step 2</p>
+            <h2 id="inquiry-title">Give the idea enough context.</h2>
+          </div>
+          <button
+            class="dialog-close"
+            type="button"
+            aria-label="Close project inquiry"
+            data-close-dialog
+          >
+            ×
+          </button>
+        </header>
+        <p class="inquiry-intro">
+          The production form will connect to the Arc’It project database. This
+          preview validates locally and sends nothing.
+        </p>
+        <form class="inquiry-form" id="inquiry-form" novalidate>
+          <label class="field">
+            <span>First name</span>
+            <input name="firstName" autocomplete="given-name" required />
+          </label>
+          <label class="field">
+            <span>Last name</span>
+            <input name="lastName" autocomplete="family-name" required />
+          </label>
+          <label class="field">
+            <span>Work email</span>
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label class="field">
+            <span>Company</span>
+            <input name="company" autocomplete="organization" required />
+          </label>
+          <label class="field field-wide">
+            <span>Company website</span>
+            <input
+              name="companyWebsite"
+              type="url"
+              placeholder="https://"
+              autocomplete="url"
+              required
+            />
+          </label>
+          <label class="field">
+            <span>Your role</span>
+            <select name="role" required>
+              <option value="" selected disabled>Select your role</option>
+              <option>Founder / CEO</option>
+              <option>Operations</option>
+              <option>Product</option>
+              <option>Engineering / Data</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Company size</span>
+            <select name="companySize" required>
+              <option value="" selected disabled>Number of employees</option>
+              <option>1–10</option>
+              <option>11–50</option>
+              <option>51–100</option>
+              <option>101–500</option>
+              <option>500+</option>
+            </select>
+          </label>
+          <label class="field field-wide">
+            <span>Project type</span>
+            <select name="projectType" required>
+              <option value="" selected disabled>Choose a direction</option>
+              <option>Product or SaaS</option>
+              <option>Internal tool</option>
+              <option>Automation or agent</option>
+              <option>Prototype</option>
+              <option>Not sure yet</option>
+            </select>
+          </label>
+          <fieldset class="budget-field">
+            <legend>Budget range</legend>
+            <div class="budget-options">
+              <label class="budget-option">
+                <input name="budget" type="radio" value="15–50k" required />
+                <span>$15k–$50k</span>
+              </label>
+              <label class="budget-option">
+                <input name="budget" type="radio" value="50–150k" />
+                <span>$50k–$150k</span>
+              </label>
+              <label class="budget-option">
+                <input name="budget" type="radio" value="150k+" />
+                <span>$150k+</span>
+              </label>
+              <label class="budget-option">
+                <input name="budget" type="radio" value="Unsure" />
+                <span>Not sure yet</span>
+              </label>
+            </div>
+          </fieldset>
+          <label class="field field-wide">
+            <span>Tell me about your project</span>
+            <textarea
+              name="context"
+              placeholder="What should exist, what already exists, and what would make this useful?"
+              required
+            ></textarea>
+          </label>
+          <div class="form-footer">
+            <button class="action" type="submit">
+              <span>Complete preview</span><span aria-hidden="true">↗</span>
+            </button>
+            <p class="form-message" id="form-message" aria-live="polite">
+              Preview only — prefer email? hello@arcitai.com
+            </p>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <script>
+      const filmDialog = document.querySelector("#film-dialog");
+      const inquiryDialog = document.querySelector("#inquiry-dialog");
+      const intakeForm = document.querySelector("#intake-form");
+      const inquiryForm = document.querySelector("#inquiry-form");
+      const formMessage = document.querySelector("#form-message");
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+      let lockedScrollY = 0;
+      let lastTrigger = null;
+
+      const lockScroll = () => {
+        lockedScrollY = window.scrollY;
+        document.documentElement.classList.add("modal-open");
+        document.body.style.top = `-${lockedScrollY}px`;
+        document.body.classList.add("modal-open");
+      };
+
+      const unlockScroll = () => {
+        document.documentElement.classList.remove("modal-open");
+        document.body.classList.remove("modal-open");
+        document.body.style.removeProperty("top");
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo(0, lockedScrollY);
+        document.documentElement.style.removeProperty("scroll-behavior");
+      };
+
+      const openDialog = (dialog, trigger) => {
+        lastTrigger = trigger;
+        lockScroll();
+        dialog.showModal();
+        window.requestAnimationFrame(() =>
+          dialog.querySelector("button, input, select, textarea")?.focus(),
+        );
+      };
+
+      const transferIntakeValues = () => {
+        ["firstName", "lastName", "email", "projectType"].forEach((name) => {
+          const source = intakeForm.elements.namedItem(name);
+          const target = inquiryForm.elements.namedItem(name);
+          if (source && target) target.value = source.value;
+        });
+      };
+
+      document
+        .querySelector("[data-open-film]")
+        .addEventListener("click", (event) => {
+          openDialog(filmDialog, event.currentTarget);
+        });
+
+      document
+        .querySelector("[data-film-to-onboard]")
+        .addEventListener("click", () => {
+          filmDialog.addEventListener(
+            "close",
+            () => {
+              document.querySelector("#onboard").scrollIntoView({
+                behavior: reducedMotion.matches ? "auto" : "smooth",
+              });
+              document.querySelector("#intake-form input").focus();
+            },
+            { once: true },
+          );
+          filmDialog.close();
+        });
+
+      document.querySelectorAll("dialog").forEach((dialog) => {
+        dialog
+          .querySelector("[data-close-dialog]")
+          .addEventListener("click", () => dialog.close());
+
+        dialog.addEventListener("click", (event) => {
+          if (event.target === dialog) dialog.close();
+        });
+
+        dialog.addEventListener("close", () => {
+          if (document.querySelector("dialog[open]")) return;
+          unlockScroll();
+          lastTrigger?.focus();
+        });
+      });
+
+      intakeForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const invalid = [...intakeForm.querySelectorAll("[required]")].find(
+          (control) => !control.validity.valid,
+        );
+
+        if (invalid) {
+          invalid.focus();
+          return;
+        }
+
+        transferIntakeValues();
+        openDialog(inquiryDialog, intakeForm.querySelector("button"));
+      });
+
+      inquiryForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const invalid = [...inquiryForm.querySelectorAll("[required]")].find(
+          (control) => !control.validity.valid,
+        );
+
+        if (invalid) {
+          formMessage.textContent =
+            "Complete the required fields so the project has enough context.";
+          formMessage.dataset.state = "error";
+          invalid.focus();
+          return;
+        }
+
+        formMessage.textContent =
+          "Preview complete — production will send this inquiry.";
+        formMessage.dataset.state = "success";
+      });
+    </script>
+  </body>
+</html>

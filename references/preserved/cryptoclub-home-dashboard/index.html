@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="da" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta
+      name="description"
+      content="Crypto Club Home — ét roligt overblik over marked, læring og AI-værktøjer."
+    />
+    <link rel="icon" href="assets/favicon-32x32.png" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <title>Crypto Club — Home</title>
+  </head>
+  <body data-page="dashboard">
+    <div class="app" id="app-shell"></div>
+    <script src="assets/mock-data.js?v=20260713"></script>
+    <script src="assets/app.js?v=20260713"></script>
+    <script>
+      const UI = CryptoClubUI;
+      const { portfolio: p, classroom: c, chat } = CryptoClubMock;
+
+      const launchIcon = (name) =>
+        ({
+          ai: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a6.5 6.5 0 0 0-3.8 11.8L7.5 20l4.2-2a6.5 6.5 0 1 0 .3-14.5Z"/><path d="M9.5 10.3h.01M14.5 10.3h.01M9.6 13.2c1.5 1 3.3 1 4.8 0"/></svg>`,
+          portfolio: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V9m5 9V5m5 13v-6m5 6V3"/><path d="m4 6 5-3 5 5 5-5"/></svg>`,
+          classroom: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 8.5 9-4.5 9 4.5-9 4.5-9-4.5Z"/><path d="M6 10v6c2.9 2.4 9.1 2.4 12 0v-6"/></svg>`,
+        })[name];
+
+      function renderDashboard() {
+        document.getElementById("page-content").innerHTML = `
+          <header class="home-head">
+            <div>
+              <p class="eyebrow">Lørdag · 11. juli</p>
+              <h1>God aften, <span>Test bruger</span></h1>
+              <p>Her er dit Crypto Club-overblik.</p>
+            </div>
+            <div class="head-actions">
+              <span class="sync-state"><i></i> Data opdateret 20:58</span>
+              <button class="icon-btn mobile-menu" id="mobileMenu" type="button" aria-label="Åbn navigation">${UI.icons.menu}</button>
+            </div>
+          </header>
+
+          <section class="launch-section" aria-labelledby="launch-title">
+            <div class="section-title-row">
+              <div><p class="eyebrow">Dit økosystem</p><h2 id="launch-title">Fortsæt hvor du slap</h2></div>
+              <button class="text-action" type="button" id="openAllApps">Alle apps ${UI.icons.arrow}</button>
+            </div>
+            <div class="launch-grid">
+              <a class="launch-card launch-primary" href="https://app.cryptoclub.dk" target="_blank" rel="noopener">
+                <span class="launch-icon">${launchIcon("ai")}</span>
+                <span class="launch-copy"><small>AI-assistent</small><strong>AI Matthæus</strong><span>AI-assistent &amp; specialister</span></span>
+                <span class="launch-arrow">${UI.icons.arrow}</span>
+              </a>
+              <a class="launch-card" href="portfolio.html">
+                <span class="launch-icon">${launchIcon("portfolio")}</span>
+                <span class="launch-copy"><small>Formue</small><strong>Portfolio</strong><span>${UI.fmtDkk(p.totalDkk)} samlet</span></span>
+                <span class="launch-arrow">${UI.icons.arrow}</span>
+              </a>
+              <a class="launch-card" href="classroom.html">
+                <span class="launch-icon">${launchIcon("classroom")}</span>
+                <span class="launch-copy"><small>Læring</small><strong>Classroom</strong><span>${c.activeModules} aktive forløb</span></span>
+                <span class="launch-arrow">${UI.icons.arrow}</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="intel-strip" aria-labelledby="intel-strip-title">
+            <div class="intel-strip-head"><div><p class="eyebrow">Fra Crypto Club Labs</p><h2 id="intel-strip-title">Dagens market intelligence</h2></div><a class="text-action" href="intelligence.html">Åbn hele overblikket ${UI.icons.arrow}</a></div>
+            <div class="intel-strip-grid">
+              <a href="intelligence.html#heatmaps"><span class="intel-strip-icon heat">${UI.icons.signal}</span><span><small>Heatmaps</small><strong>BTC · 51/100</strong><em>Neutral sentiment</em></span><b>5 markeder</b>${UI.icons.arrow}</a>
+              <a href="intelligence.html#scanner"><span class="intel-strip-icon scanner">${UI.icons.search}</span><span><small>AI Market Scanner</small><strong>UNI &amp; AAVE godkendt</strong><em>2 af 14 aktiver</em></span><b class="positive">2 matches</b>${UI.icons.arrow}</a>
+              <a href="intelligence.html#algo"><span class="intel-strip-icon algo">${launchIcon("portfolio")}</span><span><small>Algo Signals</small><strong>BTC / USD · SÆLG</strong><em>Let signal · styrke 30%</em></span><b class="negative">Aktivt</b>${UI.icons.arrow}</a>
+            </div>
+          </section>
+
+          <div class="dashboard-grid">
+            <section class="panel market-panel" aria-labelledby="market-title">
+              <div class="panel-head">
+                <div><p class="eyebrow">Markedspuls</p><h2 id="market-title">Dagens markedsbillede</h2></div>
+                <a class="text-action" href="intelligence.html">Se analyse ${UI.icons.arrow}</a>
+              </div>
+              <div class="market-hero">
+                <div class="market-score">
+                  <span class="regime-dot"></span>
+                  <div><small>Markedsregime</small><strong>${p.regime}</strong><span>Moderat positivt momentum</span></div>
+                </div>
+                <div class="fear-score">
+                  <small>Fear &amp; Greed</small>
+                  <div><strong>${p.fearGreed}</strong><span>${p.fearLabel}</span></div>
+                  <div class="fear-track"><i style="left:${p.fearGreed}%"></i></div>
+                </div>
+              </div>
+              <div class="asset-list" role="table" aria-label="Markedsudvikling">
+                <div class="asset-row asset-head" role="row"><span>Aktiv</span><span>Pris</span><span>7 dage</span><span>Signal</span></div>
+                <div class="asset-row" role="row"><span><i class="coin btc">₿</i><b>Bitcoin</b><small>BTC</small></span><span>498.420 kr.</span><span class="positive">+5,2%</span><span><em class="status hold">Hold</em></span></div>
+                <div class="asset-row" role="row"><span><i class="coin eth">◆</i><b>Ethereum</b><small>ETH</small></span><span>24.910 kr.</span><span class="positive">+3,1%</span><span><em class="status watch">Følg</em></span></div>
+                <div class="asset-row" role="row"><span><i class="coin sol">S</i><b>Solana</b><small>SOL</small></span><span>1.042 kr.</span><span class="negative">−1,4%</span><span><em class="status wait">Afvent</em></span></div>
+              </div>
+              <p class="data-note">Previewdata · ikke finansiel rådgivning</p>
+            </section>
+
+            <aside class="side-stack">
+              <section class="panel portfolio-panel" aria-labelledby="portfolio-title">
+                <div class="panel-head compact"><div><p class="eyebrow">Portfolio</p><h2 id="portfolio-title">Din udvikling</h2></div><a class="round-link" href="portfolio.html" aria-label="Åbn portfolio">${UI.icons.arrow}</a></div>
+                <div class="portfolio-total"><strong>${UI.fmtDkk(p.totalDkk)}</strong><span class="positive">+${p.change7d}% <small>seneste 7 dage</small></span></div>
+                <div class="mini-chart" id="portfolioSpark"></div>
+                <div class="chart-axis"><span>5. jul.</span><span>I dag</span></div>
+              </section>
+
+              <section class="panel learning-panel" aria-labelledby="learning-title">
+                <div class="panel-head compact"><div><p class="eyebrow">Classroom</p><h2 id="learning-title">Fortsæt dit forløb</h2></div><span class="progress-number">60%</span></div>
+                <a class="lesson-link" href="lesson.html?course=analyse">
+                  <span class="lesson-number">03</span>
+                  <span><strong>Tokenomics</strong><small>4-trins analyseframework · 12 min.</small></span>
+                  ${UI.icons.arrow}
+                </a>
+                <div class="progress"><span style="width:60%"></span></div>
+                <div class="progress-label"><span>6 af 10 lektioner</span><span>Fortsæt</span></div>
+              </section>
+            </aside>
+
+            <section class="panel activity-panel" aria-labelledby="activity-title">
+              <div class="panel-head"><div><p class="eyebrow">Seneste</p><h2 id="activity-title">Aktivitet i klubben</h2></div><a class="text-action" href="chat.html">Åbn chat ${UI.icons.arrow}</a></div>
+              <div class="activity-list">
+                <a href="chat.html#inner-circle" class="activity-item"><span class="activity-mark message">${UI.icons.chat}</span><span><strong>Ny makroopdatering i Inner Circle</strong><small>Risk On bekræftet — BTC performer stærkere end SPY.</small></span><time>18:42</time></a>
+                <a href="chat.html#heatmap" class="activity-item"><span class="activity-mark signal">${UI.icons.signal}</span><span><strong>Heatmap-signalet er klar</strong><small>Fear &amp; Greed er faldet til 42 siden i går.</small></span><time>08:15</time></a>
+                <a href="classroom.html#makro" class="activity-item"><span class="activity-mark lesson">${UI.icons.classroom}</span><span><strong>Nyt modul: Makro &amp; markedscyklus</strong><small>Forstå hvordan markedets regime påvirker din strategi.</small></span><time>I går</time></a>
+              </div>
+            </section>
+
+            <section class="panel event-panel" aria-labelledby="event-title">
+              <div class="event-date"><strong>14</strong><span>JUL</span></div>
+              <div><p class="eyebrow">Næste live</p><h2 id="event-title">Inner Circle</h2><span>Tirsdag kl. 19:30 · Makro &amp; portefølje</span></div>
+              <button class="btn btn-ghost" type="button" data-demo="Påmindelse til Inner Circle er tilføjet (preview)">Tilføj kalender</button>
+            </section>
+          </div>`;
+
+        document.getElementById("portfolioSpark").innerHTML =
+          UI.renderAreaChart(p.history7d, 420, 108);
+        document
+          .getElementById("openAllApps")
+          ?.addEventListener("click", () =>
+            document.getElementById("switcher")?.showModal(),
+          );
+        document
+          .getElementById("mobileMenu")
+          ?.addEventListener("click", () =>
+            document.querySelector(".sidebar")?.classList.toggle("is-open"),
+          );
+        UI.bindDemoActions(document.getElementById("page-content"));
+      }
+
+      UI.mountShell();
+      UI.bindShell();
+      renderDashboard();
+    </script>
+  </body>
+</html>

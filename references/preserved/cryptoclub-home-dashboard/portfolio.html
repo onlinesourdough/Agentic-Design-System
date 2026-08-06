@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="da" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="assets/favicon-32x32.png" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <title>CryptoClub Home — Portfolio</title>
+  </head>
+  <body data-page="portfolio">
+    <div class="app" id="app-shell"></div>
+    <script src="assets/mock-data.js?v=20260713"></script>
+    <script src="assets/app.js?v=20260713"></script>
+    <script>
+      const { portfolio: p } = CryptoClubMock;
+      const UI = CryptoClubUI;
+
+      function rowsHtml() {
+        return p.holdings
+          .map(
+            (h) => `<tr id="${h.symbol.toLowerCase()}">
+              <td><strong>${h.symbol}</strong><br/><small style="color:var(--muted)">${h.venue}</small></td>
+              <td class="meta">${h.amount}</td>
+              <td>${UI.fmtDkk(h.valueDkk)}</td>
+              <td style="color:${h.change7d >= 0 ? "var(--success)" : "var(--danger)"}">${h.change7d >= 0 ? "+" : ""}${h.change7d}%</td>
+            </tr>`,
+          )
+          .join("");
+      }
+
+      document.getElementById("app-shell");
+      UI.mountShell();
+      UI.bindShell();
+
+      document.getElementById("page-content").innerHTML = `
+        <header class="page-head">
+          <h1>Portfolio</h1>
+          <p>Home-modulet samler wallet/API-data og viser signaler fra køb/salg-softwaren og makro-agenten. Fremtidig fuld app: <code>portfolio.cryptoclub.dk</code>.</p>
+          <span class="env-tag">home.cryptoclub.dk/portfolio</span>
+        </header>
+
+        <div class="grid-2">
+          <article class="card">
+            <h2>Samlet værdi</h2>
+            <div class="metric"><strong>${UI.fmtDkk(p.totalDkk)}</strong><span>+${p.change7d}% (7d)</span></div>
+            <div class="chart-box" id="historyChart"></div>
+            <div class="actions">
+              <button class="btn btn-primary" type="button" data-demo="Wallet-flow: API-nøgle / read-only wallet (preview)">Tilslut wallet</button>
+              <button class="btn btn-ghost" type="button" data-demo="Import fra Nordnet, Lunar, Ledger (preview)">Tilføj konto</button>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Allokering</h2>
+            <div class="chart-box" id="donut" style="display:flex;justify-content:center"></div>
+            <p>Deployerbar kontant: <strong>${UI.fmtDkk(12850)}</strong> (5%) — matcher porteføljeregler i AI Matthæus · Portefølje.</p>
+            <a class="btn btn-primary" href="https://app.cryptoclub.dk" target="_blank" rel="noopener">Åbn AI Matthæus · Portefølje</a>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:12px">
+          <h2>Beholdning</h2>
+          <table class="table">
+            <thead><tr><th>Aktiv</th><th>Antal</th><th>Værdi</th><th>7d</th></tr></thead>
+            <tbody>${rowsHtml()}</tbody>
+          </table>
+        </article>
+
+        <article class="card" style="margin-top:12px">
+          <h2>Signaler &amp; makro</h2>
+          <div class="grid-2">
+            <div>
+              <p class="pill success">Regime: ${p.regime}</p>
+              <p style="margin-top:10px;color:var(--muted);font-size:13px">AI Matthæus · Makro vurderer BTC vs SPY og Fear &amp; Greed.</p>
+            </div>
+            <div>
+              <p class="pill warn">${p.signal.asset}: ${p.signal.action} · RSI ${p.signal.rsi}</p>
+              <p style="margin-top:10px;color:var(--muted);font-size:13px">${p.signal.source} · data via market-data-pipelines</p>
+            </div>
+          </div>
+        </article>`;
+
+      document.getElementById("historyChart").innerHTML = UI.renderSparkline(
+        p.history7d,
+        480,
+        140,
+        "#052B6D",
+      );
+      document.getElementById("donut").innerHTML = UI.renderDonut(
+        p.allocation,
+        160,
+      );
+      UI.bindDemoActions(document.getElementById("page-content"));
+
+      if (location.hash) {
+        const row = document.querySelector(location.hash);
+        row?.scrollIntoView({ behavior: "smooth", block: "center" });
+        row?.style && (row.style.outline = "2px solid var(--primary)");
+      }
+    </script>
+  </body>
+</html>

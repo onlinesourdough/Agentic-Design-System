@@ -1,0 +1,78 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 10 7"
+  fill="#2b1b12"
+  shape-rendering="crispEdges"
+>
+  <title>onlinesourdough large-pixel boule</title>
+  <desc>
+    A wide sourdough boule assembled from large square pixels with three diagonal
+    score cuts.
+  </desc>
+
+  <!-- Crown -->
+  <rect x="3.09" y="0.09" width="0.82" height="0.82" />
+  <rect x="4.09" y="0.09" width="0.82" height="0.82" />
+  <rect x="5.09" y="0.09" width="0.82" height="0.82" />
+  <rect x="6.09" y="0.09" width="0.82" height="0.82" />
+
+  <!-- Upper dome -->
+  <rect x="1.09" y="1.09" width="0.82" height="0.82" />
+  <rect x="2.09" y="1.09" width="0.82" height="0.82" />
+  <rect x="3.09" y="1.09" width="0.82" height="0.82" />
+  <rect x="4.09" y="1.09" width="0.82" height="0.82" />
+  <rect x="5.09" y="1.09" width="0.82" height="0.82" />
+  <rect x="6.09" y="1.09" width="0.82" height="0.82" />
+  <rect x="7.09" y="1.09" width="0.82" height="0.82" />
+  <rect x="8.09" y="1.09" width="0.82" height="0.82" />
+
+  <!-- Three stepped diagonal score cuts -->
+  <rect x="0.09" y="2.09" width="0.82" height="0.82" />
+  <rect x="1.09" y="2.09" width="0.82" height="0.82" />
+  <rect x="2.09" y="2.09" width="0.82" height="0.82" />
+  <rect x="4.09" y="2.09" width="0.82" height="0.82" />
+  <rect x="5.09" y="2.09" width="0.82" height="0.82" />
+  <rect x="7.09" y="2.09" width="0.82" height="0.82" />
+  <rect x="8.09" y="2.09" width="0.82" height="0.82" />
+
+  <rect x="0.09" y="3.09" width="0.82" height="0.82" />
+  <rect x="1.09" y="3.09" width="0.82" height="0.82" />
+  <rect x="3.09" y="3.09" width="0.82" height="0.82" />
+  <rect x="4.09" y="3.09" width="0.82" height="0.82" />
+  <rect x="6.09" y="3.09" width="0.82" height="0.82" />
+  <rect x="7.09" y="3.09" width="0.82" height="0.82" />
+  <rect x="9.09" y="3.09" width="0.82" height="0.82" />
+
+  <rect x="0.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="1.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="2.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="3.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="4.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="5.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="6.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="7.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="8.09" y="4.09" width="0.82" height="0.82" />
+  <rect x="9.09" y="4.09" width="0.82" height="0.82" />
+
+  <!-- Full lower crumb -->
+  <rect x="0.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="1.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="2.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="3.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="4.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="5.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="6.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="7.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="8.09" y="5.09" width="0.82" height="0.82" />
+  <rect x="9.09" y="5.09" width="0.82" height="0.82" />
+
+  <!-- Rounded base -->
+  <rect x="1.09" y="6.09" width="0.82" height="0.82" />
+  <rect x="2.09" y="6.09" width="0.82" height="0.82" />
+  <rect x="3.09" y="6.09" width="0.82" height="0.82" />
+  <rect x="4.09" y="6.09" width="0.82" height="0.82" />
+  <rect x="5.09" y="6.09" width="0.82" height="0.82" />
+  <rect x="6.09" y="6.09" width="0.82" height="0.82" />
+  <rect x="7.09" y="6.09" width="0.82" height="0.82" />
+  <rect x="8.09" y="6.09" width="0.82" height="0.82" />
+</svg>

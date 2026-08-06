@@ -44,7 +44,7 @@ for (const [format, file] of [
 
 writeFileSync(
   join(output, "HANDOFF.md"),
-  `# Design handoff\n\nSource: \`${relative(root, source)}\`\n\nCopy this directory into the receiving Solution or Power BI repository. That repository becomes the canonical owner. Revalidate behavior, accessibility, content, and tokens against its real implementation; this preview is not a runtime dependency.\n`,
+  `# Design handoff\n\nSource: \`${relative(root, source)}\`\n\nCopy this directory into the receiving project or repository. That destination becomes the canonical owner. Revalidate behavior, accessibility, content, and tokens against its real implementation; this preview is not a runtime dependency.\n`,
 );
 process.stdout.write(
   `${JSON.stringify({ success: true, source: relative(root, source), output: relative(root, output), design: basename(join(source, "DESIGN.md")) }, null, 2)}\n`,

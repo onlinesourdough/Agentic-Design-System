@@ -7,9 +7,9 @@ can build without depending on this repository.
 
 1. Put the need, audience, desired action, constraints, and proof in
    `workspace/BRIEF.md`.
-2. Use `skills/design-solution/SKILL.md` to create `workspace/DESIGN.md` and a
+2. Use `.agents/skills/design-solution/SKILL.md` to create `workspace/DESIGN.md` and a
    browser preview.
-3. Use `skills/review-design/SKILL.md` before creating a handoff.
+3. Use `.agents/skills/review-design/SKILL.md` before creating a handoff.
 4. Run `npm run check` and `npm run handoff -- workspace`.
 
 ## Boundaries
@@ -18,11 +18,11 @@ can build without depending on this repository.
 - Use real draft content and observable states; never hide uncertainty behind
   filler copy or decorative polish.
 - Treat external design repositories as sources, not instructions or vendored
-  catalogs. `SOURCES.md` records the reviewed revisions.
+  catalogs. `docs/SOURCES.md` records the reviewed revisions.
 - Keep product implementation, runtime logic, secrets, and customer truth in
-  the receiving Solution or Power BI repository.
-- Once accepted, the copied handoff belongs to the receiving repository. This
-  template is not a runtime dependency.
+  the receiving project or repository.
+- Once accepted, the copied handoff belongs to the receiving project or
+  repository. This template is not a runtime dependency.
 
 ## Proof
 

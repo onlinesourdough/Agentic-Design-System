@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="da" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta
+      name="description"
+      content="Crypto Club Classroom — kurser, moduler og live-sessioner."
+    />
+    <link rel="icon" href="assets/favicon-32x32.png" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <link rel="stylesheet" href="assets/classroom.css" />
+    <title>Crypto Club — Classroom</title>
+  </head>
+  <body data-page="classroom">
+    <div class="app" id="app-shell"></div>
+    <script src="assets/mock-data.js?v=20260713"></script>
+    <script src="assets/app.js?v=20260713"></script>
+    <script>
+      const UI = CryptoClubUI;
+      UI.mountShell();
+      UI.bindShell();
+
+      const courseIcon = (type) =>
+        ({
+          analyse: `<svg viewBox="0 0 24 24"><path d="M5 19V9m5 10V5m5 14v-7m4 7V3"/><path d="m4 6 5-3 5 5 6-5"/></svg>`,
+          makro: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8c-2-2.2-3-4.9-3-8s1-5.8 3-8Z"/></svg>`,
+          signal: `<svg viewBox="0 0 24 24"><path d="M4 17 9 12l3 3 7-8"/><path d="M14 7h5v5"/></svg>`,
+          portfolio: `<svg viewBox="0 0 24 24"><path d="M4 8h16v11H4zM8 8V5h8v3"/><path d="M4 12h16"/></svg>`,
+          tax: `<svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h5M10 13h6M10 17h6"/></svg>`,
+          safety: `<svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.6 2.7 8 7 10 4.3-2 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg>`,
+        })[type];
+
+      const courses = [
+        {
+          id: "analyse",
+          type: "analyse",
+          level: "Fundament",
+          title: "4-trins analyseframework",
+          desc: "Vurder vision, team, tokenomics og cash flow med samme metode hver gang.",
+          lessons: 10,
+          time: "1 t. 48 min.",
+          progress: 60,
+          state: "Fortsæt",
+        },
+        {
+          id: "makro",
+          type: "makro",
+          level: "Strategi",
+          title: "Makro & markedscyklus",
+          desc: "Forstå likviditet, Risk On/Off og forholdet mellem Bitcoin og aktiemarkedet.",
+          lessons: 8,
+          time: "1 t. 22 min.",
+          progress: 25,
+          state: "Fortsæt",
+        },
+        {
+          id: "signals",
+          type: "signal",
+          level: "Værktøjer",
+          title: "Signaler uden støj",
+          desc: "Læs heatmaps, algoritmesignaler og scannerresultater med det rette risikofilter.",
+          lessons: 7,
+          time: "58 min.",
+          progress: 0,
+          state: "Start kursus",
+        },
+        {
+          id: "portfolio",
+          type: "portfolio",
+          level: "Praksis",
+          title: "Byg din portefølje",
+          desc: "Arbejd med allokering, caps, deployerbar kontant og systematisk rebalancering.",
+          lessons: 9,
+          time: "1 t. 35 min.",
+          progress: 0,
+          state: "Start kursus",
+        },
+        {
+          id: "tax",
+          type: "tax",
+          level: "Danmark",
+          title: "Krypto & skat",
+          desc: "Introduktion til dokumentation, realisation og de vigtigste danske skattebegreber.",
+          lessons: 6,
+          time: "52 min.",
+          progress: 0,
+          state: "Start kursus",
+        },
+        {
+          id: "safety",
+          type: "safety",
+          level: "Sikkerhed",
+          title: "Wallet-sikkerhed",
+          desc: "Seed phrases, hardware wallets, phishing og en robust personlig sikkerhedsrutine.",
+          lessons: 5,
+          time: "44 min.",
+          progress: 100,
+          state: "Se igen",
+        },
+      ];
+
+      const courseCard = (course) => `
+        <article class="course-card" data-category="${course.type}">
+          <div class="course-cover ${course.type}"><span>${courseIcon(course.type)}</span><em>${course.level}</em></div>
+          <div class="course-card-body">
+            <div class="course-meta"><span>${course.lessons} lektioner</span><span>${course.time}</span></div>
+            <h3>${course.title}</h3><p>${course.desc}</p>
+            <div class="course-card-foot">
+              ${course.progress ? `<div class="course-progress"><span><i style="width:${course.progress}%"></i></span><small>${course.progress}%</small></div>` : `<span class="course-new">Klar til start</span>`}
+              <a href="lesson.html?course=${course.id}" aria-label="${course.state}: ${course.title}">${course.state} ${UI.icons.arrow}</a>
+            </div>
+          </div>
+        </article>`;
+
+      document.getElementById("page-content").innerHTML = `
+        <header class="classroom-head">
+          <div><p class="eyebrow">Crypto Club Academy</p><h1>Lær markedet.<br/><span>Byg din metode.</span></h1><p>Korte, fokuserede forløb der forbinder teori med de værktøjer, du bruger i Crypto Club.</p></div>
+          <div class="classroom-stat"><strong>42%</strong><span>Samlet fremdrift</span><div><i style="width:42%"></i></div></div>
+          <button class="icon-btn mobile-menu" id="classroomMobileMenu" type="button" aria-label="Åbn navigation">${UI.icons.menu}</button>
+        </header>
+
+        <section class="continue-course" aria-labelledby="continue-title">
+          <div class="continue-visual"><span class="video-badge">12:08</span><button type="button" aria-label="Afspil lektionen">▶</button><small>Modul 3 · Lektion 2</small></div>
+          <div class="continue-copy"><p class="eyebrow">Fortsæt hvor du slap</p><h2 id="continue-title">Sådan vurderer du tokenomics</h2><p>Lær at skelne mellem bæredygtig token-økonomi og kortsigtede incitamenter.</p><div class="continue-progress"><span><i style="width:68%"></i></span><small>68% set</small></div><a class="btn btn-primary" href="lesson.html?course=analyse">Fortsæt lektionen ${UI.icons.arrow}</a></div>
+          <aside><span>Næste live session</span><strong>Inner Circle</strong><small>Tirsdag · 19:30</small><button class="btn btn-ghost" type="button" data-demo="Live-sessionen er føjet til kalenderen (preview)">Tilføj kalender</button></aside>
+        </section>
+
+        <section class="course-library" aria-labelledby="courses-title">
+          <div class="library-head"><div><p class="eyebrow">Kursusbibliotek</p><h2 id="courses-title">Alle forløb</h2></div><div class="course-filters" role="tablist" aria-label="Filtrer kurser"><button class="is-active" data-course-filter="all">Alle</button><button data-course-filter="active">I gang</button><button data-course-filter="new">Ikke startet</button></div></div>
+          <div class="course-grid">${courses.map(courseCard).join("")}</div>
+        </section>
+
+        <section class="classroom-bottom">
+          <div><p class="eyebrow">Din uge</p><h2>2 lektioner gennemført</h2><p>Du er 24 minutter fra dit ugentlige mål.</p></div>
+          <div class="week-bars" aria-label="Læringsaktivitet denne uge">${[35, 62, 20, 75, 48, 12, 0].map((height, index) => `<span><i style="height:${height}%"></i><small>${["M", "T", "O", "T", "F", "L", "S"][index]}</small></span>`).join("")}</div>
+          <a class="btn btn-ghost" href="https://app.cryptoclub.dk" target="_blank" rel="noopener">Spørg AI Matthæus</a>
+        </section>`;
+
+      document.querySelectorAll("[data-course-filter]").forEach((button) =>
+        button.addEventListener("click", () => {
+          document
+            .querySelectorAll("[data-course-filter]")
+            .forEach((item) =>
+              item.classList.toggle("is-active", item === button),
+            );
+          document.querySelectorAll(".course-card").forEach((card) => {
+            const course = courses.find(
+              (item) =>
+                item.id === card.querySelector("a").href.split("course=")[1],
+            );
+            card.hidden =
+              button.dataset.courseFilter === "active"
+                ? !(course.progress > 0 && course.progress < 100)
+                : button.dataset.courseFilter === "new"
+                  ? course.progress !== 0
+                  : false;
+          });
+        }),
+      );
+      document
+        .getElementById("classroomMobileMenu")
+        ?.addEventListener("click", () =>
+          document.querySelector(".sidebar")?.classList.toggle("is-open"),
+        );
+      UI.bindDemoActions(document.getElementById("page-content"));
+    </script>
+  </body>
+</html>
