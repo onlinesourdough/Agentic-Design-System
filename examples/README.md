@@ -1,19 +1,22 @@
-# Design examples
+# Curated ADS examples
 
-Each active showcase has a brief, a portable `DESIGN.md`, and a static browser
-preview. The preserved Workbench references live under
-[`references/preserved`](../references/preserved/) and are labelled separately
-so they cannot be mistaken for current directions.
+`examples/` is the durable gallery owned by the main line of Agentic Design
+System. Each listed direction is a standalone design proof with a brief,
+`DESIGN.md`, local preview, relevant assets, and a review note. A route is not
+added here merely because it ran successfully; promotion is deliberate.
 
-Open the [showcase entry point](index.html) to browse the active directions.
+Branches and worktrees provide temporary isolation for authoring and review.
+They are not permanent example storage, and the gallery index stays on main.
 
-| Direction                                       | Preview                                                |
-| ----------------------------------------------- | ------------------------------------------------------ |
-| Executive Power BI dashboard                    | [Open preview](executive-powerbi-dashboard/index.html) |
-| Operations workspace                            | [Open preview](operations-workspace/index.html)        |
-| Plainwork Studio service landing page           | [Open preview](service-landing-page/index.html)        |
-| **resources.onlinesourdough — fresh direction** | [Open preview](onlinesourdough-resources/index.html)   |
+Open the [gallery index](index.html), or inspect one of the current directions:
 
-The active Resources direction is the canonical design home for the next
-Resources implementation. It uses only local fonts and the supplied pixel
-folder asset.
+| Direction                   | Preview                                                |
+| --------------------------- | ------------------------------------------------------ |
+| Service landing page        | [Open preview](service-landing-page/index.html)        |
+| Operations workspace        | [Open preview](operations-workspace/index.html)        |
+| Executive reporting         | [Open preview](executive-powerbi-dashboard/index.html) |
+| Resources / onlinesourdough | [Open preview](onlinesourdough-resources/index.html)   |
+
+The preserved historical material is under
+[`docs/references/preserved`](../docs/references/preserved/) and is not an
+active showcase or a library catalog.

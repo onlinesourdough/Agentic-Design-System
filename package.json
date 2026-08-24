@@ -1,17 +1,19 @@
 {
-  "name": "onlinesourdough-design-template",
+  "name": "agentic-design-system",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "A small workbench for turning a brief into a reviewed design handoff.",
-  "repository": "github:onlinesourdough/Design-template",
+  "description": "A standalone Agentic Design System for inspectable, reviewed design work.",
+  "repository": "github:onlinesourdough/Agentic-Design-System",
   "type": "module",
   "scripts": {
-    "check": "npm run format:check && node scripts/check.mjs",
+    "check": "npm run format:check && node workspace/engine/checks.mjs",
+    "test": "python3 -m unittest discover -s workspace/engine/tests -p 'test_*.py'",
     "format": "prettier --write \"**/*.{md,html,json,mjs,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{md,html,json,mjs,yml,yaml}\"",
-    "handoff": "node scripts/create-handoff.mjs",
-    "preview": "node scripts/serve.mjs"
+    "handoff": "node workspace/engine/create-handoff.mjs",
+    "preview": "node workspace/engine/serve.mjs",
+    "trace": "python3 workspace/engine/tracer.py"
   },
   "devDependencies": {
     "@google/design.md": "0.3.0",

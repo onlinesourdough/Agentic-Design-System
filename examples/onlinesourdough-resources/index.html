@@ -8,6 +8,7 @@
       content="A static design preview for the resources.onlinesourdough decision library."
     />
     <title>Resources — onlinesourdough</title>
+    <link rel="stylesheet" href="assets/adapters/heroui-disclosure.css" />
     <style>
       @font-face {
         font-family: "Geist Sans";
@@ -48,11 +49,12 @@
         --focus: #2b6f98;
         --success: #3b6f55;
         --error: #9f3e2c;
-        --folder-one: #925324;
-        --folder-two: #925324;
-        --folder-three: #925324;
-        --folder-four: #925324;
-        --folder-hover: #a35f2d;
+        --folder-one: #5a3d30;
+        --folder-two: #624333;
+        --folder-three: #694938;
+        --folder-four: #56392d;
+        --folder-hover: #795541;
+        --folder-ink: #fffaf1;
         --shadow: rgba(70, 39, 20, 0.12);
         --shadow-soft: rgba(70, 39, 20, 0.06);
         --font-sans:
@@ -60,9 +62,11 @@
         --font-mono: "Geist Mono", SFMono-Regular, Consolas, monospace;
         --font-pixel: "Geist Pixel", "Geist Mono", monospace;
         --sidebar-width: 250px;
-        --sidebar-collapsed-width: 76px;
+        --sidebar-collapsed-width: 0px;
         --topbar-height: 62px;
         --content-width: 1180px;
+        --reading-width: 720px;
+        --reading-track-reserve: 268px;
       }
 
       :root[data-theme="dark"] {
@@ -80,11 +84,12 @@
         --focus: #6db8df;
         --success: #8bc29d;
         --error: #f09a83;
-        --folder-one: #a65b27;
-        --folder-two: #a65b27;
-        --folder-three: #a65b27;
-        --folder-four: #a65b27;
-        --folder-hover: #b76a35;
+        --folder-one: #80583e;
+        --folder-two: #885c42;
+        --folder-three: #7a503a;
+        --folder-four: #76503b;
+        --folder-hover: #8e6043;
+        --folder-ink: #fff2df;
         --shadow: rgba(0, 0, 0, 0.32);
         --shadow-soft: rgba(0, 0, 0, 0.2);
       }
@@ -156,6 +161,10 @@
         transform: translateY(0);
       }
 
+      #main-content:focus-visible {
+        outline: none;
+      }
+
       .sr-only {
         position: absolute;
         width: 1px;
@@ -190,6 +199,13 @@
         background: var(--surface);
       }
 
+      .site-shell.sidebar-collapsed .sidebar {
+        width: 0;
+        border-right: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+
       .sidebar-header {
         display: flex;
         min-height: var(--topbar-height);
@@ -215,16 +231,15 @@
       }
 
       .brand-copy {
-        display: grid;
+        display: block;
         min-width: 0;
-        gap: 3px;
       }
 
       .brand-name {
         overflow: hidden;
         color: var(--text);
         font-family: var(--font-pixel);
-        font-size: 16px;
+        font-size: 15px;
         letter-spacing: -0.04em;
         line-height: 1;
         text-overflow: ellipsis;
@@ -261,6 +276,7 @@
 
       .icon-button svg,
       .mobile-menu-button svg,
+      .topbar-nav-button svg,
       .topbar-action svg,
       .nav-icon svg,
       .route-arrow svg,
@@ -285,55 +301,21 @@
         margin-top: 20px;
       }
 
-      .nav-section-title,
-      .nav-section-toggle {
+      .nav-section-heading {
         display: flex;
         width: 100%;
         min-height: 31px;
         align-items: center;
-        justify-content: space-between;
-        border-radius: 7px;
-        background: transparent;
+        margin: 0;
         color: var(--text);
-        cursor: pointer;
         font-size: 13px;
         font-weight: 690;
         text-align: left;
-      }
-
-      .nav-section-title,
-      .nav-section-toggle {
         padding: 0 8px;
       }
 
-      .nav-section-copy {
-        display: inline-flex;
-        min-width: 0;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .nav-section-symbol {
-        color: var(--muted);
-      }
-
-      .nav-section-title:hover,
-      .nav-section-title:focus-visible,
-      .nav-section-toggle:hover,
-      .nav-section-toggle:focus-visible {
-        background: var(--surface-soft);
-      }
-
-      .nav-section-toggle .nav-toggle-icon {
-        transition: transform 160ms ease;
-      }
-
-      .nav-section-toggle[aria-expanded="true"] .nav-toggle-icon {
-        transform: rotate(90deg);
-      }
-
-      .nav-section-toggle[aria-expanded="false"] .nav-toggle-icon {
-        transform: rotate(0deg);
+      .nav-section-heading + .nav-list {
+        margin-top: 4px;
       }
 
       .nav-list {
@@ -355,6 +337,71 @@
         font-weight: 560;
         line-height: 1.25;
         padding: 0 8px 0 15px;
+      }
+
+      .nav-disclosure {
+        display: grid;
+        gap: 2px;
+      }
+
+      .nav-disclosure-button {
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        min-height: 31px;
+        align-items: center;
+        gap: 8px;
+        border-radius: 0;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 560;
+        line-height: 1.25;
+        padding: 0 8px 0 15px;
+        text-align: left;
+      }
+
+      .nav-disclosure-button:hover {
+        color: var(--text);
+      }
+
+      .nav-disclosure-button:focus-visible {
+        color: var(--text);
+      }
+
+      .nav-disclosure-glyph {
+        display: inline-flex;
+        width: 15px;
+        height: 15px;
+        flex: 0 0 15px;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        color: currentColor;
+      }
+
+      .nav-disclosure-glyph svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      .nav-sublist {
+        display: grid;
+        gap: 2px;
+        margin: 0 0 2px;
+        padding-left: 10px;
+      }
+
+      .nav-subchild {
+        min-height: 29px;
+        padding-left: 17px;
+        font-size: 11px;
+        font-weight: 520;
+      }
+
+      .nav-subchild.is-active {
+        font-weight: 680;
       }
 
       .nav-child:hover,
@@ -380,6 +427,22 @@
         white-space: nowrap;
       }
 
+      .nav-external-icon {
+        display: inline-flex;
+        width: 15px;
+        height: 15px;
+        flex: 0 0 15px;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        color: currentColor;
+      }
+
+      .nav-external-icon svg {
+        width: 13px;
+        height: 13px;
+      }
+
       .nav-icon {
         display: inline-flex;
         width: 18px;
@@ -397,59 +460,16 @@
       .sidebar-bottom {
         display: grid;
         gap: 2px;
+        margin-top: auto;
         border-top: 1px solid var(--line);
         padding: 12px 10px 15px;
       }
 
-      .site-shell.sidebar-collapsed .sidebar-header {
-        justify-content: center;
-        padding-inline: 8px;
-      }
-
-      .site-shell.sidebar-collapsed .brand-copy,
-      .site-shell.sidebar-collapsed .nav-section-title > span,
-      .site-shell.sidebar-collapsed .nav-section-label,
-      .site-shell.sidebar-collapsed .nav-toggle-icon,
-      .site-shell.sidebar-collapsed .nav-child-label,
-      .site-shell.sidebar-collapsed .nav-utility-label {
-        display: none;
-      }
-
-      .site-shell.sidebar-collapsed .brand {
-        justify-content: center;
-      }
-
-      .site-shell.sidebar-collapsed .nav-section + .nav-section {
-        margin-top: 14px;
-      }
-
-      .site-shell.sidebar-collapsed .nav-section-title,
-      .site-shell.sidebar-collapsed .nav-section-toggle {
-        justify-content: center;
-        padding-inline: 0;
-      }
-
-      .site-shell.sidebar-collapsed .nav-section-copy {
-        justify-content: center;
-      }
-
-      .site-shell.sidebar-collapsed .nav-list {
-        margin-top: 2px;
-      }
-
-      .site-shell.sidebar-collapsed .nav-child,
-      .site-shell.sidebar-collapsed .nav-utility {
-        justify-content: center;
-        padding-inline: 0;
-      }
-
-      .site-shell.sidebar-collapsed .nav-child .nav-icon,
-      .site-shell.sidebar-collapsed .nav-utility .nav-icon {
-        width: 20px;
-        flex-basis: 20px;
-      }
-
       .site-main {
+        --reading-track-width: min(
+          var(--reading-width),
+          calc(100vw - var(--sidebar-width) - var(--reading-track-reserve))
+        );
         min-width: 0;
         min-height: 100dvh;
         background:
@@ -459,17 +479,30 @@
         background-size: 52px 52px;
       }
 
+      .site-shell.sidebar-collapsed .site-main {
+        --reading-track-width: min(
+          var(--reading-width),
+          calc(
+            100vw - var(--sidebar-collapsed-width) -
+              var(--reading-track-reserve)
+          )
+        );
+      }
+
       .topbar {
         position: sticky;
         top: 0;
         z-index: 10;
-        display: flex;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--reading-track-width) minmax(
+            0,
+            1fr
+          );
         min-height: var(--topbar-height);
         align-items: center;
-        gap: 16px;
         border-bottom: 1px solid var(--line);
         background: color-mix(in srgb, var(--bg) 94%, transparent);
-        padding: 0 clamp(18px, 3vw, 42px);
+        padding: 0 clamp(8px, 1.4vw, 18px);
         backdrop-filter: blur(10px);
       }
 
@@ -477,11 +510,55 @@
         display: none;
       }
 
-      .topbar-breadcrumb {
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        grid-column: 1;
+        justify-self: start;
+      }
+
+      .topbar-nav-button {
         display: inline-flex;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .topbar-nav-button:hover,
+      .topbar-nav-button:focus-visible {
+        background: var(--surface-soft);
+        color: var(--text);
+      }
+
+      .topbar-nav-button:disabled {
+        cursor: default;
+        opacity: 0.52;
+      }
+
+      .topbar-nav-button:disabled:hover {
+        background: transparent;
+        color: var(--text);
+      }
+
+      .topbar-nav-button svg {
+        width: 22px;
+        height: 22px;
+        stroke-width: 1.9;
+      }
+
+      .topbar-route {
+        display: inline-flex;
+        width: 100%;
         min-width: 0;
         align-items: center;
         gap: 8px;
+        grid-column: 2;
         color: var(--muted);
         font-family: var(--font-mono);
         font-size: 10px;
@@ -489,7 +566,7 @@
         text-transform: uppercase;
       }
 
-      .topbar-breadcrumb strong {
+      .topbar-route strong {
         overflow: hidden;
         color: var(--text);
         font-weight: 560;
@@ -502,22 +579,22 @@
         min-width: 0;
         align-items: center;
         gap: 4px;
+        grid-column: 3;
+        justify-self: end;
         margin-left: auto;
       }
 
       .topbar-action {
         display: inline-flex;
-        min-height: 34px;
+        width: 40px;
+        height: 40px;
         align-items: center;
-        gap: 7px;
+        justify-content: center;
         border-radius: 7px;
         background: transparent;
-        color: var(--muted);
+        color: var(--text);
         cursor: pointer;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 0 9px;
-        white-space: nowrap;
+        padding: 0;
       }
 
       .topbar-action:hover,
@@ -527,26 +604,25 @@
         color: var(--text);
       }
 
-      .topbar-action kbd {
-        border: 1px solid var(--line-strong);
-        border-radius: 4px;
-        color: var(--muted);
-        font-family: var(--font-mono);
-        font-size: 9px;
-        line-height: 1;
-        padding: 3px 4px;
+      .theme-toggle-icon {
+        display: block;
+        width: 17px;
+        height: 17px;
+        border-radius: 999px;
+        box-shadow: inset -6px -4px 0 0 currentColor;
       }
 
-      .theme-mark {
-        display: inline-flex;
-        width: 15px;
-        height: 15px;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid currentColor;
-        border-radius: 50%;
-        font-size: 9px;
-        line-height: 1;
+      :root[data-theme="dark"] .theme-toggle-icon {
+        background: currentColor;
+        box-shadow:
+          0 -8px 0 -6px currentColor,
+          0 8px 0 -6px currentColor,
+          8px 0 0 -6px currentColor,
+          -8px 0 0 -6px currentColor,
+          6px 6px 0 -6px currentColor,
+          -6px -6px 0 -6px currentColor,
+          6px -6px 0 -6px currentColor,
+          -6px 6px 0 -6px currentColor;
       }
 
       .page {
@@ -555,11 +631,14 @@
         padding: 48px 0 72px;
       }
 
+      .reading-track {
+        width: min(var(--reading-track-width), 100%);
+        margin-inline: auto;
+      }
+
       .page-kicker,
       .section-kicker,
-      .folder-meta,
       .list-meta,
-      .status-label,
       .route-label,
       .utility-label {
         color: var(--muted);
@@ -571,12 +650,208 @@
         text-transform: uppercase;
       }
 
-      .page-intro {
-        display: block;
-        max-width: 820px;
+      .home-hero {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        overflow: visible;
+        background: transparent;
       }
 
-      .page-intro h1,
+      .vsl-intro {
+        width: min(720px, 100%);
+        display: grid;
+        justify-items: center;
+        padding: 4px 0 27px;
+        text-align: center;
+      }
+
+      .vsl-intro h1 {
+        max-width: 720px;
+        margin: 0;
+        color: var(--text);
+        font-family: var(--font-pixel);
+        font-size: clamp(40px, 5vw, 58px);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.02;
+      }
+
+      .vsl-intro p {
+        max-width: 610px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.58;
+      }
+
+      .vsl-frame {
+        width: min(820px, 100%);
+        overflow: hidden;
+        border: 1px solid var(--line-strong);
+        border-radius: 12px;
+        background: var(--paper);
+        box-shadow: 0 14px 30px var(--shadow-soft);
+      }
+
+      .vsl-chrome {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 1fr) auto;
+        min-height: 38px;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.055em;
+        padding: 0 14px;
+        text-transform: uppercase;
+      }
+
+      .vsl-dots {
+        display: flex;
+        gap: 5px;
+      }
+
+      .vsl-dots i {
+        width: 7px;
+        height: 7px;
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        background: var(--surface-soft);
+      }
+
+      .vsl-window-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .vsl-duration {
+        color: var(--accent-dark);
+      }
+
+      .vsl-screen {
+        position: relative;
+        display: grid;
+        place-items: center;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        isolation: isolate;
+        background: var(--surface-soft);
+      }
+
+      .vsl-video {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        filter: saturate(0.86) contrast(0.97);
+      }
+
+      .vsl-screen::after {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--bg) 8%, transparent),
+            color-mix(in srgb, var(--bg) 34%, transparent)
+          ),
+          linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--bg) 42%, transparent),
+            transparent 42%,
+            color-mix(in srgb, var(--bg) 20%, transparent)
+          );
+        content: "";
+        transition: opacity 180ms ease;
+      }
+
+      .vsl-screen-copy {
+        position: relative;
+        z-index: 2;
+        width: min(490px, calc(100% - 44px));
+        display: grid;
+        justify-items: center;
+        color: var(--text);
+        text-align: center;
+        text-shadow: 0 1px 12px color-mix(in srgb, var(--bg) 35%, transparent);
+        transition:
+          opacity 180ms ease,
+          visibility 180ms ease;
+      }
+
+      .vsl-screen-copy strong {
+        margin-top: 12px;
+        font-family: var(--font-pixel);
+        font-size: clamp(25px, 4vw, 39px);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.03;
+      }
+
+      .vsl-screen-copy p {
+        max-width: 420px;
+        margin: 11px 0 0;
+        color: color-mix(in srgb, var(--text) 82%, transparent);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .vsl-play {
+        position: relative;
+        z-index: 3;
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        gap: 9px;
+        margin-top: 20px;
+        border: 1px solid
+          color-mix(in srgb, var(--line-strong) 90%, transparent);
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--surface) 88%, transparent);
+        box-shadow: 0 8px 16px var(--shadow-soft);
+        color: var(--text);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.035em;
+        padding: 0 13px 0 11px;
+        transition:
+          background 160ms ease,
+          color 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .vsl-play:hover,
+      .vsl-play:focus-visible {
+        background: var(--text);
+        color: var(--bg);
+        box-shadow: 0 10px 20px var(--shadow);
+      }
+
+      .vsl-play-glyph {
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-left: 8px solid currentColor;
+      }
+
+      .vsl-frame.is-playing .vsl-screen::after,
+      .vsl-frame.is-playing .vsl-screen-copy {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+
       .page-header h1 {
         max-width: 780px;
         margin: 19px 0 0;
@@ -588,7 +863,6 @@
         line-height: 1.02;
       }
 
-      .page-intro p,
       .page-header p {
         max-width: 690px;
         margin: 17px 0 0;
@@ -597,12 +871,17 @@
         line-height: 1.62;
       }
 
+      :root[data-theme="dark"] .vsl-video {
+        filter: brightness(0.72) saturate(0.82) contrast(0.98);
+      }
+
       .page-actions {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 12px 18px;
-        margin-top: 25px;
+        width: min(800px, 100%);
+        margin: 25px auto 0;
       }
 
       .button-primary,
@@ -661,26 +940,21 @@
       }
 
       .page-note {
-        border-left: 2px solid var(--accent);
-        padding: 4px 0 4px 17px;
-      }
-
-      .page-note strong {
-        display: block;
-        margin-top: 8px;
-        font-size: 15px;
-        line-height: 1.25;
-      }
-
-      .page-note p {
-        margin: 8px 0 0;
+        margin: 24px 0 0;
         color: var(--muted);
-        font-size: 13px;
+        font-size: 12px;
         line-height: 1.5;
       }
 
       .folder-section {
-        margin-top: 48px;
+        width: min(772px, 100%);
+        margin: 30px auto 0;
+      }
+
+      .home-divider {
+        height: 1px;
+        margin-top: 34px;
+        background: var(--line);
       }
 
       .section-heading {
@@ -695,8 +969,7 @@
 
       .section-heading h2,
       .reading-panel h2,
-      .route-section h2,
-      .state-panel h2 {
+      .route-section h2 {
         margin: 0;
         color: var(--text);
         font-size: 20px;
@@ -713,6 +986,11 @@
         text-align: right;
       }
 
+      .home-page .section-heading {
+        border-top: 0;
+        padding-top: 0;
+      }
+
       .section-note {
         flex: 0 0 auto;
         color: var(--muted);
@@ -725,22 +1003,27 @@
       .folder-stage {
         position: relative;
         isolation: isolate;
-        margin-top: 20px;
+        margin-top: 30px;
+        overflow: visible;
       }
 
       .folder-grid {
         position: relative;
         z-index: 2;
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 14px;
+        width: 100%;
+        margin-inline: auto;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 60px;
+        row-gap: 92px;
       }
 
       .folder-card {
-        display: grid;
+        position: relative;
+        display: block;
         min-width: 0;
-        gap: 6px;
         color: var(--text);
+        touch-action: manipulation;
       }
 
       .folder-card:focus-visible {
@@ -750,184 +1033,483 @@
       .folder-visual {
         position: relative;
         display: block;
-        height: 190px;
+        height: 262px;
         isolation: isolate;
+        overflow: visible;
       }
 
-      .folder-paper {
+      .folder-papers {
         position: absolute;
-        z-index: 1;
-        top: 22px;
-        right: 14px;
-        left: 14px;
-        height: 111px;
-        transform: rotate(-1.5deg);
+        inset: 0;
+        isolation: isolate;
+        pointer-events: none;
+      }
+
+      .folder-paper,
+      .folder-sheet {
+        position: absolute;
+        top: 30px;
+        height: 216px;
+        overflow: hidden;
         border: 1px solid var(--line-strong);
-        border-radius: 8px 8px 4px 4px;
-        background: var(--paper);
+        border-radius: 12px 12px 8px 8px;
+        background:
+          linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--paper) 82%, white),
+            transparent 42%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            color-mix(in srgb, var(--line) 28%, transparent) 0 1px,
+            transparent 1px 5px
+          ),
+          var(--paper);
         box-shadow: 0 8px 16px var(--shadow-soft);
-        transition:
-          transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
-          box-shadow 180ms ease;
+        pointer-events: none;
       }
 
       .folder-paper::before,
-      .folder-paper::after {
+      .folder-paper::after,
+      .folder-sheet::before,
+      .folder-sheet::after {
         position: absolute;
+        content: "";
+        pointer-events: none;
+      }
+
+      .folder-paper::before {
+        top: 22px;
+        right: 17px;
+        left: 17px;
+        height: 1px;
+        background: var(--line);
+        box-shadow: 0 10px 0 color-mix(in srgb, var(--line) 72%, transparent);
+      }
+
+      .folder-paper::after {
+        top: 14px;
+        left: 17px;
+        width: 28px;
+        height: 8px;
+        border: 1px solid var(--line-strong);
+        border-radius: 2px;
+        opacity: 0.72;
+      }
+
+      .folder-paper {
+        z-index: 1;
+        opacity: 0.86;
+        transition:
+          transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 300ms ease;
+      }
+
+      .folder-paper-back {
+        right: 46px;
+        left: 20px;
+        background: color-mix(in srgb, var(--paper) 87%, var(--surface-soft));
+        transform: translateY(0) rotate(var(--paper-back-tilt));
+      }
+
+      .folder-paper-mid {
+        top: 38px;
+        right: 20px;
+        left: 38px;
+        z-index: 2;
+        opacity: 0.94;
+        transform: translateY(0) rotate(var(--paper-mid-tilt));
+      }
+
+      .folder-sheet {
+        right: 29px;
+        left: 29px;
+        z-index: 3;
+        transition:
+          transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 300ms ease;
+        transform: translateY(0) rotate(var(--sheet-tilt));
+      }
+
+      .folder-sheet::before {
+        top: 78px;
         right: 14px;
         left: 14px;
         height: 1px;
         background: var(--line);
-        content: "";
       }
 
-      .folder-paper::before {
-        top: 31px;
+      .folder-sheet::after {
+        top: 104px;
+        right: 34%;
+        left: 14px;
+        height: 1px;
+        background: var(--line);
       }
 
-      .folder-paper::after {
-        top: 48px;
-        right: 28%;
+      .folder-sheet-topline {
+        position: absolute;
+        top: 18px;
+        right: 16px;
+        left: 16px;
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        opacity: 0.92;
+        text-transform: uppercase;
+        transition: opacity 300ms ease;
+      }
+
+      .folder-sheet-title {
+        position: absolute;
+        top: 43px;
+        right: 16px;
+        left: 16px;
+        color: var(--text);
+        font-size: 16px;
+        font-weight: 680;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        opacity: 0.85;
+        transition: opacity 300ms ease;
+      }
+
+      .folder-sheet-copy {
+        position: absolute;
+        top: 69px;
+        right: 16px;
+        left: 16px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.42;
+        opacity: 0.78;
+        transition: opacity 300ms ease;
       }
 
       .folder-front {
         position: absolute;
-        z-index: 2;
-        top: 43px;
-        right: 0;
-        bottom: 10px;
-        left: 0;
+        z-index: 4;
+        top: 86px;
+        right: 4px;
+        bottom: 14px;
+        left: 4px;
         display: grid;
         align-content: start;
         gap: 8px;
         overflow: hidden;
         border: 1px solid
           color-mix(in srgb, var(--accent-dark) 65%, var(--line));
-        border-radius: 6px 12px 8px 8px;
-        background: var(--folder-one);
-        color: #fffaf1;
-        padding: 14px 13px 16px;
+        border-radius: 0 16px 10px 10px;
+        background:
+          linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--folder-ink) 12%, transparent),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 18% 18%,
+            color-mix(in srgb, var(--folder-ink) 10%, transparent) 0 1px,
+            transparent 1.5px 100%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            color-mix(in srgb, var(--folder-ink) 4%, transparent) 0 1px,
+            transparent 1px 5px
+          ),
+          var(--folder-color, var(--folder-one));
+        color: var(--folder-ink);
+        box-shadow:
+          0 6px 0 color-mix(in srgb, var(--accent-dark) 46%, transparent),
+          0 14px 20px var(--shadow-soft);
+        padding: 28px 22px 17px;
+        transition:
+          background 180ms ease,
+          box-shadow 180ms ease,
+          transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .folder-front::before {
+        position: absolute;
+        inset: 43px 0 0;
+        border-top: 1px solid
+          color-mix(in srgb, var(--folder-ink) 28%, transparent);
+        border-radius: 0 0 10px 10px;
+        background: linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--folder-ink) 6%, transparent),
+          transparent 35%
+        );
+        box-shadow: inset 0 1px 0
+          color-mix(in srgb, var(--accent-dark) 28%, transparent);
+        content: "";
+        pointer-events: none;
+      }
+
+      .folder-front::after {
+        position: absolute;
+        top: 11px;
+        right: 17px;
+        width: 28px;
+        height: 8px;
+        border-top: 1px solid
+          color-mix(in srgb, var(--folder-ink) 32%, transparent);
+        border-bottom: 1px solid
+          color-mix(in srgb, var(--folder-ink) 18%, transparent);
+        content: "";
+        opacity: 0.85;
+        pointer-events: none;
+      }
+
+      .folder-front > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .folder-pocket {
+        position: absolute !important;
+        z-index: 0 !important;
+        inset: 43px 0 0;
+        border-top: 1px solid
+          color-mix(in srgb, var(--folder-ink) 28%, transparent);
+        border-radius: 0 0 10px 10px;
+        background: linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--folder-ink) 6%, transparent),
+          transparent 38%
+        );
+        box-shadow: inset 0 1px 0
+          color-mix(in srgb, var(--accent-dark) 28%, transparent);
+        pointer-events: none;
       }
 
       .folder-card:nth-child(2) .folder-front {
-        background: var(--folder-two);
+        --folder-color: var(--folder-two);
       }
 
       .folder-card:nth-child(3) .folder-front {
-        background: var(--folder-three);
+        --folder-color: var(--folder-three);
       }
 
       .folder-card:nth-child(4) .folder-front {
-        background: var(--folder-four);
+        --folder-color: var(--folder-four);
       }
 
       .folder-tab {
         position: absolute;
-        top: -9px;
-        left: -1px;
-        width: 76px;
-        height: 11px;
-        border-radius: 6px 6px 0 0;
+        top: -13px;
+        left: 16px;
+        width: 112px;
+        height: 15px;
+        border-radius: 7px 7px 0 0;
         background: inherit;
+        box-shadow: inset 0 1px 0
+          color-mix(in srgb, var(--folder-ink) 20%, transparent);
       }
 
       .folder-tab::after {
         position: absolute;
-        top: 8px;
+        top: 9px;
         right: 0;
         left: 0;
         height: 1px;
-        background: color-mix(in srgb, #fffaf1 34%, transparent);
+        background: color-mix(in srgb, var(--folder-ink) 34%, transparent);
         content: "";
       }
 
-      .folder-meta {
+      .folder-accent {
+        position: absolute;
+        top: 26px;
+        right: 19px;
+        width: 18px;
+        height: 18px;
+        color: color-mix(in srgb, var(--folder-ink) 78%, transparent);
+        opacity: 0.78;
+      }
+
+      .folder-accent::before {
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 4px;
+        height: 4px;
+        background: currentColor;
+        box-shadow:
+          7px 0 currentColor,
+          14px 0 currentColor,
+          7px 7px currentColor,
+          14px 14px currentColor;
+        content: "";
+      }
+
+      .folder-front-meta,
+      .folder-front-footer {
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        gap: 8px;
-        color: rgba(255, 250, 241, 0.72);
-        color: rgba(255, 250, 241, 0.77);
+        gap: 10px;
+        font-family: var(--font-mono);
         font-size: 9px;
+        letter-spacing: 0.045em;
+        line-height: 1.25;
+        text-transform: uppercase;
+      }
+
+      .folder-front-meta {
+        color: color-mix(in srgb, var(--folder-ink) 72%, transparent);
+      }
+
+      .folder-front-footer {
+        align-self: end;
+        margin-top: auto;
+        color: color-mix(in srgb, var(--folder-ink) 84%, transparent);
+      }
+
+      .folder-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--folder-ink);
+        font-weight: 650;
+      }
+
+      .folder-cta svg {
+        width: 13px;
+        height: 13px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.7;
       }
 
       .folder-front strong {
-        max-width: 180px;
+        max-width: 300px;
         margin-top: 0;
-        color: #fffaf1;
-        font-size: 15px;
+        color: var(--folder-ink);
+        font-size: 21px;
         letter-spacing: -0.01em;
-        line-height: 1.08;
+        line-height: 1.05;
       }
 
       .folder-front small {
-        max-width: 205px;
+        max-width: 320px;
         display: -webkit-box;
         overflow: hidden;
         margin-top: 0;
-        color: rgba(255, 250, 241, 0.78);
-        font-size: 10px;
-        line-height: 1.35;
+        color: color-mix(in srgb, var(--folder-ink) 82%, transparent);
+        font-size: 13px;
+        line-height: 1.42;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
       }
 
-      .folder-label {
-        display: flex;
-        min-width: 0;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 8px;
-        margin-top: 0;
-        padding: 0 3px;
+      .folder-paper-note {
+        position: absolute;
+        top: 13px;
+        right: 17px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.055em;
+        text-transform: uppercase;
       }
 
-      .folder-label strong {
-        display: block;
-        font-size: 11px;
-        letter-spacing: -0.015em;
-        line-height: 1.2;
+      .folder-card:nth-child(1) {
+        --sheet-tilt: -1.2deg;
+        --paper-back-tilt: -3.2deg;
+        --paper-mid-tilt: 1.5deg;
       }
 
-      .folder-label small {
-        display: none;
+      .folder-card:nth-child(2) {
+        --sheet-tilt: 0.8deg;
+        --paper-back-tilt: 2.8deg;
+        --paper-mid-tilt: -1.2deg;
       }
 
-      .folder-arrow {
-        display: inline-flex;
-        width: auto;
-        height: auto;
-        flex: 0 0 auto;
-        align-items: center;
-        justify-content: center;
-        border: 0;
-        color: var(--accent-dark);
+      .folder-card:nth-child(3) {
+        --sheet-tilt: -0.6deg;
+        --paper-back-tilt: -2.6deg;
+        --paper-mid-tilt: 1deg;
       }
 
-      .folder-card:hover .folder-paper,
-      .folder-card:focus-visible .folder-paper {
-        transform: translateY(-18px) rotate(-1.5deg);
+      .folder-card:nth-child(4) {
+        --sheet-tilt: 1.1deg;
+        --paper-back-tilt: 3deg;
+        --paper-mid-tilt: -1.4deg;
+      }
+
+      .folder-sheet {
+        transform: translateY(0) rotate(var(--sheet-tilt));
+      }
+
+      .folder-card:hover .folder-sheet,
+      .folder-card:focus-visible .folder-sheet {
+        box-shadow: 0 15px 24px var(--shadow-soft);
+      }
+
+      .folder-card:hover .folder-paper-back,
+      .folder-card:focus-visible .folder-paper-back {
         box-shadow: 0 12px 20px var(--shadow-soft);
+        transform: translateY(-26px) rotate(var(--paper-back-tilt));
+      }
+
+      .folder-card:hover .folder-paper-mid,
+      .folder-card:focus-visible .folder-paper-mid {
+        box-shadow: 0 13px 22px var(--shadow-soft);
+        transform: translateY(-38px) rotate(var(--paper-mid-tilt));
+      }
+
+      .folder-card:hover .folder-sheet,
+      .folder-card:focus-visible .folder-sheet {
+        transform: translateY(-52px) rotate(var(--sheet-tilt));
+      }
+
+      .folder-card:hover .folder-sheet > span,
+      .folder-card:focus-visible .folder-sheet > span {
+        opacity: 1;
       }
 
       .folder-card:hover .folder-front,
       .folder-card:focus-visible .folder-front {
-        background: var(--folder-hover);
+        background:
+          linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--folder-ink) 16%, transparent),
+            transparent 35%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            color-mix(in srgb, var(--folder-ink) 5%, transparent) 0 1px,
+            transparent 1px 5px
+          ),
+          var(--folder-hover);
+        box-shadow:
+          0 7px 0 color-mix(in srgb, var(--accent-dark) 52%, transparent),
+          0 17px 24px var(--shadow-soft);
+        transform: translateY(3px) rotate(-0.2deg);
       }
 
       .folder-shelf {
+        display: none;
+      }
+
+      .folder-shelf-foreground {
         position: absolute;
-        z-index: 3;
-        right: -5px;
-        bottom: 12px;
-        left: -5px;
-        height: 34px;
+        z-index: 5;
+        right: -13px;
+        bottom: -2px;
+        left: -13px;
+        height: 78px;
         border: 1px solid
-          color-mix(in srgb, var(--line-strong) 72%, transparent);
+          color-mix(in srgb, var(--line-strong) 48%, transparent);
         border-radius: 0 0 26px 26px;
-        background: color-mix(in srgb, var(--surface) 26%, transparent);
-        box-shadow: inset 0 1px 0
-          color-mix(in srgb, var(--surface) 68%, transparent);
-        backdrop-filter: blur(4px);
+        background: color-mix(in srgb, var(--surface) 30%, transparent);
+        box-shadow:
+          inset 0 1px 0 color-mix(in srgb, var(--surface) 44%, transparent),
+          0 7px 16px color-mix(in srgb, var(--shadow-soft) 80%, transparent);
         pointer-events: none;
       }
 
@@ -1081,6 +1663,11 @@
         margin-top: 52px;
       }
 
+      .home-new {
+        width: min(736px, 100%);
+        margin: 68px auto 0;
+      }
+
       .home-reading {
         display: grid;
         grid-template-columns: minmax(0, 1.16fr) minmax(270px, 0.84fr);
@@ -1206,8 +1793,38 @@
 
       .reading-list,
       .route-list,
-      .step-list {
+      .plain-list {
         display: grid;
+      }
+
+      .value-layer-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1fr);
+        gap: 16px;
+        border-bottom: 1px solid var(--line);
+        padding: 14px 0;
+      }
+
+      .value-layer-row strong {
+        display: block;
+        font-size: 14px;
+        line-height: 1.25;
+      }
+
+      .value-layer-row p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.42;
+      }
+
+      .value-layer-delivery {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.03em;
+        line-height: 1.45;
       }
 
       .resource-row {
@@ -1254,21 +1871,13 @@
         height: 15px;
       }
 
-      .offline-note {
-        margin: 28px 0 0;
-        border-left: 2px solid var(--line-strong);
-        color: var(--muted);
-        font-size: 12px;
-        line-height: 1.5;
-        padding-left: 13px;
-      }
-
       .page-header {
-        max-width: 800px;
+        width: min(var(--reading-track-width), 100%);
+        margin-inline: auto;
       }
 
       .page-header.compact {
-        max-width: 720px;
+        max-width: none;
       }
 
       .page-header h1 {
@@ -1276,258 +1885,128 @@
       }
 
       .route-layout {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(240px, 0.34fr);
-        gap: 42px;
-        margin-top: 48px;
+        display: block;
+        width: min(var(--reading-track-width), 100%);
+        margin: 34px auto 0;
       }
 
       .route-section + .route-section {
-        margin-top: 45px;
+        margin-top: 34px;
       }
 
       .route-section > p {
         max-width: 660px;
-        margin: 14px 0 0;
+        margin: 11px 0 0;
         color: var(--muted);
-        font-size: 15px;
-        line-height: 1.58;
+        font-size: 14px;
+        line-height: 1.52;
       }
 
       .route-list {
-        margin-top: 17px;
-        border-top: 1px solid var(--line-strong);
+        gap: 8px;
+        margin-top: 16px;
       }
 
       .route-list-item {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 18px;
-        border-bottom: 1px solid var(--line);
-        padding: 17px 0;
+        display: block;
+        padding: 4px 0;
       }
 
       .route-list-item:hover,
       .route-list-item:focus-visible {
-        background: color-mix(in srgb, var(--surface-soft) 60%, transparent);
-        outline-offset: 5px;
+        color: var(--accent-dark);
+        outline-offset: 4px;
       }
 
       .route-list-item strong {
         display: block;
-        margin-top: 6px;
-        font-size: 17px;
+        font-size: 16px;
         letter-spacing: -0.02em;
         line-height: 1.2;
       }
 
       .route-list-item p {
         max-width: 600px;
-        margin: 6px 0 0;
+        margin: 4px 0 0;
         color: var(--muted);
         font-size: 13px;
         line-height: 1.48;
       }
 
-      .route-side {
-        border-top: 2px solid var(--text);
-        padding-top: 15px;
+      .plain-list {
+        gap: 8px;
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
       }
 
-      .route-side h2 {
-        margin-top: 7px;
-        font-size: 17px;
+      .plain-list-item {
+        position: relative;
+        padding-left: 14px;
       }
 
-      .route-side p {
-        margin: 10px 0 0;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.55;
-      }
-
-      .route-side .route-side-link {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        border-bottom: 1px solid var(--line);
-        color: var(--accent-dark);
-        font-size: 12px;
-        font-weight: 680;
-        padding: 13px 0;
-      }
-
-      .route-side .route-side-link:first-of-type {
-        margin-top: 16px;
-        border-top: 1px solid var(--line);
-      }
-
-      .route-side .route-side-link:hover,
-      .route-side .route-side-link:focus-visible {
-        color: var(--text);
-        outline-offset: 5px;
-      }
-
-      .course-summary {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1px;
-        margin-top: 25px;
-        border-block: 1px solid var(--line);
-        background: var(--line);
-      }
-
-      .course-summary-item {
-        min-height: 76px;
-        background: var(--bg);
-        padding: 15px;
-      }
-
-      .course-summary-item strong {
-        display: block;
-        margin-top: 6px;
-        font-size: 15px;
-        line-height: 1.2;
-      }
-
-      .step-list {
-        margin-top: 24px;
-        border-top: 1px solid var(--line-strong);
-      }
-
-      .step-row {
-        display: grid;
-        grid-template-columns: 45px minmax(0, 1fr) auto;
-        gap: 17px;
-        align-items: start;
-        border-bottom: 1px solid var(--line);
-        padding: 17px 0;
-      }
-
-      .step-row:hover,
-      .step-row:focus-within {
-        background: color-mix(in srgb, var(--surface-soft) 62%, transparent);
-      }
-
-      .step-number {
-        color: var(--accent-dark);
-        font-family: var(--font-mono);
-        font-size: 12px;
-        font-weight: 650;
-        letter-spacing: 0.05em;
-      }
-
-      .step-row strong {
-        display: block;
-        font-size: 16px;
-        letter-spacing: -0.015em;
-        line-height: 1.2;
-      }
-
-      .step-row p {
-        max-width: 630px;
-        margin: 5px 0 0;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.46;
-      }
-
-      .access-state {
-        align-self: start;
-        border: 1px solid var(--line-strong);
-        border-radius: 5px;
-        color: var(--muted);
-        font-family: var(--font-mono);
-        font-size: 9px;
-        letter-spacing: 0.06em;
-        padding: 5px 6px;
-        text-transform: uppercase;
-        white-space: nowrap;
-      }
-
-      .access-state.is-paid {
-        border-color: color-mix(in srgb, var(--accent) 58%, var(--line));
-        color: var(--accent-dark);
-      }
-
-      .state-panel {
-        border-top: 2px solid var(--text);
-        border-bottom: 1px solid var(--line);
-        background: var(--paper);
-        padding: 22px;
-      }
-
-      .state-panel p {
-        max-width: 630px;
-        margin: 11px 0 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.55;
-      }
-
-      .state-panel .state-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        margin-bottom: 3px;
-        color: var(--success);
-        font-family: var(--font-mono);
-        font-size: 10px;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-
-      .state-status::before {
-        width: 7px;
-        height: 7px;
+      .plain-list-item::before {
+        position: absolute;
+        top: 0.7em;
+        left: 0;
+        width: 4px;
+        height: 4px;
         border-radius: 50%;
-        background: currentColor;
+        background: var(--accent);
         content: "";
       }
 
-      .project-facts {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1px;
-        margin-top: 24px;
-        background: var(--line);
-      }
-
-      .project-fact {
-        background: var(--bg);
-        padding: 16px;
-      }
-
-      .project-fact strong {
+      .plain-link {
         display: block;
-        margin-top: 7px;
-        font-size: 14px;
+        color: inherit;
+        padding: 3px 0;
+      }
+
+      .plain-link:hover,
+      .plain-link:focus-visible {
+        color: var(--accent-dark);
+        outline-offset: 4px;
+      }
+
+      .plain-link strong {
+        display: block;
+        font-size: 16px;
         line-height: 1.25;
       }
 
-      .project-fact p {
-        margin-top: 6px;
-        font-size: 12px;
+      .plain-link span {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 13px;
         line-height: 1.45;
       }
 
-      .form-panel {
-        max-width: 680px;
-        margin-top: 40px;
-        border-top: 2px solid var(--text);
-        border-bottom: 1px solid var(--line);
-        background: var(--paper);
-        padding: 24px;
+      .resource-points {
+        display: grid;
+        gap: 8px;
+        margin: 17px 0 0;
+        padding: 0 0 0 18px;
       }
 
-      .form-panel h2 {
+      .resource-points li {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+        padding-left: 3px;
+      }
+
+      .form-area {
+        max-width: var(--reading-width);
+      }
+
+      .form-area h2 {
         margin: 0;
         font-size: 20px;
         line-height: 1.15;
       }
 
-      .form-panel p {
+      .form-area > p {
         margin: 10px 0 0;
         color: var(--muted);
         font-size: 13px;
@@ -1592,18 +2071,17 @@
 
       .form-feedback {
         margin: 15px 0 0;
-        border-left: 2px solid var(--success);
         color: var(--success);
         font-size: 13px;
         line-height: 1.45;
-        padding-left: 12px;
       }
 
       .search-page-controls {
         display: flex;
         align-items: end;
         gap: 10px;
-        margin-top: 30px;
+        width: min(780px, 100%);
+        margin: 30px auto 0;
       }
 
       .search-page-controls .search-input {
@@ -1612,7 +2090,7 @@
 
       .search-results {
         max-width: 780px;
-        margin-top: 27px;
+        margin: 27px auto 0;
         border-top: 1px solid var(--line-strong);
       }
 
@@ -1779,30 +2257,14 @@
         transform: translateY(0);
       }
 
-      .site-footer {
-        width: min(calc(100% - 64px), var(--content-width));
-        margin: 0 auto;
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        font-family: var(--font-mono);
-        font-size: 10px;
-        letter-spacing: 0.035em;
-        padding: 17px 0 27px;
-      }
-
-      .site-footer span + span {
-        margin-left: 16px;
-      }
-
       .drawer-backdrop {
         display: none;
         z-index: 15;
       }
 
       @media (max-width: 1060px) {
-        .page-intro {
-          grid-template-columns: minmax(0, 1fr) minmax(200px, 0.36fr);
-          gap: 34px;
+        .vsl-video {
+          object-position: 58% center;
         }
 
         .folder-stage {
@@ -1810,15 +2272,48 @@
         }
 
         .folder-front {
-          padding: 12px;
+          padding-inline: 18px;
         }
 
         .folder-front strong {
-          font-size: 17px;
+          font-size: 19px;
         }
 
         .folder-front small {
-          font-size: 11px;
+          font-size: 12px;
+        }
+      }
+
+      @media (min-width: 901px) and (max-width: 1350px) {
+        .topbar {
+          display: flex;
+          gap: 8px;
+        }
+
+        .topbar-left,
+        .topbar-route,
+        .topbar-actions {
+          grid-column: auto;
+        }
+
+        .topbar-left {
+          gap: 4px;
+        }
+
+        .topbar-nav-button,
+        .topbar-action {
+          width: 32px;
+          height: 36px;
+        }
+
+        .topbar-route {
+          width: auto;
+          flex: 1 1 auto;
+        }
+
+        .topbar-actions {
+          gap: 2px;
+          margin-left: 0;
         }
       }
 
@@ -1836,72 +2331,37 @@
           transition: transform 180ms ease;
         }
 
+        .site-shell.sidebar-collapsed .sidebar {
+          width: min(302px, 87vw);
+          border-right: 1px solid var(--line);
+          pointer-events: auto;
+          visibility: visible;
+        }
+
         .sidebar.is-open {
           transform: translateX(0);
-        }
-
-        .site-shell.sidebar-collapsed .brand-copy,
-        .site-shell.sidebar-collapsed .nav-section-title > span,
-        .site-shell.sidebar-collapsed .nav-section-label,
-        .site-shell.sidebar-collapsed .nav-toggle-icon,
-        .site-shell.sidebar-collapsed .nav-child-label,
-        .site-shell.sidebar-collapsed .nav-utility-label {
-          display: initial;
-        }
-
-        .site-shell.sidebar-collapsed .sidebar-header {
-          justify-content: space-between;
-          padding-inline: 12px;
-        }
-
-        .site-shell.sidebar-collapsed .brand {
-          justify-content: initial;
-        }
-
-        .site-shell.sidebar-collapsed .nav-section + .nav-section {
-          margin-top: 20px;
-        }
-
-        .site-shell.sidebar-collapsed .nav-section-title,
-        .site-shell.sidebar-collapsed .nav-section-toggle {
-          justify-content: space-between;
-          padding-inline: 8px;
-        }
-
-        .site-shell.sidebar-collapsed .nav-section-copy {
-          justify-content: initial;
-        }
-
-        .site-shell.sidebar-collapsed .nav-section-label {
-          display: initial;
-        }
-
-        .site-shell.sidebar-collapsed .nav-child,
-        .site-shell.sidebar-collapsed .nav-utility {
-          justify-content: initial;
-          padding-inline: 15px 8px;
-        }
-
-        .mobile-menu-button {
-          display: inline-flex;
         }
 
         .drawer-backdrop.is-visible {
           display: block;
         }
 
+        .site-main,
+        .site-shell.sidebar-collapsed .site-main {
+          --reading-track-width: calc(100vw - 32px);
+        }
+
         .topbar {
+          display: flex;
           padding-inline: 18px;
         }
 
-        .page,
-        .site-footer {
+        .page {
           width: min(calc(100% - 44px), var(--content-width));
         }
       }
 
       @media (max-width: 760px) {
-        .page-intro,
         .home-reading,
         .home-library-rows,
         .orientation-panel,
@@ -1915,7 +2375,7 @@
         }
 
         .folder-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-columns: 1fr;
         }
 
         .home-reading {
@@ -1925,14 +2385,6 @@
         .orientation-copy {
           padding: 4px;
         }
-
-        .route-side {
-          max-width: 600px;
-        }
-
-        .course-summary {
-          grid-template-columns: 1fr;
-        }
       }
 
       @media (max-width: 560px) {
@@ -1941,7 +2393,7 @@
           padding-inline: 12px;
         }
 
-        .topbar-breadcrumb {
+        .topbar-route {
           gap: 5px;
           font-size: 9px;
         }
@@ -1958,13 +2410,11 @@
           padding: 0;
         }
 
-        .topbar-action-label,
-        .topbar-action kbd {
+        .topbar-route {
           display: none;
         }
 
-        .page,
-        .site-footer {
+        .page {
           width: calc(100% - 32px);
         }
 
@@ -1973,18 +2423,62 @@
           padding-bottom: 56px;
         }
 
-        .page-intro h1,
         .page-header h1 {
           font-size: clamp(38px, 12vw, 52px);
         }
 
-        .page-intro p,
         .page-header p {
           font-size: 15px;
         }
 
+        .vsl-intro {
+          padding: 0 0 20px;
+        }
+
+        .vsl-intro h1 {
+          max-width: 350px;
+          font-size: clamp(38px, 11vw, 48px);
+        }
+
+        .vsl-intro p {
+          max-width: 340px;
+          font-size: 14px;
+        }
+
+        .vsl-screen {
+          min-height: 220px;
+        }
+
+        .vsl-video {
+          object-position: 70% center;
+        }
+
+        .vsl-screen-copy {
+          width: min(100%, calc(100% - 30px));
+        }
+
+        .vsl-screen-copy strong {
+          font-size: clamp(24px, 8vw, 34px);
+        }
+
+        .vsl-screen-copy p {
+          max-width: 310px;
+          font-size: 12px;
+        }
+
+        .vsl-play {
+          min-height: 40px;
+          margin-top: 15px;
+        }
+
+        .vsl-chrome {
+          grid-template-columns: 54px minmax(0, 1fr) auto;
+          gap: 7px;
+          padding-inline: 10px;
+        }
+
         .folder-section {
-          margin-top: 42px;
+          margin-top: 38px;
         }
 
         .section-heading {
@@ -2005,57 +2499,52 @@
         }
 
         .folder-grid {
-          gap: 14px 9px;
+          row-gap: 68px;
+          column-gap: 0;
           padding-bottom: 0;
         }
 
         .folder-visual {
-          height: 173px;
+          height: 244px;
+        }
+
+        .folder-paper,
+        .folder-sheet {
+          top: 33px;
+          height: 196px;
+        }
+
+        .folder-paper-back {
+          right: 32px;
+          left: 16px;
+        }
+
+        .folder-paper-mid {
+          top: 39px;
+          right: 17px;
+          left: 28px;
+        }
+
+        .folder-sheet {
+          right: 20px;
+          left: 20px;
         }
 
         .folder-front {
-          min-height: 126px;
-          padding: 10px;
+          min-height: 132px;
+          top: 78px;
+          right: 4px;
+          bottom: 16px;
+          left: 4px;
+          padding: 19px 16px 24px;
         }
 
         .folder-front strong {
-          margin-top: 0;
-          font-size: 16px;
+          font-size: 18px;
         }
 
         .folder-front small {
-          font-size: 10px;
-        }
-
-        .folder-meta {
-          font-size: 8px;
-        }
-
-        .folder-label {
-          margin-top: 9px;
-        }
-
-        .folder-label strong {
           font-size: 12px;
-        }
-
-        .folder-label small {
-          font-size: 10px;
-        }
-
-        .folder-arrow {
-          width: 23px;
-          height: 23px;
-        }
-
-        .folder-holder {
-          right: 13px;
-          bottom: 16px;
-          left: 13px;
-        }
-
-        .folder-shelf {
-          bottom: 8px;
         }
 
         .orientation-panel {
@@ -2071,9 +2560,7 @@
           margin-top: 42px;
         }
 
-        .reading-panel,
-        .state-panel,
-        .form-panel {
+        .reading-panel {
           padding: 17px;
         }
 
@@ -2083,10 +2570,6 @@
 
         .reading-panel-header {
           display: block;
-        }
-
-        .reading-panel-header .status-label {
-          margin-top: 10px;
         }
 
         .orientation-art {
@@ -2109,29 +2592,14 @@
           margin-top: 35px;
         }
 
-        .route-list-item,
-        .resource-row,
-        .search-result {
-          gap: 8px;
+        .value-layer-row {
+          grid-template-columns: 1fr;
+          gap: 5px;
         }
 
         .route-list-item strong,
         .search-result strong {
           font-size: 15px;
-        }
-
-        .step-row {
-          grid-template-columns: 34px minmax(0, 1fr);
-          gap: 10px;
-        }
-
-        .step-row .access-state {
-          grid-column: 2;
-          justify-self: start;
-        }
-
-        .project-facts {
-          grid-template-columns: 1fr;
         }
 
         .search-page-controls {
@@ -2148,6 +2616,54 @@
 
         .modal-sheet {
           padding: 17px;
+        }
+      }
+
+      @media (hover: none) {
+        .folder-card:hover .folder-paper-back {
+          box-shadow: 0 8px 16px var(--shadow-soft);
+          transform: translateY(0) rotate(var(--paper-back-tilt)) !important;
+        }
+
+        .folder-card:hover .folder-paper-mid {
+          box-shadow: 0 8px 16px var(--shadow-soft);
+          transform: translateY(0) rotate(var(--paper-mid-tilt)) !important;
+        }
+
+        .folder-card:hover .folder-sheet {
+          box-shadow: 0 8px 16px var(--shadow-soft);
+          transform: translateY(0) rotate(var(--sheet-tilt)) !important;
+        }
+
+        .folder-card:hover .folder-sheet-topline {
+          opacity: 0.92;
+        }
+
+        .folder-card:hover .folder-sheet-title {
+          opacity: 0.85;
+        }
+
+        .folder-card:hover .folder-sheet-copy {
+          opacity: 0.78;
+        }
+
+        .folder-card:hover .folder-front {
+          background:
+            linear-gradient(
+              135deg,
+              color-mix(in srgb, var(--folder-ink) 12%, transparent),
+              transparent 35%
+            ),
+            repeating-linear-gradient(
+              0deg,
+              color-mix(in srgb, var(--folder-ink) 4%, transparent) 0 1px,
+              transparent 1px 5px
+            ),
+            var(--folder-color, var(--folder-one));
+          box-shadow:
+            0 6px 0 color-mix(in srgb, var(--accent-dark) 46%, transparent),
+            0 14px 20px var(--shadow-soft);
+          transform: none;
         }
       }
 
@@ -2181,55 +2697,79 @@
 
       <div class="site-main">
         <header class="topbar">
-          <button
-            class="mobile-menu-button"
-            type="button"
-            data-action="open-drawer"
-            aria-label="Open navigation"
-            aria-controls="sidebar"
-          ></button>
-          <a class="topbar-breadcrumb" href="#/" aria-label="Resources home">
+          <div class="topbar-left" aria-label="Navigation controls">
+            <button
+              class="topbar-nav-button"
+              type="button"
+              data-action="toggle-sidebar"
+              aria-label="Collapse sidebar"
+              title="Collapse sidebar"
+              aria-controls="sidebar"
+            ></button>
+            <button
+              class="topbar-nav-button"
+              type="button"
+              data-action="history-back"
+              aria-label="Go back"
+              title="Go back"
+              disabled
+            ></button>
+            <button
+              class="topbar-nav-button"
+              type="button"
+              data-action="history-forward"
+              aria-label="Go forward"
+              title="Go forward"
+              disabled
+            ></button>
+          </div>
+          <div class="topbar-route reading-track" aria-live="polite">
             <span>Resources</span>
             <span aria-hidden="true">/</span>
-            <strong id="route-label">Explore</strong>
-          </a>
+            <strong id="route-label">Home</strong>
+          </div>
           <div class="topbar-actions">
             <button
               class="topbar-action"
               type="button"
               data-action="search"
-              aria-label="Open search"
+              aria-label="Search"
+              title="Search"
             >
               <span class="topbar-action-icon" aria-hidden="true"></span>
-              <span class="topbar-action-label">Search</span>
-              <kbd>⌘K</kbd>
             </button>
+            <a
+              class="topbar-action"
+              data-external="newsletter"
+              href="https://gustavonline.com/newsletter"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Newsletter (opens in a new tab)"
+              title="Newsletter (opens in a new tab)"
+            >
+              <span class="topbar-action-icon" aria-hidden="true"></span>
+            </a>
+            <a
+              class="topbar-action"
+              href="#/account"
+              aria-label="Account"
+              title="Account"
+            >
+              <span class="topbar-action-icon" aria-hidden="true"></span>
+            </a>
             <button
               class="topbar-action"
               type="button"
-              data-action="newsletter"
-              aria-label="Open newsletter"
+              data-action="theme"
+              aria-label="Switch to dark theme"
+              title="Switch to dark theme"
             >
-              <span class="topbar-action-icon" aria-hidden="true"></span>
-              <span class="topbar-action-label">Newsletter</span>
-            </button>
-            <a class="topbar-action" href="#/account" aria-label="Log in">
-              <span class="topbar-action-icon" aria-hidden="true"></span>
-              <span class="topbar-action-label">Log in</span>
-            </a>
-            <button class="topbar-action" type="button" data-action="theme">
-              <span class="theme-mark" aria-hidden="true"></span>
-              <span class="topbar-action-label" id="theme-label">Dark</span>
+              <span class="theme-toggle-icon" aria-hidden="true"></span>
             </button>
           </div>
         </header>
 
         <main id="main-content" tabindex="-1"></main>
-        <footer class="site-footer">
-          <span>resources.onlinesourdough</span>
-          <span>Design preview / 2026</span>
-          <span>Internal routes stay honest</span>
-        </footer>
       </div>
     </div>
 
@@ -2253,8 +2793,8 @@
           ></button>
         </div>
         <p>
-          Search the draft library by title, area, or outcome. This static
-          preview searches only local content.
+          Search the draft library by title, concept, area, or outcome. This
+          static preview searches only local content.
         </p>
         <form class="modal-search-form" id="modal-search-form">
           <label class="sr-only" for="modal-search-input"
@@ -2265,22 +2805,11 @@
             id="modal-search-input"
             type="search"
             autocomplete="off"
-            placeholder="Try ownership, architecture, or Blueprint"
+            placeholder="Try constraint, AI Literacy, or Start Here"
           />
           <button class="button-primary" type="submit">Search</button>
         </form>
         <div class="modal-results" id="modal-results"></div>
-      </section>
-    </div>
-
-    <div class="modal-backdrop" id="utility-modal" hidden>
-      <section
-        class="modal-sheet"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="utility-title"
-      >
-        <div id="utility-content"></div>
       </section>
     </div>
 
@@ -2297,8 +2826,6 @@
         const routeLabel = document.getElementById("route-label");
         const drawerBackdrop = document.getElementById("drawer-backdrop");
         const searchModal = document.getElementById("search-modal");
-        const utilityModal = document.getElementById("utility-modal");
-        const utilityContent = document.getElementById("utility-content");
         const modalSearchInput = document.getElementById("modal-search-input");
         const modalResults = document.getElementById("modal-results");
         const toast = document.getElementById("toast");
@@ -2306,19 +2833,129 @@
         const STORAGE = {
           theme: "resources-design-theme",
           sidebar: "resources-design-sidebar",
-          groups: "resources-design-groups",
+        };
+
+        const NEWSLETTER_URL = "https://gustavonline.com/newsletter";
+        const AI_LITERACY_ROUTE = "/explore/ai-literacy";
+
+        const aiLiteracyConcepts = [
+          {
+            slug: "context",
+            title: "Context",
+            description:
+              "Understand business context, instructions, system and user layers, context windows, source of truth, and memory.",
+            keyPoints: [
+              "Business context shapes the question",
+              "Instructions and conversations use system and user layers",
+              "A context window is working memory, not the source of truth",
+              "Keep relevant memory; more context is not automatically better",
+            ],
+          },
+          {
+            slug: "how-ai-works",
+            title: "How AI works",
+            description:
+              "Understand probabilistic behavior, useful trade-offs, and how to test whether an output moves the business job forward.",
+            keyPoints: [
+              "AI outputs are probabilistic, not deterministic",
+              "Tokens, capability, cost, and speed are job-specific trade-offs",
+              "Choose the model and setup for the business job",
+              "An output is not automatically useful progress",
+              "Define success and test the result",
+            ],
+          },
+          {
+            slug: "tools",
+            title: "Tools",
+            description:
+              "Connect AI to data and actions through controlled access, with permissions, results, errors, and inspection kept clear.",
+            keyPoints: [
+              "A tool grants controlled access, not open autonomy",
+              "Make permissions and actions explicit",
+              "Keep returned results and errors visible",
+              "Make the work inspectable",
+            ],
+          },
+          {
+            slug: "agents",
+            title: "Agents",
+            description:
+              "Distinguish predictable workflows from bounded judgment, then set the lowest useful autonomy and a clear recovery path.",
+            keyPoints: [
+              "An agent chooses the next step within bounds",
+              "Use workflows for predictable repetition",
+              "Use the lowest useful autonomy",
+              "Keep evals, guardrails, and ownership observable",
+              "Name the stop and recovery path",
+            ],
+          },
+          {
+            slug: "skills",
+            title: "Skills",
+            description:
+              "Package instructions, context, and proof when a repeatable capability should become a reusable AIOS skill.",
+            keyPoints: [
+              "Capture the instructions that repeat",
+              "Keep needed context and boundaries with them",
+              "Add proof so the result can be checked",
+              "Package a capability when reuse helps",
+              "Feed learning back into the system",
+            ],
+          },
+        ];
+
+        const aiLiteracyNavItem = {
+          title: "AI Literacy",
+          disclosure: true,
+          description:
+            "A quiet reference for understanding how AI belongs in a business system.",
+        };
+
+        const aiLiteracyOverviewItem = {
+          title: "AI Literacy",
+          route: AI_LITERACY_ROUTE,
+          meta: "Explore · Reference",
+          description:
+            "Business architecture frames the job; AI literacy makes AI behavior understandable enough to choose and build responsibly.",
         };
 
         const groups = {
+          "business-freedom-ecosystem": {
+            label: "Business Freedom Ecosystem",
+            children: [
+              {
+                title: "Understand your business",
+                route: "/business-freedom-ecosystem/understand-your-business",
+                description:
+                  "Start with context, the current constraint, and the business system.",
+              },
+              {
+                title: "Choose what to change",
+                route: "/business-freedom-ecosystem/choose-what-to-change",
+                description:
+                  "Choose the smallest change and place responsibility clearly.",
+              },
+              {
+                title: "Build the solution",
+                route: "/business-freedom-ecosystem/build-the-solution",
+                description: "Specify, build, and prove one complete result.",
+              },
+              {
+                title: "Launch and run it",
+                route: "/business-freedom-ecosystem/launch-and-run-it",
+                description:
+                  "Release, operate, simplify, and keep a recovery path.",
+              },
+            ],
+          },
           "open-source": {
             label: "Open Source",
-            icon: "layers",
             children: [
               {
                 title: "AIOS Template",
                 route: "/open-source/aios-template",
                 description:
-                  "Reusable AIOS foundation for a project that needs a clear home.",
+                  "The open-source foundation for work that needs a clear home.",
               },
               {
                 title: "Solution Template",
@@ -2330,60 +2967,31 @@
                 title: "Skills",
                 route: "/open-source/skills",
                 description:
-                  "Focused working skills for building and reviewing with AI.",
+                  "Focused working skills for building, reviewing, and handover.",
               },
             ],
           },
-          courses: {
-            label: "Courses",
-            icon: "book",
+          "in-practice": {
+            label: "In Practice",
             children: [
               {
-                title: "Fundamentals",
-                route: "/courses/fundamentals",
+                title: "Arc’IT AI",
+                href: "https://arcitai.com/",
+                external: true,
                 description:
-                  "Language and habits for making good decisions around AI.",
-              },
-              {
-                title: "Business Architecture",
-                route: "/courses/business-architecture",
-                description:
-                  "The ordered Blueprint from constraint to owned result.",
-              },
-              {
-                title: "Agentic Engineering",
-                route: "/courses/agentic-engineering",
-                description:
-                  "Build systems AI can understand, extend, and hand over.",
-              },
-              {
-                title: "Cloud Agents",
-                route: "/courses/cloud-agents",
-                description:
-                  "Operate agents with boundaries, observability, and recovery.",
-              },
-            ],
-          },
-          projects: {
-            label: "Projects",
-            icon: "project",
-            children: [
-              {
-                title: "ArcitAI",
-                route: "/projects/arcitai",
-                description:
-                  "A local project record; public source is not linked in this preview.",
+                  "A verified external responsibility surface for applied work.",
               },
               {
                 title: "AIOS Desktop",
-                route: "/projects/aios-desktop",
-                description: "An internal home-base application for AIOS work.",
+                route: "/in-practice/aios-desktop",
+                description:
+                  "An internal working example built around the AI Workspace setup.",
               },
               {
                 title: "Power BI Template",
-                route: "/projects/power-bi-template",
+                route: "/in-practice/power-bi-template",
                 description:
-                  "A reusable reporting foundation for business decisions.",
+                  "A draft reporting foundation for business decisions.",
               },
             ],
           },
@@ -2391,136 +2999,341 @@
 
         const exploreChildren = [
           {
-            title: "Begin",
-            route: "/explore/begin",
-            description: "Name the constraint and choose a useful next move.",
+            title: "Start Here",
+            route: "/explore/start-here",
+            description:
+              "Get oriented around what Resources contains and what changed.",
           },
           {
-            title: "Featured",
-            route: "/explore/featured",
-            description: "A short set of pages worth keeping close.",
-          },
-          {
-            title: "What's New",
+            title: "What’s New",
             route: "/explore/whats-new",
-            description: "The latest changes and newly published pages.",
+            description: "See recent changes with their supporting context.",
           },
-        ];
-
-        const featured = [
+          aiLiteracyNavItem,
           {
-            title: "How to use the library",
-            route: "/explore/begin",
-            meta: "Begin · Free · 06 min",
+            title: "Newsletter",
+            href: NEWSLETTER_URL,
+            external: true,
             description:
-              "Start with the constraint, then choose the kind of help that would make it easier.",
-          },
-          {
-            title: "Architecture as shared memory",
-            route: "/open-source/skills",
-            meta: "Skills · Free · 08 min",
-            description:
-              "A small architecture note gives people and AI the context for the next change.",
-          },
-          {
-            title: "From quick build to maintainable work",
-            route: "/courses/agentic-engineering",
-            meta: "Agentic Engineering · Free · 11 min",
-            description:
-              "Notice when the business needs more structure around a working first version.",
+              "Read occasional notes on business decisions, ownership, and practical systems.",
           },
         ];
 
         const whatsNew = [
           {
             title: "The handoff is part of the result",
-            route: "/courses/business-architecture",
-            meta: "Business Architecture · Updated 06 Aug 2026",
+            route:
+              "/business-freedom-ecosystem/launch-and-run-it/08-ship-operate-and-recover",
+            meta: "Launch and run it · Update",
+            showMeta: false,
+            status: "draft",
+            access: "internal-example",
             description:
-              "A revised note on preserving context, ownership, and a recovery path.",
+              "A note on preserving context, ownership, and a recovery path.",
           },
           {
-            title: "Why AI does not create culture",
-            route: "/explore/featured",
-            meta: "Featured · Updated 01 Aug 2026",
+            title: "AI + software, clearly scoped",
+            route: "/in-practice/aios-desktop",
+            meta: "In Practice · Note",
+            showMeta: false,
+            status: "draft",
+            access: "internal-example",
             description:
-              "Generated code adds momentum; the surrounding decisions still need people.",
+              "A note on keeping the solution mechanism legible and bounded.",
           },
           {
-            title: "A smaller definition of ready",
-            route: "/projects/aios-desktop",
-            meta: "Projects · Updated 29 Jul 2026",
+            title: "Power BI Template and the business question",
+            route: "/in-practice/power-bi-template",
+            meta: "In Practice · Record",
+            showMeta: false,
+            status: "draft",
+            access: "internal-example",
             description:
-              "What to make visible before an internal tool becomes something others rely on.",
+              "A project record for turning business questions into a reviewable reporting surface.",
           },
         ];
 
-        const courseSteps = [
-          [
-            "01",
-            "Find the current constraint",
-            "Start from one real founder problem, desired freedom, and the constraint that matters now.",
-          ],
-          [
-            "02",
-            "Map the business system",
-            "Map the real process, people, outcomes, baseline, and feedback already available.",
-          ],
-          [
-            "03",
-            "Decide what should change",
-            "Choose eliminate, simplify, delegate, buy, automate, build, or deliberately do nothing.",
-          ],
-          [
-            "04",
-            "Place ownership",
-            "Choose an existing owner, an AIOS employee, or an independent solution lifecycle.",
-          ],
-          [
-            "05",
-            "Specify the smallest complete result",
-            "Define the outcome, boundaries, guardrails, and evidence for one complete result.",
-          ],
-          [
-            "06",
-            "Build and prove it",
-            "Build one complete, observable feedback loop and prove it against its evidence.",
-          ],
-          [
-            "07",
-            "Review and simplify",
-            "Review correctness, security, simplicity, and handover before release.",
-          ],
-          [
-            "08",
-            "Ship, operate, and recover",
-            "Release with authority, verify operation, preserve a stop path, and return learning.",
-          ],
+        const startHereChoices = [
+          {
+            title: "Find the current constraint",
+            route: "/business-freedom-ecosystem/understand-your-business",
+            description:
+              "Name what matters before choosing a format, tool, or implementation.",
+          },
+          {
+            title: "Choose the smallest useful change",
+            route: "/business-freedom-ecosystem/choose-what-to-change",
+            description:
+              "Keep, remove, automate, or delegate the change and its responsibility.",
+          },
+          {
+            title: "Choose the delivery route",
+            route: "/business-freedom-ecosystem/build-the-solution",
+            description:
+              "Use AI, agents, and software where the job supports it; AI Workspace is a possible configured base.",
+          },
         ];
+
+        const curriculum = [
+          {
+            number: "00",
+            slug: "start-here",
+            group: "understand-your-business",
+            title: "Start Here",
+            description:
+              "Orient around the Business Freedom Ecosystem before choosing a format, tool, or implementation.",
+            body: "Name the decision in front of you, the freedom you want, and the responsibility that must stay visible. This orientation sits beneath Understand your business.",
+          },
+          {
+            number: "01",
+            slug: "find-current-constraint",
+            group: "understand-your-business",
+            title: "Find the current constraint",
+            description:
+              "Start from one real founder problem, desired freedom, and the constraint that matters now.",
+            body: "Describe the business constraint in plain language before proposing a product, tool, or technical answer.",
+          },
+          {
+            number: "02",
+            slug: "map-business-system",
+            group: "understand-your-business",
+            title: "Map the business system",
+            description:
+              "Map the real process, people, outcomes, baseline, and feedback already available.",
+            body: "Keep the current system visible: who owns each decision, what happens now, and where evidence can be observed.",
+          },
+          {
+            number: "03",
+            slug: "decide-what-should-change",
+            group: "choose-what-to-change",
+            title: "Decide what should change",
+            description:
+              "Choose eliminate, simplify, delegate, buy, automate, build, or deliberately do nothing.",
+            body: "Choose the smallest change that improves the business constraint without hiding the work or responsibility it creates.",
+          },
+          {
+            number: "04",
+            slug: "place-ownership",
+            group: "choose-what-to-change",
+            title: "Place ownership",
+            description:
+              "Choose an existing owner, an AIOS employee, or an independent solution lifecycle.",
+            body: "Make responsibility explicit before implementation. The receiving project decides commercial ownership.",
+          },
+          {
+            number: "05",
+            slug: "specify-smallest-complete-result",
+            group: "build-the-solution",
+            title: "Specify the smallest complete result",
+            description:
+              "Define the outcome, boundaries, guardrails, and evidence for one complete result.",
+            body: "Write the smallest result that can be used, checked, handed over, and recovered without relying on a hidden promise.",
+          },
+          {
+            number: "06",
+            slug: "build-and-prove-it",
+            group: "build-the-solution",
+            title: "Build and prove it",
+            description:
+              "Build one complete, observable feedback loop and prove it against its evidence.",
+            body: "Keep implementation attached to the business result and its observable evidence.",
+          },
+          {
+            number: "07",
+            slug: "review-and-simplify",
+            group: "launch-and-run-it",
+            title: "Review and simplify",
+            description:
+              "Review correctness, security, simplicity, and handover before release.",
+            body: "Check what the result does, what it should not do, who can change it, and what can be removed before release.",
+          },
+          {
+            number: "08",
+            slug: "ship-operate-and-recover",
+            group: "launch-and-run-it",
+            title: "Ship, operate, and recover",
+            description:
+              "Release with authority, verify operation, preserve a stop path, and return learning.",
+            body: "Keep operation and recovery visible after launch.",
+          },
+        ];
+
+        const ecosystemGroups = {
+          "understand-your-business": {
+            title: "Understand your business",
+            description:
+              "Begin with the business context, the current constraint, and the system that already exists.",
+            focus: "Name the context before choosing the answer.",
+            body: "This stage keeps orientation, the current constraint, and the business map together.",
+            toolkits: [
+              {
+                title: "Constraint map",
+                route:
+                  "/business-freedom-ecosystem/understand-your-business/toolkit-constraint-map",
+                status: "draft",
+                access: "internal-example",
+                description:
+                  "A worksheet for naming the constraint, desired freedom, and current evidence.",
+                body: "Use it to record the constraint, desired freedom, and evidence available now.",
+              },
+            ],
+          },
+          "choose-what-to-change": {
+            title: "Choose what to change",
+            description:
+              "Choose the change that serves the business and place responsibility before implementation.",
+            focus: "Make the change decision and its owner explicit.",
+            body: "This stage keeps the change decision connected to the ownership boundary instead of turning a tool into the decision.",
+            toolkits: [
+              {
+                title: "Change choice worksheet",
+                route:
+                  "/business-freedom-ecosystem/choose-what-to-change/toolkit-change-choice",
+                status: "draft",
+                access: "internal-example",
+                description:
+                  "A worksheet for comparing simplify, delegate, buy, automate, build, or no change.",
+                body: "Use it to compare the smallest justified intervention.",
+              },
+            ],
+          },
+          "build-the-solution": {
+            title: "Build the solution",
+            description:
+              "Specify, build, and prove one complete result with boundaries and evidence attached.",
+            focus: "Make the result usable, observable, and handover-ready.",
+            body: "This stage describes the smallest complete result without claiming a published implementation or technical status.",
+            toolkits: [
+              {
+                title: "Solution boundary brief",
+                route:
+                  "/business-freedom-ecosystem/build-the-solution/toolkit-solution-boundary",
+                status: "draft",
+                access: "internal-example",
+                description:
+                  "A brief for recording outcome, boundaries, guardrails, and evidence.",
+                body: "Use it to keep the result complete and inspectable.",
+              },
+            ],
+          },
+          "launch-and-run-it": {
+            title: "Launch and run it",
+            description:
+              "Review, simplify, release, operate, and recover the result with responsibility still visible.",
+            focus: "Keep operation and recovery part of the result.",
+            body: "This stage describes the launch and recovery decision without claiming a live service, operating agreement, or published status.",
+            toolkits: [
+              {
+                title: "Launch and recovery checklist",
+                route:
+                  "/business-freedom-ecosystem/launch-and-run-it/toolkit-launch-recovery",
+                status: "draft",
+                access: "internal-example",
+                description:
+                  "A checklist for release checks, authority, stop paths, and returned learning.",
+                body: "Use it to keep launch, operation, and recovery visible.",
+              },
+            ],
+          },
+        };
+
+        Object.entries(ecosystemGroups).forEach(([slug, group]) => {
+          group.steps = curriculum.filter((step) => step.group === slug);
+        });
+
+        const openSourceDetails = {
+          "aios-template": {
+            title: "AIOS Template",
+            description:
+              "A reusable AIOS foundation for a project that needs a clear home, visible ownership, and room to extend.",
+            focus: "Give a project a legible starting structure.",
+            body: "Use the foundation to give a project a clear home, visible ownership, and room to extend.",
+            note: "Draft resource. The receiving product can attach a verified source when one is ready.",
+          },
+          "solution-template": {
+            title: "Solution Template",
+            description:
+              "A structured starting point for an independently owned solution that needs a clear decision and delivery boundary.",
+            focus: "Keep a solution boundary explicit before it grows.",
+            body: "Keep the solution boundary explicit as the work grows.",
+            note: "Draft resource. No external implementation is attached to this preview.",
+          },
+          skills: {
+            title: "Skills",
+            description:
+              "Focused working skills for building, reviewing, and handing over practical work with useful context attached.",
+            focus: "Make the next change easier to explain and review.",
+            body: "Package useful context with a working skill so the next change is easier to explain and review.",
+            note: "Draft resource. Published availability is not claimed here.",
+          },
+        };
+
+        const inPracticeDetails = {
+          "aios-desktop": {
+            title: "AIOS Desktop",
+            description:
+              "A working example for keeping AIOS work, context, and next actions together.",
+            focus: "AI Workspace as the configured technical setup",
+            body: "Keep AIOS work, company context, and next actions together in the customer’s configured AI Workspace.",
+            note: "Internal project record. Permission and technical status belong to the receiving project.",
+          },
+          "power-bi-template": {
+            title: "Power BI Template",
+            description:
+              "A reporting foundation for turning business questions into a reviewable decision surface.",
+            focus: "Keep the reporting decision tied to the business question",
+            body: "Turn a business question into a reviewable reporting surface with ownership visible.",
+            note: "Draft project record. If the receiving product is offline or access is missing, preserve the route and context for later.",
+          },
+        };
 
         const allSearchable = [
-          ...featured,
+          ...startHereChoices,
           ...whatsNew,
+          ...exploreChildren
+            .filter((child) => child.route || child.external)
+            .map((child) => ({ ...child, meta: "Explore" })),
           ...Object.values(groups).flatMap((group) =>
-            group.children.map((child) => ({ ...child, meta: group.label })),
+            group.children
+              .filter((child) => child.route || child.external)
+              .map((child) => ({ ...child, meta: group.label })),
           ),
-          ...courseSteps.map(([number, title, description]) => ({
-            title,
-            route: "/courses/business-architecture",
-            meta: `Blueprint · ${number} · Paid`,
-            description,
+          aiLiteracyOverviewItem,
+          ...aiLiteracyConcepts.map((concept) => ({
+            title: concept.title,
+            route: aiLiteracyConceptRoute(concept),
+            meta: "Explore · AI Literacy",
+            description: concept.description,
           })),
+          ...curriculum.map((step) => ({
+            title: step.title,
+            route: ecosystemStepRoute(step),
+            meta: `Business Freedom Ecosystem · ${step.group}`,
+            description: step.description,
+          })),
+          ...Object.values(ecosystemGroups).flatMap((group) =>
+            group.toolkits.map((toolkit) => ({ ...toolkit })),
+          ),
         ];
 
         const icons = {
           arrow:
             '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m13 6 6 6-6 6"/></svg>',
-          back: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11 6-6 6 6 6"/></svg>',
-          book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H20v16H7.5A2.5 2.5 0 0 0 5 21.5z"/><path d="M5 5.5v16"/><path d="M8 7h8"/></svg>',
+          external:
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5"/><path d="m19 5-8 8"/><path d="M17 13v5H5V6h5"/></svg>',
+          back: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>',
+          forward:
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>',
           close:
             '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12"/><path d="M18 6 6 18"/></svg>',
           collapse:
-            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/><path d="M20 5v14"/></svg>',
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2.2"/><path d="M9 5v14"/></svg>',
+          expand:
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2.2"/><path d="M15 5v14"/></svg>',
+          chevronDown:
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+          chevronUp:
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>',
           help: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 3.8 1.9c-.9.7-1.5 1.1-1.5 2.6"/><path d="M12 17h.01"/></svg>',
           layers:
             '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 4 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 16 8 4 8-4"/></svg>',
@@ -2534,27 +3347,15 @@
           user: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>',
         };
 
-        const readJSON = (key, fallback) => {
-          try {
-            const value = JSON.parse(localStorage.getItem(key));
-            return value ?? fallback;
-          } catch {
-            return fallback;
-          }
-        };
-
         let theme = localStorage.getItem(STORAGE.theme) || "light";
         let sidebarCollapsed =
           localStorage.getItem(STORAGE.sidebar) === "collapsed";
-        let groupState = readJSON(STORAGE.groups, {
-          "open-source": true,
-          courses: false,
-          projects: false,
-        });
         let drawerOpen = false;
+        let aiLiteracyExpanded = null;
         let toastTimer;
         let searchTimer;
         let searchModalPreviousFocus;
+        let lastRenderedLocation = "";
         let wasMobileViewport = window.matchMedia("(max-width: 900px)").matches;
 
         function icon(name) {
@@ -2563,6 +3364,24 @@
 
         function routeHref(route) {
           return `#${route}`;
+        }
+
+        function itemHref(item) {
+          return item.external ? item.href : routeHref(item.route);
+        }
+
+        function itemTarget(item) {
+          return item.external
+            ? ' target="_blank" rel="noopener noreferrer"'
+            : "";
+        }
+
+        function ecosystemStepRoute(step) {
+          return `/business-freedom-ecosystem/${step.group}/${step.number.toLowerCase()}-${step.slug}`;
+        }
+
+        function aiLiteracyConceptRoute(concept) {
+          return `${AI_LITERACY_ROUTE}/${concept.slug}`;
         }
 
         function escapeHTML(value) {
@@ -2583,245 +3402,602 @@
           };
         }
 
+        function ensureHistoryState() {
+          if (history.state?.resourcesPreview) return;
+          history.replaceState(
+            {
+              ...(history.state || {}),
+              resourcesPreview: true,
+              resourcesIndex: 0,
+              resourcesMaxIndex: 0,
+            },
+            "",
+            location.href,
+          );
+        }
+
+        function navigate(route) {
+          const nextHash = route.startsWith("#") ? route : `#${route}`;
+          if (location.hash === nextHash) {
+            renderFromHistory();
+            return;
+          }
+          ensureHistoryState();
+          const currentState = history.state;
+          const nextIndex = (currentState.resourcesIndex || 0) + 1;
+          history.replaceState(
+            { ...currentState, resourcesMaxIndex: nextIndex },
+            "",
+            location.href,
+          );
+          history.pushState(
+            {
+              ...currentState,
+              resourcesIndex: nextIndex,
+              resourcesMaxIndex: nextIndex,
+            },
+            "",
+            nextHash,
+          );
+          renderFromHistory();
+        }
+
+        function renderFromHistory() {
+          ensureHistoryState();
+          if (lastRenderedLocation === location.href) {
+            updateTopbarControls();
+            return;
+          }
+          renderPage();
+          lastRenderedLocation = location.href;
+          window.scrollTo(0, 0);
+          main.focus({ preventScroll: true });
+        }
+
+        function updateTopbarControls() {
+          const state = history.state || {};
+          const historyIndex = Number.isInteger(state.resourcesIndex)
+            ? state.resourcesIndex
+            : 0;
+          const historyMaxIndex = Number.isInteger(state.resourcesMaxIndex)
+            ? state.resourcesMaxIndex
+            : historyIndex;
+          const sidebarToggle = document.querySelector(
+            '[data-action="toggle-sidebar"]',
+          );
+          const backButton = document.querySelector(
+            '[data-action="history-back"]',
+          );
+          const forwardButton = document.querySelector(
+            '[data-action="history-forward"]',
+          );
+          const isMobile = window.matchMedia("(max-width: 900px)").matches;
+          if (sidebarToggle) {
+            sidebarToggle.innerHTML = icon(
+              isMobile ? "menu" : sidebarCollapsed ? "expand" : "collapse",
+            );
+            const label = isMobile
+              ? "Open navigation"
+              : `${sidebarCollapsed ? "Expand" : "Collapse"} sidebar`;
+            sidebarToggle.setAttribute("aria-label", label);
+            sidebarToggle.setAttribute("title", label);
+            sidebarToggle.setAttribute(
+              "aria-expanded",
+              String(isMobile ? drawerOpen : !sidebarCollapsed),
+            );
+          }
+          if (backButton) {
+            backButton.innerHTML = icon("back");
+            backButton.disabled = historyIndex <= 0;
+          }
+          if (forwardButton) {
+            forwardButton.innerHTML = icon("forward");
+            forwardButton.disabled = historyIndex >= historyMaxIndex;
+          }
+        }
+
         function routeTitle(path) {
-          if (path === "/" || path === "/explore") return "Explore";
-          if (path.startsWith("/explore/"))
-            return path.split("/")[2].replaceAll("-", " ");
-          if (path.startsWith("/open-source")) return "Open Source";
-          if (path.startsWith("/courses")) return "Courses";
-          if (path.startsWith("/projects")) return "Projects";
-          if (path.startsWith("/search")) return "Search";
-          if (path === "/account") return "Account";
-          if (path === "/help") return "Need help";
-          return "Explore";
+          const labels = {
+            "/": "Home",
+            "/explore/start-here": "Explore / Start Here",
+            "/explore/whats-new": "Explore / What’s New",
+            "/business-freedom-ecosystem/understand-your-business":
+              "Business Freedom Ecosystem / Understand your business",
+            "/business-freedom-ecosystem/choose-what-to-change":
+              "Business Freedom Ecosystem / Choose what to change",
+            "/business-freedom-ecosystem/build-the-solution":
+              "Business Freedom Ecosystem / Build the solution",
+            "/business-freedom-ecosystem/launch-and-run-it":
+              "Business Freedom Ecosystem / Launch and run it",
+            "/open-source/aios-template": "Open Source / AIOS Template",
+            "/open-source/solution-template": "Open Source / Solution Template",
+            "/open-source/skills": "Open Source / Skills",
+            "/in-practice/aios-desktop": "In Practice / AIOS Desktop",
+            "/in-practice/power-bi-template": "In Practice / Power BI Template",
+            "/search": "Search",
+            "/account": "Account",
+            "/help": "Need help",
+          };
+          if (labels[path]) return labels[path];
+          if (path === AI_LITERACY_ROUTE) return "Explore / AI Literacy";
+          const aiLiteracyConcept = aiLiteracyConcepts.find(
+            (item) => aiLiteracyConceptRoute(item) === path,
+          );
+          if (aiLiteracyConcept)
+            return `Explore / AI Literacy / ${aiLiteracyConcept.title}`;
+          for (const step of curriculum) {
+            if (ecosystemStepRoute(step) === path) {
+              return `Business Freedom Ecosystem / ${ecosystemGroups[step.group].title} / ${step.title}`;
+            }
+          }
+          for (const group of Object.values(ecosystemGroups)) {
+            const toolkit = group.toolkits.find((item) => item.route === path);
+            if (toolkit)
+              return `Business Freedom Ecosystem / ${group.title} / ${toolkit.title}`;
+          }
+          return "Not found";
         }
 
         function isActive(path, route) {
-          if (route === "/") return path === "/" || path === "/explore";
-          return path === route;
+          if (!route) return false;
+          return path === route || path.startsWith(`${route}/`);
+        }
+
+        function isAiLiteracyPath(path) {
+          return (
+            path === AI_LITERACY_ROUTE ||
+            aiLiteracyConcepts.some(
+              (concept) => aiLiteracyConceptRoute(concept) === path,
+            )
+          );
+        }
+
+        function aiLiteracyDisclosureMarkup(path) {
+          const routeIsAiLiteracy = isAiLiteracyPath(path);
+          const expanded = routeIsAiLiteracy
+            ? aiLiteracyExpanded !== false
+            : aiLiteracyExpanded === true;
+          const concepts = [
+            { title: "Overview", route: AI_LITERACY_ROUTE },
+            ...aiLiteracyConcepts.map((concept) => ({
+              ...concept,
+              route: aiLiteracyConceptRoute(concept),
+            })),
+          ];
+          return `<div class="nav-disclosure"><button class="nav-disclosure-button" data-adapter="heroui-disclosure" type="button" data-action="toggle-ai-literacy" aria-expanded="${expanded}" aria-controls="ai-literacy-subnav"><span class="nav-child-label">AI Literacy</span><span class="nav-disclosure-glyph" aria-hidden="true">${icon(expanded ? "chevronUp" : "chevronDown")}</span></button><div class="nav-sublist" id="ai-literacy-subnav"${expanded ? "" : " hidden"}>${concepts
+            .map((child) => {
+              const childActive = path === child.route;
+              return `<a class="nav-child nav-subchild ${childActive ? "is-active" : ""}" href="${routeHref(child.route)}" title="${child.title}"${childActive ? ' aria-current="page"' : ""}><span class="nav-child-label">${child.title}</span></a>`;
+            })
+            .join("")}</div></div>`;
         }
 
         function sidebarMarkup(path) {
-          const groupMarkup = (key) => {
-            const group = groups[key];
-            const expanded = Boolean(groupState[key]);
+          const linkMarkup = (child) => {
+            if (child.disclosure) return aiLiteracyDisclosureMarkup(path);
+            const active = isActive(path, child.route);
+            return `<a class="nav-child ${active ? "is-active" : ""}" href="${itemHref(child)}"${itemTarget(child)} title="${child.title}${child.external ? " (opens in a new tab)" : ""}" ${active ? 'aria-current="page"' : ""}><span class="nav-child-label">${child.title}</span>${child.external ? `<span class="nav-external-icon" aria-hidden="true">${icon("external")}</span>` : ""}</a>`;
+          };
+          const sectionMarkup = (key, label, children) => {
             return `<section class="nav-section" data-section="${key}">
-              <button class="nav-section-toggle" type="button" data-action="toggle-group" data-group="${key}" aria-label="${expanded ? "Collapse" : "Expand"} ${group.label}" title="${group.label}" aria-expanded="${expanded}">
-                <span class="nav-section-copy"><span class="nav-section-symbol nav-icon" aria-hidden="true">${icon(group.icon)}</span><span class="nav-section-label">${group.label}</span></span><span class="nav-toggle-icon" aria-hidden="true">${icon("arrow")}</span>
-              </button>
-              <div class="nav-list" ${expanded ? "" : "hidden"}>
-                ${group.children.map((child) => `<a class="nav-child ${isActive(path, child.route) ? "is-active" : ""}" href="${routeHref(child.route)}" title="${child.title}"><span class="nav-icon" aria-hidden="true">${icon(group.icon)}</span><span class="nav-child-label">${child.title}</span></a>`).join("")}
+              <h2 class="nav-section-heading">${label}</h2>
+              <div class="nav-list">
+                ${children.map((child) => linkMarkup(child)).join("")}
               </div>
             </section>`;
           };
 
-          return `<section class="nav-section nav-section-explore">
-            <a class="nav-section-title" href="${routeHref("/explore")}" title="Explore"><span>Explore</span><span class="nav-icon" aria-hidden="true">${icon("search")}</span></a>
-            <div class="nav-list">
-              ${exploreChildren.map((child, index) => `<a class="nav-child ${isActive(path, child.route) ? "is-active" : ""}" href="${routeHref(child.route)}" title="${child.title}"><span class="nav-icon" aria-hidden="true">${index === 0 ? icon("arrow") : index === 1 ? icon("project") : icon("book")}</span><span class="nav-child-label">${child.title}</span></a>`).join("")}
-            </div>
-          </section>
-          ${groupMarkup("open-source")}
-          ${groupMarkup("courses")}
-          ${groupMarkup("projects")}`;
+          return `${sectionMarkup("explore", "Explore", exploreChildren)}${Object.entries(
+            groups,
+          )
+            .map(([key, group]) =>
+              sectionMarkup(key, group.label, group.children),
+            )
+            .join("")}`;
         }
 
         function renderSidebar(path) {
           const isMobile = window.matchMedia("(max-width: 900px)").matches;
-          const sidebarActionLabel = isMobile
-            ? "Close navigation"
-            : `${sidebarCollapsed ? "Expand" : "Collapse"} sidebar`;
           shell.classList.toggle("sidebar-collapsed", sidebarCollapsed);
-          sidebarHeader.innerHTML = `<a class="brand" href="${routeHref("/")}" title="Resources home"><img class="brand-mark" src="assets/resources-folder-transparent.png" alt="" aria-hidden="true" /><span class="brand-copy"><span class="brand-name">Resources</span><span class="brand-suffix">onlinesourdough</span></span></a><button class="icon-button" type="button" data-action="toggle-sidebar" aria-label="${sidebarActionLabel}" aria-pressed="${isMobile ? "false" : sidebarCollapsed}">${icon(isMobile ? "close" : "collapse")}</button>`;
+          sidebarHeader.innerHTML = `<a class="brand" href="${routeHref("/")}" title="Resources.onlinesourdough"><img class="brand-mark" src="assets/resources-folder-transparent.png" alt="" aria-hidden="true" /><span class="brand-copy"><span class="brand-name">Resources.onlinesourdough</span></span></a>${isMobile ? `<button class="icon-button" type="button" data-action="close-drawer" aria-label="Close navigation" title="Close navigation">${icon("close")}</button>` : ""}`;
           sidebarNav.innerHTML = sidebarMarkup(path);
           sidebarBottom.innerHTML = `<a class="nav-utility ${path === "/account" ? "is-active" : ""}" href="${routeHref("/account")}" title="Account"><span class="nav-icon" aria-hidden="true">${icon("user")}</span><span class="nav-utility-label">Account</span></a><a class="nav-utility ${path === "/help" ? "is-active" : ""}" href="${routeHref("/help")}" title="Need help"><span class="nav-icon" aria-hidden="true">${icon("help")}</span><span class="nav-utility-label">Need help</span></a>`;
         }
 
-        function folderCard(title, route, description, meta, variant) {
-          return `<a class="folder-card" href="${routeHref(route)}" data-route="${route}" aria-label="Open ${title}">
+        function folderCard(title, destination, description, preview) {
+          return `<a class="folder-card" href="${itemHref(destination)}"${itemTarget(destination)} data-route="${destination.route || ""}" aria-label="${title} folder">
             <span class="folder-visual">
-              <span class="folder-paper" aria-hidden="true"></span>
-              <span class="folder-front" style="--folder-index:${variant}">
+              <span class="folder-papers" aria-hidden="true"><span class="folder-paper folder-paper-back"><span class="folder-paper-note">${preview.back}</span></span><span class="folder-paper folder-paper-mid"><span class="folder-paper-note">${preview.mid}</span></span><span class="folder-sheet"><span class="folder-sheet-topline"><span>${preview.kicker}</span><span>${preview.index}</span></span><span class="folder-sheet-title">${preview.title}</span><span class="folder-sheet-copy">${preview.copy}</span></span></span>
+              <span class="folder-front">
                 <span class="folder-tab" aria-hidden="true"></span>
-                <span class="folder-meta"><span>${meta}</span><span>Open</span></span>
+                <span class="folder-pocket" aria-hidden="true"></span>
+                <span class="folder-accent" aria-hidden="true"></span>
+                <span class="folder-front-meta"><span>${preview.kicker}</span><span>${preview.date}</span></span>
                 <strong>${title}</strong>
                 <small>${description}</small>
+                <span class="folder-front-footer"><span>${preview.index} / 04</span><span class="folder-cta">${preview.cta} ${icon("arrow")}</span></span>
               </span>
-              <span class="folder-shelf" aria-hidden="true"></span>
+              <span class="folder-shelf" aria-hidden="true"></span><span class="folder-shelf-foreground" aria-hidden="true"></span>
             </span>
-            <span class="folder-label"><span><strong>${title}</strong><small>${meta}</small></span><span class="folder-arrow" aria-hidden="true">${icon("arrow")}</span></span>
           </a>`;
         }
 
         function resourceRow(item) {
-          return `<a class="resource-row" href="${routeHref(item.route)}"><span><span class="list-meta">${item.meta}</span><strong>${item.title}</strong><p>${item.description}</p></span><span class="route-arrow" aria-hidden="true">${icon("arrow")}</span></a>`;
+          return `<a class="resource-row" href="${itemHref(item)}"${itemTarget(item)}><span>${item.showMeta !== false && item.meta ? `<span class="list-meta">${item.meta}</span>` : ""}<strong>${item.title}</strong><p>${item.description}</p></span><span class="route-arrow" aria-hidden="true">${icon("arrow")}</span></a>`;
         }
 
         function routeListItem(item) {
-          return `<a class="route-list-item" href="${routeHref(item.route)}"><span><span class="list-meta">${item.meta || "Internal route"}</span><strong>${item.title}</strong><p>${item.description}</p></span><span class="route-arrow" aria-hidden="true">${icon("arrow")}</span></a>`;
+          return `<a class="route-list-item" href="${itemHref(item)}"${itemTarget(item)}><span>${item.meta && item.showMeta !== false ? `<span class="list-meta">${item.meta}</span>` : ""}<strong>${item.title}</strong>${item.description ? `<p>${item.description}</p>` : ""}</span></a>`;
         }
 
         function homePage() {
           return `<div class="page home-page">
-            <section class="page-intro" aria-labelledby="home-title">
-              <div>
-                <span class="page-kicker">resources.onlinesourdough</span>
-                <h1 id="home-title">Make the result. Own the system.</h1>
-                <p>One connected resource library for taking a real business constraint from first understanding to a result someone can operate, recover, and improve.</p>
+            <section class="home-hero vsl-section" aria-labelledby="home-title" aria-describedby="vsl-description">
+              <div class="vsl-intro">
+                <h1 id="home-title">Build business freedom you can operate.</h1>
+                <p id="vsl-description">Business Freedom Ecosystem for solo business owners who want to become more techy and build more of their business with AI and software.</p>
               </div>
-            </section>
-
-            <section class="folder-section" aria-labelledby="folder-title">
-              <div class="section-heading"><div><span class="section-kicker">Library / Four areas</span><h2 id="folder-title">Four folders, one system.</h2></div><span class="section-note">Explore · Open Source · Courses · Projects</span></div>
-              <div class="folder-stage">
-                <div class="folder-grid">
-                  ${folderCard("Explore", "/explore", "Begin, Featured, and What's New.", "Find a next move", 1)}
-                  ${folderCard("Open Source", "/open-source", "Foundations you can use and extend.", "Use and extend", 2)}
-                  ${folderCard("Courses", "/courses/business-architecture", "A connected path around the work.", "Learn by family", 3)}
-                  ${folderCard("Projects", "/projects/aios-desktop", "See what the system looks like in use.", "See the work", 4)}
+              <div class="vsl-frame" data-vsl-frame>
+                <div class="vsl-chrome">
+                  <span class="vsl-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span class="vsl-window-title">resources / motion preview</span>
+                  <span class="vsl-duration">local preview / 00:06</span>
+                </div>
+                <div class="vsl-screen">
+                  <video class="vsl-video" id="resources-video" poster="assets/resources-hero-agentic-v2.png" preload="metadata" playsinline controls aria-label="Resources motion preview">
+                    <source src="assets/resources-vsl-motion-preview-v2.mp4" type="video/mp4" />
+                    Your browser cannot play the local Resources motion preview.
+                  </video>
+                  <div class="vsl-screen-copy">
+                    <strong>See the system in motion.</strong>
+                    <p>Find the constraint · build the mechanism · keep the freedom.</p>
+                    <button class="vsl-play" type="button" data-action="play-vsl" aria-controls="resources-video" aria-label="Play the Resources motion preview"><span class="vsl-play-glyph" aria-hidden="true"></span><span>Play preview</span></button>
+                  </div>
                 </div>
               </div>
             </section>
 
-            <section class="orientation-panel" aria-labelledby="orientation-title">
-              <div class="video-frame">
-                <img src="assets/resources-folder-transparent.png" width="640" height="640" alt="Pixel folder holding working papers and a dough scraper" />
-                <span class="video-meta"><span>Orientation / 06 min</span><span>Start here</span></span>
-                <a class="video-play" href="${routeHref("/explore/begin")}" aria-label="Open the Resources orientation"><span aria-hidden="true">▶</span></a>
-              </div>
-              <div class="orientation-copy">
-                <span class="section-kicker">Before you open a folder</span>
-                <h2 id="orientation-title">Name the constraint, then choose the next useful place.</h2>
-                <p>Begin helps you make the question clearer before you choose an open foundation, a connected course, or a project example.</p>
-                <div class="orientation-cues"><span class="access-label free">Begin · free</span><span class="access-label paid">Courses · paid</span></div>
-                <a class="button-primary" href="${routeHref("/explore/begin")}">Open Begin ${icon("arrow")}</a>
+            <div class="home-divider" role="separator" aria-hidden="true"></div>
+
+            <section class="folder-section" aria-labelledby="folder-title">
+              <div class="section-heading"><div><span class="section-kicker">Working areas</span><h2 id="folder-title">Choose a place to work.</h2></div></div>
+              <div class="folder-stage">
+                <div class="folder-grid">
+                  ${folderCard("Explore", exploreChildren[0], "Orient yourself before choosing a working path.", { kicker: "Start here", index: "01", date: "08/13", back: "ORIENTATION / 00", mid: "EXPLORE / FREE", title: "Start Here", copy: "Make the method legible before choosing a format.", cta: "Open Start Here" })}
+                  ${folderCard("Business Freedom Ecosystem", groups["business-freedom-ecosystem"].children[0], "A business-first method from context to an owned result.", { kicker: "Business method", index: "02", date: "08/14", back: "METHOD / 00–08", mid: "BUSINESS / SYSTEM", title: "Understand your business", copy: "Start with the business system and current constraint.", cta: "Open method" })}
+                  ${folderCard("Open Source", groups["open-source"].children[0], "Open foundations you can inspect, adapt, and own.", { kicker: "Open foundation", index: "03", date: "08/06", back: "FOUNDATION / OPEN", mid: "AIOS / TEMPLATE", title: "AIOS Template", copy: "A clear starting structure with room to extend.", cta: "Open foundation" })}
+                  ${folderCard("In Practice", groups["in-practice"].children[0], "Configured work and responsibility in context.", { kicker: "Applied context", index: "04", date: "07/29", back: "PRACTICE / OPEN", mid: "RESPONSIBILITY / EXTERNAL", title: "Arc’IT AI", copy: "Open the verified external responsibility surface.", cta: "Open Arc’IT AI" })}
+                </div>
               </div>
             </section>
 
-            <section class="home-library-rows" aria-label="Featured and recently changed resources">
-              <section class="reading-rail-section" aria-labelledby="featured-title"><div class="reading-rail-heading"><div><span class="section-kicker">Selected pages</span><h2 id="featured-title">Featured</h2></div><a class="text-link" href="${routeHref("/explore/featured")}">View all</a></div><div class="reading-list">${featured.slice(0, 2).map(resourceRow).join("")}</div></section>
-              <section class="reading-rail-section" aria-labelledby="new-title"><div class="reading-rail-heading"><div><span class="section-kicker">Recently changed</span><h2 id="new-title">What's New</h2></div><a class="text-link" href="${routeHref("/explore/whats-new")}">View all</a></div><div class="reading-list">${whatsNew.slice(0, 2).map(resourceRow).join("")}</div></section>
-            </section>
+            <section class="home-new" aria-labelledby="new-title"><div class="reading-rail-heading"><div><span class="section-kicker">Recently changed</span><h2 id="new-title">What’s New</h2></div><a class="text-link" href="${routeHref("/explore/whats-new")}">View all</a></div><div class="reading-list">${whatsNew.map(resourceRow).join("")}</div></section>
+            <section class="home-new" aria-labelledby="layers-title"><div class="reading-rail-heading"><div><span class="section-kicker">Overview</span><h2 id="layers-title">Three layers. One method.</h2></div></div><div class="value-layer-list">
+              <div class="value-layer-row"><span class="list-meta">01 / Business architecture</span><span><strong>Find the right constraint.</strong><p>Fixed shape. Individually applied.</p></span></div>
+              <div class="value-layer-row"><span class="list-meta">02 / AI · agents · software</span><span><strong>Primary solution mechanism.</strong><p>AI Workspace is the concrete base inside the ecosystem.</p></span></div>
+              <div class="value-layer-row"><span class="list-meta">03 / Business bandwidth / freedom</span><span><strong>The outcome.</strong><p>Work design: keep · remove · automate · delegate.</p></span></div>
+            </div><p class="value-layer-delivery">Resources · do it yourself · The Fermentary · done with you · Complete Bake · done for you.</p></section>
           </div>`;
         }
 
-        function explorePage(kind = "explore") {
-          const content =
-            kind === "featured"
-              ? featured
-              : kind === "whats-new"
-                ? whatsNew
-                : exploreChildren;
-          const title =
-            kind === "featured"
-              ? "Featured"
-              : kind === "whats-new"
-                ? "What's New"
-                : "Explore";
-          const description =
-            kind === "featured"
-              ? "A short selection of pages worth keeping close while the rest of the system stays quiet."
-              : kind === "whats-new"
-                ? "Recent changes are shown with dates and context, not as a noisy update feed."
-                : "Start with the question in front of you, then choose a useful next route.";
-          const items =
-            kind === "explore"
-              ? exploreChildren.map((child) => ({
-                  ...child,
-                  meta:
-                    child.title === "Begin" ? "Start here" : "Explore route",
-                }))
-              : content;
-          return `<div class="page"><header class="page-header compact"><span class="page-kicker">Explore / ${kind === "explore" ? "Start here" : title}</span><h1>${title}</h1><p>${description}</p></header><div class="route-layout"><section class="route-section" aria-labelledby="explore-list-title"><span class="section-kicker">Library route</span><h2 id="explore-list-title">${kind === "explore" ? "Choose a useful first surface" : title}</h2><p>${kind === "explore" ? "Explore stays visible in the sidebar because these three routes are the simplest ways into the system." : "Each row carries a route and a concrete reason to open it."}</p><div class="route-list">${items.map(routeListItem).join("")}</div></section><aside class="route-side"><span class="section-kicker">Decision cue</span><h2>${kind === "explore" ? "Not sure where to begin?" : "Keep the context"}</h2><p>${kind === "explore" ? "Open Begin when you have a real constraint. It is designed to get you to a better question before you choose a format." : "Featured and updated pages remain connected to the area they support. Use the sidebar when the question changes."}</p><a class="route-side-link" href="${routeHref("/explore/begin")}">Open Begin <span aria-hidden="true">→</span></a><a class="route-side-link" href="${routeHref("/courses/business-architecture")}">See the ordered course <span aria-hidden="true">→</span></a></aside></div></div>`;
+        function resourceSectionTemplate(section) {
+          const listMarkup = section.items
+            ? `<div class="route-list">${section.items.map(routeListItem).join("")}</div>`
+            : "";
+          const pointsMarkup = section.points
+            ? `<ul class="resource-points">${section.points.map((point) => `<li>${point}</li>`).join("")}</ul>`
+            : "";
+          const stepsMarkup = section.steps
+            ? `<ul class="plain-list">${section.steps
+                .map((step) => {
+                  const stepRoute = section.routeBuilder
+                    ? section.routeBuilder(step)
+                    : step.route || ecosystemStepRoute(step);
+                  return `<li class="plain-list-item"><a class="plain-link" href="${routeHref(stepRoute)}"><strong>${step.title}</strong><span>${step.description}</span></a></li>`;
+                })
+                .join("")}</ul>`
+            : "";
+          const bodyMarkup = section.body ? `<p>${section.body}</p>` : "";
+          const headingMarkup = section.heading
+            ? `<h2 id="${section.id}">${section.heading}</h2>`
+            : "";
+          return `<section class="route-section"${section.id ? ` aria-labelledby="${section.id}"` : ""}>${headingMarkup}${section.lead ? `<p>${section.lead}</p>` : ""}${bodyMarkup}${listMarkup}${stepsMarkup}${pointsMarkup}</section>`;
         }
 
-        function beginPage() {
-          const nextPlaces = [
-            {
-              title: "Use an open foundation",
-              route: "/open-source",
-              meta: "Open Source",
-              description:
-                "Choose a reusable starting point when the question is already clear.",
-            },
-            {
-              title: "Follow the connected course",
-              route: "/courses/business-architecture",
-              meta: "Courses",
-              description:
-                "Use the ordered path when the work needs a complete sequence.",
-            },
-            {
-              title: "See a project in context",
-              route: "/projects/aios-desktop",
-              meta: "Projects",
-              description:
-                "Open a project record when an example will make the next decision easier.",
-            },
-          ];
-          return `<div class="page"><header class="page-header compact"><span class="page-kicker">Explore / Begin</span><h1>Begin with the constraint.</h1><p>Name what should become easier, who needs to own the result, and what evidence would make the next move worth taking.</p></header><div class="route-layout"><section class="route-section" aria-labelledby="begin-title"><span class="section-kicker">Free orientation</span><h2 id="begin-title">Choose the smallest useful next place</h2><p>Resources stays simple by making the first decision before choosing a format.</p><div class="route-list">${nextPlaces.map(routeListItem).join("")}</div></section><aside class="route-side"><span class="section-kicker">Begin here</span><h2>What should become easier?</h2><p>Keep the question concrete: one repeating owner task, one business constraint, or one handoff that repeatedly loses context.</p><a class="route-side-link" href="${routeHref("/open-source")}">Browse Open Source <span aria-hidden="true">→</span></a><a class="route-side-link" href="${routeHref("/explore/featured")}">See Featured pages <span aria-hidden="true">→</span></a></aside></div></div>`;
+        function resourceShellTemplate(data, template) {
+          return `<div class="page resource-page" data-page-template="${template}" data-route-kind="${data.kind}" data-route-slug="${data.slug}"><header class="page-header reading-track"><h1>${data.title}</h1><p>${data.summary}</p></header><div class="route-layout reading-track">${data.sections.map(resourceSectionTemplate).join("")}</div></div>`;
         }
 
-        function openSourcePage() {
-          const items = groups["open-source"].children.map((child) => ({
-            ...child,
-            meta: "Open Source / Internal route",
-          }));
-          return `<div class="page"><header class="page-header"><span class="page-kicker">Open Source / Use and extend</span><h1>Foundations you can use and extend.</h1><p>These entries keep the reusable parts of AI-native work close to the decisions they support. They are local Resources routes in this preview; no public repository URL is invented.</p></header><div class="route-layout"><section class="route-section" aria-labelledby="open-source-title"><span class="section-kicker">Three local records</span><h2 id="open-source-title">Open Source</h2><p>Choose a foundation by the kind of ownership or extension you need next.</p><div class="route-list">${items.map(routeListItem).join("")}</div></section><aside class="route-side"><span class="section-kicker">Honest status</span><h2>Internal until linked</h2><p>Private or not-yet-public sources stay as internal records. The receiving product can add verified links later without changing the information architecture.</p><a class="route-side-link" href="${routeHref("/explore/begin")}">Back to Explore <span aria-hidden="true">→</span></a><a class="route-side-link" href="${routeHref("/projects/aios-desktop")}">See an internal project <span aria-hidden="true">→</span></a></aside></div></div>`;
+        function resourcePageTemplate(data) {
+          return resourceShellTemplate(data, "page");
         }
 
-        function coursePage() {
-          return `<div class="page"><header class="page-header"><span class="page-kicker">Courses / Business Architecture</span><h1>From business constraint to owned result.</h1><p>The Blueprint is the ordered course spine. It keeps the business question, intervention choice, ownership, build, review, and recovery in one sequence.</p><div class="course-summary"><div class="course-summary-item"><span class="list-meta">Format</span><strong>8 ordered steps</strong></div><div class="course-summary-item"><span class="list-meta">Access</span><strong>Paid course</strong></div><div class="course-summary-item"><span class="list-meta">Outcome</span><strong>One owned result</strong></div></div></header><div class="route-layout"><section class="route-section" aria-labelledby="blueprint-title"><span class="section-kicker">Blueprint / Ordered path</span><h2 id="blueprint-title">Business Architecture</h2><p>Numbers appear here because the steps are genuinely ordered. Every lesson keeps the decision and the next proof visible.</p><div class="step-list">${courseSteps.map(([number, title, description]) => `<a class="step-row" href="${routeHref("/account")}"><span class="step-number">${number}</span><span><strong>${title}</strong><p>${description}</p></span><span class="access-state is-paid">Paid · locked</span></a>`).join("")}</div></section><aside class="route-side"><span class="section-kicker">Access state</span><h2>Continue with an account</h2><p>The course preview exposes the shape and sequence without pretending to reveal private lesson content.</p><a class="route-side-link" href="${routeHref("/account")}">Log in to continue <span aria-hidden="true">→</span></a><a class="route-side-link" href="${routeHref("/explore/begin")}">Use the free orientation <span aria-hidden="true">→</span></a></aside></div></div>`;
+        function resourceSubpageTemplate(data) {
+          return resourceShellTemplate(data, "subpage");
         }
 
-        function projectPage(slug) {
-          const project =
-            groups.projects.children.find((child) =>
-              child.route.endsWith(slug),
-            ) || groups.projects.children[1];
-          const isDesktop = slug === "aios-desktop";
-          const title = project.title;
-          const lead = isDesktop
-            ? "An internal home-base application for keeping AIOS work, context, and next actions together."
-            : project.description;
-          return `<div class="page"><header class="page-header"><span class="page-kicker">Projects / Internal project record</span><h1>${title}</h1><p>${lead}</p></header><div class="route-layout"><section class="route-section" aria-labelledby="project-title"><div class="state-panel"><span class="state-status">Internal route / reviewable</span><h2 id="project-title">A clear place to keep the work in view.</h2><p>${isDesktop ? "This preview route is intentionally honest: it describes the project surface without inventing a public GitHub link or claiming that private implementation details are available here." : "This project record is local to Resources in the preview. A verified external source can be added when one exists."}</p><div class="project-facts"><div class="project-fact"><span class="list-meta">What it supports</span><strong>${isDesktop ? "Context, tasks, and handover" : "Product context and direction"}</strong><p>Keep the business reason and the next useful action together.</p></div><div class="project-fact"><span class="list-meta">Current status</span><strong>Internal / not public</strong><p>Access is represented as permission state, not a fabricated public link.</p></div></div></div><section class="route-section"><span class="section-kicker">Working principle</span><h2>Make ownership visible before adding more surface.</h2><p>Projects belong here when they show how a resource becomes a working system. The route stays short so the library does not turn into a second product dashboard.</p></section></section><aside class="route-side"><span class="section-kicker">Project action</span><h2>Choose the next context</h2><p>Return to the course when you need the ordered decision path, or start with the free orientation when the question is still forming.</p><a class="route-side-link" href="${routeHref("/courses/business-architecture")}">Open Business Architecture <span aria-hidden="true">→</span></a><a class="route-side-link" href="${routeHref("/explore/begin")}">Start with Begin <span aria-hidden="true">→</span></a></aside></div></div>`;
+        function aiLiteracyOverviewPage() {
+          return {
+            kind: "ai-literacy-overview",
+            slug: "ai-literacy",
+            title: "AI Literacy",
+            summary:
+              "Business architecture identifies what matters. AI literacy makes technical concepts understandable enough to choose and build responsibly.",
+            sections: [
+              {
+                id: "ai-literacy-understand",
+                heading: "What you’ll understand",
+                points: [
+                  "How context shapes what an AI system can use",
+                  "Where models, tools, agents, and skills fit a business job",
+                  "How to keep results testable, owned, and recoverable",
+                ],
+              },
+              {
+                id: "ai-literacy-concepts",
+                heading: "Concepts",
+                items: aiLiteracyConcepts.map((concept) => ({
+                  ...concept,
+                  route: aiLiteracyConceptRoute(concept),
+                })),
+              },
+            ],
+          };
+        }
+
+        function aiLiteracyConceptPage(concept) {
+          return {
+            kind: "ai-literacy-concept",
+            slug: concept.slug,
+            title: concept.title,
+            summary: concept.description,
+            sections: [
+              {
+                id: "ai-literacy-concept-points",
+                heading: "Key points",
+                points: concept.keyPoints,
+              },
+            ],
+          };
+        }
+
+        function aiLiteracyPageForPath(path) {
+          if (path === AI_LITERACY_ROUTE) return aiLiteracyOverviewPage();
+          const concept = aiLiteracyConcepts.find(
+            (item) => aiLiteracyConceptRoute(item) === path,
+          );
+          if (concept) return aiLiteracyConceptPage(concept);
+          return null;
+        }
+
+        function resourcePageForPath(path) {
+          if (path === "/explore/start-here") {
+            return {
+              kind: "explore-child",
+              slug: "start-here",
+              title: "Start Here",
+              summary:
+                "Start with Business Freedom Ecosystem: find the constraint, choose the smallest useful change, and place responsibility.",
+              sections: [
+                {
+                  id: "start-here-context",
+                  heading: "Start with the constraint",
+                  lead: "Name the business problem before choosing the answer.",
+                  items: startHereChoices,
+                },
+                {
+                  id: "start-here-delivery",
+                  heading: "Choose the delivery mode",
+                  lead: "Choose how you want the work carried.",
+                  points: [
+                    "Resources · do it yourself",
+                    "The Fermentary · done with you",
+                    "Complete Bake · done for you",
+                  ],
+                },
+                {
+                  id: "start-here-foundation",
+                  heading: "Open foundation",
+                  items: [
+                    {
+                      title: "AIOS Template",
+                      route: "/open-source/aios-template",
+                      showMeta: false,
+                      description:
+                        "An open foundation when the work needs a clear home.",
+                    },
+                  ],
+                },
+              ],
+            };
+          }
+          if (path === "/explore/whats-new") {
+            return {
+              kind: "explore-child",
+              slug: "whats-new",
+              title: "What’s New",
+              summary: "Recent changes, listed latest first.",
+              sections: [
+                {
+                  id: "recent-updates",
+                  heading: "Latest first",
+                  items: whatsNew,
+                },
+              ],
+            };
+          }
+          const aiLiteracyPage = aiLiteracyPageForPath(path);
+          if (aiLiteracyPage) return aiLiteracyPage;
+          if (path.startsWith("/open-source/")) {
+            const slug = path.split("/").at(-1);
+            const detail = openSourceDetails[slug];
+            if (!detail) return null;
+            return {
+              kind: "open-source-child",
+              slug,
+              title: detail.title,
+              summary: detail.description,
+              sections: [
+                {
+                  id: "resource-focus",
+                  heading: detail.focus,
+                  lead: detail.body,
+                  note: detail.note,
+                },
+              ],
+            };
+          }
+          const ecosystemPrefix = "/business-freedom-ecosystem/";
+          if (path.startsWith(ecosystemPrefix)) {
+            const segments = path.slice(ecosystemPrefix.length).split("/");
+            const groupSlug = segments[0];
+            const group = ecosystemGroups[groupSlug];
+            if (!group) return null;
+            if (segments.length === 1) {
+              return {
+                kind: "ecosystem-page",
+                slug: groupSlug,
+                title: group.title,
+                summary: group.description,
+                sections: [
+                  {
+                    id: `${groupSlug}-focus`,
+                    heading: group.focus,
+                    lead: group.body,
+                  },
+                  {
+                    id: `${groupSlug}-sequence`,
+                    heading: "Resources",
+                    steps: group.steps,
+                  },
+                  {
+                    id: `${groupSlug}-toolkits`,
+                    heading: "Tools",
+                    items: group.toolkits,
+                  },
+                ],
+              };
+            }
+            const childPath = path;
+            const step = group.steps.find(
+              (item) => ecosystemStepRoute(item) === childPath,
+            );
+            if (step) {
+              return {
+                kind: "ecosystem-step",
+                slug: `${groupSlug}-${step.slug}`,
+                title: step.title,
+                summary: step.description,
+                sections: [
+                  {
+                    id: "ecosystem-step-body",
+                    body: step.body,
+                  },
+                ],
+              };
+            }
+            const toolkit = group.toolkits.find(
+              (item) => item.route === childPath,
+            );
+            if (toolkit) {
+              return {
+                kind: "ecosystem-toolkit",
+                slug: `${groupSlug}-${toolkit.title.toLowerCase().replaceAll(" ", "-")}`,
+                title: toolkit.title,
+                summary: toolkit.description,
+                sections: [
+                  {
+                    id: "toolkit-body",
+                    body: toolkit.body,
+                  },
+                ],
+              };
+            }
+            return null;
+          }
+          if (path.startsWith("/in-practice/")) {
+            const slug = path.split("/").at(-1);
+            const detail = inPracticeDetails[slug];
+            if (!detail) return null;
+            return {
+              kind: "in-practice-child",
+              slug,
+              title: detail.title,
+              summary: detail.description,
+              sections: [
+                {
+                  id: "in-practice-focus",
+                  heading: detail.focus,
+                  lead: detail.body,
+                  note: detail.note,
+                },
+              ],
+            };
+          }
+          return null;
         }
 
         function accountPage() {
-          return `<div class="page"><header class="page-header compact"><span class="page-kicker">Account / Access</span><h1>Continue where the work needs you.</h1><p>Use the email connected to your Resources access. This preview validates the interaction locally and does not send a magic link.</p></header><section class="form-panel" aria-labelledby="account-form-title"><h2 id="account-form-title">Log in to Resources</h2><p>Paid Blueprint steps show their honest locked state until an account is available.</p><form class="form-grid" id="account-form" novalidate><div class="form-field"><label for="account-email">Email address</label><input id="account-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required /></div><button class="button-primary" type="submit">Send a preview link ${icon("arrow")}</button></form><p class="offline-note">Offline state: no request leaves this preview. In the product, preserve the route and return the user to the page they intended to open.</p></section></div>`;
+          return `<div class="page"><header class="page-header reading-track compact"><h1>Continue where the work needs you.</h1><p>Use the email connected to your Resources access. This preview validates the interaction locally and does not send a magic link.</p></header><div class="route-layout reading-track form-area"><section aria-labelledby="account-form-title"><h2 id="account-form-title">Log in to Resources</h2><p>Access-controlled child resources keep their honest locked state until an account and published material are available.</p><form class="form-grid" id="account-form" novalidate><div class="form-field"><label for="account-email">Email address</label><input id="account-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required /></div><button class="button-primary" type="submit">Send a preview link ${icon("arrow")}</button></form><p class="page-note">No request leaves this preview. In the product, preserve the route and return the user to the page they intended to open.</p></section></div></div>`;
         }
 
         function helpPage() {
-          return `<div class="page"><header class="page-header compact"><span class="page-kicker">Support / Need help</span><h1>Keep the question small enough to answer.</h1><p>Send the page you were on, the constraint you are working through, and what you expected to happen. Include an exact error when the issue is access-related.</p></header><section class="form-panel" aria-labelledby="help-form-title"><h2 id="help-form-title">What should support see?</h2><p>Validation and success are represented here; the static preview does not send email.</p><form class="form-grid" id="help-form" novalidate><div class="form-field"><label for="help-page">Page or route</label><input id="help-page" name="page" type="text" placeholder="/courses/business-architecture" required /></div><div class="form-field"><label for="help-message">Short description</label><textarea id="help-message" name="message" placeholder="I expected..." required></textarea></div><button class="button-primary" type="submit">Prepare support note ${icon("arrow")}</button></form><p class="offline-note">If you are offline, copy this route and the error text first. The receiving app can attach the note when support becomes available.</p></section></div>`;
+          return `<div class="page"><header class="page-header reading-track compact"><h1>Keep the question small enough to answer.</h1><p>Send the page you were on, the constraint you are working through, and what you expected to happen. Include an exact error when the issue is access-related.</p></header><div class="route-layout reading-track form-area"><section aria-labelledby="help-form-title"><h2 id="help-form-title">What should support see?</h2><p>Validation and success are represented here; the static preview does not send email.</p><form class="form-grid" id="help-form" novalidate><div class="form-field"><label for="help-page">Page or route</label><input id="help-page" name="page" type="text" placeholder="/business-freedom-ecosystem/understand-your-business" required /></div><div class="form-field"><label for="help-message">Short description</label><textarea id="help-message" name="message" placeholder="I expected..." required></textarea></div><button class="button-primary" type="submit">Prepare support note ${icon("arrow")}</button></form><p class="page-note">If you are offline, copy this route and the error text first. The receiving app can attach the note when support becomes available.</p></section></div></div>`;
         }
 
         function searchPage(query) {
-          return `<div class="page"><header class="page-header compact"><span class="page-kicker">Search / Local library</span><h1>Find the page that helps now.</h1><p>Search titles, areas, and draft outcomes. Results stay tied to honest internal routes.</p></header><form class="search-page-controls" id="page-search-form"><div><label class="sr-only" for="page-search-input">Search Resources</label><input class="search-input" id="page-search-input" type="search" value="${escapeHTML(query)}" placeholder="Try ownership, architecture, or Blueprint" /></div><button class="button-primary" type="submit">Search ${icon("search")}</button></form><div class="search-results" id="page-search-results"></div></div>`;
+          return `<div class="page"><header class="page-header reading-track compact"><h1>Find the page that helps now.</h1><p>Search titles, stages, concepts, and draft outcomes. Results stay tied to honest internal routes.</p></header><div class="route-layout reading-track search-area"><form class="search-page-controls" id="page-search-form"><div><label class="sr-only" for="page-search-input">Search Resources</label><input class="search-input" id="page-search-input" type="search" value="${escapeHTML(query)}" placeholder="Try constraint, AI Literacy, or Start Here" /></div><button class="button-primary" type="submit">Search ${icon("search")}</button></form><div class="search-results" id="page-search-results"></div></div></div>`;
         }
 
         function notFoundPage() {
-          return `<div class="page"><header class="page-header compact"><span class="page-kicker">Route / Not found</span><h1>This page is not in the preview.</h1><p>Use the visible library routes to find a useful next step. No external or private destination is fabricated here.</p></header><div class="page-actions"><a class="button-primary" href="${routeHref("/")}">Return to Explore ${icon("arrow")}</a></div></div>`;
+          return `<div class="page"><header class="page-header reading-track compact"><h1>This page is not in the preview.</h1><p>Use the visible library routes to find a useful next step. No external or private destination is fabricated here.</p></header><div class="route-layout reading-track page-actions"><a class="button-primary" href="${routeHref("/explore/start-here")}">Open Start Here ${icon("arrow")}</a></div></div>`;
         }
 
         function renderPage() {
           const route = currentRoute();
           const path = route.path;
+          const firstChildRoutes = {
+            "/explore": "/explore/start-here",
+            "/business-freedom-ecosystem":
+              "/business-freedom-ecosystem/understand-your-business",
+            "/open-source": "/open-source/aios-template",
+            "/in-practice": "https://arcitai.com/",
+          };
+          if (firstChildRoutes[path]) {
+            if (firstChildRoutes[path].startsWith("http")) {
+              window.open(
+                firstChildRoutes[path],
+                "_blank",
+                "noopener,noreferrer",
+              );
+              return;
+            }
+            history.replaceState(
+              {
+                ...history.state,
+                resourcesIndex: history.state.resourcesIndex || 0,
+              },
+              "",
+              routeHref(firstChildRoutes[path]),
+            );
+            return renderPage();
+          }
           let markup;
-          if (path === "/" || path === "/explore")
-            markup = path === "/" ? homePage() : explorePage();
-          else if (path === "/explore/featured")
-            markup = explorePage("featured");
-          else if (path === "/explore/whats-new")
-            markup = explorePage("whats-new");
-          else if (path === "/explore/begin") markup = beginPage();
-          else if (path === "/open-source") markup = openSourcePage();
-          else if (path.startsWith("/open-source/")) markup = openSourcePage();
-          else if (path === "/courses/business-architecture")
-            markup = coursePage();
-          else if (path.startsWith("/courses/")) markup = coursePage();
-          else if (path.startsWith("/projects/"))
-            markup = projectPage(path.split("/").at(-1));
-          else if (path === "/account") markup = accountPage();
+          const resourcePageData = resourcePageForPath(path);
+          if (path === "/") markup = homePage();
+          else if (resourcePageData) {
+            const subpageKinds = new Set([
+              "explore-child",
+              "ai-literacy-concept",
+              "open-source-child",
+              "ecosystem-step",
+              "ecosystem-toolkit",
+              "in-practice-child",
+            ]);
+            markup = subpageKinds.has(resourcePageData.kind)
+              ? resourceSubpageTemplate(resourcePageData)
+              : resourcePageTemplate(resourcePageData);
+          } else if (path === "/account") markup = accountPage();
           else if (path === "/help") markup = helpPage();
           else if (path === "/search")
             markup = searchPage(route.query.get("query") || "");
@@ -2831,7 +4007,9 @@
           routeLabel.textContent = routeTitle(path);
           renderSidebar(path);
           updateTopbarIcons();
+          updateTopbarControls();
           bindPageForms();
+          bindVideoPlayer();
           if (path === "/search")
             updateSearchResults(
               route.query.get("query") || "",
@@ -2844,32 +4022,24 @@
           const searchButton = document.querySelector(
             '[data-action="search"] .topbar-action-icon',
           );
-          const newsletterButton = document.querySelector(
-            '[data-action="newsletter"] .topbar-action-icon',
+          const newsletterIcon = document.querySelector(
+            '[data-external="newsletter"] .topbar-action-icon',
           );
           const loginButton = document.querySelector(
             '.topbar-action[href="#/account"] .topbar-action-icon',
           );
-          const menuButton = document.querySelector(
-            '[data-action="open-drawer"]',
-          );
           if (searchButton) searchButton.innerHTML = icon("search");
-          if (newsletterButton) newsletterButton.innerHTML = icon("book");
+          if (newsletterIcon) newsletterIcon.innerHTML = icon("external");
           if (loginButton) loginButton.innerHTML = icon("user");
-          if (menuButton) menuButton.innerHTML = icon("menu");
-          const themeMark = document.querySelector(".theme-mark");
-          const themeLabel = document.getElementById("theme-label");
-          if (themeMark) themeMark.innerHTML = theme === "light" ? "" : "";
-          if (themeLabel)
-            themeLabel.textContent = theme === "light" ? "Dark" : "Light";
           const themeButton = document.querySelector('[data-action="theme"]');
-          if (themeButton)
-            themeButton.setAttribute(
-              "aria-label",
+          if (themeButton) {
+            const label =
               theme === "light"
-                ? "Switch to dark mode"
-                : "Switch to light mode",
-            );
+                ? "Switch to dark theme"
+                : "Switch to light theme";
+            themeButton.setAttribute("aria-label", label);
+            themeButton.setAttribute("title", label);
+          }
         }
 
         function setTheme(nextTheme) {
@@ -2886,12 +4056,34 @@
             sidebarCollapsed ? "collapsed" : "expanded",
           );
           renderSidebar(currentRoute().path);
+          updateTopbarControls();
         }
 
-        function toggleGroup(key) {
-          groupState[key] = !groupState[key];
-          localStorage.setItem(STORAGE.groups, JSON.stringify(groupState));
-          renderSidebar(currentRoute().path);
+        function toggleAiLiteracy() {
+          const button = sidebarNav.querySelector(
+            '[data-action="toggle-ai-literacy"]',
+          );
+          const sublist = document.getElementById("ai-literacy-subnav");
+          if (!button || !sublist) return;
+          const expanded = button.getAttribute("aria-expanded") === "true";
+          if (!expanded) {
+            aiLiteracyExpanded = true;
+            if (currentRoute().path === AI_LITERACY_ROUTE) {
+              renderSidebar(AI_LITERACY_ROUTE);
+              updateTopbarControls();
+            } else {
+              navigate(AI_LITERACY_ROUTE);
+            }
+            sidebarNav
+              .querySelector('[data-action="toggle-ai-literacy"]')
+              ?.focus({ preventScroll: true });
+            return;
+          }
+          aiLiteracyExpanded = false;
+          button.setAttribute("aria-expanded", "false");
+          sublist.hidden = true;
+          const glyph = button.querySelector(".nav-disclosure-glyph");
+          if (glyph) glyph.innerHTML = icon("chevronDown");
         }
 
         function openDrawer() {
@@ -2899,9 +4091,7 @@
           sidebar.classList.add("is-open");
           drawerBackdrop.hidden = false;
           drawerBackdrop.classList.add("is-visible");
-          document
-            .querySelector('[data-action="open-drawer"]')
-            ?.setAttribute("aria-expanded", "true");
+          updateTopbarControls();
         }
 
         function closeDrawer() {
@@ -2909,9 +4099,7 @@
           sidebar.classList.remove("is-open");
           drawerBackdrop.hidden = true;
           drawerBackdrop.classList.remove("is-visible");
-          document
-            .querySelector('[data-action="open-drawer"]')
-            ?.setAttribute("aria-expanded", "false");
+          updateTopbarControls();
         }
 
         function showToast(message) {
@@ -2925,7 +4113,7 @@
         }
 
         function resultMarkup(item) {
-          return `<a class="modal-result" href="${routeHref(item.route)}"><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.meta)}</small></a>`;
+          return `<a class="modal-result" href="${itemHref(item)}"${itemTarget(item)}><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.meta)}</small></a>`;
         }
 
         function findResults(query) {
@@ -2958,7 +4146,7 @@
             const results = findResults(query);
             target.innerHTML = results.length
               ? results.map(resultMarkup).join("")
-              : `<div class="search-empty"><strong>No page matches “${escapeHTML(query || "that phrase")}”.</strong>Try a broader word such as <em>ownership</em>, <em>architecture</em>, or <em>Blueprint</em>.</div>`;
+              : `<div class="search-empty"><strong>No page matches “${escapeHTML(query || "that phrase")}".</strong>Try a broader word such as <em>constraint</em>, <em>software</em>, or <em>Start Here</em>.</div>`;
           }, 180);
         }
 
@@ -2974,40 +4162,47 @@
           searchModalPreviousFocus?.focus?.();
         }
 
-        function openNewsletter() {
-          utilityModal.hidden = false;
-          utilityContent.innerHTML = `<div class="modal-header"><div><span class="utility-label">Newsletter</span><h2 id="utility-title">One useful note at a time.</h2></div><button class="icon-button" type="button" data-action="close-utility" aria-label="Close newsletter">${icon("close")}</button></div><p>Occasional notes on business architecture, AI, and the work around software. This is a local preview; no email is sent.</p><form class="modal-form" id="newsletter-form" novalidate><div class="form-field"><label for="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required /></div><button class="button-primary" type="submit">Join the preview list ${icon("arrow")}</button></form><p class="offline-note">Success state: the preview will acknowledge a valid address without creating a subscription.</p>`;
-          window.setTimeout(
-            () => document.getElementById("newsletter-email")?.focus(),
-            0,
-          );
-          document
-            .getElementById("newsletter-form")
-            ?.addEventListener("submit", (event) => {
-              event.preventDefault();
-              const form = event.currentTarget;
-              clearValidation(form);
-              if (!form.checkValidity()) {
-                const input = form.querySelector("input");
-                input?.setAttribute("aria-invalid", "true");
-                if (!form.querySelector(".form-error"))
-                  input?.insertAdjacentHTML(
-                    "afterend",
-                    '<p class="form-error">Enter a valid email address.</p>',
-                  );
-                showToast("Enter a valid email address to continue.");
-                return;
-              }
-              utilityContent.insertAdjacentHTML(
-                "beforeend",
-                '<p class="form-feedback">You are on the preview list. The real product would now confirm the subscription.</p>',
-              );
-              showToast("Newsletter success state shown.");
-            });
+        function syncVideoOverlay(video) {
+          const frame = video.closest("[data-vsl-frame]");
+          const button = frame?.querySelector("[data-action='play-vsl']");
+          if (!frame || !button) return;
+          const playing = !video.paused && !video.ended;
+          frame.classList.toggle("is-playing", playing);
+          button.hidden = playing;
+          if (!playing) {
+            const replay = video.ended || video.currentTime > 0.05;
+            button.setAttribute(
+              "aria-label",
+              replay
+                ? "Replay the Resources motion preview"
+                : "Play the Resources motion preview",
+            );
+            const label = button.querySelector("span:last-child");
+            if (label)
+              label.textContent = replay ? "Replay preview" : "Play preview";
+          }
         }
 
-        function closeUtility() {
-          utilityModal.hidden = true;
+        function bindVideoPlayer() {
+          const video = document.getElementById("resources-video");
+          if (!video) return;
+          const sync = () => syncVideoOverlay(video);
+          video.addEventListener("play", sync);
+          video.addEventListener("pause", sync);
+          video.addEventListener("ended", sync);
+          sync();
+        }
+
+        function playVideoPreview() {
+          const video = document.getElementById("resources-video");
+          if (!video) return;
+          if (video.ended) video.currentTime = 0;
+          const playRequest = video.play();
+          if (playRequest?.catch) {
+            playRequest.catch(() => {
+              showToast("Use the native controls to start the preview.");
+            });
+          }
         }
 
         function bindPageForms() {
@@ -3083,7 +4278,7 @@
               event.preventDefault();
               const value =
                 pageSearchForm.querySelector("input")?.value.trim() || "";
-              location.hash = `/search?query=${encodeURIComponent(value)}`;
+              navigate(`/search?query=${encodeURIComponent(value)}`);
             });
           }
         }
@@ -3092,33 +4287,53 @@
           const action = event.target.closest("[data-action]")?.dataset.action;
           if (!action) return;
           if (action === "toggle-sidebar") {
-            if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
+            if (window.matchMedia("(max-width: 900px)").matches) openDrawer();
             else toggleSidebar();
           }
-          if (action === "toggle-group")
-            toggleGroup(event.target.closest("[data-action]").dataset.group);
-          if (action === "open-drawer") openDrawer();
+          if (action === "history-back") history.back();
+          if (action === "history-forward") history.forward();
           if (action === "close-drawer") closeDrawer();
+          if (action === "toggle-ai-literacy") toggleAiLiteracy();
           if (action === "search") openSearch();
           if (action === "close-search") closeSearch();
-          if (action === "newsletter") openNewsletter();
-          if (action === "close-utility") closeUtility();
+          if (action === "play-vsl") playVideoPreview();
           if (action === "theme")
             setTheme(theme === "light" ? "dark" : "light");
         });
 
+        document.addEventListener("keydown", (event) => {
+          const target =
+            event.target instanceof Element
+              ? event.target.closest('[data-action="toggle-ai-literacy"]')
+              : null;
+          if (!target) return;
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          if (event.repeat) return;
+          toggleAiLiteracy();
+        });
+
         document.addEventListener("click", (event) => {
           const link = event.target.closest('a[href^="#"]');
-          if (link && window.matchMedia("(max-width: 900px)").matches)
-            closeDrawer();
+          if (!link || link.getAttribute("href") === "#main-content") return;
+          if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey ||
+            link.target
+          )
+            return;
+          event.preventDefault();
+          navigate(link.getAttribute("href").slice(1));
+          if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
         });
 
         drawerBackdrop.addEventListener("click", closeDrawer);
         searchModal.addEventListener("click", (event) => {
           if (event.target === searchModal) closeSearch();
-        });
-        utilityModal.addEventListener("click", (event) => {
-          if (event.target === utilityModal) closeUtility();
         });
         modalSearchInput.addEventListener("input", () =>
           updateSearchResults(modalSearchInput.value, modalResults),
@@ -3129,14 +4344,11 @@
             event.preventDefault();
             const query = modalSearchInput.value.trim();
             closeSearch();
-            location.hash = `/search?query=${encodeURIComponent(query)}`;
+            navigate(`/search?query=${encodeURIComponent(query)}`);
           });
 
-        window.addEventListener("hashchange", () => {
-          renderPage();
-          window.scrollTo(0, 0);
-          main.focus({ preventScroll: true });
-        });
+        window.addEventListener("hashchange", renderFromHistory);
+        window.addEventListener("popstate", renderFromHistory);
 
         window.addEventListener("resize", () => {
           const isMobileViewport =
@@ -3145,6 +4357,7 @@
           wasMobileViewport = isMobileViewport;
           closeDrawer();
           renderSidebar(currentRoute().path);
+          updateTopbarControls();
         });
 
         window.addEventListener("keydown", (event) => {
@@ -3157,13 +4370,13 @@
           }
           if (event.key === "Escape") {
             if (!searchModal.hidden) closeSearch();
-            else if (!utilityModal.hidden) closeUtility();
             else if (drawerOpen) closeDrawer();
           }
         });
 
         document.documentElement.dataset.theme = theme;
-        renderPage();
+        ensureHistoryState();
+        renderFromHistory();
       })();
     </script>
   </body>

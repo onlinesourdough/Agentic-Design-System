@@ -1,0 +1,41 @@
+/*
+ * ADS-owned adapter: heroui-disclosure
+ *
+ * This is original CSS for the static preview. It adapts the state vocabulary
+ * we selected from HeroUI/React Aria (button name, aria-expanded, focus, and
+ * pressed affordance) to the existing Resources disclosure. No HeroUI code or
+ * package is redistributed here.
+ */
+
+.nav-disclosure-button[data-adapter="heroui-disclosure"] {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 7px 8px;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.nav-disclosure-button[data-adapter="heroui-disclosure"]:hover {
+  border-color: var(--line);
+  background: var(--surface-soft);
+}
+
+.nav-disclosure-button[data-adapter="heroui-disclosure"][aria-expanded="true"] {
+  border-color: var(--line-strong);
+  background: var(--paper);
+  color: var(--accent-dark);
+}
+
+.nav-disclosure-button[data-adapter="heroui-disclosure"]:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-disclosure-button[data-adapter="heroui-disclosure"] {
+    transition: none;
+  }
+}

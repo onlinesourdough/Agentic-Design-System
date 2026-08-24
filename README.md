@@ -1,58 +1,88 @@
-![Design-template workflow](docs/assets/design-template-overview.svg)
+![Agentic Design System route](docs/assets/agentic-design-system-overview.svg)
 
-# Design-template
+# Agentic Design System
 
-Turn a brief into a design you can inspect before anyone builds the product.
+Agentic Design System (ADS) is a standalone design System for turning resolved
+intent into an inspectable, reviewable design direction and a durable example.
+It is a repeatable work surface, not a project template or a library that a
+receiving product installs.
 
 ```text
-BRIEF.md → DESIGN.md → browser preview → review → handoff
+prior runs → workspace brief/design → preview → review → evidence → curated gallery
 ```
 
-Use it when a visual direction, interface, landing page, workspace, or report
-needs to be decided. Skip it when the solution has no meaningful visual layer.
+The durable model is small:
 
-Browse the [active showcase](examples/index.html) for the current directions.
+```text
+workspace/   active work, state, history, learning, and optional engine
+examples/    deliberately promoted, self-contained design proof
+docs/        contract, source audit, architecture, validation, references
+```
 
-## Start
+## Start locally
 
 ```sh
 npm install
 npm run preview
 ```
 
-The preview serves `examples/index.html` by default. Pass `workspace` after
-`--` when you need to inspect the working preview instead.
+The server opens the examples gallery at `http://localhost:4173/`. Pass a
+directory after `--` to preview a specific surface, for example:
 
-1. Replace the prompts in `workspace/BRIEF.md` with real context.
-2. Use [`design-solution`](.agents/skills/design-solution/SKILL.md) to create the design
-   and preview.
-3. Use [`review-design`](.agents/skills/review-design/SKILL.md) to review the result.
-4. Run:
+```sh
+npm run preview -- workspace
+npm run preview -- examples/onlinesourdough-resources
+```
+
+The primary agent entry is
+[`agentic-design-system`](.agents/skills/agentic-design-system/SKILL.md). It
+inspects prior runs, works in `workspace/`, and routes the internal
+[`design-solution`](.agents/skills/design-solution/SKILL.md) and
+[`review-design`](.agents/skills/review-design/SKILL.md) methods. Those methods
+remain separate so a design can be authored and reviewed without duplicating
+the System route.
+
+## Verify a route
 
 ```sh
 npm run check
+npm test
+npm run trace -- --slug clean-clone-proof --preview --review --promote-example
 npm run handoff -- workspace
 ```
 
-The receiving project or repository copies the approved handoff and becomes
-its canonical owner. Nothing here is required at runtime.
+The tracer uses only the standard library. It can also prove a recoverable
+failure relation:
 
-## What the handoff contains
+```sh
+npm run trace -- --slug recovery-proof --simulate-failure
+npm run trace -- --slug recovery-proof --recover --preview --review --promote-example
+```
 
-- `DESIGN.md`
-- `index.html` and local assets
-- `theme.css`
-- `tokens.json`
-- `tailwind.theme.json`
-- `HANDOFF.md`
+Use a temporary checkout for those demonstrations when the operational ledger
+should remain empty in the working tree. See [`docs/validation.md`](docs/validation.md)
+for the clean-clone recipe.
 
-Four active examples show the full route for a service landing page, an
-operations workspace, an executive Power BI dashboard, and the
-resources.onlinesourdough direction. They are examples, not prescribed styles.
+## Gallery
 
-## Sources
+The [examples index](examples/index.html) is owned by the main line and is the
+single durable entry point for curated work. Branches and worktrees are review
+isolation only. Current examples include service, operations, executive
+reporting, and the carried `resources.onlinesourdough` direction.
 
-Google Design.md is the pinned format and export tool. The compact workflow and
-review criteria also incorporate selected, attributed lessons from four MIT
-design repositories. See [SOURCES.md](docs/SOURCES.md) and
-[THIRD_PARTY.md](docs/THIRD_PARTY.md); no external skill catalog is vendored.
+Every curated example carries a brief, a portable `DESIGN.md`, a local
+browser preview, relevant assets, and a readable proof/review note. The
+Resources example also proves the selected dependency-free disclosure adapter
+in `examples/onlinesourdough-resources/assets/adapters/`.
+
+## References and ownership
+
+Google Design.md remains the pinned format and export tool. The source audit
+records what was learned from external design repositories and why no one
+external UI library becomes the ADS default. Preserved historical references
+are under [`docs/references/preserved`](docs/references/preserved/), clearly
+separate from the active gallery.
+
+ADS can be used entirely on its own. Another System may pass ordinary resolved
+context and read the returned path and proof, but no AIOS or APT package,
+service, database, or shared data contract is needed to run this repository.

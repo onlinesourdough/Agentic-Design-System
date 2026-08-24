@@ -1,0 +1,20 @@
+# Build requirement to evidence map
+
+| Requirement                                                      | Evidence in this Build                                                                                                              |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Persistent standalone System shell                               | `AGENTS.md`, `README.md`, `.agents/skills/agentic-design-system/SKILL.md`, `docs/contract.md`, `docs/ARCHITECTURE.md`               |
+| `workspace/` owns active work, history, learning, and state      | `workspace/README.md`, `workspace/BRIEF.md`, `workspace/DESIGN.md`, `workspace/state/`, `workspace/history/`, `workspace/learning/` |
+| Optional engine stays under workspace                            | `workspace/engine/`, root `npm` scripts, structural checks in `workspace/engine/checks.mjs`                                         |
+| One public route with useful local methods                       | primary skill plus internal `design-solution` and `review-design` skills                                                            |
+| Create/resume, preview, review, ledger, and deliberate promotion | `workspace/engine/tracer.py`, its tests, `docs/validation.md`, gallery index                                                        |
+| Failure and recovery relations                                   | tracer `--simulate-failure` / `--recover`, `workspace/engine/tests/test_tracer.py`                                                  |
+| Main-owned examples index; temporary branches only               | `examples/README.md`, `examples/index.html`, primary skill and architecture docs                                                    |
+| Four requested sources audited and one adapter proved            | `docs/SOURCE_AUDIT.md`, Resources adapter README/CSS, carried Resources preview                                                     |
+| Dirty source preserved                                           | `docs/preservation.md`, matching SHA-256 transfer output, unchanged source status                                                   |
+| Browser preview states and responsive access                     | `workspace/DESIGN.md`, `workspace/index.html`, `workspace/REVIEW.md`, `docs/validation.md`                                          |
+| No external System package or service required                   | package scripts, Python standard-library tracer, checks, contract boundaries                                                        |
+| CI/checks and stale scans                                        | `workspace/engine/checks.mjs`, `.github/workflows/check.yml`, `npm run check`                                                       |
+| Handoff remains portable                                         | `workspace/engine/create-handoff.mjs`, `npm run handoff -- workspace`                                                               |
+
+The Build deliberately does not include a commit, push, repository rename,
+GitHub setting change, issue edit, PR, or external-repository mutation.

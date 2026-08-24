@@ -2,8 +2,11 @@ import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, normalize, resolve } from "node:path";
 
-const root = resolve(process.cwd(), process.argv[2] ?? "examples");
-const port = Number(process.env.DESIGN_TEMPLATE_PORT ?? 4173);
+const args = process.argv.slice(2);
+const portFlag = args.indexOf("--port");
+const port = portFlag >= 0 ? Number(args[portFlag + 1] ?? 4173) : 4173;
+const rootArgument = portFlag === 0 ? args[2] : args[0];
+const root = resolve(process.cwd(), rootArgument ?? "examples");
 const types = {
   ".css": "text/css",
   ".html": "text/html",
@@ -32,5 +35,7 @@ createServer((request, response) => {
   });
   createReadStream(file).pipe(response);
 }).listen(port, () =>
-  process.stdout.write(`Design-template preview: http://localhost:${port}\n`),
+  process.stdout.write(
+    `Agentic Design System preview: http://localhost:${port}\n`,
+  ),
 );
