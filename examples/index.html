@@ -2,112 +2,290 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Design-template examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="The curated Agentic Design System gallery."
+    />
+    <title>Agentic Design System — curated examples</title>
     <style>
       :root {
         color-scheme: light;
-        font-family: ui-sans-serif, system-ui, sans-serif;
-        background: #f3efe6;
-        color: #25241f;
+        --paper: #f5f1e8;
+        --surface: #fffdf7;
+        --ink: #1d282b;
+        --muted: #5c6868;
+        --line: #d7d2c7;
+        --teal: #173d45;
+        --rust: #d06b45;
       }
+
       * {
         box-sizing: border-box;
       }
+
       body {
+        min-width: 320px;
         margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        line-height: 1.55;
       }
-      main {
-        width: min(1100px, calc(100% - 32px));
-        margin: 0 auto;
-        padding: 64px 0;
-      }
-      h1 {
-        max-width: 680px;
-        font-size: clamp(40px, 7vw, 82px);
-        line-height: 0.96;
-        letter-spacing: -0.055em;
-        margin: 0 0 24px;
-      }
-      p {
-        max-width: 620px;
-        font-size: 18px;
-        line-height: 1.6;
-        color: #666257;
-      }
-      nav {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin-top: 48px;
-      }
+
       a {
         color: inherit;
-        text-decoration: none;
-        background: #fffdf8;
-        border: 1px solid #d8d1c3;
-        border-radius: 22px;
-        padding: 24px;
-        min-height: 190px;
-        transition:
-          transform 0.2s ease,
-          box-shadow 0.2s ease;
       }
-      a:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 18px 45px rgb(65 55 32 / 0.12);
-      }
-      a:focus-visible {
-        outline: 3px solid #e4572e;
+
+      :focus-visible {
+        outline: 3px solid var(--rust);
         outline-offset: 4px;
       }
-      strong {
+
+      .skip-link {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        transform: translateY(-180%);
+        border-radius: 6px;
+        background: var(--teal);
+        color: var(--paper);
+        padding: 10px 14px;
+        font-weight: 750;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      main {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 72px 0 96px;
+      }
+
+      header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 56px;
+        align-items: end;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 48px;
+      }
+
+      .eyebrow,
+      .card-meta {
+        color: #a94c32;
+        font-family: ui-monospace, monospace;
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 770px;
+        margin: 10px 0 20px;
+        font-size: clamp(48px, 8vw, 92px);
+        line-height: 0.93;
+        letter-spacing: -0.07em;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .header-note {
+        border-top: 2px solid var(--rust);
+        border-bottom: 1px solid var(--line);
+        padding: 16px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .header-note strong {
         display: block;
-        font-size: 21px;
-        margin-bottom: 48px;
+        margin-bottom: 6px;
+        color: var(--ink);
+        font-size: 17px;
       }
-      span {
-        color: #756f62;
-        line-height: 1.5;
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 13px;
+        padding-top: 38px;
       }
-      @media (max-width: 760px) {
-        nav {
+
+      .example-card {
+        display: flex;
+        min-height: 260px;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+        padding: 20px;
+        text-decoration: none;
+        transition:
+          transform 160ms ease,
+          box-shadow 160ms ease,
+          border-color 160ms ease;
+      }
+
+      .example-card:hover {
+        border-color: var(--rust);
+        box-shadow: 0 18px 48px rgb(37 47 44 / 0.09);
+        transform: translateY(-4px);
+      }
+
+      .example-card h2 {
+        max-width: 200px;
+        margin: 10px 0 10px;
+        font-size: 23px;
+        line-height: 1.05;
+        letter-spacing: -0.045em;
+      }
+
+      .example-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .open-label {
+        color: var(--teal);
+        font-family: ui-monospace, monospace;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .gallery-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        border-top: 1px solid var(--line);
+        margin-top: 46px;
+        padding-top: 18px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .gallery-footer a {
+        color: var(--teal);
+        font-weight: 750;
+      }
+
+      @media (max-width: 920px) {
+        header {
+          grid-template-columns: 1fr;
+          gap: 26px;
+        }
+
+        .gallery {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 600px) {
+        main {
+          width: min(100% - 30px, 500px);
+          padding-top: 44px;
+        }
+
+        h1 {
+          font-size: clamp(48px, 15vw, 76px);
+        }
+
+        .gallery {
           grid-template-columns: 1fr;
         }
-        main {
-          padding-top: 36px;
+
+        .gallery-footer {
+          display: block;
+        }
+
+        .gallery-footer p + p {
+          margin-top: 7px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>See the dough before you bake the product.</h1>
-      <p>
-        Four active examples show how a brief becomes a design, a browser
-        preview, and a portable handoff. Curated historical references live
-        separately.
-      </p>
-      <nav aria-label="Showcase examples">
-        <a href="service-landing-page/"
-          ><strong>Service landing page</strong
-          ><span>A clear offer and one meaningful next step.</span></a
-        >
-        <a href="operations-workspace/"
-          ><strong>Operations workspace</strong
-          ><span>A working surface with real states and decisions.</span></a
-        >
-        <a href="executive-powerbi-dashboard/"
-          ><strong>Executive Power BI dashboard</strong
-          ><span>A report designed around the decision it supports.</span></a
-        >
-        <a href="onlinesourdough-resources/"
-          ><strong>Resources / onlinesourdough</strong
-          ><span
-            >A folder-led decision library with real navigation states.</span
-          ></a
-        >
-      </nav>
+    <a class="skip-link" href="#gallery">Skip to curated examples</a>
+    <main id="main-content">
+      <header>
+        <div>
+          <div class="eyebrow">Agentic Design System · main gallery</div>
+          <h1>See the direction before you build it.</h1>
+          <p>
+            Curated examples show how a resolved brief becomes a design
+            direction, a browser preview, review evidence, and a portable
+            starting point for implementation.
+          </p>
+        </div>
+        <aside class="header-note">
+          <strong>Promotion is deliberate.</strong>
+          A successful route stays in workspace until its proof and owner
+          decision are ready for a durable example.
+        </aside>
+      </header>
+
+      <section
+        class="gallery"
+        id="gallery"
+        aria-label="Curated design examples"
+      >
+        <a class="example-card" href="service-landing-page/index.html">
+          <span>
+            <span class="card-meta">01 · offer</span>
+            <h2>Service landing page</h2>
+            <p>A clear offer with one meaningful next step.</p>
+          </span>
+          <span class="open-label">Open preview →</span>
+        </a>
+        <a class="example-card" href="operations-workspace/index.html">
+          <span>
+            <span class="card-meta">02 · decisions</span>
+            <h2>Operations workspace</h2>
+            <p>A working surface with real status and handoff states.</p>
+          </span>
+          <span class="open-label">Open preview →</span>
+        </a>
+        <a class="example-card" href="executive-powerbi-dashboard/index.html">
+          <span>
+            <span class="card-meta">03 · reporting</span>
+            <h2>Executive reporting</h2>
+            <p>A report organized around the decision it supports.</p>
+          </span>
+          <span class="open-label">Open preview →</span>
+        </a>
+        <a class="example-card" href="onlinesourdough-resources/index.html">
+          <span>
+            <span class="card-meta">04 · library</span>
+            <h2>Resources / onlinesourdough</h2>
+            <p>A folder-led decision library with a reviewed adapter proof.</p>
+          </span>
+          <span class="open-label">Open preview →</span>
+        </a>
+      </section>
+
+      <footer class="gallery-footer">
+        <p>Four curated directions · local previews only</p>
+        <p><a href="../workspace/index.html">Return to active workspace</a></p>
+      </footer>
     </main>
   </body>
 </html>

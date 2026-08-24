@@ -2,80 +2,1087 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Workspace preview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="The active Agentic Design System route console."
+    />
+    <title>ADS workspace — Agentic Design System</title>
     <style>
       :root {
-        font-family: ui-sans-serif, system-ui, sans-serif;
-        background: #f3efe6;
-        color: #25241f;
+        color-scheme: light;
+        --paper: #f5f1e8;
+        --surface: #fffdf7;
+        --surface-soft: #ece9e0;
+        --ink: #1d282b;
+        --muted: #5c6868;
+        --line: #d7d2c7;
+        --teal: #173d45;
+        --teal-soft: #dbe8e5;
+        --rust: #d06b45;
+        --rust-dark: #a94c32;
+        --green: #2c765b;
+        --red: #a84335;
+        --shadow: 0 18px 50px rgb(37 47 44 / 0.08);
+        --sans:
+          ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
       }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-width: 320px;
+        scroll-behavior: smooth;
+      }
+
       body {
+        min-width: 320px;
         margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        line-height: 1.55;
       }
-      .skip-link {
-        position: absolute;
-        left: -999px;
+
+      a {
+        color: inherit;
       }
-      .skip-link:focus {
-        left: 16px;
-        top: 16px;
-        background: white;
-        padding: 12px;
-      }
-      main {
-        width: min(760px, calc(100% - 32px));
-        margin: 0 auto;
-        padding: 80px 0;
-      }
-      .card {
-        background: #fffdf8;
-        border: 1px solid #d8d1c3;
-        border-radius: 22px;
-        padding: clamp(24px, 5vw, 56px);
-      }
-      h1 {
-        font-size: clamp(40px, 8vw, 72px);
-        line-height: 1;
-        letter-spacing: -0.04em;
-        margin-top: 0;
-      }
-      p {
-        color: #666257;
-        line-height: 1.65;
-      }
+
       button {
-        border: 0;
-        border-radius: 12px;
-        background: #2f5d50;
-        color: white;
-        padding: 14px 18px;
         font: inherit;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--rust);
+        outline-offset: 4px;
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 10;
+        top: 14px;
+        left: 14px;
+        transform: translateY(-180%);
+        border-radius: 6px;
+        background: var(--teal);
+        color: #fffdf7;
+        padding: 10px 14px;
+        text-decoration: none;
         font-weight: 700;
       }
-      button:hover {
-        background: #24493f;
+
+      .skip-link:focus {
+        transform: translateY(0);
       }
-      button:active {
-        transform: translateY(1px);
+
+      .site-header {
+        border-bottom: 1px solid var(--line);
+        background: var(--teal);
+        color: #f5f1e8;
       }
-      button:focus-visible {
-        outline: 3px solid #e4572e;
-        outline-offset: 4px;
+
+      .header-inner,
+      main,
+      .site-footer {
+        width: min(1200px, calc(100% - 48px));
+        margin: 0 auto;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 70px;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        border: 1px solid rgb(245 241 232 / 0.55);
+        border-radius: 50%;
+        color: var(--rust);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .brand-copy {
+        display: grid;
+        gap: 1px;
+      }
+
+      .brand-copy strong {
+        font-size: 14px;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-copy span,
+      .eyebrow,
+      .meta,
+      .field-label,
+      .status-label,
+      .section-kicker {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .brand-copy span {
+        color: #b9c9c5;
+      }
+
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .header-nav a {
+        color: #e8eee9;
+        font-size: 14px;
+        text-decoration: none;
+      }
+
+      .header-nav a:hover {
+        color: #fff;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      main {
+        padding: 66px 0 92px;
+      }
+
+      .route-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 325px;
+        gap: 72px;
+        align-items: end;
+        padding-bottom: 56px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow,
+      .section-kicker,
+      .field-label,
+      .status-label {
+        color: var(--rust-dark);
+        font-weight: 750;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin-bottom: 22px;
+        font-size: clamp(48px, 7vw, 82px);
+        line-height: 0.96;
+        letter-spacing: -0.065em;
+      }
+
+      .lede {
+        max-width: 650px;
+        margin-bottom: 30px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .action-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .button-primary,
+      .button-secondary,
+      .state-button {
+        border: 1px solid transparent;
+        border-radius: 9px;
+        cursor: pointer;
+        font-weight: 750;
+        text-decoration: none;
+        transition:
+          transform 160ms ease,
+          background-color 160ms ease,
+          border-color 160ms ease;
+      }
+
+      .button-primary {
+        background: var(--teal);
+        color: #fffdf7;
+        padding: 13px 17px;
+      }
+
+      .button-primary:hover {
+        background: #245762;
+        transform: translateY(-1px);
+      }
+
+      .button-primary[aria-busy="true"] {
+        cursor: wait;
+        opacity: 0.78;
+      }
+
+      .button-secondary {
+        border-color: var(--line);
+        background: transparent;
+        color: var(--teal);
+        padding: 12px 16px;
+      }
+
+      .button-secondary:hover {
+        border-color: var(--teal);
+        background: var(--surface);
+      }
+
+      .status-card {
+        position: relative;
+        border-top: 2px solid var(--rust);
+        border-bottom: 1px solid var(--line);
+        padding: 18px 0 20px;
+      }
+
+      .status-card::before {
+        position: absolute;
+        top: -8px;
+        left: -1px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--rust);
+        content: "";
+      }
+
+      .status-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .status-title strong {
+        font-size: 17px;
+      }
+
+      .status-marker {
+        border-radius: 5px;
+        background: #dbeee3;
+        color: var(--green);
+        padding: 4px 7px;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .status-copy {
+        margin-bottom: 13px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .meta {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.8;
+      }
+
+      .workspace-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 315px;
+        gap: 28px;
+        padding: 48px 0 70px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        padding: 26px;
+      }
+
+      .panel + .panel {
+        margin-top: 18px;
+      }
+
+      .panel-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+
+      .panel-heading h2,
+      .panel-heading h3 {
+        margin-bottom: 0;
+        font-size: 21px;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+      }
+
+      .panel-heading .meta {
+        text-align: right;
+      }
+
+      .brief-list,
+      .evidence-list,
+      .run-list {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .brief-list li,
+      .evidence-list li,
+      .run-list li {
+        display: grid;
+        grid-template-columns: 115px minmax(0, 1fr);
+        gap: 16px;
+        border-top: 1px solid var(--line);
+        padding: 15px 0;
+      }
+
+      .brief-list li:first-child,
+      .evidence-list li:first-child,
+      .run-list li:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .brief-list dt,
+      .evidence-list .field-label {
+        color: var(--muted);
+      }
+
+      .brief-list dd,
+      .evidence-list p,
+      .run-list p {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      code {
+        color: var(--teal);
+        font-family: var(--mono);
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+
+      .route-note {
+        margin: 22px 0 0;
+        border-left: 3px solid var(--rust);
+        background: #fbf1e7;
+        padding: 13px 15px;
+        color: #68412e;
+        font-size: 14px;
+      }
+
+      .evidence-list li {
+        display: block;
+      }
+
+      .evidence-list .field-label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .evidence-list a {
+        color: var(--teal);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .decision {
+        background: var(--teal);
+        color: #f5f1e8;
+      }
+
+      .decision .section-kicker {
+        color: #f1a17e;
+      }
+
+      .decision p {
+        color: #c7d5d1;
+        font-size: 14px;
+      }
+
+      .decision strong {
+        display: block;
+        margin: 6px 0 12px;
+        font-size: 20px;
+        letter-spacing: -0.03em;
+      }
+
+      .decision .decision-source {
+        border-top: 1px solid rgb(245 241 232 / 0.22);
+        margin-top: 18px;
+        padding-top: 16px;
+        color: #e7eee9;
+      }
+
+      .gallery-section {
+        border-top: 1px solid var(--line);
+        padding-top: 42px;
+      }
+
+      .section-intro {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 22px;
+      }
+
+      .section-intro h2 {
+        margin: 5px 0 0;
+        font-size: 28px;
+        letter-spacing: -0.04em;
+      }
+
+      .section-intro p {
+        max-width: 420px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .gallery-card {
+        display: flex;
+        min-height: 178px;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--surface);
+        padding: 18px;
+        text-decoration: none;
+        transition:
+          transform 160ms ease,
+          box-shadow 160ms ease,
+          border-color 160ms ease;
+      }
+
+      .gallery-card:hover {
+        border-color: var(--rust);
+        box-shadow: var(--shadow);
+        transform: translateY(-3px);
+      }
+
+      .gallery-card strong {
+        display: block;
+        max-width: 180px;
+        font-size: 16px;
+        line-height: 1.15;
+      }
+
+      .gallery-card p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .card-link {
+        color: var(--rust-dark);
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .state-section {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 42px;
+        border-top: 1px solid var(--line);
+        margin-top: 70px;
+        padding-top: 42px;
+      }
+
+      .state-section h2 {
+        margin: 5px 0 10px;
+        font-size: 24px;
+        letter-spacing: -0.04em;
+      }
+
+      .state-section > div > p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .state-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .state-button {
+        border-color: var(--line);
+        background: transparent;
+        color: var(--muted);
+        padding: 9px 11px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.02em;
+      }
+
+      .state-button:hover,
+      .state-button[aria-pressed="true"] {
+        border-color: var(--teal);
+        background: var(--teal-soft);
+        color: var(--teal);
+      }
+
+      .state-output {
+        min-height: 96px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface);
+        padding: 17px;
+      }
+
+      .state-output[data-state="error"] {
+        border-color: #e4aaa0;
+        background: #fff2ef;
+        color: var(--red);
+      }
+
+      .state-output[data-state="offline"] {
+        border-color: #d6c18a;
+        background: #fff8df;
+        color: #725a1f;
+      }
+
+      .state-output[data-state="empty"],
+      .state-output[data-state="permission"] {
+        color: var(--muted);
+      }
+
+      .state-output strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 15px;
+      }
+
+      .state-output p {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .site-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        border-top: 1px solid var(--line);
+        padding: 20px 0 34px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .site-footer p {
+        margin: 0;
+      }
+
+      .site-footer a {
+        color: var(--teal);
+        font-weight: 700;
+      }
+
+      @media (max-width: 920px) {
+        .route-header,
+        .workspace-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .route-header {
+          gap: 30px;
+        }
+
+        .status-card {
+          max-width: 520px;
+        }
+
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 620px) {
+        .header-inner,
+        main,
+        .site-footer {
+          width: min(100% - 30px, 500px);
+        }
+
+        .header-inner {
+          min-height: 64px;
+        }
+
+        .header-nav {
+          gap: 10px;
+        }
+
+        .header-nav a:first-child {
+          display: none;
+        }
+
+        main {
+          padding-top: 42px;
+        }
+
+        .route-header {
+          padding-bottom: 38px;
+        }
+
+        h1 {
+          font-size: clamp(46px, 15vw, 68px);
+        }
+
+        .lede {
+          font-size: 16px;
+        }
+
+        .workspace-grid {
+          padding: 34px 0 48px;
+        }
+
+        .panel {
+          padding: 20px;
+        }
+
+        .brief-list li {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+
+        .section-intro,
+        .state-section,
+        .site-footer {
+          display: block;
+        }
+
+        .section-intro p {
+          margin-top: 12px;
+        }
+
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .state-section {
+          margin-top: 48px;
+        }
+
+        .state-section > div + div {
+          margin-top: 22px;
+        }
+
+        .site-footer p + p {
+          margin-top: 7px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
       }
     </style>
   </head>
   <body>
-    <a class="skip-link" href="#content">Skip to content</a>
-    <main id="content">
-      <section class="card">
-        <h1>Replace this preview.</h1>
-        <p>
-          Use the brief and DESIGN.md to make one inspectable direction with
-          real content and relevant states.
-        </p>
-        <button type="button">Primary action</button>
+    <a class="skip-link" href="#main-content">Skip to active route</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#main-content">
+          <span class="brand-mark" aria-hidden="true">A</span>
+          <span class="brand-copy">
+            <strong>Agentic Design System</strong>
+            <span>persistent route console</span>
+          </span>
+        </a>
+        <nav class="header-nav" aria-label="Workspace navigation">
+          <a href="#evidence">Evidence</a>
+          <a href="#gallery">Gallery</a>
+          <a href="../examples/index.html">Open gallery ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <section class="route-header" aria-labelledby="route-title">
+        <div>
+          <p class="eyebrow">Active route · design-example / run-014</p>
+          <h1 id="route-title">Make the next design decision visible.</h1>
+          <p class="lede">
+            Resume the current direction, inspect its evidence, and decide
+            whether this work is ready to become part of the durable gallery.
+          </p>
+          <div class="action-row">
+            <button class="button-primary" id="resume-route" type="button">
+              Resume active route <span aria-hidden="true">→</span>
+            </button>
+            <a class="button-secondary" href="#brief">Read active brief</a>
+          </div>
+          <p class="meta" id="route-feedback" role="status" aria-live="polite">
+            Last checked 2026-08-24 · local preview is available
+          </p>
+        </div>
+
+        <aside class="status-card" aria-label="Active route status">
+          <div class="status-title">
+            <strong>Ready for review</strong>
+            <span class="status-marker">success</span>
+          </div>
+          <p class="status-copy">
+            The active design has a brief, preview, review notes, and a source
+            decision. Promotion is still an owner choice.
+          </p>
+          <div class="meta">
+            run-014<br />
+            previous: run-013 · predecessor<br />
+            workspace/state/active.json
+          </div>
+        </aside>
+      </section>
+
+      <section class="workspace-grid" id="evidence" aria-label="Route evidence">
+        <article class="panel" id="brief" aria-labelledby="brief-title">
+          <div class="panel-heading">
+            <h2 id="brief-title">Active brief</h2>
+            <span class="meta">workspace / resolved</span>
+          </div>
+          <dl class="brief-list">
+            <div>
+              <dt>Need</dt>
+              <dd>
+                Keep repeated design work visible as a route from prior evidence
+                to a deliberate gallery decision.
+              </dd>
+            </div>
+            <div>
+              <dt>Audience</dt>
+              <dd>
+                Owner, agent, and reviewer working from the same inspectable
+                preview.
+              </dd>
+            </div>
+            <div>
+              <dt>Next decision</dt>
+              <dd>Resume, review the proof, then choose whether to promote.</dd>
+            </div>
+            <div>
+              <dt>Constraint</dt>
+              <dd>
+                Workspace owns state and history; examples stay curated and the
+                gallery stays on main.
+              </dd>
+            </div>
+          </dl>
+          <p class="route-note">
+            Source choice in this run: one small, dependency-free disclosure
+            adapter selected for the carried Resources preview. The external
+            libraries remain references, not defaults.
+          </p>
+        </article>
+
+        <aside>
+          <section class="panel" aria-labelledby="proof-title">
+            <div class="panel-heading">
+              <h2 id="proof-title">Proof trail</h2>
+              <span class="meta">3 artifacts</span>
+            </div>
+            <ul class="evidence-list">
+              <li>
+                <span class="field-label">Output</span>
+                <p><code>workspace/runs/run-014/output.json</code></p>
+              </li>
+              <li>
+                <span class="field-label">Review</span>
+                <p><a href="#state-lab">PASS · visual and keyboard QA</a></p>
+              </li>
+              <li>
+                <span class="field-label">Relation</span>
+                <p><code>run-013 → predecessor</code></p>
+              </li>
+              <li>
+                <span class="field-label">Ledger</span>
+                <p><code>workspace/history/runs.jsonl#run-014</code></p>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel decision" aria-labelledby="decision-title">
+            <span class="section-kicker">Curated choice</span>
+            <strong id="decision-title">Promotion is intentional.</strong>
+            <p>
+              A successful route is not automatically a gallery example. The
+              owner selects the durable path after review.
+            </p>
+            <p class="decision-source">
+              Current candidate<br /><code
+                >examples/onlinesourdough-resources/</code
+              >
+            </p>
+          </section>
+        </aside>
+      </section>
+
+      <section
+        class="gallery-section"
+        id="gallery"
+        aria-labelledby="gallery-title"
+      >
+        <div class="section-intro">
+          <div>
+            <span class="section-kicker">Durable gallery</span>
+            <h2 id="gallery-title">Curated examples</h2>
+          </div>
+          <p>
+            Each example carries its own brief, design direction, preview, and
+            proof. Open one to inspect the work without this route console.
+          </p>
+        </div>
+        <div class="gallery-grid">
+          <a class="gallery-card" href="../examples/service-landing-page/">
+            <span>
+              <strong>Service landing page</strong>
+              <p>One offer, one useful next step, and honest states.</p>
+            </span>
+            <span class="card-link">Open preview →</span>
+          </a>
+          <a class="gallery-card" href="../examples/operations-workspace/">
+            <span>
+              <strong>Operations workspace</strong>
+              <p>A working surface organized around decisions.</p>
+            </span>
+            <span class="card-link">Open preview →</span>
+          </a>
+          <a
+            class="gallery-card"
+            href="../examples/executive-powerbi-dashboard/"
+          >
+            <span>
+              <strong>Executive reporting</strong>
+              <p>A report direction with a clear supported decision.</p>
+            </span>
+            <span class="card-link">Open preview →</span>
+          </a>
+          <a class="gallery-card" href="../examples/onlinesourdough-resources/">
+            <span>
+              <strong>Resources / onlinesourdough</strong>
+              <p>A folder-led library with a reviewed adapter integration.</p>
+            </span>
+            <span class="card-link">Open preview →</span>
+          </a>
+        </div>
+      </section>
+
+      <section
+        class="state-section"
+        id="state-lab"
+        aria-labelledby="state-title"
+      >
+        <div>
+          <span class="section-kicker">State lab</span>
+          <h2 id="state-title">Make uncertainty observable.</h2>
+          <p>
+            These fixtures are review evidence, not live customer truth. Use the
+            buttons with a keyboard to inspect each route state.
+          </p>
+        </div>
+        <div>
+          <div
+            class="state-controls"
+            role="group"
+            aria-label="Route state fixtures"
+          >
+            <button
+              class="state-button"
+              type="button"
+              data-state="success"
+              aria-pressed="true"
+            >
+              Success
+            </button>
+            <button
+              class="state-button"
+              type="button"
+              data-state="loading"
+              aria-pressed="false"
+            >
+              Loading
+            </button>
+            <button
+              class="state-button"
+              type="button"
+              data-state="error"
+              aria-pressed="false"
+            >
+              Error
+            </button>
+            <button
+              class="state-button"
+              type="button"
+              data-state="empty"
+              aria-pressed="false"
+            >
+              Empty
+            </button>
+            <button
+              class="state-button"
+              type="button"
+              data-state="permission"
+              aria-pressed="false"
+            >
+              Permission
+            </button>
+            <button
+              class="state-button"
+              type="button"
+              data-state="offline"
+              aria-pressed="false"
+            >
+              Offline
+            </button>
+          </div>
+          <div
+            class="state-output"
+            data-state="success"
+            id="state-output"
+            role="status"
+            aria-live="polite"
+          >
+            <strong>Preview and review evidence are available.</strong>
+            <p>The owner can inspect the run and choose promotion.</p>
+          </div>
+        </div>
       </section>
     </main>
+
+    <footer class="site-footer">
+      <p>ADS workspace · active operational truth</p>
+      <p><a href="../docs/contract.md">Read the filesystem contract</a></p>
+    </footer>
+
+    <script>
+      (() => {
+        const resumeButton = document.getElementById("resume-route");
+        const feedback = document.getElementById("route-feedback");
+        const stateOutput = document.getElementById("state-output");
+        const stateButtons = [
+          ...document.querySelectorAll("[data-state]"),
+        ].filter((button) => button.classList.contains("state-button"));
+        const states = {
+          success: [
+            "Preview and review evidence are available.",
+            "The owner can inspect the run and choose promotion.",
+          ],
+          loading: [
+            "Opening the active route…",
+            "The local preview is being prepared; keep this state visible.",
+          ],
+          error: [
+            "Review evidence could not be read.",
+            "Keep the failed run, inspect the referenced path, and record a recovery if needed.",
+          ],
+          empty: [
+            "No prior run is recorded for this brief.",
+            "Create the first route; the ledger will start with a null predecessor.",
+          ],
+          permission: [
+            "Promotion has not been selected.",
+            "A successful route remains in workspace until the owner chooses curation.",
+          ],
+          offline: [
+            "The local preview is unavailable.",
+            "Keep the proof paths and return when the checkout can be served again.",
+          ],
+        };
+
+        function showState(name) {
+          const copy = states[name];
+          if (!copy) return;
+          stateOutput.dataset.state = name;
+          stateOutput.innerHTML = `<strong>${copy[0]}</strong><p>${copy[1]}</p>`;
+          stateButtons.forEach((button) =>
+            button.setAttribute(
+              "aria-pressed",
+              String(button.dataset.state === name),
+            ),
+          );
+        }
+
+        resumeButton.addEventListener("click", () => {
+          resumeButton.setAttribute("aria-busy", "true");
+          resumeButton.disabled = true;
+          resumeButton.innerHTML = "Opening active route…";
+          feedback.textContent = "Loading · inspecting previous run evidence";
+          showState("loading");
+          window.setTimeout(() => {
+            resumeButton.removeAttribute("aria-busy");
+            resumeButton.disabled = false;
+            resumeButton.innerHTML =
+              'Route resumed <span aria-hidden="true">✓</span>';
+            feedback.textContent =
+              "Success · active preview and proof are available";
+            showState("success");
+          }, 520);
+        });
+
+        stateButtons.forEach((button) =>
+          button.addEventListener("click", () =>
+            showState(button.dataset.state),
+          ),
+        );
+      })();
+    </script>
   </body>
 </html>

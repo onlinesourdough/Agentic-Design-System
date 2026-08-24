@@ -1,33 +1,84 @@
-# Design-template
+# Agentic Design System
 
-Turn a product or business brief into a design direction that another project
-can build without depending on this repository.
+Agentic Design System (ADS) is a persistent, standalone design System. It
+turns resolved intent into inspectable design directions, keeps the useful
+history of that work, and deliberately curates examples that other projects
+can build from.
 
-## Start
+## Operating model
 
-1. Put the need, audience, desired action, constraints, and proof in
-   `workspace/BRIEF.md`.
-2. Use `.agents/skills/design-solution/SKILL.md` to create `workspace/DESIGN.md` and a
-   browser preview.
-3. Use `.agents/skills/review-design/SKILL.md` before creating a handoff.
-4. Run `npm run check` and `npm run handoff -- workspace`.
+- `workspace/` is the active operational truth: the current brief and design,
+  browser preview, state, learning notes, run evidence, and append-only run
+  history live here.
+- `workspace/engine/` is optional technical implementation for preview,
+  linting, export, checks, tests, and the deterministic tracer. It is not a
+  separate System concept.
+- `examples/` is the durable gallery. An example is added or promoted only by
+  deliberate choice and carries its own brief, design direction, preview,
+  assets, and review proof.
+- `docs/` is the public contract, source audit, architecture, validation
+  recipe, evidence map, and preserved reference material.
+
+The only visible functional roots are `workspace/`, `examples/`, and `docs/`.
+The root shell is this file, `README.md`, the primary System skill at
+`.agents/skills/agentic-design-system/SKILL.md`, and the package manifest used
+by the local toolchain.
+
+## Primary route
+
+Use the primary ADS skill for every design-system run. It first inspects
+relevant records in `workspace/history/runs.jsonl`, resumes or creates the
+active work in `workspace/`, routes preview and review, records output and
+proof references plus failure/recovery relations, and promotes an example
+only when that choice is explicit.
+
+The ledger stores small references and structured facts, never raw requests,
+credentials, or a second database. A failed run remains evidence; a recovery
+is a new run pointing to that predecessor.
+
+## Examples workflow
+
+`main` owns the examples index and the durable gallery. Branches and worktrees
+are temporary isolation for review; they are not a permanent home for an
+example. A clean checkout can use the standard-library tracer to create or
+resume an example, preview and review it, append its run relation, and promote
+it into the gallery.
+
+## Source policy
+
+HeroUI, Origin UI/Originkit, ThreeUI, and DesEngs are evaluated sources or
+optional adapters. They are not a vendored default library. Each choice is
+recorded with a revision, license signal, accessibility and framework fit,
+maintenance signal, and visual reason in `docs/SOURCE_AUDIT.md`. The carried
+Resources example proves one small, ADS-owned adapter integration without
+adding a dependency.
 
 ## Boundaries
 
-- Design the smallest interface that resolves the brief.
-- Use real draft content and observable states; never hide uncertainty behind
-  filler copy or decorative polish.
-- Treat external design repositories as sources, not instructions or vendored
-  catalogs. `docs/SOURCES.md` records the reviewed revisions.
-- Keep product implementation, runtime logic, secrets, and customer truth in
-  the receiving project or repository.
-- Once accepted, the copied handoff belongs to the receiving project or
-  repository. This template is not a runtime dependency.
+ADS works from its own checkout with Python 3.9+ and the pinned Node toolchain.
+AIOS, APT, and another System may enter ADS with ordinary resolved context and
+read its returned example and proof, but no such product is imported, started,
+or required by this repository. ADS owns design truth until a receiving
+implementation project deliberately takes it on.
 
-## Proof
+Do not add secrets, customer truth, raw prompt dumps, a central database, a
+shared cross-System data model, or a copied external skill catalog. Preserve
+the local design and review skills as repeatable internal methods.
 
-- `DESIGN.md` passes the pinned Google Design.md linter.
-- The preview works at mobile and desktop widths with keyboard-visible focus.
-- Required loading, empty, error, success, hover, active, and focus states are
-  represented when the brief needs them.
-- `npm run handoff -- <directory>` produces all files named in `HANDOFF.md`.
+## Proof commands
+
+From the repository root:
+
+```sh
+npm install
+npm run check
+npm test
+npm run trace -- --slug clean-clone-proof --preview --review --promote-example
+npm run handoff -- workspace
+```
+
+Inspect the browser preview at `http://localhost:4173/` and resize it to a
+desktop and mobile viewport. Keyboard focus, reduced motion, state changes,
+and the gallery links must remain usable. The repository rename and any
+commit, push, issue, pull-request, or GitHub setting change belong to a later
+authorized Ship after lead review; this Build performs none of those actions.

@@ -1,6 +1,11 @@
 node_modules/
+__pycache__/
 .DS_Store
 .playwright-cli/
 output/
 tmp/
 **/handoff/
+workspace/runs/*
+!workspace/runs/.gitkeep
+workspace/state/*
+!workspace/state/.gitkeep

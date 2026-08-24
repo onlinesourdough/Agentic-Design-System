@@ -1,19 +1,25 @@
 ---
 name: design-solution
-description: Turn a product or business brief into a focused DESIGN.md, inspectable browser preview, and portable handoff. Use when a landing page, application interface, workspace, dashboard, or report needs visual direction before the receiving project or repository builds it.
+description: Internal design method for turning a resolved ADS brief into a focused DESIGN.md and inspectable browser preview. Use through the Agentic Design System primary route when a landing page, application interface, workspace, dashboard, or report needs visual direction.
 ---
 
-# Design solution
+# Design solution — internal method
+
+The public route is `$agentic-design-system`. This skill is the focused
+authoring method it calls; it does not own the ledger or gallery.
 
 ## Establish the job
 
-1. Read `BRIEF.md` and preserve resolved facts.
+1. Read the active `BRIEF.md` from `workspace/` or the explicitly selected
+   example and preserve resolved facts.
 2. Name the audience, current constraint, one primary action or decision, real
    content/data, required states, constraints, proof, and receiving project or
    repository.
 3. Ask one question only when a missing answer would materially change the
    direction; otherwise state the smallest reasonable assumption.
 4. Reduce the interface to the smallest composition that completes that job.
+   Keep active work in `workspace/`; only the primary route decides when a
+   result becomes a curated example.
 
 ## Set the direction
 

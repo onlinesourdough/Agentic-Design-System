@@ -3,7 +3,7 @@
 These folders are curated, read-only references migrated from the Design MD
 Workbench. They are not active showcases, product dependencies, or a catalog
 to copy. The new Resources direction lives in
-`examples/onlinesourdough-resources/`.
+`../../examples/onlinesourdough-resources/`.
 
 Reviewed source: `/Users/gustavanderson/Downloads/AIOS/projects/design-md-workbench`
 at revision `30ef68f709f05225e23ac061fcb8da63cca31fba` plus the meaningful

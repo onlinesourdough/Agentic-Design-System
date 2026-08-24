@@ -1,9 +1,12 @@
 ---
 name: review-design
-description: Review a DESIGN.md and browser preview for job fit, originality, realistic content, responsive behavior, accessibility, complete states, and handoff readiness. Use after a Design-template direction is built and before it is accepted by or copied into the receiving project or repository.
+description: Internal review method for a DESIGN.md and browser preview, covering job fit, originality, realistic content, responsive behavior, accessibility, complete states, and acceptance readiness. Use through the Agentic Design System primary route.
 ---
 
-# Review design
+# Review design — internal method
+
+The public route is `$agentic-design-system`. This method evaluates without
+editing and returns evidence for the System run; it does not own promotion.
 
 Evaluate without editing. Return `PASS` only when every required check passes;
 otherwise return `REVISE` with the smallest concrete correction.
