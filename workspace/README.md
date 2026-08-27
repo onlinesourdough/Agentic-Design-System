@@ -5,12 +5,16 @@
 - `BRIEF.md`, `DESIGN.md`, and `index.html` are the current working direction
   and technical preview.
 - `REVIEW.md` records the latest design-method result and any proof limitation.
+- `openpencil/` exists only for the active explicitly selected creative route:
+  one editable source and its reviewed export boundary. It is not required for
+  ordinary work.
 - `state/` holds a small current-state pointer, never a history replacement.
 - `runs/` holds structured evidence for route attempts.
 - `history/runs.jsonl` is append-only and relates predecessors and recoveries.
 - `learning/` holds short, intentional notes retained for future routes.
-- `engine/` contains optional preview, lint, export, check, test, and tracer
-  tooling. It is implementation detail, not another ADS concept.
+- `engine/` contains optional preview, lint, export, check, test, tracer, and
+  read-only audit tooling. It is implementation detail, not another ADS
+  concept.
 
 The primary System skill reads this surface before it starts work. A clean
 checkout can use its `--root` tracer option to exercise the route in a fresh

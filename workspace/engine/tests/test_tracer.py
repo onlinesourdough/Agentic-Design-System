@@ -29,11 +29,16 @@ class TracerTests(unittest.TestCase):
             "workspace/state",
             "workspace/learning",
             "examples",
+            "docs",
         ):
             (root / relative).mkdir(parents=True, exist_ok=True)
         for filename in ("BRIEF.md", "DESIGN.md", "index.html"):
             copyfile(ROOT / "workspace" / filename, root / "workspace" / filename)
         copyfile(ROOT / "examples" / "index.html", root / "examples" / "index.html")
+        copyfile(
+            ROOT / "docs" / "SOURCE_AUDIT.md",
+            root / "docs" / "SOURCE_AUDIT.md",
+        )
         (root / "workspace/history/runs.jsonl").write_text("", encoding="utf-8")
         return temporary, root
 
@@ -112,6 +117,27 @@ class TracerTests(unittest.TestCase):
         self.assertEqual(result.preview_status, "ready")
         self.assertEqual(result.review_status, "PASS")
         self.assertTrue(result.example_path and result.example_path.is_dir())
+
+    def test_source_decision_resolves_three_materially_different_roles(self):
+        temporary, root = self._root()
+        self.addCleanup(temporary.cleanup)
+        result = tracer.trace_once(
+            root,
+            slug="source-decision-proof",
+            preview=True,
+            review=True,
+            source_decision=True,
+        )
+        self.assertEqual(
+            {source["Role"] for source in result.source_decision or []},
+            {
+                "UI/library source",
+                "inspiration/reference source",
+                "optional tool adapter",
+            },
+        )
+        proof = json.loads(result.proof_path.read_text(encoding="utf-8"))
+        self.assertEqual(len(proof["source_decision"]), 3)
 
 
 if __name__ == "__main__":

@@ -47,8 +47,12 @@ authoring method it calls; it does not own the ledger or gallery.
 
 ## Hand off
 
-After `review-design` passes, run `npm run handoff -- <directory>`. Confirm the
+After `review-design` passes, run
+`npm run handoff -- <directory> <output> --receiving-owner <owner>`. Confirm the
 output contains `DESIGN.md`, preview/assets, `theme.css`, `tokens.json`,
-`tailwind.theme.json`, and `HANDOFF.md`. The receiving project or repository
+`tailwind.theme.json`, and `HANDOFF.md`. Only an explicitly selected
+OpenPencil route adds a reviewed `.op` source and PNG/SVG exports; follow the
+primary skill's binding rather than duplicating upstream instructions here.
+The receiving project or repository
 becomes the canonical owner; this repository remains a design workbench, not a
 dependency.

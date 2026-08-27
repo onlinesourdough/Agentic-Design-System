@@ -36,13 +36,20 @@ otherwise return `REVISE` with the smallest concrete correction.
 8. **Contract:** `BRIEF.md`, `DESIGN.md`, and preview agree; Design.md lint and
    repository checks pass; the handoff names the receiving project or
    repository and contains every promised file.
+9. **Optional native source:** When OpenPencil was explicitly selected, use a
+   real supervised upstream surface to open the `.op` source and export the
+   declared PNG/SVG boundary. Compare that export with `DESIGN.md`; verify the
+   source audit, paths, hashes, provenance, upstream version/revision, review,
+   limitations, and receiving owner in `HANDOFF.md`. When it was not
+   selected or is unavailable, verify the visible ordinary-handoff fallback;
+   absence of `.op` is not itself a failure.
 
 Return:
 
 ```text
 Review: design
 Result: PASS | REVISE
-Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract]
+Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source]
 Next: create handoff | revise
 Findings: [only material failures]
 ```

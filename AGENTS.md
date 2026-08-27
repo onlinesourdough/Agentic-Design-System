@@ -11,7 +11,8 @@ can build from.
   browser preview, state, learning notes, run evidence, and append-only run
   history live here.
 - `workspace/engine/` is optional technical implementation for preview,
-  linting, export, checks, tests, and the deterministic tracer. It is not a
+  linting, export, checks, tests, deterministic tracers, and the read-only
+  periodic audit. It is not a
   separate System concept.
 - `examples/` is the durable gallery. An example is added or promoted only by
   deliberate choice and carries its own brief, design direction, preview,
@@ -35,6 +36,15 @@ only when that choice is explicit.
 The ledger stores small references and structured facts, never raw requests,
 credentials, or a second database. A failed run remains evidence; a recovery
 is a new run pointing to that predecessor.
+
+An explicitly selected creative route may add an optional OpenPencil `.op`
+source and reviewed PNG/SVG exports to a handoff. `DESIGN.md` stays semantic,
+`HANDOFF.md` binds provenance and hashes, and ordinary HTML/tokens handoff
+must remain green when OpenPencil is unselected or unavailable.
+
+The ADS-local `audit-design-system` route checks accumulated drift without
+mutation. It is separate from deterministic checks and per-design Review and
+returns exactly `PASS`, `FAIL`, or `BLOCKED`.
 
 ## Examples workflow
 
@@ -73,8 +83,10 @@ From the repository root:
 npm install
 npm run check
 npm test
-npm run trace -- --slug clean-clone-proof --preview --review --promote-example
-npm run handoff -- workspace
+npm run trace -- --slug clean-clone-proof --source-decision --preview --review --promote-example
+npm run trace:handoff -- --openpencil-tool <verified-op-path>
+npm run trace:audit
+npm run handoff -- workspace workspace/handoff --receiving-owner "Agentic Design System"
 ```
 
 Inspect the browser preview at `http://localhost:4173/` and resize it to a

@@ -9,6 +9,8 @@ receiving product installs.
 
 ```text
 prior runs → workspace brief/design → preview → review → evidence → curated gallery
+                                      ↘ optional native handoff
+accumulated truth ─────────────────────→ read-only periodic audit
 ```
 
 The durable model is small:
@@ -40,15 +42,18 @@ inspects prior runs, works in `workspace/`, and routes the internal
 [`design-solution`](.agents/skills/design-solution/SKILL.md) and
 [`review-design`](.agents/skills/review-design/SKILL.md) methods. Those methods
 remain separate so a design can be authored and reviewed without duplicating
-the System route.
+the System route. The ADS-local
+[`audit-design-system`](.agents/skills/audit-design-system/SKILL.md) method
+checks accumulated drift without repairing or creating anything.
 
 ## Verify a route
 
 ```sh
 npm run check
 npm test
-npm run trace -- --slug clean-clone-proof --preview --review --promote-example
-npm run handoff -- workspace
+npm run trace -- --slug clean-clone-proof --source-decision --preview --review --promote-example
+npm run trace:audit
+npm run handoff -- workspace workspace/handoff --receiving-owner "Agentic Design System"
 ```
 
 The tracer uses only the standard library. It can also prove a recoverable
@@ -62,6 +67,37 @@ npm run trace -- --slug recovery-proof --recover --preview --review --promote-ex
 Use a temporary checkout for those demonstrations when the operational ledger
 should remain empty in the working tree. See [`docs/validation.md`](docs/validation.md)
 for the clean-clone recipe.
+
+## Portable and optional native handoff
+
+Every reviewed route can return semantic `DESIGN.md`, HTML/assets, and token
+exports without OpenPencil. A creative route adds `.op` and reviewed PNG/SVG
+files only when explicitly selected. The generated `HANDOFF.md` binds the
+receiving owner, upstream version/revision, source/export paths and SHA-256
+hashes, provenance, review, and limitations. The tool-unavailable route is
+visible and falls back to the ordinary handoff without changing its source.
+Every handoff command requires a non-empty explicit `--receiving-owner`.
+
+Run the native success/fallback tracer with a temporary verified v0.8.4 CLI:
+
+```sh
+npm run trace:handoff -- --openpencil-tool <verified-op-path>
+```
+
+## Periodic read-only audit
+
+`npm run check` is deterministic validation and `review-design` evaluates
+one design. The periodic audit instead reads accumulated ADS truth, source and
+license proof, handoff optionality, run evidence, failures/recovery, stale
+routes, and unavailable evidence:
+
+```sh
+npm run audit -- --scope repository
+npm run trace:audit
+```
+
+It returns exactly `PASS`, `FAIL`, or `BLOCKED` and never repairs,
+exports, promotes, creates an issue, or appends a run.
 
 ## Gallery
 

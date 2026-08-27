@@ -10,11 +10,14 @@
 | Failure and recovery relations                                   | tracer `--simulate-failure` / `--recover`, `workspace/engine/tests/test_tracer.py`                                                  |
 | Main-owned examples index; temporary branches only               | `examples/README.md`, `examples/index.html`, primary skill and architecture docs                                                    |
 | Four requested sources audited and one adapter proved            | `docs/SOURCE_AUDIT.md`, Resources adapter README/CSS, carried Resources preview                                                     |
+| Three source roles resolve into active design                    | `docs/SOURCE_AUDIT.md` current trace, `workspace/DESIGN.md` markers, tracer `--source-decision`                                     |
 | Dirty source preserved                                           | `docs/preservation.md`, matching SHA-256 transfer output, unchanged source status                                                   |
 | Browser preview states and responsive access                     | `workspace/DESIGN.md`, `workspace/index.html`, `workspace/REVIEW.md`, `docs/validation.md`                                          |
 | No external System package or service required                   | package scripts, Python standard-library tracer, checks, contract boundaries                                                        |
 | CI/checks and stale scans                                        | `workspace/engine/checks.mjs`, `.github/workflows/check.yml`, `npm run check`                                                       |
-| Handoff remains portable                                         | `workspace/engine/create-handoff.mjs`, `npm run handoff -- workspace`                                                               |
+| Handoff remains portable                                         | `workspace/engine/create-handoff.mjs`, `npm run handoff -- workspace workspace/handoff --receiving-owner <owner>`                   |
+| Optional editable OpenPencil handoff and ordinary fallback       | active `.op`/PNG, `create-handoff.mjs`, `handoff_tracer.mjs`, per-design `REVIEW.md`                                                |
+| Read-only accumulated-state audit                                | `audit-design-system` skill, `audit_design_system.py`, `audit_tracer.py`, audit tests                                               |
 
 The Build deliberately does not include a commit, push, repository rename,
 GitHub setting change, issue edit, PR, or external-repository mutation.

@@ -30,6 +30,8 @@ const textExtensions = new Set([
   ".json",
   ".md",
   ".mjs",
+  ".op",
+  ".py",
   ".svg",
   ".yml",
   ".yaml",
@@ -40,6 +42,7 @@ const requiredPaths = [
   ".agents/skills/agentic-design-system/SKILL.md",
   ".agents/skills/design-solution/SKILL.md",
   ".agents/skills/review-design/SKILL.md",
+  ".agents/skills/audit-design-system/SKILL.md",
   "workspace/README.md",
   "workspace/BRIEF.md",
   "workspace/DESIGN.md",
@@ -50,8 +53,13 @@ const requiredPaths = [
   "workspace/learning",
   "workspace/engine/checks.mjs",
   "workspace/engine/create-handoff.mjs",
+  "workspace/engine/handoff_tracer.mjs",
+  "workspace/engine/audit_design_system.py",
+  "workspace/engine/audit_tracer.py",
   "workspace/engine/serve.mjs",
   "workspace/engine/tracer.py",
+  "workspace/openpencil/route-console.op",
+  "workspace/openpencil/exports/route-console.png",
   "examples/index.html",
   "examples/README.md",
   "docs/contract.md",
@@ -241,6 +249,52 @@ function checkWorkspace() {
     fail("Resources preview does not load the reviewed local adapter");
   if (!resourcePreview.includes('data-adapter="heroui-disclosure"'))
     fail("Resources preview does not expose the adapter state");
+
+  const sourceAudit = read(join(root, "docs/SOURCE_AUDIT.md"));
+  const design = read(join(root, "workspace/DESIGN.md"));
+  for (const marker of [
+    "## Current design/source trace",
+    "**Role:** UI/library source",
+    "**Role:** inspiration/reference source",
+    "**Role:** optional tool adapter",
+  ]) {
+    if (!sourceAudit.includes(marker))
+      fail(`docs/SOURCE_AUDIT.md lacks ${marker}`);
+  }
+  for (const marker of [
+    "source:heroui-ui-library",
+    "source:desengs-inspiration",
+    "source:openpencil-optional-adapter",
+  ]) {
+    if (!design.includes(marker))
+      fail(`workspace/DESIGN.md lacks source decision ${marker}`);
+  }
+
+  const handoff = read(join(root, "workspace/engine/create-handoff.mjs"));
+  for (const marker of [
+    'status: "not-requested"',
+    'status: "fallback"',
+    'status: "included"',
+    "openPencilReleaseRevision",
+    "receivingOwner",
+  ]) {
+    if (!handoff.includes(marker))
+      fail(`handoff generator lacks optional binding marker ${marker}`);
+  }
+  if (
+    lstatSync(join(root, "workspace/openpencil/route-console.op")).size === 0 ||
+    lstatSync(join(root, "workspace/openpencil/exports/route-console.png"))
+      .size === 0
+  )
+    fail("OpenPencil source or reviewed export is empty");
+
+  const auditSkill = read(
+    join(root, ".agents/skills/audit-design-system/SKILL.md"),
+  );
+  for (const marker of ["read-only", "PASS", "FAIL", "BLOCKED"]) {
+    if (!auditSkill.includes(marker))
+      fail(`audit-design-system skill lacks ${marker}`);
+  }
 }
 
 function checkLedger() {

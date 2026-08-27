@@ -1,0 +1,3552 @@
+{
+  "version": "0.8.4",
+  "name": "OpenPencil CLI Session",
+  "children": [
+    {
+      "type": "frame",
+      "id": "n1",
+      "name": "ADS workspace — Agentic Design System",
+      "width": 1440.0,
+      "height": "fit_content",
+      "minWidth": 320.0,
+      "layout": "vertical",
+      "fill": [
+        {
+          "type": "solid",
+          "color": "#f5f1e8"
+        }
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "n4",
+          "name": "header",
+          "width": "fill_container",
+          "height": "fit_content",
+          "layout": "vertical",
+          "padding": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "alignItems": "center",
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#173d45"
+            }
+          ],
+          "stroke": {
+            "thickness": [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            "align": "inside",
+            "fill": [
+              {
+                "type": "solid",
+                "color": "#d7d2c7"
+              }
+            ]
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "n5",
+              "name": "div",
+              "width": 1200.0,
+              "height": 70.0,
+              "minHeight": 70.0,
+              "layout": "horizontal",
+              "gap": 24.0,
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "n6",
+                  "name": "a",
+                  "width": "fit_content",
+                  "height": "fit_content",
+                  "layout": "horizontal",
+                  "gap": 11.0,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "n7",
+                      "name": "span",
+                      "width": 30.0,
+                      "height": 30.0,
+                      "layout": "vertical",
+                      "padding": 1.0,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "cornerRadius": 15.0,
+                      "stroke": {
+                        "thickness": 1.0,
+                        "align": "inside",
+                        "fill": [
+                          {
+                            "type": "solid",
+                            "color": "#f5f1e88c"
+                          }
+                        ]
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n8",
+                          "name": "Text",
+                          "width": 30.0,
+                          "content": [
+                            {
+                              "text": "A",
+                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                              "fontSize": 12.0,
+                              "fontWeight": 800,
+                              "fill": "#d06b45",
+                              "href": "#main-content"
+                            }
+                          ],
+                          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                          "fontSize": 12.0,
+                          "fontWeight": 800,
+                          "lineHeight": 1.55,
+                          "textGrowth": "fixed-width",
+                          "fill": [
+                            {
+                              "type": "solid",
+                              "color": "#d06b45"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "n9",
+                      "name": "span",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "layout": "vertical",
+                      "gap": 1.0,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n10",
+                          "name": "strong",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "n11",
+                              "name": "Text",
+                              "content": [
+                                {
+                                  "text": "Agentic Design System",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 14.0,
+                                  "fontWeight": 700,
+                                  "fill": "#f5f1e8",
+                                  "href": "#main-content"
+                                }
+                              ],
+                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                              "fontSize": 14.0,
+                              "fontWeight": 700,
+                              "letterSpacing": -0.28,
+                              "lineHeight": 1.55,
+                              "textGrowth": "auto",
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#f5f1e8"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "n12",
+                          "name": "span",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "n13",
+                              "name": "Text",
+                              "content": [
+                                {
+                                  "text": "PERSISTENT ROUTE CONSOLE",
+                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                  "fontSize": 11.0,
+                                  "fill": "#b9c9c5",
+                                  "href": "#main-content"
+                                }
+                              ],
+                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                              "fontSize": 11.0,
+                              "letterSpacing": 0.77,
+                              "lineHeight": 1.55,
+                              "textGrowth": "auto",
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#b9c9c5"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "n14",
+                  "name": "nav",
+                  "width": "fit_content",
+                  "height": "fit_content",
+                  "layout": "horizontal",
+                  "gap": 20.0,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "n15",
+                      "name": "a",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n16",
+                          "name": "Text",
+                          "content": [
+                            {
+                              "text": "Evidence",
+                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                              "fontSize": 14.0,
+                              "fill": "#e8eee9",
+                              "href": "#evidence"
+                            }
+                          ],
+                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                          "fontSize": 14.0,
+                          "lineHeight": 1.55,
+                          "textGrowth": "auto",
+                          "fill": [
+                            {
+                              "type": "solid",
+                              "color": "#e8eee9"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "n17",
+                      "name": "a",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n18",
+                          "name": "Text",
+                          "content": [
+                            {
+                              "text": "Gallery",
+                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                              "fontSize": 14.0,
+                              "fill": "#e8eee9",
+                              "href": "#gallery"
+                            }
+                          ],
+                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                          "fontSize": 14.0,
+                          "lineHeight": 1.55,
+                          "textGrowth": "auto",
+                          "fill": [
+                            {
+                              "type": "solid",
+                              "color": "#e8eee9"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "n19",
+                      "name": "a",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n20",
+                          "name": "Text",
+                          "content": [
+                            {
+                              "text": "Open gallery ↗",
+                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                              "fontSize": 14.0,
+                              "fill": "#e8eee9",
+                              "href": "../examples/index.html"
+                            }
+                          ],
+                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                          "fontSize": 14.0,
+                          "lineHeight": 1.55,
+                          "textGrowth": "auto",
+                          "fill": [
+                            {
+                              "type": "solid",
+                              "color": "#e8eee9"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "n21",
+          "name": "Auto margin",
+          "width": "fill_container",
+          "height": "fit_content",
+          "layout": "horizontal",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "n22",
+              "name": "main",
+              "width": 1200.0,
+              "height": "fit_content",
+              "layout": "vertical",
+              "padding": [
+                66.0,
+                0.0,
+                92.0,
+                0.0
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "n23",
+                  "name": "section",
+                  "width": "fill_container",
+                  "height": "fit_content",
+                  "layout": "vertical",
+                  "gap": 72.0,
+                  "padding": [
+                    0.0,
+                    0.0,
+                    57.0,
+                    0.0
+                  ],
+                  "alignItems": "end",
+                  "stroke": {
+                    "thickness": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      0.0
+                    ],
+                    "align": "inside",
+                    "fill": [
+                      {
+                        "type": "solid",
+                        "color": "#d7d2c7"
+                      }
+                    ]
+                  },
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "n24",
+                      "name": "Grid row",
+                      "width": "fill_container",
+                      "height": "fit_content",
+                      "layout": "horizontal",
+                      "gap": 72.0,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n25",
+                          "name": "div",
+                          "width": 803.0,
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "n26",
+                              "name": "p",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": [
+                                0.0,
+                                0.0,
+                                16.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n27",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": "ACTIVE ROUTE · DESIGN-EXAMPLE / RUN-014",
+                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                  "fontSize": 11.0,
+                                  "fontWeight": 750,
+                                  "letterSpacing": 0.77,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#a94c32"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n28",
+                              "name": "h1",
+                              "width": 780.0,
+                              "height": "fit_content",
+                              "maxWidth": 780.0,
+                              "layout": "vertical",
+                              "padding": [
+                                0.0,
+                                0.0,
+                                22.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n29",
+                                  "name": "Text",
+                                  "width": 780.0,
+                                  "maxWidth": 780.0,
+                                  "content": "Make the next design decision visible.",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 82.0,
+                                  "fontWeight": 700,
+                                  "letterSpacing": -5.33,
+                                  "lineHeight": 0.96,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#1d282b"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n30",
+                              "name": "p",
+                              "width": 650.0,
+                              "height": "fit_content",
+                              "maxWidth": 650.0,
+                              "layout": "vertical",
+                              "padding": [
+                                0.0,
+                                0.0,
+                                30.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n31",
+                                  "name": "Text",
+                                  "width": 650.0,
+                                  "maxWidth": 650.0,
+                                  "content": "Resume the current direction, inspect its evidence, and decide whether this work is ready to become part of the durable gallery.",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 18.0,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#5c6868"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n32",
+                              "name": "div",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "horizontal",
+                              "gap": 12.0,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n33",
+                                  "name": "button",
+                                  "role": "button",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    14.0,
+                                    18.0,
+                                    14.0,
+                                    18.0
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "cornerRadius": 9.0,
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#173d45"
+                                    }
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n34",
+                                      "name": "Text",
+                                      "content": "Resume active route →",
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 16.0,
+                                      "fontWeight": 750,
+                                      "fontStyle": "normal",
+                                      "lineHeight": 1.55,
+                                      "textAlign": "center",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#fffdf7"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n35",
+                                  "name": "a",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    13.0,
+                                    17.0,
+                                    13.0,
+                                    17.0
+                                  ],
+                                  "cornerRadius": 9.0,
+                                  "stroke": {
+                                    "thickness": 1.0,
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#d7d2c7"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n36",
+                                      "name": "Text",
+                                      "content": [
+                                        {
+                                          "text": "Read active brief",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "fontWeight": 750,
+                                          "fill": "#173d45",
+                                          "href": "#brief"
+                                        }
+                                      ],
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 16.0,
+                                      "fontWeight": 750,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#173d45"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n37",
+                              "name": "p",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": [
+                                0.0,
+                                0.0,
+                                16.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n38",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": "LAST CHECKED 2026-08-24 · LOCAL PREVIEW IS AVAILABLE",
+                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                  "fontSize": 10.0,
+                                  "letterSpacing": 0.7000000000000001,
+                                  "lineHeight": 1.8,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#5c6868"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "n39",
+                          "name": "aside",
+                          "width": 325.0,
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "padding": [
+                            20.0,
+                            0.0,
+                            21.0,
+                            0.0
+                          ],
+                          "stroke": {
+                            "thickness": [
+                              2.0,
+                              0.0,
+                              1.0,
+                              0.0
+                            ],
+                            "align": "inside",
+                            "fill": [
+                              {
+                                "type": "solid",
+                                "color": "#d06b45"
+                              }
+                            ]
+                          },
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "n40",
+                              "name": "::before",
+                              "x": -1.0,
+                              "y": -8.0,
+                              "constraints": {
+                                "h": "left",
+                                "v": "top"
+                              },
+                              "width": 12.0,
+                              "height": 12.0,
+                              "layout": "vertical",
+                              "cornerRadius": 6.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#d06b45"
+                                }
+                              ],
+                              "children": []
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n41",
+                              "name": "div",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "horizontal",
+                              "gap": 12.0,
+                              "padding": [
+                                0.0,
+                                0.0,
+                                8.0,
+                                0.0
+                              ],
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n42",
+                                  "name": "strong",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n43",
+                                      "name": "Text",
+                                      "content": "Ready for review",
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 17.0,
+                                      "fontWeight": 700,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#1d282b"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n44",
+                                  "name": "span",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    4.0,
+                                    7.0,
+                                    4.0,
+                                    7.0
+                                  ],
+                                  "cornerRadius": 5.0,
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#dbeee3"
+                                    }
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n45",
+                                      "name": "Text",
+                                      "content": "SUCCESS",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 10.0,
+                                      "fontWeight": 800,
+                                      "letterSpacing": 0.5,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#2c765b"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n46",
+                              "name": "p",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": [
+                                0.0,
+                                0.0,
+                                13.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n47",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": "The active design has a brief, preview, review notes, and a source decision. Promotion is still an owner choice.",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 14.0,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#5c6868"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n48",
+                              "name": "div",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n49",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": "RUN-014\nPREVIOUS: RUN-013 · PREDECESSOR\nWORKSPACE/STATE/ACTIVE.JSON",
+                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                  "fontSize": 10.0,
+                                  "letterSpacing": 0.7000000000000001,
+                                  "lineHeight": 1.8,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#5c6868"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "n50",
+                  "name": "section",
+                  "width": "fill_container",
+                  "height": "fit_content",
+                  "layout": "vertical",
+                  "gap": 28.0,
+                  "padding": [
+                    48.0,
+                    0.0,
+                    70.0,
+                    0.0
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "n51",
+                      "name": "Grid row",
+                      "width": "fill_container",
+                      "height": "fit_content",
+                      "layout": "horizontal",
+                      "gap": 28.0,
+                      "alignItems": "stretch",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n52",
+                          "name": "article",
+                          "width": 857.0,
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "padding": 27.0,
+                          "cornerRadius": 18.0,
+                          "fill": [
+                            {
+                              "type": "solid",
+                              "color": "#fffdf7"
+                            }
+                          ],
+                          "stroke": {
+                            "thickness": 1.0,
+                            "align": "inside",
+                            "fill": [
+                              {
+                                "type": "solid",
+                                "color": "#d7d2c7"
+                              }
+                            ]
+                          },
+                          "effects": [
+                            {
+                              "type": "shadow",
+                              "offsetX": 0.0,
+                              "offsetY": 18.0,
+                              "blur": 50.0,
+                              "spread": 0.0,
+                              "color": "#252f2c14"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "n53",
+                              "name": "div",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "horizontal",
+                              "gap": 14.0,
+                              "padding": [
+                                0.0,
+                                0.0,
+                                22.0,
+                                0.0
+                              ],
+                              "justifyContent": "space_between",
+                              "alignItems": "end",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n54",
+                                  "name": "h2",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n55",
+                                      "name": "Text",
+                                      "content": "Active brief",
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 21.0,
+                                      "fontWeight": 700,
+                                      "letterSpacing": -0.63,
+                                      "lineHeight": 1.1,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#1d282b"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n56",
+                                  "name": "span",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n57",
+                                      "name": "Text",
+                                      "content": "WORKSPACE / RESOLVED",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 10.0,
+                                      "letterSpacing": 0.7000000000000001,
+                                      "lineHeight": 1.8,
+                                      "textAlign": "right",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#5c6868"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n58",
+                              "name": "dl",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "gap": 0.0,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n59",
+                                  "name": "div",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n60",
+                                      "name": "dt",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n61",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Need",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n62",
+                                      "name": "dd",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n63",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Keep repeated design work visible as a route from prior evidence to a deliberate gallery decision.",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 14.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n64",
+                                  "name": "div",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n65",
+                                      "name": "dt",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n66",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Audience",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n67",
+                                      "name": "dd",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n68",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Owner, agent, and reviewer working from the same inspectable preview.",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 14.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n69",
+                                  "name": "div",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n70",
+                                      "name": "dt",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n71",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Next decision",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n72",
+                                      "name": "dd",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n73",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Resume, review the proof, then choose whether to promote.",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 14.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n74",
+                                  "name": "div",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n75",
+                                      "name": "dt",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n76",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Constraint",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n77",
+                                      "name": "dd",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n78",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": "Workspace owns state and history; examples stay curated and the gallery stays on main.",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 14.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n79",
+                              "name": "p",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": [
+                                13.0,
+                                15.0,
+                                13.0,
+                                18.0
+                              ],
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#fbf1e7"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": [
+                                  0.0,
+                                  0.0,
+                                  0.0,
+                                  3.0
+                                ],
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d06b45"
+                                  }
+                                ]
+                              },
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n80",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": "Source choice in this run: one small, dependency-free disclosure adapter selected for the carried Resources preview. The external libraries remain references, not defaults.",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 14.0,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#68412e"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "n81",
+                          "name": "aside",
+                          "width": 315.0,
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "n82",
+                              "name": "section",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": 27.0,
+                              "cornerRadius": 18.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#fffdf7"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": 1.0,
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d7d2c7"
+                                  }
+                                ]
+                              },
+                              "effects": [
+                                {
+                                  "type": "shadow",
+                                  "offsetX": 0.0,
+                                  "offsetY": 18.0,
+                                  "blur": 50.0,
+                                  "spread": 0.0,
+                                  "color": "#252f2c14"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n83",
+                                  "name": "div",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "horizontal",
+                                  "gap": 14.0,
+                                  "padding": [
+                                    0.0,
+                                    0.0,
+                                    22.0,
+                                    0.0
+                                  ],
+                                  "justifyContent": "space_between",
+                                  "alignItems": "end",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n84",
+                                      "name": "h2",
+                                      "width": "fit_content",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n85",
+                                          "name": "Text",
+                                          "content": "Proof trail",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 21.0,
+                                          "fontWeight": 700,
+                                          "letterSpacing": -0.63,
+                                          "lineHeight": 1.1,
+                                          "textGrowth": "auto",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n86",
+                                      "name": "span",
+                                      "width": "fit_content",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n87",
+                                          "name": "Text",
+                                          "content": "3 ARTIFACTS",
+                                          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                          "fontSize": 10.0,
+                                          "letterSpacing": 0.7000000000000001,
+                                          "lineHeight": 1.8,
+                                          "textAlign": "right",
+                                          "textGrowth": "auto",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n88",
+                                  "name": "ul",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "gap": 0.0,
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n89",
+                                      "name": "li",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "gap": 16.0,
+                                      "padding": [
+                                        0.0,
+                                        0.0,
+                                        15.0,
+                                        0.0
+                                      ],
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "n90",
+                                          "name": "span",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "padding": [
+                                            0.0,
+                                            0.0,
+                                            5.0,
+                                            0.0
+                                          ],
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n91",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": "OUTPUT",
+                                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                              "fontSize": 11.0,
+                                              "fontWeight": 750,
+                                              "letterSpacing": 0.77,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#5c6868"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "n92",
+                                          "name": "p",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n93",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": [
+                                                {
+                                                  "text": "workspace/runs/run-014/output.json",
+                                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                                  "fontSize": 12.0,
+                                                  "fill": "#173d45"
+                                                }
+                                              ],
+                                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                              "fontSize": 12.0,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#173d45"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n94",
+                                      "name": "li",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "gap": 16.0,
+                                      "padding": [
+                                        16.0,
+                                        0.0,
+                                        15.0,
+                                        0.0
+                                      ],
+                                      "stroke": {
+                                        "thickness": [
+                                          1.0,
+                                          0.0,
+                                          0.0,
+                                          0.0
+                                        ],
+                                        "align": "inside",
+                                        "fill": [
+                                          {
+                                            "type": "solid",
+                                            "color": "#d7d2c7"
+                                          }
+                                        ]
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "n95",
+                                          "name": "span",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "padding": [
+                                            0.0,
+                                            0.0,
+                                            5.0,
+                                            0.0
+                                          ],
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n96",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": "REVIEW",
+                                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                              "fontSize": 11.0,
+                                              "fontWeight": 750,
+                                              "letterSpacing": 0.77,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#5c6868"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "n97",
+                                          "name": "p",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n98",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": [
+                                                {
+                                                  "text": "PASS · visual and keyboard QA",
+                                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                                  "fontSize": 14.0,
+                                                  "fill": "#173d45",
+                                                  "underline": true,
+                                                  "href": "#state-lab"
+                                                }
+                                              ],
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 14.0,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "underline": true,
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#173d45"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n99",
+                                      "name": "li",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "gap": 16.0,
+                                      "padding": [
+                                        16.0,
+                                        0.0,
+                                        15.0,
+                                        0.0
+                                      ],
+                                      "stroke": {
+                                        "thickness": [
+                                          1.0,
+                                          0.0,
+                                          0.0,
+                                          0.0
+                                        ],
+                                        "align": "inside",
+                                        "fill": [
+                                          {
+                                            "type": "solid",
+                                            "color": "#d7d2c7"
+                                          }
+                                        ]
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "n100",
+                                          "name": "span",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "padding": [
+                                            0.0,
+                                            0.0,
+                                            5.0,
+                                            0.0
+                                          ],
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n101",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": "RELATION",
+                                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                              "fontSize": 11.0,
+                                              "fontWeight": 750,
+                                              "letterSpacing": 0.77,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#5c6868"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "n102",
+                                          "name": "p",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n103",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": [
+                                                {
+                                                  "text": "run-013 → predecessor",
+                                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                                  "fontSize": 12.0,
+                                                  "fill": "#173d45"
+                                                }
+                                              ],
+                                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                              "fontSize": 12.0,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#173d45"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n104",
+                                      "name": "li",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "gap": 16.0,
+                                      "padding": [
+                                        16.0,
+                                        0.0,
+                                        15.0,
+                                        0.0
+                                      ],
+                                      "stroke": {
+                                        "thickness": [
+                                          1.0,
+                                          0.0,
+                                          0.0,
+                                          0.0
+                                        ],
+                                        "align": "inside",
+                                        "fill": [
+                                          {
+                                            "type": "solid",
+                                            "color": "#d7d2c7"
+                                          }
+                                        ]
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "n105",
+                                          "name": "span",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "padding": [
+                                            0.0,
+                                            0.0,
+                                            5.0,
+                                            0.0
+                                          ],
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n106",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": "LEDGER",
+                                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                              "fontSize": 11.0,
+                                              "fontWeight": 750,
+                                              "letterSpacing": 0.77,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#5c6868"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "n107",
+                                          "name": "p",
+                                          "width": "fill_container",
+                                          "height": "fit_content",
+                                          "layout": "vertical",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "n108",
+                                              "name": "Text",
+                                              "width": "fill_container",
+                                              "content": [
+                                                {
+                                                  "text": "workspace/history/runs.jsonl#run-014",
+                                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                                  "fontSize": 12.0,
+                                                  "fill": "#173d45"
+                                                }
+                                              ],
+                                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                              "fontSize": 12.0,
+                                              "lineHeight": 1.55,
+                                              "textGrowth": "fixed-width",
+                                              "fill": [
+                                                {
+                                                  "type": "solid",
+                                                  "color": "#173d45"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n109",
+                              "name": "section",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": 27.0,
+                              "cornerRadius": 18.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#173d45"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": 1.0,
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d7d2c7"
+                                  }
+                                ]
+                              },
+                              "effects": [
+                                {
+                                  "type": "shadow",
+                                  "offsetX": 0.0,
+                                  "offsetY": 18.0,
+                                  "blur": 50.0,
+                                  "spread": 0.0,
+                                  "color": "#252f2c14"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n110",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": [
+                                    {
+                                      "text": "CURATED CHOICE",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fill": "#f1a17e"
+                                    }
+                                  ],
+                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                  "fontSize": 11.0,
+                                  "fontWeight": 750,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#f1a17e"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n111",
+                                  "name": "strong",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    6.0,
+                                    0.0,
+                                    12.0,
+                                    0.0
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n112",
+                                      "name": "Text",
+                                      "width": "fill_container",
+                                      "content": "Promotion is intentional.",
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 20.0,
+                                      "fontWeight": 700,
+                                      "letterSpacing": -0.6,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "fixed-width",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#f5f1e8"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n113",
+                                  "name": "p",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    0.0,
+                                    0.0,
+                                    16.0,
+                                    0.0
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n114",
+                                      "name": "Text",
+                                      "width": "fill_container",
+                                      "content": "A successful route is not automatically a gallery example. The owner selects the durable path after review.",
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 14.0,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "fixed-width",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#c7d5d1"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n115",
+                                  "name": "p",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    17.0,
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                  ],
+                                  "stroke": {
+                                    "thickness": [
+                                      1.0,
+                                      0.0,
+                                      0.0,
+                                      0.0
+                                    ],
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#f5f1e838"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n116",
+                                      "name": "Text",
+                                      "width": "fill_container",
+                                      "content": [
+                                        {
+                                          "text": "Current candidate\n",
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 14.0,
+                                          "fill": "#e7eee9"
+                                        },
+                                        {
+                                          "text": "examples/onlinesourdough-resources/",
+                                          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                          "fontSize": 12.0,
+                                          "fill": "#173d45"
+                                        }
+                                      ],
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 14.0,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "fixed-width",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#e7eee9"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "n117",
+                  "name": "section",
+                  "width": "fill_container",
+                  "height": "fit_content",
+                  "layout": "vertical",
+                  "padding": [
+                    43.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "stroke": {
+                    "thickness": [
+                      1.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "align": "inside",
+                    "fill": [
+                      {
+                        "type": "solid",
+                        "color": "#d7d2c7"
+                      }
+                    ]
+                  },
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "n118",
+                      "name": "div",
+                      "width": "fill_container",
+                      "height": "fit_content",
+                      "layout": "horizontal",
+                      "gap": 24.0,
+                      "padding": [
+                        0.0,
+                        0.0,
+                        22.0,
+                        0.0
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n119",
+                          "name": "div",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "n120",
+                              "name": "anonymous line box",
+                              "width": "fit_content",
+                              "height": "fit_content",
+                              "layout": "horizontal",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n121",
+                                  "name": "line-height strut",
+                                  "width": 0.0,
+                                  "height": 24.8,
+                                  "children": []
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "n122",
+                                  "name": "Text",
+                                  "content": [
+                                    {
+                                      "text": "DURABLE GALLERY",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fill": "#a94c32"
+                                    }
+                                  ],
+                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                  "fontSize": 11.0,
+                                  "fontWeight": 750,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "auto",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#a94c32"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n123",
+                              "name": "h2",
+                              "width": "fit_content",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": [
+                                5.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n124",
+                                  "name": "Text",
+                                  "content": "Curated examples",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 28.0,
+                                  "fontWeight": 700,
+                                  "letterSpacing": -1.12,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "auto",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#1d282b"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "n125",
+                          "name": "p",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "maxWidth": 420.0,
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "n126",
+                              "name": "Text",
+                              "width": 420.0,
+                              "maxWidth": 420.0,
+                              "content": "Each example carries its own brief, design direction, preview, and proof. Open one to inspect the work without this route console.",
+                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                              "fontSize": 14.0,
+                              "lineHeight": 1.55,
+                              "textGrowth": "fixed-width",
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#5c6868"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "n127",
+                      "name": "div",
+                      "width": "fill_container",
+                      "height": "fit_content",
+                      "layout": "vertical",
+                      "gap": 12.0,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n128",
+                          "name": "Grid row",
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "layout": "horizontal",
+                          "gap": 12.0,
+                          "alignItems": "stretch",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "n129",
+                              "name": "a",
+                              "width": 291.0,
+                              "height": 178.0,
+                              "minHeight": 178.0,
+                              "layout": "vertical",
+                              "padding": 19.0,
+                              "justifyContent": "space_between",
+                              "cornerRadius": 14.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#fffdf7"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": 1.0,
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d7d2c7"
+                                  }
+                                ]
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n130",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n131",
+                                      "name": "strong",
+                                      "width": 180.0,
+                                      "height": "fit_content",
+                                      "maxWidth": 180.0,
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n132",
+                                          "name": "Text",
+                                          "width": 180.0,
+                                          "maxWidth": 180.0,
+                                          "content": [
+                                            {
+                                              "text": "Service landing page",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 16.0,
+                                              "fontWeight": 700,
+                                              "fill": "#1d282b",
+                                              "href": "../examples/service-landing-page/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "fontWeight": 700,
+                                          "lineHeight": 1.15,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n133",
+                                      "name": "p",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "padding": [
+                                        8.0,
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                      ],
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n134",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": [
+                                            {
+                                              "text": "One offer, one useful next step, and honest states.",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 13.0,
+                                              "fill": "#5c6868",
+                                              "href": "../examples/service-landing-page/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 13.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n135",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n136",
+                                      "name": "Text",
+                                      "content": [
+                                        {
+                                          "text": "OPEN PREVIEW →",
+                                          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                          "fontSize": 10.0,
+                                          "fontWeight": 800,
+                                          "fill": "#a94c32",
+                                          "href": "../examples/service-landing-page/"
+                                        }
+                                      ],
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 10.0,
+                                      "fontWeight": 800,
+                                      "letterSpacing": 0.6,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#a94c32"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n137",
+                              "name": "a",
+                              "width": 291.0,
+                              "height": 178.0,
+                              "minHeight": 178.0,
+                              "layout": "vertical",
+                              "padding": 19.0,
+                              "justifyContent": "space_between",
+                              "cornerRadius": 14.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#fffdf7"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": 1.0,
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d7d2c7"
+                                  }
+                                ]
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n138",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n139",
+                                      "name": "strong",
+                                      "width": 180.0,
+                                      "height": "fit_content",
+                                      "maxWidth": 180.0,
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n140",
+                                          "name": "Text",
+                                          "width": 180.0,
+                                          "maxWidth": 180.0,
+                                          "content": [
+                                            {
+                                              "text": "Operations workspace",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 16.0,
+                                              "fontWeight": 700,
+                                              "fill": "#1d282b",
+                                              "href": "../examples/operations-workspace/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "fontWeight": 700,
+                                          "lineHeight": 1.15,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n141",
+                                      "name": "p",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "padding": [
+                                        8.0,
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                      ],
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n142",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": [
+                                            {
+                                              "text": "A working surface organized around decisions.",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 13.0,
+                                              "fill": "#5c6868",
+                                              "href": "../examples/operations-workspace/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 13.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n143",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n144",
+                                      "name": "Text",
+                                      "content": [
+                                        {
+                                          "text": "OPEN PREVIEW →",
+                                          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                          "fontSize": 10.0,
+                                          "fontWeight": 800,
+                                          "fill": "#a94c32",
+                                          "href": "../examples/operations-workspace/"
+                                        }
+                                      ],
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 10.0,
+                                      "fontWeight": 800,
+                                      "letterSpacing": 0.6,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#a94c32"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n145",
+                              "name": "a",
+                              "width": 291.0,
+                              "height": 178.0,
+                              "minHeight": 178.0,
+                              "layout": "vertical",
+                              "padding": 19.0,
+                              "justifyContent": "space_between",
+                              "cornerRadius": 14.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#fffdf7"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": 1.0,
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d7d2c7"
+                                  }
+                                ]
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n146",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n147",
+                                      "name": "strong",
+                                      "width": 180.0,
+                                      "height": "fit_content",
+                                      "maxWidth": 180.0,
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n148",
+                                          "name": "Text",
+                                          "width": 180.0,
+                                          "maxWidth": 180.0,
+                                          "content": [
+                                            {
+                                              "text": "Executive reporting",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 16.0,
+                                              "fontWeight": 700,
+                                              "fill": "#1d282b",
+                                              "href": "../examples/executive-powerbi-dashboard/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "fontWeight": 700,
+                                          "lineHeight": 1.15,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n149",
+                                      "name": "p",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "padding": [
+                                        8.0,
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                      ],
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n150",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": [
+                                            {
+                                              "text": "A report direction with a clear supported decision.",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 13.0,
+                                              "fill": "#5c6868",
+                                              "href": "../examples/executive-powerbi-dashboard/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 13.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n151",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n152",
+                                      "name": "Text",
+                                      "content": [
+                                        {
+                                          "text": "OPEN PREVIEW →",
+                                          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                          "fontSize": 10.0,
+                                          "fontWeight": 800,
+                                          "fill": "#a94c32",
+                                          "href": "../examples/executive-powerbi-dashboard/"
+                                        }
+                                      ],
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 10.0,
+                                      "fontWeight": 800,
+                                      "letterSpacing": 0.6,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#a94c32"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n153",
+                              "name": "a",
+                              "width": 291.0,
+                              "height": 178.0,
+                              "minHeight": 178.0,
+                              "layout": "vertical",
+                              "padding": 19.0,
+                              "justifyContent": "space_between",
+                              "cornerRadius": 14.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#fffdf7"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": 1.0,
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d7d2c7"
+                                  }
+                                ]
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n154",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "n155",
+                                      "name": "strong",
+                                      "width": 180.0,
+                                      "height": "fit_content",
+                                      "maxWidth": 180.0,
+                                      "layout": "vertical",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n156",
+                                          "name": "Text",
+                                          "width": 180.0,
+                                          "maxWidth": 180.0,
+                                          "content": [
+                                            {
+                                              "text": "Resources / onlinesourdough",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 16.0,
+                                              "fontWeight": 700,
+                                              "fill": "#1d282b",
+                                              "href": "../examples/onlinesourdough-resources/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 16.0,
+                                          "fontWeight": 700,
+                                          "lineHeight": 1.15,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#1d282b"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "n157",
+                                      "name": "p",
+                                      "width": "fill_container",
+                                      "height": "fit_content",
+                                      "layout": "vertical",
+                                      "padding": [
+                                        8.0,
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                      ],
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "n158",
+                                          "name": "Text",
+                                          "width": "fill_container",
+                                          "content": [
+                                            {
+                                              "text": "A folder-led library with a reviewed adapter integration.",
+                                              "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                              "fontSize": 13.0,
+                                              "fill": "#5c6868",
+                                              "href": "../examples/onlinesourdough-resources/"
+                                            }
+                                          ],
+                                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                          "fontSize": 13.0,
+                                          "lineHeight": 1.55,
+                                          "textGrowth": "fixed-width",
+                                          "fill": [
+                                            {
+                                              "type": "solid",
+                                              "color": "#5c6868"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n159",
+                                  "name": "span",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n160",
+                                      "name": "Text",
+                                      "content": [
+                                        {
+                                          "text": "OPEN PREVIEW →",
+                                          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                          "fontSize": 10.0,
+                                          "fontWeight": 800,
+                                          "fill": "#a94c32",
+                                          "href": "../examples/onlinesourdough-resources/"
+                                        }
+                                      ],
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 10.0,
+                                      "fontWeight": 800,
+                                      "letterSpacing": 0.6,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#a94c32"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "n161",
+                  "name": "section",
+                  "width": "fill_container",
+                  "height": "fit_content",
+                  "layout": "vertical",
+                  "gap": 42.0,
+                  "padding": [
+                    43.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "stroke": {
+                    "thickness": [
+                      1.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "align": "inside",
+                    "fill": [
+                      {
+                        "type": "solid",
+                        "color": "#d7d2c7"
+                      }
+                    ]
+                  },
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "n162",
+                      "name": "Grid row",
+                      "width": "fill_container",
+                      "height": "fit_content",
+                      "layout": "horizontal",
+                      "gap": 42.0,
+                      "alignItems": "stretch",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n163",
+                          "name": "div",
+                          "width": 250.0,
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "n164",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "content": [
+                                {
+                                  "text": "STATE LAB",
+                                  "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                  "fontSize": 11.0,
+                                  "fontWeight": 750,
+                                  "fill": "#a94c32"
+                                }
+                              ],
+                              "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                              "fontSize": 11.0,
+                              "fontWeight": 750,
+                              "lineHeight": 1.55,
+                              "textGrowth": "fixed-width",
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#a94c32"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n165",
+                              "name": "h2",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": [
+                                5.0,
+                                0.0,
+                                10.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n166",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": "Make uncertainty observable.",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 24.0,
+                                  "fontWeight": 700,
+                                  "letterSpacing": -0.96,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#1d282b"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n167",
+                              "name": "p",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "vertical",
+                              "padding": [
+                                0.0,
+                                0.0,
+                                16.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n168",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "content": "These fixtures are review evidence, not live customer truth. Use the buttons with a keyboard to inspect each route state.",
+                                  "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                  "fontSize": 14.0,
+                                  "lineHeight": 1.55,
+                                  "textGrowth": "fixed-width",
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#5c6868"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "n169",
+                          "name": "div",
+                          "width": 908.0,
+                          "height": "fit_content",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "n170",
+                              "name": "div",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "layout": "horizontal",
+                              "gap": 8.0,
+                              "padding": [
+                                0.0,
+                                0.0,
+                                14.0,
+                                0.0
+                              ],
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n171",
+                                  "name": "button",
+                                  "role": "button",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    10.0,
+                                    12.0,
+                                    10.0,
+                                    12.0
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "cornerRadius": 9.0,
+                                  "fill": [
+                                    {
+                                      "type": "solid",
+                                      "color": "#dbe8e5"
+                                    }
+                                  ],
+                                  "stroke": {
+                                    "thickness": 1.0,
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#173d45"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n172",
+                                      "name": "Text",
+                                      "content": "Success",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fontStyle": "normal",
+                                      "letterSpacing": 0.22,
+                                      "lineHeight": 1.55,
+                                      "textAlign": "center",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#173d45"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n173",
+                                  "name": "button",
+                                  "role": "button",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    10.0,
+                                    12.0,
+                                    10.0,
+                                    12.0
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "cornerRadius": 9.0,
+                                  "stroke": {
+                                    "thickness": 1.0,
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#d7d2c7"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n174",
+                                      "name": "Text",
+                                      "content": "Loading",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fontStyle": "normal",
+                                      "letterSpacing": 0.22,
+                                      "lineHeight": 1.55,
+                                      "textAlign": "center",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#5c6868"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n175",
+                                  "name": "button",
+                                  "role": "button",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    10.0,
+                                    12.0,
+                                    10.0,
+                                    12.0
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "cornerRadius": 9.0,
+                                  "stroke": {
+                                    "thickness": 1.0,
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#d7d2c7"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n176",
+                                      "name": "Text",
+                                      "content": "Error",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fontStyle": "normal",
+                                      "letterSpacing": 0.22,
+                                      "lineHeight": 1.55,
+                                      "textAlign": "center",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#5c6868"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n177",
+                                  "name": "button",
+                                  "role": "button",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    10.0,
+                                    12.0,
+                                    10.0,
+                                    12.0
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "cornerRadius": 9.0,
+                                  "stroke": {
+                                    "thickness": 1.0,
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#d7d2c7"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n178",
+                                      "name": "Text",
+                                      "content": "Empty",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fontStyle": "normal",
+                                      "letterSpacing": 0.22,
+                                      "lineHeight": 1.55,
+                                      "textAlign": "center",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#5c6868"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n179",
+                                  "name": "button",
+                                  "role": "button",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    10.0,
+                                    12.0,
+                                    10.0,
+                                    12.0
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "cornerRadius": 9.0,
+                                  "stroke": {
+                                    "thickness": 1.0,
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#d7d2c7"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n180",
+                                      "name": "Text",
+                                      "content": "Permission",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fontStyle": "normal",
+                                      "letterSpacing": 0.22,
+                                      "lineHeight": 1.55,
+                                      "textAlign": "center",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#5c6868"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n181",
+                                  "name": "button",
+                                  "role": "button",
+                                  "width": "fit_content",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    10.0,
+                                    12.0,
+                                    10.0,
+                                    12.0
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "cornerRadius": 9.0,
+                                  "stroke": {
+                                    "thickness": 1.0,
+                                    "align": "inside",
+                                    "fill": [
+                                      {
+                                        "type": "solid",
+                                        "color": "#d7d2c7"
+                                      }
+                                    ]
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n182",
+                                      "name": "Text",
+                                      "content": "Offline",
+                                      "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace",
+                                      "fontSize": 11.0,
+                                      "fontWeight": 750,
+                                      "fontStyle": "normal",
+                                      "letterSpacing": 0.22,
+                                      "lineHeight": 1.55,
+                                      "textAlign": "center",
+                                      "textGrowth": "auto",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#5c6868"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "n183",
+                              "name": "div",
+                              "width": "fill_container",
+                              "height": 96.0,
+                              "minHeight": 96.0,
+                              "layout": "vertical",
+                              "padding": 18.0,
+                              "cornerRadius": 12.0,
+                              "fill": [
+                                {
+                                  "type": "solid",
+                                  "color": "#fffdf7"
+                                }
+                              ],
+                              "stroke": {
+                                "thickness": 1.0,
+                                "align": "inside",
+                                "fill": [
+                                  {
+                                    "type": "solid",
+                                    "color": "#d7d2c7"
+                                  }
+                                ]
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n184",
+                                  "name": "strong",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "padding": [
+                                    0.0,
+                                    0.0,
+                                    4.0,
+                                    0.0
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n185",
+                                      "name": "Text",
+                                      "width": "fill_container",
+                                      "content": "Preview and review evidence are available.",
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 15.0,
+                                      "fontWeight": 700,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "fixed-width",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#1d282b"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "n186",
+                                  "name": "p",
+                                  "width": "fill_container",
+                                  "height": "fit_content",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "n187",
+                                      "name": "Text",
+                                      "width": "fill_container",
+                                      "content": "The owner can inspect the run and choose promotion.",
+                                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                                      "fontSize": 14.0,
+                                      "lineHeight": 1.55,
+                                      "textGrowth": "fixed-width",
+                                      "fill": [
+                                        {
+                                          "type": "solid",
+                                          "color": "#1d282b"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "n188",
+          "name": "Auto margin",
+          "width": "fill_container",
+          "height": "fit_content",
+          "layout": "horizontal",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "n189",
+              "name": "footer",
+              "width": 1200.0,
+              "height": "fit_content",
+              "layout": "horizontal",
+              "gap": 20.0,
+              "padding": [
+                21.0,
+                0.0,
+                34.0,
+                0.0
+              ],
+              "justifyContent": "space_between",
+              "stroke": {
+                "thickness": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "align": "inside",
+                "fill": [
+                  {
+                    "type": "solid",
+                    "color": "#d7d2c7"
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "n190",
+                  "name": "p",
+                  "width": "fit_content",
+                  "height": "fit_content",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "n191",
+                      "name": "Text",
+                      "content": "ADS workspace · active operational truth",
+                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                      "fontSize": 12.0,
+                      "lineHeight": 1.55,
+                      "textGrowth": "auto",
+                      "fill": [
+                        {
+                          "type": "solid",
+                          "color": "#5c6868"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "n192",
+                  "name": "p",
+                  "width": "fit_content",
+                  "height": "fit_content",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "n193",
+                      "name": "Text",
+                      "content": [
+                        {
+                          "text": "Read the filesystem contract",
+                          "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                          "fontSize": 12.0,
+                          "fontWeight": 700,
+                          "fill": "#173d45",
+                          "underline": true,
+                          "href": "../docs/contract.md"
+                        }
+                      ],
+                      "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n          \"Segoe UI\", sans-serif",
+                      "fontSize": 12.0,
+                      "fontWeight": 700,
+                      "lineHeight": 1.55,
+                      "textGrowth": "auto",
+                      "underline": true,
+                      "fill": [
+                        {
+                          "type": "solid",
+                          "color": "#173d45"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "editorMeta": {
+    "activePageIndex": 0,
+    "preserveAuthoredGeometry": false
+  }
+}

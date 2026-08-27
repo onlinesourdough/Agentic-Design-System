@@ -22,6 +22,7 @@ workspace/                         active operational truth
 ├── BRIEF.md                        resolved current input
 ├── DESIGN.md                       current direction
 ├── index.html                      technical preview
+├── openpencil/                      optional selected native source/exports
 ├── state/                          small current-state pointer
 ├── runs/                            one directory per route attempt
 ├── history/runs.jsonl              append-only run relation
@@ -69,6 +70,45 @@ can be recovered only once.
 `workspace/state/active.json` may identify the current active slug and latest
 route for quick resume. It is not a second history store. Learning notes are
 short and intentional under `workspace/learning/`.
+
+## Source-decision boundary
+
+`docs/SOURCE_AUDIT.md` owns source revision/version, license and reuse
+boundary, maintenance/availability, framework/accessibility fit, visual
+reason, and learned-versus-copied evidence. The active `DESIGN.md` resolves
+those facts into named use/reject decisions. The design/source tracer records
+that resolution as run proof; it does not create a catalogue, registry,
+`design-list.md`, or second source of truth.
+
+## Portable and optional native handoff
+
+Every handoff contains semantic `DESIGN.md`, HTML/assets, token exports, and a
+`HANDOFF.md` binder. The receiving owner becomes canonical after acceptance.
+The generator requires that owner explicitly through a non-empty
+`--receiving-owner`; it never assigns one by default.
+An explicitly selected creative route may additionally carry one editable
+`<slug>.op` source and reviewed PNG/SVG exports. `HANDOFF.md` binds the
+OpenPencil upstream version/revision, source/export relative paths and SHA-256
+hashes, provenance, review result, known limitations, and receiving owner.
+
+OpenPencil remains optional and replaceable. It is not an ADS dependency, a
+receiving-runtime dependency, or a shared ADS-to-receiving-System schema.
+When it is unselected or unavailable, the visible route falls back to the
+ordinary handoff without modifying source files.
+
+## Deterministic check, Review, and periodic audit
+
+Deterministic checks test known repository invariants. Per-design Review
+judges one `DESIGN.md`, preview, and selected handoff. The periodic System
+audit separately reads accumulated current truth, source/license proof,
+handoff optionality, run evidence, failure/recovery relations, stale routes,
+and unavailable evidence.
+
+The ADS-local audit returns exactly `PASS`, `FAIL`, or `BLOCKED` with scope,
+evidence, gaps, and the smallest next action. Missing required evidence is
+`BLOCKED`. It never repairs, exports, promotes, creates a run or issue, or
+depends on AIOS. Findings return to ADS Build/Review, or to AIOS improvement
+triage only when the work originated there.
 
 ## Promotion boundary
 

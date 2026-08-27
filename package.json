@@ -12,6 +12,9 @@
     "format": "prettier --write \"**/*.{md,html,json,mjs,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{md,html,json,mjs,yml,yaml}\"",
     "handoff": "node workspace/engine/create-handoff.mjs",
+    "trace:handoff": "node workspace/engine/handoff_tracer.mjs",
+    "trace:audit": "python3 workspace/engine/audit_tracer.py",
+    "audit": "python3 workspace/engine/audit_design_system.py",
     "preview": "node workspace/engine/serve.mjs",
     "trace": "python3 workspace/engine/tracer.py"
   },

@@ -89,6 +89,19 @@ one primary action: `Resume active route`. The gallery, source decision, and
 proof relation remain visible below it. A quiet state lab makes loading,
 success, error, empty, permission, and offline behavior inspectable.
 
+## Source decisions
+
+- **source:heroui-ui-library** — Use HeroUI only as the researched interaction
+  source behind the original disclosure adapter in the named Resources
+  example. Reject its React package and visual language for this static route.
+- **source:desengs-inspiration** — Learn from concise editorial grouping, while
+  keeping this route-spine composition, copy, code, and assets original. Reject
+  DesEngs as an adapter or visual template.
+- **source:openpencil-optional-adapter** — For this explicitly selected
+  creative handoff, carry one editable OpenPencil source and its reviewed PNG.
+  The semantic direction remains this file and ordinary HTML/tokens handoffs
+  remain complete when the tool is unavailable or unselected.
+
 ## Colors
 
 Warm paper is the page field; white paper marks durable evidence surfaces.

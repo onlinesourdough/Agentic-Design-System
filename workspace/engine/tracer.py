@@ -40,6 +40,7 @@ class TraceResult:
     recovery_path: Optional[Path]
     preview_status: str
     review_status: str
+    source_decision: Optional[List[Dict[str, str]]]
 
 
 def repository_root() -> Path:
@@ -111,6 +112,75 @@ def _review_check(path: Path) -> Tuple[str, List[str]]:
     text = path.read_text(encoding="utf-8").lower()
     generic = [phrase for phrase in ("lorem ipsum", "john doe", "acme corp") if phrase in text]
     return ("REVISE", generic) if generic else ("PASS", [])
+
+
+def _source_decision_check(root: Path) -> List[Dict[str, str]]:
+    """Resolve the canonical source audit into the active semantic direction."""
+
+    audit_path = root / "docs" / "SOURCE_AUDIT.md"
+    design_path = root / "workspace" / "DESIGN.md"
+    if not audit_path.is_file() or not design_path.is_file():
+        raise TraceError(
+            "source decision requires docs/SOURCE_AUDIT.md and workspace/DESIGN.md"
+        )
+    text = audit_path.read_text(encoding="utf-8")
+    marker = "## Current design/source trace"
+    if marker not in text:
+        raise TraceError("SOURCE_AUDIT lacks the current design/source trace")
+    body = text.split(marker, 1)[1]
+    if "\n## " in body:
+        body = body.split("\n## ", 1)[0]
+    required = (
+        "Role",
+        "Revision/version",
+        "License/reuse boundary",
+        "Maintenance/availability",
+        "Framework/accessibility fit",
+        "Visual reason",
+        "Learned versus copied",
+        "Active use or rejection",
+        "DESIGN marker",
+    )
+    sources: List[Dict[str, str]] = []
+    findings: List[str] = []
+    for section in re.split(r"(?m)^### ", body)[1:]:
+        lines = section.strip().splitlines()
+        source: Dict[str, str] = {"Source": lines[0].strip()}
+        current_field: Optional[str] = None
+        for line in lines[1:]:
+            match = re.match(r"^- \*\*(.+?):\*\*\s+(.+)$", line)
+            if match:
+                current_field = match.group(1)
+                source[current_field] = match.group(2).strip()
+            elif current_field and line.startswith("  "):
+                source[current_field] += " " + line.strip()
+        missing = [field for field in required if not source.get(field)]
+        if missing:
+            findings.append(
+                f"{source['Source']} lacks {', '.join(missing)}"
+            )
+        sources.append(source)
+    expected_roles = {
+        "UI/library source",
+        "inspiration/reference source",
+        "optional tool adapter",
+    }
+    actual_roles = {source.get("Role") for source in sources}
+    if len(sources) < 3 or not expected_roles.issubset(actual_roles):
+        findings.append(
+            "source decision must include UI/library, inspiration/reference, "
+            "and optional tool adapter roles"
+        )
+    design = design_path.read_text(encoding="utf-8")
+    for source in sources:
+        design_marker = source.get("DESIGN marker", "").strip("§")
+        if design_marker and design_marker not in design:
+            findings.append(
+                f"workspace/DESIGN.md does not resolve marker {design_marker}"
+            )
+    if findings:
+        raise TraceError("source decision failed: " + "; ".join(findings))
+    return sources
 
 
 def _generated_preview(slug: str) -> str:
@@ -200,6 +270,7 @@ def trace_once(
     recover: bool = False,
     preview: bool = False,
     review: bool = False,
+    source_decision: bool = False,
     timestamp: str = DEFAULT_TIMESTAMP,
 ) -> TraceResult:
     """Perform one deterministic route and preserve its evidence."""
@@ -214,6 +285,7 @@ def trace_once(
         review = True
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", timestamp):
         raise TraceError("timestamp must use UTC form YYYY-MM-DDTHH:MM:SSZ")
+    source_records = _source_decision_check(root) if source_decision else None
 
     ledger_path = root / "workspace" / "history" / "runs.jsonl"
     records = _read_ledger(ledger_path)
@@ -341,6 +413,10 @@ def trace_once(
                 "recovery evidence points to the failed predecessor",
             ]
 
+    if source_records:
+        assertions.append(
+            "the source decision resolved three materially different roles"
+        )
     _write_json(output_path, output)
     _write_json(
         proof_path,
@@ -358,6 +434,7 @@ def trace_once(
             "review": review_status,
             "run_id": run_id,
             "status": status,
+            "source_decision": source_records,
         },
     )
     _append_ledger(
@@ -415,6 +492,7 @@ def trace_once(
         recovery_path=recovery_path,
         preview_status=preview_status,
         review_status=review_status,
+        source_decision=source_records,
     )
 
 
@@ -427,6 +505,11 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--recover", action="store_true", help="recover the latest failed route for this slug")
     parser.add_argument("--preview", action="store_true", help="check the local workspace preview")
     parser.add_argument("--review", action="store_true", help="run the dependency-light review fixture")
+    parser.add_argument(
+        "--source-decision",
+        action="store_true",
+        help="trace audited source roles into the active DESIGN.md",
+    )
     parser.add_argument("--timestamp", default=DEFAULT_TIMESTAMP, help="UTC timestamp for deterministic evidence")
     return parser
 
@@ -442,6 +525,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             recover=args.recover,
             preview=args.preview,
             review=args.review,
+            source_decision=args.source_decision,
             timestamp=args.timestamp,
         )
     except TraceError as exc:
@@ -456,6 +540,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     print(f"status: {result.status}")
     print(f"preview: {result.preview_status}")
     print(f"review: {result.review_status}")
+    print(
+        f"source_decision: passed ({len(result.source_decision)} roles)"
+        if result.source_decision
+        else "source_decision: not-requested"
+    )
     print(f"output: {_relative(result.output_path, root)}")
     print(f"proof: {_relative(result.proof_path, root)}")
     print(f"ledger: {_relative(result.ledger_path, root)}")
