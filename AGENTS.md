@@ -23,7 +23,8 @@ can build from.
 The only visible functional roots are `workspace/`, `examples/`, and `docs/`.
 The root shell is this file, `README.md`, the primary System skill at
 `.agents/skills/agentic-design-system/SKILL.md`, and the package manifest used
-by the local toolchain.
+by the local toolchain. The [local skill index](.agents/skills/README.md)
+documents ADS-owned routes and the boundary with externally installed skills.
 
 ## Primary route
 

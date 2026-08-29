@@ -1,5 +1,13 @@
 import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
-import { basename, dirname, extname, join, relative, resolve } from "node:path";
+import {
+  basename,
+  dirname,
+  extname,
+  join,
+  relative,
+  resolve,
+  sep,
+} from "node:path";
 import { spawnSync } from "node:child_process";
 
 const root = resolve(
@@ -39,6 +47,7 @@ const textExtensions = new Set([
 const requiredPaths = [
   "AGENTS.md",
   "README.md",
+  ".agents/skills/README.md",
   ".agents/skills/agentic-design-system/SKILL.md",
   ".agents/skills/design-solution/SKILL.md",
   ".agents/skills/review-design/SKILL.md",
@@ -86,6 +95,141 @@ function read(path) {
     fail(`cannot read ${rel(path)}: ${error.message}`);
     return "";
   }
+}
+
+function readSkillName(path) {
+  const lines = read(path).split(/\r?\n/);
+  if (lines[0] !== "---") {
+    fail(`${rel(path)} has malformed frontmatter`);
+    return null;
+  }
+  const closing = lines.indexOf("---", 1);
+  if (closing === -1) {
+    fail(`${rel(path)} has malformed frontmatter`);
+    return null;
+  }
+  const names = lines
+    .slice(1, closing)
+    .map((line) => line.match(/^name:\s*(.*?)\s*$/))
+    .filter(Boolean)
+    .map((match) => match[1]);
+  if (names.length !== 1) {
+    fail(`${rel(path)} must have exactly one frontmatter name`);
+    return null;
+  }
+  const quoted = names[0].match(/^(?:"([^"]+)"|'([^']+)')$/);
+  const name = quoted ? (quoted[1] ?? quoted[2]) : names[0];
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) {
+    fail(`${rel(path)} has an invalid frontmatter name`);
+    return null;
+  }
+  return name;
+}
+
+function checkSkills() {
+  const shelf = join(root, ".agents/skills");
+  if (!existsSync(shelf)) {
+    fail("local skill shelf is missing: .agents/skills/");
+    return [];
+  }
+  const shelfStat = lstatSync(shelf);
+  if (shelfStat.isSymbolicLink() || !shelfStat.isDirectory()) {
+    fail("local skill shelf must be a regular directory");
+    return [];
+  }
+
+  const directSkills = [];
+  const inspect = (directory) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      const pathRel = relative(shelf, path);
+      if (entry.isSymbolicLink()) {
+        fail(`skill tree contains a symlink: .agents/skills/${pathRel}`);
+        continue;
+      }
+      if (entry.isDirectory()) {
+        inspect(path);
+      } else if (entry.isFile() && entry.name === "SKILL.md") {
+        if (pathRel.split(sep).length !== 2)
+          fail(`nested SKILL.md is not allowed: .agents/skills/${pathRel}`);
+      }
+    }
+  };
+
+  for (const entry of readdirSync(shelf, { withFileTypes: true })) {
+    const path = join(shelf, entry.name);
+    if (entry.isSymbolicLink()) {
+      fail(`skill tree contains a symlink: .agents/skills/${entry.name}`);
+    } else if (entry.isDirectory()) {
+      directSkills.push(entry.name);
+    } else if (!(entry.isFile() && entry.name === "README.md")) {
+      fail(`unexpected skill shelf file: .agents/skills/${entry.name}`);
+    }
+  }
+  inspect(shelf);
+  directSkills.sort();
+
+  for (const skill of directSkills) {
+    const path = join(shelf, skill, "SKILL.md");
+    if (!existsSync(path)) {
+      fail(`direct skill folder lacks SKILL.md: .agents/skills/${skill}/`);
+      continue;
+    }
+    const stat = lstatSync(path);
+    if (stat.isSymbolicLink() || !stat.isFile()) {
+      fail(`direct skill payload is not a regular file: ${rel(path)}`);
+      continue;
+    }
+    const declaredName = readSkillName(path);
+    if (declaredName !== null && declaredName !== skill)
+      fail(
+        `${rel(path)} frontmatter name ${declaredName} does not match folder ${skill}`,
+      );
+  }
+
+  const indexPath = join(shelf, "README.md");
+  if (!existsSync(indexPath)) {
+    fail("local skill index is missing: .agents/skills/README.md");
+    return directSkills;
+  }
+  const indexStat = lstatSync(indexPath);
+  if (indexStat.isSymbolicLink() || !indexStat.isFile()) {
+    fail("local skill index must be a regular file: .agents/skills/README.md");
+    return directSkills;
+  }
+
+  const documented = new Map();
+  for (const match of read(indexPath).matchAll(/\[[^\]]*\]\(([^)\s]+)\)/g)) {
+    const target = match[1].split(/[?#]/, 1)[0];
+    if (/^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
+    const absolute = resolve(dirname(indexPath), target);
+    const targetRel = relative(shelf, absolute);
+    if (
+      targetRel.startsWith("..") ||
+      targetRel === "" ||
+      basename(absolute) !== "SKILL.md"
+    )
+      continue;
+    documented.set(targetRel, (documented.get(targetRel) ?? 0) + 1);
+  }
+
+  const expected = new Set(
+    directSkills.map((skill) => join(skill, "SKILL.md")),
+  );
+  for (const path of expected) {
+    const count = documented.get(path) ?? 0;
+    if (count !== 1)
+      fail(
+        `.agents/skills/README.md must document ${path.split(sep).join("/")} exactly once`,
+      );
+  }
+  for (const path of documented.keys()) {
+    if (!expected.has(path))
+      fail(
+        `.agents/skills/README.md lists unknown skill ${path.split(sep).join("/")}`,
+      );
+  }
+  return directSkills;
 }
 
 function walk(directory, { includeReferences = false } = {}) {
@@ -393,11 +537,15 @@ function checkPublicText() {
   }
 }
 
-checkShell();
-checkWorkspace();
-checkExamples();
-checkLedger();
-checkPublicText();
+const skillsOnly = process.argv.includes("--skills-only");
+const skills = checkSkills();
+if (!skillsOnly) {
+  checkShell();
+  checkWorkspace();
+  checkExamples();
+  checkLedger();
+  checkPublicText();
+}
 
 if (failures.length) {
   process.stderr.write(
@@ -410,11 +558,20 @@ if (failures.length) {
       {
         success: true,
         root,
-        visibleRoots: ["workspace/", "examples/", "docs/"],
-        examples: readdirSync(join(root, "examples"), { withFileTypes: true })
-          .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
-          .map((entry) => entry.name)
-          .sort(),
+        skills,
+        ...(skillsOnly
+          ? {}
+          : {
+              visibleRoots: ["workspace/", "examples/", "docs/"],
+              examples: readdirSync(join(root, "examples"), {
+                withFileTypes: true,
+              })
+                .filter(
+                  (entry) => entry.isDirectory() && !entry.name.startsWith("."),
+                )
+                .map((entry) => entry.name)
+                .sort(),
+            }),
       },
       null,
       2,

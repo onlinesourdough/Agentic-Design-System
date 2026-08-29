@@ -36,7 +36,8 @@ npm run preview -- workspace
 npm run preview -- examples/onlinesourdough-resources
 ```
 
-The primary agent entry is
+The [local skill index](.agents/skills/README.md) is the ownership map for
+ADS-specific, repeatable methods. The primary agent entry is
 [`agentic-design-system`](.agents/skills/agentic-design-system/SKILL.md). It
 inspects prior runs, works in `workspace/`, and routes the internal
 [`design-solution`](.agents/skills/design-solution/SKILL.md) and
@@ -44,7 +45,9 @@ inspects prior runs, works in `workspace/`, and routes the internal
 remain separate so a design can be authored and reviewed without duplicating
 the System route. The ADS-local
 [`audit-design-system`](.agents/skills/audit-design-system/SKILL.md) method
-checks accumulated drift without repairing or creating anything.
+checks accumulated drift without repairing or creating anything. Global and
+cross-project skills are installed by the calling plugin or harness and do not
+become ADS-owned files.
 
 ## Verify a route
 
