@@ -5,6 +5,13 @@ the warm Online Sourdough material language, local Geist fonts, supplied
 pixel-folder cue, and active v2 computer scene inside a quiet documentation-like
 shell.
 
+`DESIGN.md` is the canonical portable visual direction. The HTML preview,
+fonts, imagery, motion preview, adapter, tokens, exports, and any editable
+source are optional referenced companions. A cross-owner delivery adds the
+versioned `HANDOFF.md` binder and remains pending until explicitly accepted;
+the receiving Project owns implementation, while ACS owns editorial/content
+production and edit/render/package/publish execution when selected.
+
 The sidebar has four static group headings—Explore, Business Freedom Ecosystem,
 Open Source, and In Practice—with only their listed children navigable. Explore
 contains a quiet keyboard-accessible AI Literacy disclosure before Newsletter;

@@ -2,14 +2,16 @@
 
 # Agentic Design System
 
-Agentic Design System (ADS) is a standalone design System for turning resolved
-intent into an inspectable, reviewable design direction and a durable example.
-It is a repeatable work surface, not a project template or a library that a
-receiving product installs.
+Agentic Design System (ADS) turns resolved intent into an approved, portable
+visual design direction whose required artifact is `DESIGN.md`, with optional
+assets and tool-native sources bound by a reviewed cross-owner handoff. It
+serves websites, applications, dashboards, reports, slides, marketing/content
+surfaces, and other visual outcomes. It is a repeatable standalone work surface,
+not a project template, receiving implementation, or installed runtime library.
 
 ```text
-prior runs → workspace brief/design → preview → review → evidence → curated gallery
-                                      ↘ optional native handoff
+prior runs → brief → canonical DESIGN.md → preview → review → evidence → gallery
+                                      ↘ cross-owner HANDOFF.md + optional companions
 accumulated truth ─────────────────────→ read-only periodic audit
 ```
 
@@ -73,13 +75,28 @@ for the clean-clone recipe.
 
 ## Portable and optional native handoff
 
-Every reviewed route can return semantic `DESIGN.md`, HTML/assets, and token
-exports without OpenPencil. A creative route adds `.op` and reviewed PNG/SVG
-files only when explicitly selected. The generated `HANDOFF.md` binds the
-receiving owner, upstream version/revision, source/export paths and SHA-256
-hashes, provenance, review, and limitations. The tool-unavailable route is
-visible and falls back to the ordinary handoff without changing its source.
-Every handoff command requires a non-empty explicit `--receiving-owner`.
+`DESIGN.md` is always the canonical portable, human-readable source of visual
+truth. HTML previews, tokens, assets, exports, and editable sources are optional
+referenced companions and never replace it. When delivery crosses an owner
+boundary, generated `HANDOFF.md` uses the versioned
+[`ADS-HANDOFF/1` Markdown contract](docs/HANDOFF_TEMPLATE.md): stable
+identity/revision, receiving owner/outcome, source revision, included relative
+paths and SHA-256 values, provenance/licensing, review, limitations, and
+explicit acceptance. Accepted snapshots are immutable; later ADS revisions
+require a new handoff and re-acceptance rather than live synchronization.
+
+A minimal handoff copies only `BRIEF.md`, canonical `DESIGN.md`, and PASS
+`REVIEW.md` or `proof.json` evidence, then generates `HANDOFF.md`. Add
+`--preview`, repeatable `--asset <assets/path>`, or repeatable
+`--export <css|tokens|tailwind>` only when that companion is selected for the
+receiving outcome. Export tooling is not needed when no export is selected.
+
+A creative route adds `.op` and reviewed PNG/SVG files only when explicitly
+selected. Tool unavailability is visible and falls back to the required
+portable handoff plus any independently selected companions without changing
+its source. Every handoff command requires a non-empty explicit
+`--receiving-owner`; receiving outcome and rights data come from the reviewed
+human-readable `BRIEF.md`, not a cross-System schema.
 
 Run the native success/fallback tracer with a temporary verified v0.8.4 CLI:
 
@@ -122,6 +139,15 @@ external UI library becomes the ADS default. Preserved historical references
 are under [`docs/references/preserved`](docs/references/preserved/), clearly
 separate from the active gallery.
 
+ADS owns visual direction, visual hierarchy, brand/style/voice expression,
+composition, typography, color, imagery, interaction/motion direction, and
+selected reusable visual assets. The receiving Project owns implementation
+after acceptance. ACS owns editorial/content production, edit/render execution,
+packaging, and publication. Either sibling may be entered first or run alone;
+crossing the boundary returns a bounded sibling-route suggestion to the current
+caller and never auto-runs a deterministic ADS-to-ACS chain.
+
 ADS can be used entirely on its own. Another System may pass ordinary resolved
-context and read the returned path and proof, but no AIOS or APT package,
-service, database, or shared data contract is needed to run this repository.
+context and read returned paths and proof, but no AIOS, APT, ACS, service,
+database, runtime protocol, registry, shared state, or synchronized contract is
+needed to run this repository.

@@ -34,6 +34,7 @@ REPOSITORY_EVIDENCE = (
     ".agents/skills/review-design/SKILL.md",
     ".agents/skills/audit-design-system/SKILL.md",
     "docs/SOURCE_AUDIT.md",
+    "docs/HANDOFF_TEMPLATE.md",
     "docs/contract.md",
     "docs/validation.md",
     "workspace/BRIEF.md",
@@ -224,6 +225,22 @@ def _repository_audit(
 
     source_text = (root / "docs/SOURCE_AUDIT.md").read_text(encoding="utf-8")
     design_text = (root / "workspace/DESIGN.md").read_text(encoding="utf-8")
+    brief_text = (root / "workspace/BRIEF.md").read_text(encoding="utf-8")
+    for marker in (
+        "This `DESIGN.md` is the canonical",
+        "## Portable direction and ownership",
+        "**Known limitations:**",
+    ):
+        if marker not in design_text:
+            findings.append(f"active DESIGN.md lacks portable contract marker {marker}")
+    for marker in (
+        "**Receiving outcome:**",
+        "**Source/reference rights, provenance, and licensing:**",
+        "**Ownership boundary:**",
+        "**Review and acceptance owner:**",
+    ):
+        if marker not in brief_text:
+            findings.append(f"active BRIEF.md lacks capability boundary {marker}")
     sources, source_findings = _parse_source_trace(source_text)
     findings.extend(source_findings)
     for source in sources:
@@ -253,11 +270,42 @@ def _repository_audit(
         'status: "not-requested"',
         'status: "fallback"',
         'status: "included"',
+        'contract: "ADS-HANDOFF/1"',
         "DESIGN.md",
+        "artifactManifest",
+        "receivingOutcome",
+        "Acceptance state: PENDING",
+        "Accepted handoff snapshots are immutable",
         "receivingOwner",
     ):
         if marker not in handoff:
             findings.append(f"handoff route lacks optionality marker {marker}")
+
+    template = (root / "docs/HANDOFF_TEMPLATE.md").read_text(encoding="utf-8")
+    for marker in (
+        "ADS-HANDOFF/1",
+        "Handoff ID:",
+        "Receiving outcome:",
+        "Included snapshot and integrity",
+        "Provenance and licensing",
+        "Acceptance state:",
+    ):
+        if marker not in template:
+            findings.append(f"handoff template lacks contract marker {marker}")
+
+    public_contract = "\n".join(
+        (root / path).read_text(encoding="utf-8")
+        for path in ("AGENTS.md", "README.md", "docs/contract.md")
+    )
+    for marker in (
+        "ADS owns visual direction",
+        "ACS owns editorial/content production",
+        "Either ADS",
+        "never auto-run",
+        "ADS-to-ACS",
+    ):
+        if marker not in public_contract:
+            findings.append(f"public capability boundary lacks {marker}")
 
     if openpencil_selected and (
         op_source.suffix != ".op" or op_export.suffix not in {".png", ".svg"}
@@ -269,7 +317,9 @@ def _repository_audit(
             [
                 "deterministic checks, per-design Review, and periodic audit are distinct",
                 f"source decision resolves {len(sources)} source roles into workspace/DESIGN.md",
-                "ordinary handoff and explicit OpenPencil include/fallback routes are discoverable",
+                "DESIGN.md is canonical and the versioned cross-owner handoff is discoverable",
+                "minimal handoff and explicit optional-companion/OpenPencil routes are discoverable",
+                "ADS/ACS ownership and suggestion-only sibling routing are explicit",
             ]
         )
         if openpencil_selected:
@@ -281,7 +331,7 @@ def _repository_audit(
             )
         else:
             evidence.append(
-                "OpenPencil is not selected; the ordinary handoff remains sufficient"
+                "OpenPencil is not selected; the minimal portable handoff remains sufficient"
             )
     return evidence
 

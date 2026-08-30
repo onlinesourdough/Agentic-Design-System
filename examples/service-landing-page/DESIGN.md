@@ -85,6 +85,23 @@ action feel practical rather than technological. The signature moment is the
 annotated operating map beside the hero. Avoid generic feature cards, fake
 logos, stock team photos, and claims without evidence.
 
+## Portable direction and ownership
+
+This `DESIGN.md` is the canonical, portable visual direction for the fictional
+Plainwork Studio landing page. Its preview, exported tokens, and any future
+assets are optional companions; none replaces this human-readable file.
+
+- **Scope and non-goals:** ADS owns visual direction, visual voice, brand
+  expression, composition, and interaction direction. The receiving Project
+  owns implementation, while the offer owner owns editorial claims and
+  publication; this direction does not supply testimonials or operating code.
+- **Review, revision, and acceptance:** Revision `alpha` has ADS Review `PASS`.
+  A cross-owner copy remains pending until the implementation owner explicitly
+  accepts its `HANDOFF.md`; later revisions require a new snapshot.
+- **Known limitations:** The company, offer, and booking flow are fictional.
+  The preview proves responsive and state direction, not a connected booking
+  service, conversion claim, or production accessibility audit.
+
 ## Colors
 
 Cream carries the page, paper-white lifts working artifacts, green marks

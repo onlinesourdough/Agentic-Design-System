@@ -219,7 +219,7 @@ def _ensure_promoted_example(root: Path, slug: str, run_id: str, proof_ref: str)
         (directory / "README.md").write_text(
             f"# Curated {slug} proof\n\n"
             f"This standalone example was deliberately promoted by ADS run `{run_id}`.\n\n"
-            "It carries its brief, design direction, local preview, and proof without importing ADS.\n",
+            "Its canonical portable `DESIGN.md`, brief, local preview, and proof remain usable without importing ADS. Optional companions never replace the direction.\n",
             encoding="utf-8",
         )
     else:
@@ -395,6 +395,7 @@ def trace_once(
             "the primary skill inspected relevant prior runs",
             "the route recorded preview and review status",
             "output and proof were written under workspace/runs",
+            "the standalone route required no AIOS or sibling System runtime",
         ]
         if recover:
             recovery_path = run_dir / "recovery.json"

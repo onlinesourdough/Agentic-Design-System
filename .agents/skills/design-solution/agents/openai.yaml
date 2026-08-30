@@ -1,4 +1,4 @@
 interface:
   display_name: "Design solution"
-  short_description: "Turn a brief into a reviewed design handoff"
-  default_prompt: "Use $design-solution to turn this brief into a DESIGN.md, browser preview, and handoff."
+  short_description: "Author a portable visual direction"
+  default_prompt: "Use $design-solution to turn this brief into a canonical portable DESIGN.md, selected preview companions, and a reviewed handoff when ownership crosses."

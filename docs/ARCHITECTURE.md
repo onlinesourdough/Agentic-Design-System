@@ -1,8 +1,9 @@
 # ADS architecture
 
-Agentic Design System is a persistent System for repeated design work. Its
-shape is intentionally filesystem-first so a clean checkout is inspectable by
-a person or an agent without a service.
+Agentic Design System is a persistent System for producing approved, portable
+visual directions across websites, applications, dashboards, reports, slides,
+and content surfaces. Its shape is intentionally filesystem-first so a clean
+checkout and its canonical `DESIGN.md` are inspectable without a service.
 
 ```text
 root shell
@@ -14,7 +15,7 @@ root shell
 │   ├── review-design/                internal per-design review method
 │   └── audit-design-system/          internal periodic read-only audit
 ├── workspace/
-│   ├── BRIEF.md, DESIGN.md, index.html active work and preview
+│   ├── BRIEF.md, DESIGN.md, index.html active input, canonical direction, preview
 │   ├── state/                         current resume pointer
 │   ├── runs/                          route evidence
 │   ├── history/runs.jsonl             append-only relations
@@ -46,11 +47,24 @@ maintenance signal, and visual value justify it. The adapter is implemented in
 the receiving preview or curated example; a source repository is never copied
 into ADS as a universal catalog.
 
-`DESIGN.md` stays the semantic and portable design owner.
+`DESIGN.md` stays the canonical semantic and portable design owner for every
+work surface. Optional assets, previews, tokens, exports, and tool-native
+sources stay referenced companions.
 `docs/SOURCE_AUDIT.md` owns upstream fit and reuse decisions. An explicitly
 selected OpenPencil `.op` file is editable tool-native source; its reviewed
 PNG/SVG is an export boundary, and generated `HANDOFF.md` binds both to a
-receiving owner. None of those roles introduces a shared cross-System model.
+receiving owner. For every cross-owner delivery, the same binder also records
+identity/revision, receiving outcome, all included paths/hashes,
+provenance/licensing, review, limitations, and explicit acceptance. None of
+those roles introduces a shared cross-System model.
+
+ADS owns visual direction, visual hierarchy, brand/style/voice expression,
+composition, typography, color, imagery, interaction/motion direction, and
+selected reusable visual assets. A receiving Project owns implementation after
+acceptance; ACS owns editorial/content production, edit/render execution,
+packaging, and publication. Either sibling may be entered first. A boundary
+crossing returns a bounded route suggestion to the caller and never creates an
+automatic or deterministic ADS-to-ACS edge.
 
 The technical lifecycle has three distinct readers:
 

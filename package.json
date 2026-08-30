@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "A standalone Agentic Design System for inspectable, reviewed design work.",
+  "description": "A standalone Agentic Design System for approved, portable visual directions led by DESIGN.md.",
   "repository": "github:onlinesourdough/Agentic-Design-System",
   "type": "module",
   "scripts": {

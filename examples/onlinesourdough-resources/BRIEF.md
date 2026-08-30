@@ -9,6 +9,9 @@
   same practical decisions about ownership and responsibility.
 - **Desired action:** Start with `Start Here`, understand the Business Freedom
   Ecosystem method, then open the smallest useful child resource or toolkit.
+- **Receiving outcome:** Implement the accepted Resources visual direction,
+  shell, responsive states, and selected reusable assets in the receiving
+  product without depending on ADS or its creative tools at runtime.
 - **Business vocabulary:** The umbrella method is **Business Freedom
   Ecosystem**. AI, agents, and software are the primary solution mechanism;
   **AI Workspace** is the configured technical base inside it; and **AIOS
@@ -102,6 +105,17 @@ Ecosystem`, `Open Source`, and `In Practice`, in that order. Each folder is a
   URLs, published inventory, commercial proof, secrets, runtime logic,
   integrations, deployments, or application implementation for the receiving
   Resources project.
+- **Source/reference rights, provenance, and licensing:** ADS owns the direction
+  and generated visual assets; the user-owned carried folder asset and local
+  Geist fonts retain the provenance and licenses documented in
+  `assets/README.md`, `assets/fonts/LICENSE.txt`, `docs/preservation.md`, and
+  `docs/THIRD_PARTY.md`. HeroUI informed an original local state adaptation;
+  no component source or ACS production truth was copied.
+- **Ownership boundary:** ADS owns visual direction, brand/style/voice
+  expression, graphic composition, motion language, and reusable design
+  assets. The receiving Resources Project owns implementation. If ACS receives
+  a selected visual snapshot, ACS owns editorial content, edit/render
+  execution, packaging, and publication; ADS does not perform those steps.
 - **Proof:** At roughly 1440×1000 and 390×844, a first-time visitor can see the
   four folders, identify the method and technical vocabulary, open Start Here,
   open the verified external links, use the video, search, collapse/reopen the
@@ -111,3 +125,6 @@ Ecosystem`, `Open Source`, and `In Practice`, in that order. Each folder is a
 - **Receiving project or repository:** The project selected to implement the
   accepted design; this example remains a portable design workbench artifact
   until accepted.
+- **Review and acceptance owner:** ADS Review approves this direction and its
+  optional native-source boundary; the named receiving owner explicitly
+  accepts any cross-owner `HANDOFF.md` snapshot.

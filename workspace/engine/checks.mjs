@@ -72,6 +72,7 @@ const requiredPaths = [
   "examples/index.html",
   "examples/README.md",
   "docs/contract.md",
+  "docs/HANDOFF_TEMPLATE.md",
   "docs/ARCHITECTURE.md",
   "docs/SOURCE_AUDIT.md",
   "docs/THIRD_PARTY.md",
@@ -302,6 +303,40 @@ function checkPreview(path) {
   }
 }
 
+function strongField(markdown, label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(
+    `^- \\*\\*${escaped}:\\*\\*\\s+\\S[\\s\\S]*?(?=\\n- \\*\\*|\\n#{1,6} |(?![\\s\\S]))`,
+    "m",
+  ).test(markdown);
+}
+
+function checkPortableWorkSurface(directory) {
+  const briefPath = join(directory, "BRIEF.md");
+  const designPath = join(directory, "DESIGN.md");
+  const brief = read(briefPath);
+  const design = read(designPath);
+  for (const field of [
+    "Receiving outcome",
+    "Source/reference rights, provenance, and licensing",
+    "Ownership boundary",
+    "Review and acceptance owner",
+  ]) {
+    if (!strongField(brief, field))
+      fail(`${rel(briefPath)} lacks inspectable ${field}`);
+  }
+  for (const marker of [
+    "## Portable direction and ownership",
+    "This `DESIGN.md` is the canonical",
+    "**Scope and non-goals:**",
+    "**Review, revision, and acceptance:**",
+    "**Known limitations:**",
+  ]) {
+    if (!design.includes(marker))
+      fail(`${rel(designPath)} lacks portable direction marker ${marker}`);
+  }
+}
+
 function checkLocalLinks(path) {
   const html = read(path);
   const attributes = [...html.matchAll(/(?:href|src)=["']([^"']+)["']/gi)];
@@ -344,6 +379,7 @@ function checkExamples() {
       if (!existsSync(join(directory, filename)))
         fail(`examples/${slug}/${filename} is missing`);
     }
+    checkPortableWorkSurface(directory);
     lintDesign(join(directory, "DESIGN.md"));
     checkPreview(join(directory, "index.html"));
     checkLocalLinks(join(directory, "index.html"));
@@ -363,6 +399,7 @@ function checkExamples() {
 }
 
 function checkWorkspace() {
+  checkPortableWorkSurface(join(root, "workspace"));
   lintDesign(join(root, "workspace/DESIGN.md"));
   checkPreview(join(root, "workspace/index.html"));
   checkLocalLinks(join(root, "workspace/index.html"));
@@ -419,8 +456,18 @@ function checkWorkspace() {
     'status: "not-requested"',
     'status: "fallback"',
     'status: "included"',
+    'contract: "ADS-HANDOFF/1"',
+    "artifactManifest",
+    "receivingOutcome",
+    "Acceptance state: PENDING",
+    "Accepted handoff snapshots are immutable",
     "openPencilReleaseRevision",
     "receivingOwner",
+    'for (const file of ["BRIEF.md", "DESIGN.md"])',
+    'argument === "--preview"',
+    '["--asset", "assets"]',
+    '["--export", "exports"]',
+    "Selected token exports require",
   ]) {
     if (!handoff.includes(marker))
       fail(`handoff generator lacks optional binding marker ${marker}`);
@@ -438,6 +485,95 @@ function checkWorkspace() {
   for (const marker of ["read-only", "PASS", "FAIL", "BLOCKED"]) {
     if (!auditSkill.includes(marker))
       fail(`audit-design-system skill lacks ${marker}`);
+  }
+}
+
+function checkCapabilityContract() {
+  const publicFiles = [
+    "AGENTS.md",
+    "README.md",
+    "docs/contract.md",
+    ".agents/skills/agentic-design-system/SKILL.md",
+  ];
+  for (const path of publicFiles) {
+    const text = read(join(root, path));
+    for (const marker of ["DESIGN.md", "canonical", "portable"]) {
+      if (!text.includes(marker))
+        fail(`${path} lacks public capability marker ${marker}`);
+    }
+  }
+
+  const discovery = read(
+    join(root, ".agents/skills/agentic-design-system/SKILL.md"),
+  );
+  for (const surface of [
+    "websites",
+    "applications",
+    "dashboards",
+    "reports",
+    "slides",
+    "content surfaces",
+  ]) {
+    if (!discovery.includes(surface))
+      fail(`primary skill description lacks ${surface}`);
+  }
+
+  try {
+    const packageDescription = JSON.parse(
+      read(join(root, "package.json")),
+    ).description;
+    for (const marker of ["portable", "DESIGN.md"]) {
+      if (!packageDescription?.includes(marker))
+        fail(`package description lacks ${marker}`);
+    }
+  } catch {
+    fail("package.json does not expose a readable capability description");
+  }
+
+  const ownership = [
+    read(join(root, "AGENTS.md")),
+    read(join(root, "README.md")),
+    read(join(root, "docs/contract.md")),
+  ].join("\n");
+  for (const marker of [
+    "ADS owns visual direction",
+    "ACS owns editorial/content production",
+    "Either ADS",
+    "never auto-run",
+    "ADS-to-ACS",
+  ]) {
+    if (!ownership.includes(marker))
+      fail(`public ownership boundary lacks ${marker}`);
+  }
+
+  const template = read(join(root, "docs/HANDOFF_TEMPLATE.md"));
+  for (const marker of [
+    "ADS-HANDOFF/1",
+    "Handoff ID:",
+    "Handoff revision:",
+    "Source revision:",
+    "Receiving owner:",
+    "Receiving outcome:",
+    "Acceptance state:",
+    "Included snapshot and integrity",
+    "Provenance and licensing",
+    "Known limitations",
+  ]) {
+    if (!template.includes(marker)) fail(`handoff template lacks ${marker}`);
+  }
+
+  const handoffTracer = read(join(root, "workspace/engine/handoff_tracer.mjs"));
+  for (const marker of [
+    "websiteApplication",
+    "dashboardSlide",
+    "ACS-originated brief fixture",
+    "suggestion-only",
+    "acceptedSnapshotImmutable",
+    "minimal-source",
+    "selected-companions",
+  ]) {
+    if (!handoffTracer.includes(marker))
+      fail(`handoff tracer lacks capability proof ${marker}`);
   }
 }
 
@@ -542,6 +678,7 @@ const skills = checkSkills();
 if (!skillsOnly) {
   checkShell();
   checkWorkspace();
+  checkCapabilityContract();
   checkExamples();
   checkLedger();
   checkPublicText();

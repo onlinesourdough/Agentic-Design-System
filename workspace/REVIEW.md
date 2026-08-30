@@ -2,12 +2,21 @@
 
 Review: design
 Result: PASS
-Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source]
+Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source, ownership and sibling route]
 Next: create handoff
 Findings: []
 
 Scope: the active ADS route console in `workspace/` and the curated
 `examples/onlinesourdough-resources/` direction.
+
+Contract review confirms that `DESIGN.md` is the canonical portable visual
+direction; assets, preview, token exports, and native sources are companions.
+Cross-owner generation must use `ADS-HANDOFF/1`, begin with explicit `PENDING`
+acceptance, and preserve any accepted receiving snapshot. ADS owns visual and
+expressive direction; receiving Projects own implementation, while ACS owns
+editorial/content production and edit/render/package/publish execution. Either
+sibling may enter first, and the ADS route only suggests a bounded sibling
+route when a material gap appears.
 
 The first viewport names the audience, route, current status, and one primary
 resume action. Copy is specific to ADS operational truth; route IDs and proof

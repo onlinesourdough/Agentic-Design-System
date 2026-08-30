@@ -14,6 +14,12 @@ deliberately.
 All onlinesourdough workflow text and skills in this repository are original
 adaptations written for ADS.
 
+Source material can inform a brief, but `DESIGN.md` remains the canonical
+portable visual direction. Referenced code, assets, tokens, exports, and
+tool-native files are optional companions whose rights and use/reject decisions
+must remain visible in the brief, design, source audit, and any cross-owner
+`HANDOFF.md`; none becomes a universal ADS library or duplicated ACS truth.
+
 ## AI Literacy research
 
 Reviewed on 2026-08-18 from the user-supplied AI Hero pages below. These pages

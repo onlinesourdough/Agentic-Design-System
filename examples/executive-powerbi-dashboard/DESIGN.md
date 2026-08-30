@@ -84,6 +84,24 @@ story and the account/product evidence beneath it. The signature element is a
 plain-language decision strip that combines gap, cause, and owner. Avoid a
 gallery of unrelated charts, traffic-light decoration, and context-free KPIs.
 
+## Portable direction and ownership
+
+This `DESIGN.md` is the canonical, portable visual direction for the fictional
+Common Table dashboard and its slide-ready 16:9 composition. The HTML preview,
+token exports, and any report assets are optional companions and never replace
+this file.
+
+- **Scope and non-goals:** ADS owns report hierarchy, composition, typography,
+  color, visual voice, and reusable visual assets. The receiving analytics
+  Project owns data modeling, calculations, row-level security, refresh, report
+  implementation, and distribution after acceptance.
+- **Review, revision, and acceptance:** Revision `alpha` has ADS Review `PASS`.
+  A cross-owner dashboard or slide snapshot requires explicit acceptance in
+  `HANDOFF.md`; later directions require a new revision and re-acceptance.
+- **Known limitations:** The business and measures are fictional. The preview
+  is neither a Power BI file nor a live or production-ready data model, and it
+  does not prove projection hardware or tenant accessibility.
+
 ## Colors
 
 Warm neutral pages reduce projection glare. Deep green structures the report,

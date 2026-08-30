@@ -15,10 +15,12 @@ npm test
 
 `npm run check` verifies the three visible roots, required shell and workspace
 paths, gallery entries, Design.md lint, local preview accessibility markers,
-stale identity/path/link fragments, source/handoff/audit discovery, and
-secret-safe public text. `npm test` exercises source decisions, ordinary and
-optional handoffs, audit outcomes/read-only behavior, ledger
-predecessor/recovery rules, and repeatability in temporary roots.
+stale identity/path/link fragments, canonical DESIGN.md/brief semantics,
+versioned handoff/ownership discovery, source/audit discovery, and secret-safe
+public text. `npm test` exercises source decisions, genuinely minimal and
+explicit optional-companion handoffs, accepted-snapshot immutability, audit
+outcomes/read-only behavior, ledger predecessor/recovery rules, and
+repeatability in temporary roots.
 
 ## Full standalone route
 
@@ -77,10 +79,37 @@ npm run handoff -- workspace workspace/handoff \
 `--receiving-owner` is explicit and required; an absent or blank owner fails
 before any existing output is removed.
 
-The output must contain `DESIGN.md`, `index.html`, local assets, `theme.css`,
-`tokens.json`, `tailwind.theme.json`, and `HANDOFF.md`. The receiving project
-becomes canonical for its copied implementation; ADS remains the owner of its
-curated example and evidence.
+The minimal output contains only `BRIEF.md`, canonical `DESIGN.md`, copied PASS
+`REVIEW.md` or `proof.json` evidence, and generated `HANDOFF.md`. It needs no
+preview, asset directory, token export, OpenPencil artifact, or installed token
+export tool. The binder follows [`ADS-HANDOFF/1`](HANDOFF_TEMPLATE.md) and
+records identity/revision, receiving owner/outcome, source revision, every
+included relative path and SHA-256, provenance/licensing, review, limitations,
+and explicit acceptance. The receiving project becomes canonical for its
+accepted implementation copy; ADS retains its design direction and evidence.
+
+Add only the companions deliberately selected for the receiving outcome:
+
+```sh
+npm run handoff -- workspace workspace/handoff \
+  --receiving-owner "Agentic Design System" \
+  --preview \
+  --export tokens \
+  --export tailwind
+```
+
+`--preview` selects source `index.html`. Repeatable `--asset` accepts one
+source-relative file beneath `assets/` (for example,
+`--asset assets/approved-mark.svg`); it never copies the directory implicitly.
+Repeatable `--export` accepts `css`, `tokens`, or `tailwind` and invokes the
+pinned Design.md tool only for those selected formats. Missing or invalid
+selected companions fail before an existing pending output is replaced.
+
+Generation starts `PENDING`. Copying is not acceptance. Once the receiving
+owner records `Acceptance state: ACCEPTED`, rerunning the generator against that
+output must fail without changing it. A later ADS revision uses a different
+output/revision and receives separate acceptance; no live synchronization
+exists.
 
 For an explicitly selected OpenPencil route, use the temporary verified CLI
 path and bind all native facts:
@@ -115,7 +144,23 @@ npm run trace:handoff -- --openpencil-tool <verified-op-path>
 ```
 
 The fallback exits successfully, emits the exact unavailable-tool reason,
-copies no native artifact, and still produces the complete ordinary handoff.
+copies no native artifact, and still produces the required portable handoff
+plus only any independently selected companions.
+
+The same existing tracer also proves the public capability boundary in its
+temporary root:
+
+- a website/application handoff from the service example;
+- a dashboard/report or slide-ready handoff from the executive example;
+- an ACS-originated thumbnail/motion-direction brief returned as an accepted
+  ADS design snapshot without an ADS runtime dependency;
+- a material editorial-promise gap returned as a bounded ACS route suggestion
+  with no external invocation or recursive chain; and
+- an accepted snapshot left byte-identical while a later design revision uses
+  a new pending handoff.
+
+The ordinary Python tracer remains the standalone ADS proof and needs neither
+ACS nor AIOS.
 
 ## Periodic read-only audit
 

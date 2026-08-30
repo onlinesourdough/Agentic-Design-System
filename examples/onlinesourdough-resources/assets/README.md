@@ -13,6 +13,11 @@
 | `fonts/LICENSE.txt`                   | Preserved font license bundled with the reviewed Workbench Resources reference                                                                     | Asset provenance.                                                                              |
 
 No remote assets or external icon libraries are needed by this preview.
+These reusable visual companions remain subordinate to canonical
+`../DESIGN.md`. A cross-owner handoff records each selected relative path and
+SHA-256 plus this provenance/licensing boundary. ADS owns the visual assets
+until acceptance; a receiver owns its accepted copy and ACS, when involved,
+owns production edit/render/package/publish execution rather than ADS.
 
 ## Adapter
 

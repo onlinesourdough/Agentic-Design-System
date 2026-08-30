@@ -1,5 +1,22 @@
 # Agentic Design System contract
 
+## Public capability
+
+ADS turns resolved intent into an approved, portable visual design direction
+whose required artifact is `DESIGN.md`, with optional assets and tool-native
+sources bound by a reviewed cross-owner handoff. It can direct websites,
+applications, dashboards, reports, slides, marketing/content surfaces, and
+other visual outcomes without taking ownership of their implementation,
+content production, render, or publication.
+
+ADS accepts ordinary human-readable context: a conversation, rough visual
+request, resolved brief, existing `DESIGN.md`, reference set, content brief,
+AIOS task, Project, or another System. Before authoring, `BRIEF.md` makes the
+intended outcome and receiving owner/reuse scope, audience/job, surfaces and
+states, material brand/content/technical/accessibility/legal/delivery
+constraints, source rights/provenance, and review/acceptance owner inspectable.
+This is a semantic boundary, not an AIOS-only schema or fixed questionnaire.
+
 ## Vocabulary
 
 ADS follows the neutral Agentic System model:
@@ -20,7 +37,7 @@ Only these visible functional roots exist:
 ```text
 workspace/                         active operational truth
 ├── BRIEF.md                        resolved current input
-├── DESIGN.md                       current direction
+├── DESIGN.md                       canonical portable direction
 ├── index.html                      technical preview
 ├── openpencil/                      optional selected native source/exports
 ├── state/                          small current-state pointer
@@ -80,12 +97,57 @@ those facts into named use/reject decisions. The design/source tracer records
 that resolution as run proof; it does not create a catalogue, registry,
 `design-list.md`, or second source of truth.
 
-## Portable and optional native handoff
+## Canonical portable direction
 
-Every handoff contains semantic `DESIGN.md`, HTML/assets, token exports, and a
-`HANDOFF.md` binder. The receiving owner becomes canonical after acceptance.
-The generator requires that owner explicitly through a non-empty
-`--receiving-owner`; it never assigns one by default.
+Every successful ADS outcome includes `DESIGN.md`. It is human-readable and
+usable without ADS, OpenPencil, the original caller, or a sibling System. It
+contains only relevant sections while making intent, audience/job, scope and
+non-goals, visual principles/voice/brand expression, color, typography,
+spacing/layout/composition, imagery/iconography/illustration/assets, relevant
+motion, surface/responsive/state mappings, accessibility/content legibility,
+source use/reject decisions, limitations, revision, review, and the receiving
+acceptance boundary inspectable.
+
+Assets, token/theme files, HTML previews, PNG/SVG/PDF exports, implementation
+notes, and editable `.op` files are optional referenced companions. They never
+replace `DESIGN.md`.
+
+## Ownership and sibling routing
+
+| ADS owns                                                                                                                                                                                   | Receiving or sibling owner                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Visual direction, hierarchy, visual voice, brand/style expression, composition, typography, color, imagery, iconography, interaction/motion direction, and selected reusable visual assets | A receiving Project owns implementation after explicit acceptance                                                                       |
+| Thumbnail/social composition and motion language after a content brief supplies the editorial promise and selected source media                                                            | ACS owns editorial thesis, script, hook, caption, source-media/content choices, edit/render execution, content package, and publication |
+| Reviewed portable direction and selected assets until acceptance                                                                                                                           | The receiver owns its accepted implementation or production copy                                                                        |
+
+Visual format alone does not decide ownership. ADS may design a slide system or
+video motion language while a Project or ACS owns narrative, temporal
+execution, final render, and publication.
+
+ADS, ACS, or a receiving Project may be entered first; each may run alone. If
+ADS discovers a material sibling decision, it names the missing decision and
+returns a bounded sibling-route suggestion to the current caller/coordinator.
+It never auto-runs ACS, invents content, mutates a sibling repository, recurses,
+or creates a deterministic ADS-to-ACS chain. An accepted sibling result returns
+as ordinary referenced input, not a runtime dependency.
+
+## Cross-owner and optional native handoff
+
+Same-owner work may remain in `workspace/` or a curated example without a
+handoff binder. Every cross-owner delivery contains canonical `DESIGN.md` and
+`HANDOFF.md`, with `BRIEF.md` and PASS review evidence bound into the snapshot;
+selected HTML/assets/tokens/exports are companions. The
+human-readable [`ADS-HANDOFF/1` template](HANDOFF_TEMPLATE.md) binds stable
+identity/revision, receiving owner/outcome, source revision, included relative
+paths and SHA-256 values, provenance/licensing, review state, known limitations,
+and explicit acceptance. The generator requires a non-empty
+`--receiving-owner`; receiving outcome and source-rights facts remain in
+`BRIEF.md`, not a duplicated cross-System contract.
+
+The receiving owner becomes canonical for its implementation or production
+copy only after explicit acceptance. Generation and copying start as `PENDING`.
+An `ACCEPTED` snapshot is immutable: a later ADS revision uses a new handoff
+revision/output and separate re-acceptance. There is no live synchronization.
 An explicitly selected creative route may additionally carry one editable
 `<slug>.op` source and reviewed PNG/SVG exports. `HANDOFF.md` binds the
 OpenPencil upstream version/revision, source/export relative paths and SHA-256
@@ -94,13 +156,15 @@ hashes, provenance, review result, known limitations, and receiving owner.
 OpenPencil remains optional and replaceable. It is not an ADS dependency, a
 receiving-runtime dependency, or a shared ADS-to-receiving-System schema.
 When it is unselected or unavailable, the visible route falls back to the
-ordinary handoff without modifying source files.
+required portable handoff plus only any independently selected companions,
+without modifying source files. Preview, individual asset paths, token/theme
+exports, and OpenPencil files are never copied or generated by default.
 
 ## Deterministic check, Review, and periodic audit
 
 Deterministic checks test known repository invariants. Per-design Review
-judges one `DESIGN.md`, preview, and selected handoff. The periodic System
-audit separately reads accumulated current truth, source/license proof,
+judges one `DESIGN.md`, any selected preview or companions, and the selected
+handoff. The periodic System audit separately reads accumulated current truth, source/license proof,
 handoff optionality, run evidence, failure/recovery relations, stale routes,
 and unavailable evidence.
 
@@ -121,7 +185,8 @@ promotion remains operational evidence only.
 ## Standalone and AIOS entry/return
 
 Standalone operation uses the pinned Node tools and Python standard library.
-An AIOS-root caller may enter this checkout, provide resolved Space context as
-ordinary input, wait for the primary skill route, and read the returned example
-path and proof. ADS does not import AIOS, APT, another System, a shared
-package, a central database, or a synchronized cross-System data model.
+Any caller may enter this checkout, provide ordinary resolved context, wait for
+the primary skill route, and read returned paths and proof. ADS does not import
+or auto-run AIOS, APT, ACS, another System, a shared package, runtime protocol,
+registry, MCP, central database, shared state, or synchronized cross-System
+data model.

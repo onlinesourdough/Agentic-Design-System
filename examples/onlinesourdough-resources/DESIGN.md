@@ -278,6 +278,33 @@ are not canonical and resolve to not-found.
   shelf stays still. Drawer, search, history, video, and theme transitions are
   functional and respect reduced motion; touch remains a direct link.
 
+## Portable direction and ownership
+
+This `DESIGN.md` is the canonical, portable, human-readable visual direction
+for Resources. The preview, tokens, fonts, imagery, video, adapter, and any
+editable source are referenced companions selected by the brief; none replaces
+this file or creates a receiving runtime dependency.
+
+- **Scope and non-goals:** ADS owns visual direction, brand/style/voice
+  expression, composition, typography, color, imagery, motion language, and
+  reusable visual assets until accepted handoff. The Resources Project owns
+  implementation. ACS, when selected by the caller, owns editorial content,
+  edit/render execution, packaging, and publication; ADS does not own the final
+  VSL, thumbnail promise, or content production.
+- **Review, revision, and acceptance:** Revision `alpha` and the optional native
+  source/export boundary have ADS Review `PASS`. A named receiver must
+  explicitly accept the versioned `HANDOFF.md`; later ADS revisions require a
+  new handoff and cannot silently change an accepted receiving snapshot.
+- **Sibling boundary:** Work may start in ADS, ACS, or a receiving Project. A
+  material missing script, message, source-media selection, or content promise
+  is returned as a bounded sibling-route suggestion to the caller. ADS never
+  auto-runs ACS and consumes only the accepted content result as ordinary
+  referenced input.
+- **Known limitations:** The static preview contains draft/internal example
+  content and replaceable design-preview media, not a live Resources product,
+  final editorial package, production render, published inventory, commercial
+  proof, or synchronized implementation.
+
 ## Colors
 
 Warm cream is the page field; paper white marks reading surfaces; walnut carries

@@ -84,6 +84,24 @@ signature is a narrow dispatch rail above a work table and a dedicated blocker
 panel that keeps ownership visible. Avoid a permanent left sidebar, a wall of
 equal KPI cards, and status conveyed by color alone.
 
+## Portable direction and ownership
+
+This `DESIGN.md` is the canonical, portable visual direction for the fictional
+Harborlight dispatch workspace. The local preview, tokens, and any reusable
+assets are supporting companions and never replace this file.
+
+- **Scope and non-goals:** ADS owns visual hierarchy, style/voice expression,
+  responsive composition, interaction direction, and reusable visual assets.
+  The receiving Project owns application logic, operational data, permissions,
+  and deployment after acceptance.
+- **Review, revision, and acceptance:** Revision `alpha` has ADS Review `PASS`.
+  Cross-owner delivery requires explicit receiver acceptance of a versioned
+  `HANDOFF.md`; later ADS revisions cannot mutate the accepted implementation
+  snapshot.
+- **Known limitations:** Jobs, people, and operational states are fictional.
+  The preview does not connect scheduling, inventory, authentication, or live
+  data and is not production behavior proof.
+
 ## Colors
 
 Cool harbor neutrals reduce glare during long shifts. Deep teal owns primary

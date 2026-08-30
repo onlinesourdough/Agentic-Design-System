@@ -89,6 +89,31 @@ one primary action: `Resume active route`. The gallery, source decision, and
 proof relation remain visible below it. A quiet state lab makes loading,
 success, error, empty, permission, and offline behavior inspectable.
 
+## Portable direction and ownership
+
+This `DESIGN.md` is the canonical, portable, human-readable visual direction
+for the route console. It remains usable without ADS tooling, AIOS, the
+original caller, OpenPencil, or any sibling System. The brief, HTML preview,
+tokens, reviewed export, and editable source are supporting companions and
+never replace this file.
+
+- **Scope and non-goals:** ADS owns the console's visual hierarchy,
+  brand/style/voice expression, interaction and motion direction, and reusable
+  visual assets. This direction does not own a receiving implementation,
+  editorial/content production, production render, packaging, or publication.
+- **Review, revision, and acceptance:** Revision `alpha` has ADS Review `PASS`.
+  Cross-owner delivery requires the versioned `HANDOFF.md` snapshot and the
+  named receiver's explicit acceptance; a later revision requires a new
+  handoff and does not update an accepted receiving copy.
+- **Sibling boundary:** Either ADS or ACS may be entered first. A material
+  content-production gap is returned to the caller as a bounded ACS route
+  suggestion. ADS never invokes ACS automatically, and an accepted content
+  brief returns as ordinary referenced input rather than a runtime dependency.
+- **Known limitations:** The browser preview proves direction and interaction
+  states, not a receiving product implementation. The reviewed OpenPencil PNG
+  is optional visual evidence with documented importer approximations and does
+  not prove browser accessibility or production rendering.
+
 ## Source decisions
 
 - **source:heroui-ui-library** — Use HeroUI only as the researched interaction
@@ -99,8 +124,9 @@ success, error, empty, permission, and offline behavior inspectable.
   DesEngs as an adapter or visual template.
 - **source:openpencil-optional-adapter** — For this explicitly selected
   creative handoff, carry one editable OpenPencil source and its reviewed PNG.
-  The semantic direction remains this file and ordinary HTML/tokens handoffs
-  remain complete when the tool is unavailable or unselected.
+  The semantic direction remains this file. The required portable handoff
+  remains complete without HTML, tokens, assets, or OpenPencil when those
+  companions are unavailable or unselected.
 
 ## Colors
 

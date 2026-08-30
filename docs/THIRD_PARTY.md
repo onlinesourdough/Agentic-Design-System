@@ -21,3 +21,8 @@ The carried Resources preview includes local Geist fonts and a bundled
 `assets/fonts/LICENSE.txt`; that notice remains next to the assets. Media
 provenance and the user-owned carry proof are recorded in the example asset
 README and [`preservation.md`](preservation.md).
+
+Cross-owner `HANDOFF.md` snapshots repeat the applicable human-readable
+provenance/licensing boundary and bind every included companion with a relative
+path and SHA-256 value. That binder does not sublicense third-party material;
+the receiver must revalidate the listed rights for its accepted use.

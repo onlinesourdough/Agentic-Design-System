@@ -1,4 +1,4 @@
 interface:
   display_name: "Agentic Design System"
-  short_description: "Route design work, proof, and curated examples"
-  default_prompt: "Use $agentic-design-system to inspect prior runs, work in workspace, preview and review the design, record proof, and promote only deliberate examples."
+  short_description: "Create portable visual directions and handoffs"
+  default_prompt: "Use $agentic-design-system to inspect prior runs, make DESIGN.md the canonical portable visual direction, preview and review it, create an explicit cross-owner handoff when needed, record proof, and promote only deliberate examples."

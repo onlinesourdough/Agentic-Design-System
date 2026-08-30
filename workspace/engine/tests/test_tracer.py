@@ -68,6 +68,11 @@ class TracerTests(unittest.TestCase):
         self.assertEqual(second.action, "resume")
         self.assertEqual(second.previous_run_id, "run-0001")
         self.assertEqual(second.previous_run_relation, "predecessor")
+        proof = json.loads(first.proof_path.read_text(encoding="utf-8"))
+        self.assertIn(
+            "the standalone route required no AIOS or sibling System runtime",
+            proof["assertions"],
+        )
         gallery = (root / "examples/index.html").read_text(encoding="utf-8")
         self.assertIn("clean-clone-proof/index.html", gallery)
 

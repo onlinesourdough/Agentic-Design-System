@@ -1,6 +1,6 @@
 ---
 name: review-design
-description: Internal review method for a DESIGN.md and browser preview, covering job fit, originality, realistic content, responsive behavior, accessibility, complete states, and acceptance readiness. Use through the Agentic Design System primary route.
+description: Internal review method for a canonical portable DESIGN.md, selected companions, preview, ownership boundary, and cross-owner acceptance readiness. Use through the Agentic Design System primary route.
 ---
 
 # Review design — internal method
@@ -10,6 +10,10 @@ editing and returns evidence for the System run; it does not own promotion.
 
 Evaluate without editing. Return `PASS` only when every required check passes;
 otherwise return `REVISE` with the smallest concrete correction.
+Apply viewport, interaction, and rendered-accessibility checks to a preview only
+when one is selected. For a direction-only review, evaluate the corresponding
+instructions in `DESIGN.md` and record receiving-surface validation as a
+limitation rather than inventing preview proof.
 
 ## Checks
 
@@ -33,23 +37,34 @@ otherwise return `REVISE` with the smallest concrete correction.
 7. **Originality and source safety:** References informed principles rather
    than reproducing a third-party brand, layout, proprietary asset, or long
    skill passage.
-8. **Contract:** `BRIEF.md`, `DESIGN.md`, and preview agree; Design.md lint and
-   repository checks pass; the handoff names the receiving project or
-   repository and contains every promised file.
+8. **Contract:** `BRIEF.md` and canonical portable `DESIGN.md` agree; any
+   selected preview, asset, export, or tool source agrees with both. Design.md
+   lint and applicable repository checks pass. Optional companions do not
+   replace `DESIGN.md`. Cross-owner `HANDOFF.md` records
+   `ADS-HANDOFF/1`, identity/revision, receiving owner/outcome, source revision,
+   all included paths/hashes, provenance/licensing, Review, limitations, and an
+   explicit acceptance state; accepted snapshots cannot be overwritten.
 9. **Optional native source:** When OpenPencil was explicitly selected, use a
    real supervised upstream surface to open the `.op` source and export the
    declared PNG/SVG boundary. Compare that export with `DESIGN.md`; verify the
    source audit, paths, hashes, provenance, upstream version/revision, review,
-   limitations, and receiving owner in `HANDOFF.md`. When it was not
-   selected or is unavailable, verify the visible ordinary-handoff fallback;
-   absence of `.op` is not itself a failure.
+   limitations, and receiving owner in `HANDOFF.md`. When it was not selected
+   or is unavailable, verify that the required portable handoff plus only any
+   independently selected companions remains valid; absence of `.op` is not
+   itself a failure.
+10. **Ownership and sibling route:** ADS decisions stay visual and expressive;
+    receiving implementation stays with its Project, and editorial/content
+    production plus edit/render/package/publish execution stays with ACS when
+    relevant. Either may enter first. A material sibling gap produces only a
+    bounded suggestion to the caller; no automatic call, invented content,
+    recursion, or deterministic chain passes Review.
 
 Return:
 
 ```text
 Review: design
 Result: PASS | REVISE
-Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source]
+Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source, ownership and sibling route]
 Next: create handoff | revise
 Findings: [only material failures]
 ```

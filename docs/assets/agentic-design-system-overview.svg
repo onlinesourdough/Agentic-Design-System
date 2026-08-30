@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760" role="img" aria-labelledby="title desc">
   <title id="title">Agentic Design System route</title>
-  <desc id="desc">Prior run evidence enters the workspace, moves through source choice, preview and review, is recorded in a small ledger, and is promoted only by deliberate choice. Handoff may add optional native source, while periodic audit remains read-only.</desc>
+  <desc id="desc">Prior evidence becomes a canonical portable DESIGN.md, preview and review proof. Cross-owner delivery adds an explicitly accepted HANDOFF.md with optional companions; either sibling may be entered first and no sibling route runs automatically. Periodic audit remains read-only.</desc>
   <rect width="1600" height="760" rx="42" fill="#f5f1e8"/>
   <path d="M90 128H1510" stroke="#d7d2c7" stroke-width="2" stroke-dasharray="7 12"/>
   <text x="90" y="84" fill="#5c6868" font-family="ui-monospace,monospace" font-size="22" letter-spacing="3">AGENTIC DESIGN SYSTEM · PERSISTENT ROUTE</text>
-  <text x="90" y="190" fill="#1d282b" font-family="ui-sans-serif,system-ui" font-size="66" font-weight="750" letter-spacing="-3">Make the next design decision visible.</text>
+  <text x="90" y="190" fill="#1d282b" font-family="ui-sans-serif,system-ui" font-size="60" font-weight="750" letter-spacing="-3">Portable visual direction, ready to accept.</text>
   <g font-family="ui-sans-serif,system-ui">
     <g transform="translate(90 280)"><rect width="235" height="210" rx="22" fill="#fffdf7" stroke="#d7d2c7" stroke-width="2"/><text x="28" y="48" fill="#a94c32" font-size="18" font-weight="700">01 · HISTORY</text><text x="28" y="101" fill="#1d282b" font-size="31" font-weight="700">Inspect</text><text x="28" y="138" fill="#5c6868" font-size="19">Prior runs, learning</text><text x="28" y="166" fill="#5c6868" font-size="19">and active state.</text></g>
-    <g transform="translate(385 280)"><rect width="235" height="210" rx="22" fill="#fffdf7" stroke="#d7d2c7" stroke-width="2"/><text x="28" y="48" fill="#a94c32" font-size="18" font-weight="700">02 · WORKSPACE</text><text x="28" y="101" fill="#1d282b" font-size="31" font-weight="700">Resume</text><text x="28" y="138" fill="#5c6868" font-size="19">Brief, direction,</text><text x="28" y="166" fill="#5c6868" font-size="19">and current state.</text></g>
+    <g transform="translate(385 280)"><rect width="235" height="210" rx="22" fill="#fffdf7" stroke="#d7d2c7" stroke-width="2"/><text x="28" y="48" fill="#a94c32" font-size="18" font-weight="700">02 · DIRECTION</text><text x="28" y="101" fill="#1d282b" font-size="31" font-weight="700">Design</text><text x="28" y="138" fill="#5c6868" font-size="19">Canonical portable</text><text x="28" y="166" fill="#5c6868" font-size="19">DESIGN.md.</text></g>
     <g transform="translate(680 280)"><rect width="235" height="210" rx="22" fill="#fffdf7" stroke="#d7d2c7" stroke-width="2"/><text x="28" y="48" fill="#a94c32" font-size="18" font-weight="700">03 · REVIEW</text><text x="28" y="101" fill="#1d282b" font-size="31" font-weight="700">See it</text><text x="28" y="138" fill="#5c6868" font-size="19">Browser, mobile,</text><text x="28" y="166" fill="#5c6868" font-size="19">states and focus.</text></g>
     <g transform="translate(975 280)"><rect width="235" height="210" rx="22" fill="#fffdf7" stroke="#d7d2c7" stroke-width="2"/><text x="28" y="48" fill="#a94c32" font-size="18" font-weight="700">04 · LEDGER</text><text x="28" y="101" fill="#1d282b" font-size="31" font-weight="700">Relate</text><text x="28" y="138" fill="#5c6868" font-size="19">Output, proof,</text><text x="28" y="166" fill="#5c6868" font-size="19">failure and recovery.</text></g>
     <g transform="translate(1270 280)"><rect width="240" height="210" rx="22" fill="#173d45"/><text x="28" y="48" fill="#f1a17e" font-size="18" font-weight="700">05 · GALLERY</text><text x="28" y="101" fill="#fffdf7" font-size="31" font-weight="700">Curate</text><text x="28" y="138" fill="#c7d5d1" font-size="19">Only deliberate</text><text x="28" y="166" fill="#c7d5d1" font-size="19">examples become</text><text x="28" y="194" fill="#c7d5d1" font-size="19">durable.</text></g>
@@ -17,8 +17,8 @@
   <path d="M1390 510V595H510" fill="none" stroke="#173d45" stroke-width="3" stroke-linecap="round"/>
   <path d="m510 595 14-9v18z" fill="#173d45"/>
   <rect x="90" y="555" width="420" height="110" rx="18" fill="#dbe8e5"/>
-  <text x="118" y="593" fill="#173d45" font-family="ui-sans-serif,system-ui" font-size="18" font-weight="700">PORTABLE HANDOFF · READ-ONLY AUDIT</text>
-  <text x="118" y="624" fill="#173d45" font-family="ui-sans-serif,system-ui" font-size="19">HTML/tokens always; native source</text>
-  <text x="118" y="650" fill="#173d45" font-family="ui-sans-serif,system-ui" font-size="19">only when selected.</text>
-  <text x="90" y="708" fill="#5c6868" font-family="ui-sans-serif,system-ui" font-size="20">The gallery is durable. Periodic audit reports drift; Build owns repair.</text>
+  <text x="118" y="593" fill="#173d45" font-family="ui-sans-serif,system-ui" font-size="18" font-weight="700">CROSS-OWNER HANDOFF · READ-ONLY AUDIT</text>
+  <text x="118" y="624" fill="#173d45" font-family="ui-sans-serif,system-ui" font-size="19">HANDOFF.md binds acceptance;</text>
+  <text x="118" y="650" fill="#173d45" font-family="ui-sans-serif,system-ui" font-size="19">companions stay optional.</text>
+  <text x="90" y="708" fill="#5c6868" font-family="ui-sans-serif,system-ui" font-size="20">Either sibling may enter first. Suggestions never auto-run; Build owns repair.</text>
 </svg>

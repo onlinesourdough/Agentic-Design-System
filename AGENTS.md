@@ -1,13 +1,16 @@
 # Agentic Design System
 
-Agentic Design System (ADS) is a persistent, standalone design System. It
-turns resolved intent into inspectable design directions, keeps the useful
-history of that work, and deliberately curates examples that other projects
-can build from.
+Agentic Design System (ADS) is a persistent, standalone design System. It turns
+resolved intent into an approved, portable visual design direction whose
+required artifact is `DESIGN.md`, with optional assets and tool-native sources
+bound by a reviewed cross-owner handoff. It serves websites, applications,
+dashboards, reports, slides, marketing/content surfaces, and other visual
+outcomes without owning their receiving implementation or content production.
 
 ## Operating model
 
-- `workspace/` is the active operational truth: the current brief and design,
+- `workspace/` is the active operational truth: the current brief and canonical
+  portable design direction,
   browser preview, state, learning notes, run evidence, and append-only run
   history live here.
 - `workspace/engine/` is optional technical implementation for preview,
@@ -34,14 +37,21 @@ active work in `workspace/`, routes preview and review, records output and
 proof references plus failure/recovery relations, and promotes an example
 only when that choice is explicit.
 
-The ledger stores small references and structured facts, never raw requests,
+`DESIGN.md` is always the canonical human-readable visual direction. Optional
+assets, previews, tokens, exports, and editable sources remain referenced
+companions. The ledger stores small references and structured facts, never raw requests,
 credentials, or a second database. A failed run remains evidence; a recovery
 is a new run pointing to that predecessor.
 
-An explicitly selected creative route may add an optional OpenPencil `.op`
-source and reviewed PNG/SVG exports to a handoff. `DESIGN.md` stays semantic,
-`HANDOFF.md` binds provenance and hashes, and ordinary HTML/tokens handoff
-must remain green when OpenPencil is unselected or unavailable.
+Every cross-owner delivery adds the versioned `HANDOFF.md` Markdown binder. It
+records stable identity/revision, receiving owner/outcome, source revision,
+included relative paths and integrity hashes, provenance/licensing, review,
+limitations, and explicit acceptance. An explicitly selected creative route
+may add an optional OpenPencil `.op` source and reviewed PNG/SVG exports;
+minimal handoff requires only `BRIEF.md`, canonical `DESIGN.md`, PASS review
+evidence, the binder, and an explicit receiving owner. Preview, individual
+assets, token/theme exports, and OpenPencil files are included only when
+deliberately selected; the route remains green without their tools.
 
 The ADS-local `audit-design-system` route checks accumulated drift without
 mutation. It is separate from deterministic checks and per-design Review and
@@ -64,17 +74,30 @@ maintenance signal, and visual reason in `docs/SOURCE_AUDIT.md`. The carried
 Resources example proves one small, ADS-owned adapter integration without
 adding a dependency.
 
-## Boundaries
+## Capability and sibling boundaries
 
 ADS works from its own checkout with Python 3.9+ and the pinned Node toolchain.
-AIOS, APT, and another System may enter ADS with ordinary resolved context and
-read its returned example and proof, but no such product is imported, started,
-or required by this repository. ADS owns design truth until a receiving
-implementation project deliberately takes it on.
+It owns visual direction, visual hierarchy, brand/style/voice expression,
+graphic composition, typography, color, imagery, interaction/motion direction,
+and selected reusable visual assets. A receiving Project owns implementation
+after explicit acceptance. ACS owns editorial/content production, edit/render
+execution, packaging, and publication; visual format alone does not transfer
+that ownership to ADS.
 
-Do not add secrets, customer truth, raw prompt dumps, a central database, a
-shared cross-System data model, or a copied external skill catalog. Preserve
-the local design and review skills as repeatable internal methods.
+Either ADS or a sibling such as ACS may be entered first and either may run
+alone. When work reaches a material sibling boundary, return a bounded route
+suggestion to the current caller/coordinator. Never auto-run the sibling,
+invent its missing decisions, recurse, or create a deterministic ADS-to-ACS
+chain. Accepted sibling output returns only as ordinary referenced input.
+
+AIOS, APT, and another System may enter ADS with ordinary resolved context and
+read its returned paths and proof, but no such product is imported, started,
+or required by this repository.
+
+Do not add secrets, customer truth, raw prompt dumps, a central database,
+runtime protocol, registry, shared cross-System data model, duplicated ACS
+truth, or copied external skill catalog. Preserve the local design and review
+skills as repeatable internal methods.
 
 ## Proof commands
 

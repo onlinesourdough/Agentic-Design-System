@@ -1,6 +1,6 @@
 ---
 name: design-solution
-description: Internal design method for turning a resolved ADS brief into a focused DESIGN.md and inspectable browser preview. Use through the Agentic Design System primary route when a landing page, application interface, workspace, dashboard, or report needs visual direction.
+description: Internal design method for turning a resolved ADS brief into a canonical portable DESIGN.md and inspectable preview for websites, applications, workspaces, dashboards, reports, slides, or content visuals. Use through the Agentic Design System primary route.
 ---
 
 # Design solution — internal method
@@ -12,9 +12,11 @@ authoring method it calls; it does not own the ledger or gallery.
 
 1. Read the active `BRIEF.md` from `workspace/` or the explicitly selected
    example and preserve resolved facts.
-2. Name the audience, current constraint, one primary action or decision, real
-   content/data, required states, constraints, proof, and receiving project or
-   repository.
+2. Name the intended outcome and receiving owner/reuse scope, audience/job,
+   current constraint, primary action or decision, surfaces/form factors, real
+   content/data, required states, material brand/content/technical/accessibility/
+   legal/delivery constraints, source rights/provenance, proof, and acceptance
+   owner.
 3. Ask one question only when a missing answer would materially change the
    direction; otherwise state the smallest reasonable assumption.
 4. Reduce the interface to the smallest composition that completes that job.
@@ -35,6 +37,13 @@ authoring method it calls; it does not own the ledger or gallery.
    permission/offline states when the brief makes them relevant.
 6. Use optional references such as awesome-design-md to study variety, never to
    copy a brand or make it the default.
+7. Keep the ownership boundary explicit. ADS owns visual direction,
+   brand/style/voice expression, composition, motion direction, and selected
+   reusable visual assets. A receiving Project owns implementation after
+   acceptance; ACS owns editorial/content production, edit/render execution,
+   packaging, and publication. If a missing sibling decision materially blocks
+   design, return a bounded route suggestion to the caller; never run ACS or
+   invent its content.
 
 ## Make it inspectable
 
@@ -49,10 +58,15 @@ authoring method it calls; it does not own the ledger or gallery.
 
 After `review-design` passes, run
 `npm run handoff -- <directory> <output> --receiving-owner <owner>`. Confirm the
-output contains `DESIGN.md`, preview/assets, `theme.css`, `tokens.json`,
-`tailwind.theme.json`, and `HANDOFF.md`. Only an explicitly selected
-OpenPencil route adds a reviewed `.op` source and PNG/SVG exports; follow the
-primary skill's binding rather than duplicating upstream instructions here.
-The receiving project or repository
-becomes the canonical owner; this repository remains a design workbench, not a
-dependency.
+output contains canonical `DESIGN.md`, `BRIEF.md`, copied `REVIEW.md` or
+`proof.json`, and versioned `HANDOFF.md`. Add preview, individual assets, or
+CSS/design-token/Tailwind exports only through explicit companion selections
+for that outcome. Confirm its receiving outcome, all included hashes,
+provenance/licensing, review, limitations, and pending or explicit receiver
+acceptance. No export tooling is required when exports are unselected. Only an
+explicitly selected OpenPencil route adds a reviewed `.op` source and PNG/SVG
+exports; follow the primary skill's binding rather than duplicating upstream
+instructions here.
+The receiving owner becomes canonical for its accepted implementation or
+production copy; `DESIGN.md` remains the handed-off visual source of truth and
+this repository remains a design workbench, not a runtime dependency.

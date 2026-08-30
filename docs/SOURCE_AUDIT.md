@@ -10,7 +10,7 @@ not a component catalog or default design language.
 | [Origin UI / Originkit](https://www.originkit.dev/)                           | `origin-space/originui` resolves to [cosscom/coss](https://github.com/cosscom/coss), commit `19620ae8cae81e30775f2cde03829326cb4916b2`; AGPL-3.0 license file `29ebfa545f5580919a4e884d7014d7a3eb2df762` | Live catalog exposes an interactive component surface, but ADS did not treat that as a sufficient accessibility audit | Live page signals Next/React/Framer and an animated component catalog; poor fit for dependency-free local previews               | Repository updated 2026-08-24; active but source identity/license transition needs re-checking         | Broad animated visual reference, but license and runtime cost make it a source-only reference for this Build; no adapter selected.                                                        |
 | [ThreeUI](https://github.com/MengTo/threeui)                                  | `MengTo/threeui` commit `fbc9b3d61b0ef4b2e93b42e4fffa617ca277429b`; MIT license file `b3a5f823a69b4b010f92930ac09e8a776daf65c6`; bundled fonts retain SIL OFL and Three.js remains MIT per README        | Public README describes a live renderer and controls; no reason to assume every effect meets ADS preview needs        | React package plus Three.js assets; some implementation source is entitled/private, so it does not fit the smallest static route | Community sync merge dated 2026-08-23; active signals, but private Pro boundary increases review cost  | Strong source for selective motion or spatial visual research. Not chosen for the Resources route because 3D runtime would obscure its reading job.                                       |
 | [DesEngs](https://desengs.com/) / [source](https://github.com/remvze/desengs) | `remvze/desengs` commit `634ff685dfee02419d48891baf2f79160f7959b6`; MIT license file `8221498bff7ddc727a9ee902daa6593569c8effc`                                                                          | The live resource site is a visual reference, not a component accessibility contract                                  | Live page signals Astro 5.16.2, local fonts, and a resource catalogue; not a drop-in ADS adapter                                 | Repository updated 2026-08-24; active resource curation signal                                         | Useful editorial hierarchy and design-engineering curation reference. No code or assets were copied and no adapter was selected.                                                          |
-| [OpenPencil](https://github.com/ZSeven-W/openpencil)                          | release `v0.8.4`, peeled commit `c51d7ed41a96068a09127bbc096fee143fce0b22`; observed main `9c810776dab546076a5d9db791a49d9e8048dbd7`; MIT license blob `0dec8929ada31c1b4a60e64410e283a538ca9dfc`        | Editable canvas/export evidence does not replace semantic HTML accessibility review                                   | Optional standalone editor and CLI; no ADS or receiving-runtime dependency, and ordinary HTML/tokens handoff remains complete    | Signed release assets and checksums were available 2026-08-27; CLI archive needs a desktop or web host | Selected only for the active creative handoff: ADS-owned HTML became editable nodes and one reviewed PNG. No upstream UI, template, code, or asset was copied.                            |
+| [OpenPencil](https://github.com/ZSeven-W/openpencil)                          | release `v0.8.4`, peeled commit `c51d7ed41a96068a09127bbc096fee143fce0b22`; observed main `9c810776dab546076a5d9db791a49d9e8048dbd7`; MIT license blob `0dec8929ada31c1b4a60e64410e283a538ca9dfc`        | Editable canvas/export evidence does not replace semantic HTML accessibility review                                   | Optional standalone editor and CLI; no ADS or receiving-runtime dependency, and the minimal portable handoff needs neither       | Signed release assets and checksums were available 2026-08-27; CLI archive needs a desktop or web host | Selected only for the active creative handoff: ADS-owned HTML became editable nodes and one reviewed PNG. No upstream UI, template, code, or asset was copied.                            |
 
 ## Current design/source trace
 
@@ -51,7 +51,7 @@ different roles into the current semantic direction and one named example.
 - **Framework/accessibility fit:** Tool-native editing and export fit an explicitly selected creative route, but accessibility remains owned by semantic `DESIGN.md`, HTML preview, and per-design Review.
 - **Visual reason:** It provides an editable composition and reviewed raster boundary for a receiving designer without making every ADS run tool-specific.
 - **Learned versus copied:** OpenPencil imported ADS-owned HTML into editable nodes; ADS removed one importer artifact and copied no upstream design content.
-- **Active use or rejection:** The active route uses `workspace/openpencil/route-console.op` and its reviewed PNG; ordinary handoffs reject any OpenPencil requirement.
+- **Active use or rejection:** The active route uses `workspace/openpencil/route-console.op` and its reviewed PNG; minimal handoffs reject any OpenPencil requirement.
 - **DESIGN marker:** §source:openpencil-optional-adapter§
 
 ## Selection rule
@@ -59,8 +59,16 @@ different roles into the current semantic direction and one named example.
 For a new brief, compare the source signals above with the receiving preview's
 framework, interaction needs, license boundary, accessibility evidence,
 maintenance cost, and visual job. Record the chosen adapter and proof in the
-example README. If those conditions do not justify a source, keep it as
-research only.
+example README and canonical `DESIGN.md`. If those conditions do not justify a
+source, keep it as research only. A selected asset, adapter, export, or `.op`
+file remains an optional companion and receives a path/hash plus provenance and
+licensing entry in a cross-owner `HANDOFF.md`; it never replaces `DESIGN.md`.
+
+Source selection does not change the ADS/ACS boundary. ADS owns visual
+direction and reusable visual assets; ACS owns editorial/content production,
+edit/render execution, packaging, and publication. A missing sibling decision
+is suggested to the caller as a bounded route and is never auto-run from this
+audit or source record.
 
 ## Integration proof
 
