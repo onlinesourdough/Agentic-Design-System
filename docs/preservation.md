@@ -2,7 +2,7 @@
 
 The user-owned source checkout was read-only during this Build:
 
-`/Users/gustavanderson/Downloads/AIOS/projects/Design-template`
+`Owner project source: projects/Design-template`
 
 At ingest it reported six modified files and four untracked media assets. The
 following SHA-256 values were recorded before any restructuring and matched in

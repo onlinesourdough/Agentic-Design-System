@@ -25,5 +25,7 @@
 - **Proof:** A dispatcher identifies overdue or blocked work and records an
   owner without leaving the workspace.
 - **Receiving project or repository:** The implementation project selected by its owner.
-- **Review and acceptance owner:** ADS Review approves the portable direction;
-  the selected application owner explicitly accepts any cross-owner snapshot.
+- **Review mode:** independent
+- **Review owner:** ADS Review
+- **Receiver acceptance:** The selected application owner explicitly accepts
+  any cross-owner snapshot.

@@ -58,6 +58,17 @@ identity/revision, receiving outcome, all included paths/hashes,
 provenance/licensing, review, limitations, and explicit acceptance. None of
 those roles introduces a shared cross-System model.
 
+The brief selects independent or owner review and names a Review owner
+separately from the receiver. In both modes the evidence reviewer must match
+that declared identity. Its PASS binds the current `DESIGN.md` hash and every
+pre-existing selected source-companion hash before generation; owner mode waits
+for that exact Review owner, while independent mode proceeds to a separate
+pending receiver-acceptance step. Deterministic CSS/token/Tailwind outputs are
+generated from the reviewed DESIGN hash and integrity-bound as derived exports,
+not pre-existing Review evidence. Receivers copy accepted immutable
+snapshots—never a live ADS workspace—and no recursive automatic sibling edge is
+created.
+
 ADS owns visual direction, visual hierarchy, brand/style/voice expression,
 composition, typography, color, imagery, interaction/motion direction, and
 selected reusable visual assets. A receiving Project owns implementation after

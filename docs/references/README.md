@@ -5,7 +5,7 @@ Workbench. They are not active showcases, product dependencies, or a catalog
 to copy. The new Resources direction lives in
 `../../examples/onlinesourdough-resources/`.
 
-Reviewed source: `/Users/gustavanderson/Downloads/AIOS/projects/design-md-workbench`
+Reviewed source: `Owner project source: projects/design-md-workbench`
 at revision `30ef68f709f05225e23ac061fcb8da63cca31fba` plus the meaningful
 owner/product preview files present in the reviewed worktree on 2026-08-06.
 

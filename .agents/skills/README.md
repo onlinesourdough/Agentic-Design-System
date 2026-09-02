@@ -12,6 +12,9 @@ ADS owns the direct skills on this shelf. Their standard path is
   reports, slides, and content visuals.
 - [`review-design`](review-design/SKILL.md) — design and handoff review method
   used by the primary route.
+- [`openpencil-workbench`](openpencil-workbench/SKILL.md) — internal strict
+  loopback launcher and review method for an explicitly selected OpenPencil
+  v0.8.4 source/export companion.
 - [`audit-design-system`](audit-design-system/SKILL.md) — read-only periodic
   audit of accumulated ADS truth.
 

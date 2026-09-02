@@ -53,6 +53,24 @@ evidence, the binder, and an explicit receiving owner. Preview, individual
 assets, token/theme exports, and OpenPencil files are included only when
 deliberately selected; the route remains green without their tools.
 
+The brief selects review mode exactly as `independent` or `owner` and declares
+a non-empty `Review owner` distinct from the receiving project or repository.
+The evidence reviewer must match that declared identity and record `PASS`, the
+current `DESIGN.md` SHA-256, and each selected pre-existing source-companion
+path/hash before handoff generation. Independent review is sufficient when
+selected; owner mode stops `waiting-owner` until that exact Review owner makes
+the bound decision. Deterministic CSS/token/Tailwind exports are derived from
+the reviewed `DESIGN.md` and integrity-hashed in the generated binder rather
+than represented as pre-existing reviewed files. Receiver acceptance remains
+separate. A receiver copies its accepted immutable snapshot, never live-syncs
+ADS, and never creates an automatic recursive sibling request.
+
+When OpenPencil is selected, the ADS-local workbench starts verified v0.8.4
+release bytes on strict `127.0.0.1`, returns a machine-readable URL for the
+Codex-compatible built-in browser, provides the `/pkg/canvaskit/*`
+compatibility route, and owns bounded status/log/stop cleanup. It never invokes
+an OS browser and does not make OpenPencil a required or vendored runtime.
+
 The ADS-local `audit-design-system` route checks accumulated drift without
 mutation. It is separate from deterministic checks and per-design Review and
 returns exactly `PASS`, `FAIL`, or `BLOCKED`.

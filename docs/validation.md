@@ -79,6 +79,17 @@ npm run handoff -- workspace workspace/handoff \
 `--receiving-owner` is explicit and required; an absent or blank owner fails
 before any existing output is removed.
 
+`BRIEF.md` must set `**Review mode:** independent` or `owner` and a non-empty
+`**Review owner:**` independently of the receiving project. Review evidence
+must name a reviewer matching that declared identity, record `PASS`, bind the
+current `DESIGN.md` SHA-256, and list every pre-existing selected preview,
+asset, `.op`, and native export with its exact source-relative path and SHA-256.
+A matching independent PASS is sufficient for independent mode. Owner mode
+exits with machine-readable status `waiting-owner` until the exact Review owner
+records the PASS, current DESIGN hash, and every selected source-companion hash.
+The reviewer is never compared with `--receiving-owner`; receiver acceptance is
+separate. Every denial happens before an existing output is replaced.
+
 The minimal output contains only `BRIEF.md`, canonical `DESIGN.md`, copied PASS
 `REVIEW.md` or `proof.json` evidence, and generated `HANDOFF.md`. It needs no
 preview, asset directory, token export, OpenPencil artifact, or installed token
@@ -98,18 +109,61 @@ npm run handoff -- workspace workspace/handoff \
   --export tailwind
 ```
 
-`--preview` selects source `index.html`. Repeatable `--asset` accepts one
-source-relative file beneath `assets/` (for example,
-`--asset assets/approved-mark.svg`); it never copies the directory implicitly.
+`--preview` selects pre-existing source companion `index.html`. Repeatable
+`--asset` accepts one pre-existing source-relative file beneath `assets/` (for
+example, `--asset assets/approved-mark.svg`); it never copies the directory
+implicitly. Both require reviewed path/hash evidence. OpenPencil `.op` and
+native PNG/SVG exports are also pre-existing reviewed source companions.
 Repeatable `--export` accepts `css`, `tokens`, or `tailwind` and invokes the
-pinned Design.md tool only for those selected formats. Missing or invalid
-selected companions fail before an existing pending output is replaced.
+pinned Design.md tool only for those selected formats. These outputs are
+deterministic derivations of the exact reviewed `DESIGN.md`; emitted JSON and
+`HANDOFF.md` record each output hash plus the reviewed DESIGN hash. Review need
+not pretend those generated files existed beforehand. Missing or invalid
+selected source companions fail before an existing pending output is replaced.
 
 Generation starts `PENDING`. Copying is not acceptance. Once the receiving
 owner records `Acceptance state: ACCEPTED`, rerunning the generator against that
 output must fail without changing it. A later ADS revision uses a different
 output/revision and receives separate acceptance; no live synchronization
-exists.
+exists. A receiving System copies only the accepted snapshot and never sends a
+recursive automatic request back to ADS.
+
+### OpenPencil browser workbench
+
+Start the selected v0.8.4 editable source from the verified external VSIX:
+
+```sh
+npm run openpencil -- start \
+  --vsix <verified-openpencil-v0.8.4-platform.vsix> \
+  --document workspace/openpencil/route-console.op \
+  --expected-nodes 314 \
+  --expected-document-sha256 33ab74b5315b89f68eefe8b6a3d3da193e968afab6f851de3c9f3b2f97b9b0e0
+```
+
+The single JSON response contains a strict `http://127.0.0.1:<port>/` URL.
+Pass that URL to the Codex-compatible built-in browser. The workbench never
+invokes `op start --web`, an OS browser, or Zen. It launches the verified
+release daemon directly and maps `/pkg/canvaskit/*` to the upstream
+`/canvaskit/*` bytes. The pinned macOS arm64 VSIX SHA-256 is
+`7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342`.
+
+After supervised inspection, prove the live surface and reviewed bytes, then
+clean it deterministically:
+
+```sh
+npm run openpencil -- check \
+  --expected-nodes 314 \
+  --expected-document-sha256 33ab74b5315b89f68eefe8b6a3d3da193e968afab6f851de3c9f3b2f97b9b0e0 \
+  --export workspace/openpencil/exports/route-console.png \
+  --expected-export-sha256 734c32836a61c42088141d84308392a198403d6e4a80991f65d3d2f9a8b5e92d
+npm run openpencil -- status
+npm run openpencil -- logs --lines 80
+npm run openpencil -- stop
+```
+
+`stop` closes the daemon and removes the temporary extracted runtime and state.
+OpenPencil remains optional: failure to start or inspect it leaves the portable
+`DESIGN.md` handoff and unavailable-tool fallback valid.
 
 For an explicitly selected OpenPencil route, use the temporary verified CLI
 path and bind all native facts:
@@ -134,8 +188,9 @@ archive SHA-256 is
 `2784d041bed961af2efa21fc68e494eb1915e90445e3ac16caf5d9cd21966b99`;
 the signed arm64 DMG SHA-256 is
 `576af5beb22bb0e6df5b82fbedae757c6b10e9f2e5d635f99f96d1d184319180`.
-The CLI archive is only a client, so the separate desktop or web surface is a
-known availability boundary. No executable is installed or committed.
+The CLI archive is only a handoff-version probe. The repository-owned
+workbench above supplies the supervised web surface from verified VSIX bytes;
+no executable, UI, or runtime is installed or committed.
 
 Prove included and tool-unavailable behavior without changing `workspace/`:
 
@@ -145,7 +200,8 @@ npm run trace:handoff -- --openpencil-tool <verified-op-path>
 
 The fallback exits successfully, emits the exact unavailable-tool reason,
 copies no native artifact, and still produces the required portable handoff
-plus only any independently selected companions.
+plus only any independently selected source companions or deterministic derived
+exports.
 
 The same existing tracer also proves the public capability boundary in its
 temporary root:

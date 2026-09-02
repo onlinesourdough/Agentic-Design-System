@@ -2,6 +2,8 @@
   "curated": true,
   "example": "operations-workspace",
   "review": "PASS",
+  "reviewed_design_sha256": "51fc0309569ca6ef6cf2e676183a6593a7efce14720f76322b7f37f8baab5f1d",
+  "reviewer": "ADS Review",
   "source_run_id": "curated-operations-workspace",
   "status": "succeeded"
 }

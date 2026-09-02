@@ -85,6 +85,17 @@ paths and SHA-256 values, provenance/licensing, review, limitations, and
 explicit acceptance. Accepted snapshots are immutable; later ADS revisions
 require a new handoff and re-acceptance rather than live synchronization.
 
+The brief selects `independent` or `owner` review and declares a non-empty
+`Review owner` separately from the receiving project. Evidence names a reviewer
+matching that identity, binds the reviewed `DESIGN.md`, and lists each selected
+pre-existing source-companion hash. Independent PASS is sufficient when
+selected; owner mode returns `waiting-owner` until that exact Review owner
+decides. Selected CSS/token/Tailwind outputs are deterministic derivatives of
+the reviewed DESIGN hash and are integrity-bound in the generated binder, not
+listed as files that Review supposedly saw before generation. Receiver
+acceptance remains separate. A receiver copies its accepted snapshot and never
+live-syncs or recursively invokes ADS.
+
 A minimal handoff copies only `BRIEF.md`, canonical `DESIGN.md`, and PASS
 `REVIEW.md` or `proof.json` evidence, then generates `HANDOFF.md`. Add
 `--preview`, repeatable `--asset <assets/path>`, or repeatable
@@ -103,6 +114,12 @@ Run the native success/fallback tracer with a temporary verified v0.8.4 CLI:
 ```sh
 npm run trace:handoff -- --openpencil-tool <verified-op-path>
 ```
+
+For supervised native review, `npm run openpencil -- start ...` launches the
+verified v0.8.4 web canvas on strict `127.0.0.1` and prints a URL for the
+Codex-compatible built-in browser. `status`, bounded `logs`, `check`, and
+`stop` provide deterministic proof and cleanup; no OS browser is invoked and no
+OpenPencil runtime is vendored. See [`docs/validation.md`](docs/validation.md).
 
 ## Periodic read-only audit
 

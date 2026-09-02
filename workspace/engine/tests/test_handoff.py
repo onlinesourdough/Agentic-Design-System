@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -49,9 +50,20 @@ class HandoffTests(unittest.TestCase):
         )
 
     def _run_from(
-        self, source: Path, output: Path, *arguments: str, cwd: Path = ROOT
+        self,
+        source: Path,
+        output: Path,
+        *arguments: str,
+        receiving_owner: Optional[str] = "Receiving repository owner",
+        cwd: Path = ROOT,
     ) -> dict:
-        result = self._invoke(source, output, *arguments, cwd=cwd)
+        result = self._invoke(
+            source,
+            output,
+            *arguments,
+            receiving_owner=receiving_owner,
+            cwd=cwd,
+        )
         self.assertEqual(result.returncode, 0, result.stderr)
         return json.loads(result.stdout)
 
@@ -81,14 +93,51 @@ class HandoffTests(unittest.TestCase):
             "Importer CSS approximation remains visible.",
         ]
 
+    def _write_review(
+        self,
+        source: Path,
+        *,
+        reviewer: str = "ADS Review",
+        result: str = "PASS",
+        companions: tuple[str, ...] = (),
+    ) -> None:
+        lines = [
+            "# Review evidence",
+            "",
+            f"Reviewer: {reviewer}",
+            f"Result: {result}",
+            "Reviewed DESIGN.md SHA-256: "
+            f"`{hashlib.sha256(source.joinpath('DESIGN.md').read_bytes()).hexdigest()}`",
+        ]
+        for relative in companions:
+            digest = hashlib.sha256(source.joinpath(relative).read_bytes()).hexdigest()
+            lines.append(
+                f"Reviewed source companion: `{relative}` — SHA-256 `{digest}`"
+            )
+        source.joinpath("REVIEW.md").write_text(
+            "\n".join(lines) + "\n", encoding="utf-8"
+        )
+
+    def _record_reviewed_companion(self, source: Path, relative: str) -> None:
+        review = source.joinpath("REVIEW.md")
+        digest = hashlib.sha256(source.joinpath(relative).read_bytes()).hexdigest()
+        review.write_text(
+            review.read_text(encoding="utf-8").rstrip()
+            + f"\nReviewed source companion: `{relative}` — SHA-256 `{digest}`\n",
+            encoding="utf-8",
+        )
+
     def _minimal_source(self, root: Path) -> Path:
         source = root / "source"
-        source.mkdir()
+        source.mkdir(parents=True)
         source.joinpath("BRIEF.md").write_text(
             """# Minimal portable brief
 
 - **Receiving outcome:** Apply the approved visual direction in the named receiving repository.
 - **Source/reference rights, provenance, and licensing:** ADS-owned fixture text under the repository license; no external assets.
+- **Review mode:** independent
+- **Review owner:** ADS Review
+- **Receiver acceptance:** The named receiving repository separately decides whether to accept the generated snapshot.
 """,
             encoding="utf-8",
         )
@@ -104,10 +153,7 @@ version: 1.0.0
 """,
             encoding="utf-8",
         )
-        source.joinpath("REVIEW.md").write_text(
-            "# Review evidence\n\nResult: PASS\n",
-            encoding="utf-8",
-        )
+        self._write_review(source)
         return source
 
     def test_minimal_handoff_needs_no_preview_assets_exports_or_tool_install(self):
@@ -129,12 +175,185 @@ version: 1.0.0
             )
             self.assertEqual(
                 result["companions"],
-                {"preview": False, "assets": [], "exports": []},
+                {
+                    "reviewedSourceCompanions": [],
+                    "deterministicDerivedExports": [],
+                },
             )
             binder = output.joinpath("HANDOFF.md").read_text(encoding="utf-8")
             self.assertIn("Contract: `ADS-HANDOFF/1`", binder)
+            self.assertIn("Review mode: independent", binder)
+            self.assertIn("Review owner: ADS Review", binder)
+            self.assertIn("Reviewer: ADS Review", binder)
+            self.assertIn("Reviewed DESIGN.md SHA-256:", binder)
+            self.assertEqual(result["handoff"]["review"]["reviewOwner"], "ADS Review")
+            self.assertEqual(
+                result["handoff"]["review"]["reviewedSourceCompanions"], []
+            )
+            self.assertEqual(
+                result["handoff"]["review"]["deterministicDerivedExports"], []
+            )
             self.assertIn("Preview: not selected", binder)
             self.assertIn("Assets and token/theme exports: not selected", binder)
+
+    def test_missing_review_and_unnamed_reviewer_preserve_output(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for case in ("missing", "unnamed"):
+                with self.subTest(case=case):
+                    source = self._minimal_source(root / case)
+                    if case == "missing":
+                        source.joinpath("REVIEW.md").unlink()
+                    else:
+                        review = source.joinpath("REVIEW.md")
+                        review.write_text(
+                            review.read_text(encoding="utf-8").replace(
+                                "Reviewer: ADS Review\n", ""
+                            ),
+                            encoding="utf-8",
+                        )
+                    output = root / f"{case}-handoff"
+                    output.mkdir()
+                    sentinel = output / "preserve.txt"
+                    sentinel.write_text("keep", encoding="utf-8")
+
+                    result = self._invoke(source, output)
+
+                    self.assertNotEqual(result.returncode, 0)
+                    expected = (
+                        "requires REVIEW.md or proof.json"
+                        if case == "missing"
+                        else "lacks a non-empty named reviewer"
+                    )
+                    self.assertIn(expected, result.stderr)
+                    self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
+
+    def test_owner_review_waits_for_named_owner_decision(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = self._minimal_source(root)
+            source.joinpath("assets").mkdir()
+            source.joinpath("assets/selected.svg").write_text(
+                "<svg/>\n", encoding="utf-8"
+            )
+            brief = source.joinpath("BRIEF.md")
+            brief.write_text(
+                brief.read_text(encoding="utf-8").replace(
+                    "**Review mode:** independent", "**Review mode:** owner"
+                ).replace("**Review owner:** ADS Review", "**Review owner:** Gustav Anderson"),
+                encoding="utf-8",
+            )
+            output = root / "handoff"
+            output.mkdir()
+            sentinel = output / "preserve.txt"
+            sentinel.write_text("keep", encoding="utf-8")
+
+            for case, reviewer in (
+                ("missing", ""),
+                ("wrong", "ADS Review"),
+                ("case-mismatch", "gustav anderson"),
+            ):
+                with self.subTest(case=case):
+                    self._write_review(source, reviewer=reviewer)
+                    waiting = self._invoke(
+                        source,
+                        output,
+                        "--asset",
+                        "assets/selected.svg",
+                        receiving_owner="Agentic Content System",
+                    )
+
+                    self.assertEqual(waiting.returncode, 2)
+                    self.assertEqual(
+                        json.loads(waiting.stderr)["status"], "waiting-owner"
+                    )
+                    self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
+
+            self._write_review(source, reviewer="Gustav Anderson")
+            missing_source_hash = self._invoke(
+                source,
+                output,
+                "--asset",
+                "assets/selected.svg",
+                receiving_owner="Agentic Content System",
+            )
+            self.assertEqual(missing_source_hash.returncode, 2)
+            self.assertIn("selected source companion", missing_source_hash.stderr)
+            self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
+
+            self._write_review(
+                source,
+                reviewer="Gustav Anderson",
+                companions=("assets/selected.svg",),
+            )
+            accepted = self._run_from(
+                source,
+                output,
+                "--asset",
+                "assets/selected.svg",
+                receiving_owner="Agentic Content System",
+            )
+            self.assertEqual(accepted["receivingOwner"], "Agentic Content System")
+            self.assertEqual(accepted["handoff"]["review"]["mode"], "owner")
+            self.assertEqual(
+                accepted["handoff"]["review"]["reviewOwner"],
+                "Gustav Anderson",
+            )
+            self.assertEqual(
+                accepted["handoff"]["review"]["reviewer"],
+                "Gustav Anderson",
+            )
+
+    def test_independent_reviewer_must_match_declared_review_owner(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = self._minimal_source(root)
+            self._write_review(source, reviewer="Gustav Anderson")
+            output = root / "handoff"
+            output.mkdir()
+            sentinel = output / "preserve.txt"
+            sentinel.write_text("keep", encoding="utf-8")
+
+            denied = self._invoke(
+                source,
+                output,
+                receiving_owner="Agentic Content System",
+            )
+
+            self.assertEqual(denied.returncode, 1)
+            self.assertIn(
+                "does not match BRIEF.md Review owner ADS Review", denied.stderr
+            )
+            self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
+
+    def test_stale_design_or_unreviewed_asset_is_denied(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = self._minimal_source(root)
+            output = root / "handoff"
+            source.joinpath("DESIGN.md").write_text(
+                source.joinpath("DESIGN.md").read_text(encoding="utf-8")
+                + "\nChanged after Review.\n",
+                encoding="utf-8",
+            )
+
+            stale = self._invoke(source, output)
+
+            self.assertNotEqual(stale.returncode, 0)
+            self.assertIn("does not bind the current DESIGN.md", stale.stderr)
+            self._write_review(source)
+            source.joinpath("assets").mkdir()
+            source.joinpath("assets/unreviewed.svg").write_text(
+                "<svg/>\n", encoding="utf-8"
+            )
+
+            unreviewed = self._invoke(
+                source, output, "--asset", "assets/unreviewed.svg"
+            )
+
+            self.assertNotEqual(unreviewed.returncode, 0)
+            self.assertIn("does not list selected source companion", unreviewed.stderr)
+            self.assertFalse(output.exists())
 
     def test_explicit_preview_asset_and_export_selection(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -145,6 +364,7 @@ version: 1.0.0
             assets.mkdir(exist_ok=True)
             assets.joinpath("selected.svg").write_text("<svg/>\n", encoding="utf-8")
             assets.joinpath("unselected.svg").write_text("<svg/>\n", encoding="utf-8")
+            self._record_reviewed_companion(source, "assets/selected.svg")
             output = root / "handoff"
 
             result = self._run_from(
@@ -170,15 +390,48 @@ version: 1.0.0
             ):
                 self.assertTrue(output.joinpath(name).is_file(), name)
             self.assertFalse(output.joinpath("assets/unselected.svg").exists())
-            self.assertEqual(result["companions"]["preview"], True)
+            companion_boundary = result["companions"]
+            review = result["handoff"]["review"]
+            design_sha256 = hashlib.sha256(
+                source.joinpath("DESIGN.md").read_bytes()
+            ).hexdigest()
+            self.assertEqual(review["reviewOwner"], "ADS Review")
             self.assertEqual(
-                result["companions"]["assets"], ["assets/selected.svg"]
+                {
+                    item["path"]
+                    for item in companion_boundary["reviewedSourceCompanions"]
+                },
+                {"index.html", "assets/selected.svg"},
             )
             self.assertEqual(
-                result["companions"]["exports"],
-                ["theme.css", "tokens.json", "tailwind.theme.json"],
+                review["reviewedSourceCompanions"],
+                companion_boundary["reviewedSourceCompanions"],
             )
+            self.assertNotIn("theme.css", source.joinpath("REVIEW.md").read_text())
+            derived = {
+                item["path"]: item
+                for item in companion_boundary["deterministicDerivedExports"]
+            }
+            self.assertEqual(
+                review["deterministicDerivedExports"],
+                companion_boundary["deterministicDerivedExports"],
+            )
+            self.assertEqual(
+                set(derived), {"theme.css", "tokens.json", "tailwind.theme.json"}
+            )
+            for name, item in derived.items():
+                self.assertEqual(item["derivedFromDesignSha256"], design_sha256)
+                self.assertEqual(
+                    item["sha256"],
+                    hashlib.sha256(output.joinpath(name).read_bytes()).hexdigest(),
+                )
             binder = output.joinpath("HANDOFF.md").read_text(encoding="utf-8")
+            self.assertIn("## Review and derivation boundary", binder)
+            self.assertIn("Reviewed source companions:", binder)
+            self.assertIn("Deterministic derived exports:", binder)
+            self.assertIn(
+                f"derived from reviewed DESIGN.md SHA-256 `{design_sha256}`", binder
+            )
             for name in (
                 "index.html",
                 "assets/selected.svg",
@@ -244,7 +497,21 @@ version: 1.0.0
             self.assertIn("## Provenance and licensing", handoff)
             self.assertIn("## Known limitations", handoff)
             self.assertIn("c51d7ed41a96068a09127bbc096fee143fce0b22", handoff)
-            self.assertIn(included["openpencil"]["source"]["sha256"], handoff)
+            self.assertIn(
+                included["openpencil"]["sourceCompanion"]["sha256"], handoff
+            )
+            self.assertEqual(
+                {
+                    item["path"]
+                    for item in included["handoff"]["review"][
+                        "reviewedSourceCompanions"
+                    ]
+                },
+                {
+                    "openpencil/route-console.op",
+                    "openpencil/exports/route-console.png",
+                },
+            )
             for name in ("BRIEF.md", "DESIGN.md", "REVIEW.md", "HANDOFF.md"):
                 self.assertTrue((root / "fallback" / name).is_file())
             for name in (
@@ -283,9 +550,14 @@ version: 1.0.0
             accepted_before = fingerprint(accepted_output)
 
             design_path = source / "DESIGN.md"
-            revised = design_path.read_text(encoding="utf-8").replace(
-                "version: alpha", "version: beta", 1
+            revised, replacements = re.subn(
+                r"^version:\s*[^\n]+$",
+                "version: test-revision",
+                design_path.read_text(encoding="utf-8"),
+                count=1,
+                flags=re.MULTILINE,
             )
+            self.assertEqual(replacements, 1)
             design_path.write_text(revised, encoding="utf-8")
             denied = self._invoke(source, accepted_output)
 
@@ -293,6 +565,7 @@ version: 1.0.0
             self.assertIn("Accepted handoff snapshots are immutable", denied.stderr)
             self.assertEqual(accepted_before, fingerprint(accepted_output))
 
+            self._write_review(source)
             second = self._run_from(source, root / "revision")
             self.assertEqual(first["handoff"]["id"], second["handoff"]["id"])
             self.assertNotEqual(
@@ -303,22 +576,26 @@ version: 1.0.0
     def test_missing_human_readable_contract_metadata_preserves_output(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            source = root / "source"
-            shutil.copytree(SOURCE, source)
-            brief_path = source / "BRIEF.md"
-            brief = brief_path.read_text(encoding="utf-8")
-            brief = brief.replace("**Receiving outcome:**", "**Missing outcome:**", 1)
-            brief_path.write_text(brief, encoding="utf-8")
-            output = root / "handoff"
-            output.mkdir()
-            sentinel = output / "preserve.txt"
-            sentinel.write_text("keep", encoding="utf-8")
+            for field in ("Receiving outcome", "Review owner"):
+                with self.subTest(field=field):
+                    source = root / field.lower().replace(" ", "-") / "source"
+                    shutil.copytree(SOURCE, source)
+                    brief_path = source / "BRIEF.md"
+                    brief = brief_path.read_text(encoding="utf-8")
+                    brief = brief.replace(f"**{field}:**", f"**Missing {field}:**", 1)
+                    brief_path.write_text(brief, encoding="utf-8")
+                    output = source.parent / "handoff"
+                    output.mkdir()
+                    sentinel = output / "preserve.txt"
+                    sentinel.write_text("keep", encoding="utf-8")
 
-            result = self._invoke(source, output)
+                    result = self._invoke(source, output)
 
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("BRIEF.md lacks a non-empty **Receiving outcome:**", result.stderr)
-            self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn(
+                        f"BRIEF.md lacks a non-empty **{field}:**", result.stderr
+                    )
+                    self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
 
     def test_surface_sibling_and_revision_tracer(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -339,6 +616,12 @@ version: 1.0.0
             self.assertEqual(result.returncode, 0, result.stderr)
             proof = json.loads(result.stdout)
             self.assertEqual(proof["portableContract"], "ADS-HANDOFF/1")
+            self.assertEqual(proof["reviewGate"]["mode"], "independent")
+            self.assertEqual(proof["reviewGate"]["reviewOwner"], "ADS Review")
+            self.assertEqual(proof["reviewGate"]["reviewer"], "ADS Review")
+            self.assertTrue(proof["reviewGate"]["designSha256Bound"])
+            self.assertTrue(proof["reviewGate"]["selectedSourceCompanionsBound"])
+            self.assertTrue(proof["reviewGate"]["derivedExportsBoundToDesign"])
             self.assertTrue(
                 proof["surfaces"]["websiteApplication"]["designCanonical"]
             )
@@ -347,6 +630,9 @@ version: 1.0.0
             self.assertEqual(content["origin"], "ACS-originated brief fixture")
             self.assertTrue(content["acceptedSnapshotImmutable"])
             self.assertFalse(content["adsRuntimeRequiredByReceiver"])
+            self.assertTrue(content["selectedSnapshotOnly"])
+            self.assertFalse(content["liveSync"])
+            self.assertFalse(content["recursiveRequest"])
             self.assertEqual(content["nextRevisionAcceptance"], "PENDING")
             self.assertEqual(proof["contentGap"]["routing"], "suggestion-only")
             self.assertFalse(proof["contentGap"]["invoked"])

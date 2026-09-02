@@ -2,7 +2,7 @@
 
 | Asset                                 | Provenance                                                                                                                                         | Use                                                                                            |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `resources-folder-transparent.png`    | Copied byte-for-byte from `/Users/gustavanderson/Downloads/AIOS/projects/onlinesourdough-resources/public/assets/resources-folder-transparent.png` | The compact Resources identity cue in the sidebar.                                             |
+| `resources-folder-transparent.png`    | Copied byte-for-byte from `Owner read-only project source path: projects/onlinesourdough-resources/public/assets/resources-folder-transparent.png` | The compact Resources identity cue in the sidebar.                                             |
 | `resources-hero-agentic-v1.png`       | Prior reviewed poster generated with the built-in `image_gen` tool; retained at 1672×941.                                                          | Retained predecessor; not the active Home poster.                                              |
 | `resources-vsl-motion-preview.mp4`    | Prior silent H.264 preview derived with `ffmpeg` from the v1 poster; six seconds, 1280×720.                                                        | Retained predecessor; not the active Home video source.                                        |
 | `resources-hero-agentic-v2.png`       | Active built-in `image_gen` compositing edit from the v1 base plus two supplied pet references; cropped to 1672×940.                               | Active Resources poster with two small in-world pixel companions and one cabled local-AI node. |
@@ -29,9 +29,9 @@ is not a copied component or a package dependency. See
 
 ## Prior v1 hero provenance
 
-- **Mode:** Built-in `image_gen` generation mode, not CLI fallback. The source
-  remains at `/Users/gustavanderson/.codex/generated_images/019ffab5-fbe6-7c30-b1c9-ca8cc19f0b28/exec-2114ce0a-7a10-4b0d-958e-3fbb44c1b56f.png`; this project owns the copied,
-  versioned artifact above.
+- **Mode:** Built-in `image_gen` generation mode, not CLI fallback. The original
+  generation remained in the owner's local Codex cache at creation time; this
+  project owns the copied, versioned artifact above.
 - **Reference role:** The two supplied screenshots were used only as mood and
   broad composition references. They were not edit targets, and the generated
   scene does not copy their branding, scenery, UI, text, or exact composition.

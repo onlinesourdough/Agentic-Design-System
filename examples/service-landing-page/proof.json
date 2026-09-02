@@ -2,6 +2,8 @@
   "curated": true,
   "example": "service-landing-page",
   "review": "PASS",
+  "reviewed_design_sha256": "9c2b0092fc56c83652f75b6eeec6ff734af0a5cd44de3dc5ca6efc115a9f924d",
+  "reviewer": "ADS Review",
   "source_run_id": "curated-service-landing-page",
   "status": "succeeded"
 }

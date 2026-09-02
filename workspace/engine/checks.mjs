@@ -51,6 +51,7 @@ const requiredPaths = [
   ".agents/skills/agentic-design-system/SKILL.md",
   ".agents/skills/design-solution/SKILL.md",
   ".agents/skills/review-design/SKILL.md",
+  ".agents/skills/openpencil-workbench/SKILL.md",
   ".agents/skills/audit-design-system/SKILL.md",
   "workspace/README.md",
   "workspace/BRIEF.md",
@@ -62,6 +63,7 @@ const requiredPaths = [
   "workspace/learning",
   "workspace/engine/checks.mjs",
   "workspace/engine/create-handoff.mjs",
+  "workspace/engine/openpencil-workbench.mjs",
   "workspace/engine/handoff_tracer.mjs",
   "workspace/engine/audit_design_system.py",
   "workspace/engine/audit_tracer.py",
@@ -320,11 +322,14 @@ function checkPortableWorkSurface(directory) {
     "Receiving outcome",
     "Source/reference rights, provenance, and licensing",
     "Ownership boundary",
-    "Review and acceptance owner",
+    "Review owner",
+    "Receiver acceptance",
   ]) {
     if (!strongField(brief, field))
       fail(`${rel(briefPath)} lacks inspectable ${field}`);
   }
+  if (!/^- \*\*Review mode:\*\* (?:independent|owner)\s*$/m.test(brief))
+    fail(`${rel(briefPath)} lacks an exact independent or owner Review mode`);
   for (const marker of [
     "## Portable direction and ownership",
     "This `DESIGN.md` is the canonical",
@@ -463,6 +468,9 @@ function checkWorkspace() {
     "Accepted handoff snapshots are immutable",
     "openPencilReleaseRevision",
     "receivingOwner",
+    "reviewOwner",
+    "reviewedSourceCompanions",
+    "deterministicDerivedExports",
     'for (const file of ["BRIEF.md", "DESIGN.md"])',
     'argument === "--preview"',
     '["--asset", "assets"]',
@@ -558,6 +566,8 @@ function checkCapabilityContract() {
     "Included snapshot and integrity",
     "Provenance and licensing",
     "Known limitations",
+    "Review owner:",
+    "Review and derivation boundary",
   ]) {
     if (!template.includes(marker)) fail(`handoff template lacks ${marker}`);
   }

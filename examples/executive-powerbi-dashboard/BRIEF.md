@@ -27,5 +27,7 @@
 - **Proof:** Leadership can name the largest actionable margin gap and its owner
   in under two minutes.
 - **Receiving project or repository:** The project selected to implement this dashboard.
-- **Review and acceptance owner:** ADS Review approves the portable direction;
-  the selected analytics owner explicitly accepts any cross-owner snapshot.
+- **Review mode:** independent
+- **Review owner:** ADS Review
+- **Receiver acceptance:** The selected analytics owner explicitly accepts any
+  cross-owner snapshot.

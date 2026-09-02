@@ -24,6 +24,7 @@
 - **Proof:** A first-time visitor can explain the offer and find the booking
   action within ten seconds.
 - **Receiving project or repository:** The implementation project selected by its owner.
-- **Review and acceptance owner:** ADS Review approves the portable direction;
-  the selected implementation owner explicitly accepts any cross-owner
+- **Review mode:** independent
+- **Review owner:** ADS Review
+- **Receiver acceptance:** The selected implementation owner explicitly accepts any cross-owner
   `HANDOFF.md` snapshot.

@@ -3,6 +3,8 @@
   "curated": true,
   "example": "onlinesourdough-resources",
   "review": "PASS",
+  "reviewed_design_sha256": "19ab27bf48eafb1706e091918c0a4831a59302b636f191826cb355e9c6b5fafa",
+  "reviewer": "ADS Review",
   "source_run_id": "carried-dirty-build-6-8",
   "status": "succeeded"
 }

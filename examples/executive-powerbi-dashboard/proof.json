@@ -2,6 +2,8 @@
   "curated": true,
   "example": "executive-powerbi-dashboard",
   "review": "PASS",
+  "reviewed_design_sha256": "06e47bdf12bc47a685f651818709b2ad33b7d31f1a965ece7244dc52aba79cd8",
+  "reviewer": "ADS Review",
   "source_run_id": "curated-executive-powerbi-dashboard",
   "status": "succeeded"
 }

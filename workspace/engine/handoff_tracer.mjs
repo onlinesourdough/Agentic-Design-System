@@ -31,6 +31,9 @@ try {
 
 - **Receiving outcome:** Apply the approved visual direction in the named receiving repository.
 - **Source/reference rights, provenance, and licensing:** ADS-owned tracer text under the repository license; no external assets.
+- **Review mode:** independent
+- **Review owner:** ADS Review
+- **Receiver acceptance:** The named receiving repository separately decides whether to accept the generated snapshot.
 `,
     "utf8",
   );
@@ -49,7 +52,12 @@ version: 1.0.0
   );
   writeFileSync(
     join(minimalSource, "REVIEW.md"),
-    "# Review evidence\n\nResult: PASS\n",
+    `# Review evidence
+
+Reviewer: ADS Review
+Result: PASS
+Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
+`,
     "utf8",
   );
   const ordinary = run([
@@ -69,6 +77,12 @@ version: 1.0.0
   writeFileSync(
     join(companionSource, "assets/unselected.txt"),
     "not selected\n",
+    "utf8",
+  );
+  const companionReviewPath = join(companionSource, "REVIEW.md");
+  writeFileSync(
+    companionReviewPath,
+    `${readFileSync(companionReviewPath, "utf8").trimEnd()}\n\nReviewed source companion: \`assets/selected.txt\` — SHA-256 \`${sha256(join(companionSource, "assets/selected.txt"))}\`\n`,
     "utf8",
   );
   const selectedCompanions = run([
@@ -168,7 +182,9 @@ version: 1.0.0
 - **Ownership boundary:** ADS owns visual composition, style/voice expression, and motion direction. ACS owns editorial content and all production execution.
 - **Proof:** The accepted handoff is portable, hashed, and usable without ADS at runtime.
 - **Receiving project or repository:** Agentic Content System fixture receiver.
-- **Review and acceptance owner:** Existing ADS Review evidence approves the direction; the fixture receiver explicitly accepts the generated snapshot.
+- **Review mode:** independent
+- **Review owner:** ADS Review
+- **Receiver acceptance:** The fixture receiver explicitly accepts the generated snapshot.
 `,
     "utf8",
   );
@@ -198,6 +214,16 @@ version: 1.0.0
       "\n## Isolated revision fixture\n\nThis temporary tracer-only revision proves explicit re-handoff without changing the accepted snapshot.\n",
     );
   writeFileSync(join(contentSource, "DESIGN.md"), revisedDesign, "utf8");
+  const contentProofPath = join(contentSource, "proof.json");
+  const contentProof = JSON.parse(readFileSync(contentProofPath, "utf8"));
+  contentProof.reviewed_design_sha256 = sha256(
+    join(contentSource, "DESIGN.md"),
+  );
+  writeFileSync(
+    contentProofPath,
+    `${JSON.stringify(contentProof, null, 2)}\n`,
+    "utf8",
+  );
   const revisedOutput = join(temporary, "content-visual-revision");
   const revisedContent = run([
     contentSource,
@@ -219,9 +245,8 @@ version: 1.0.0
   if (ordinary.openpencil.status !== "not-requested")
     fail("minimal handoff unexpectedly selected OpenPencil");
   if (
-    ordinary.companions.preview ||
-    ordinary.companions.assets.length ||
-    ordinary.companions.exports.length
+    ordinary.companions.reviewedSourceCompanions.length ||
+    ordinary.companions.deterministicDerivedExports.length
   )
     fail("minimal handoff unexpectedly included optional companions");
   const minimalPaths = ordinary.handoff.artifacts
@@ -231,14 +256,39 @@ version: 1.0.0
   if (minimalPaths !== "BRIEF.md,DESIGN.md,REVIEW.md")
     fail(`minimal handoff has an unexpected artifact set: ${minimalPaths}`);
   if (
-    !selectedCompanions.companions.preview ||
-    selectedCompanions.companions.assets.join(",") !== "assets/selected.txt" ||
-    selectedCompanions.companions.exports.join(",") !==
-      "theme.css,tokens.json,tailwind.theme.json"
+    selectedCompanions.companions.reviewedSourceCompanions
+      .map((artifact) => artifact.path)
+      .sort()
+      .join(",") !== "assets/selected.txt,index.html" ||
+    selectedCompanions.companions.deterministicDerivedExports
+      .map((artifact) => artifact.path)
+      .join(",") !== "theme.css,tokens.json,tailwind.theme.json"
   )
     fail("explicit companion selection was not preserved");
   if (existsSync(join(temporary, "selected-companions/assets/unselected.txt")))
     fail("unselected asset was copied");
+  const selectedSourceCompanionsBound =
+    sourceCompanionsMatchIntegrity(selectedCompanions, 2) &&
+    sourceCompanionsMatchIntegrity(success, 2);
+  if (!selectedSourceCompanionsBound)
+    fail(
+      "selected source companions are not Review-bound to exact integrity hashes",
+    );
+  const derivedExportsBoundToDesign =
+    selectedCompanions.handoff.review.deterministicDerivedExports.length ===
+      3 &&
+    selectedCompanions.handoff.review.deterministicDerivedExports.every(
+      (artifact) =>
+        artifact.derivedFromDesignSha256 ===
+          selectedCompanions.handoff.review.designSha256 &&
+        selectedCompanions.handoff.artifacts.some(
+          (included) =>
+            included.path === artifact.path &&
+            included.sha256 === artifact.sha256,
+        ),
+    );
+  if (!derivedExportsBoundToDesign)
+    fail("deterministic exports are not integrity-bound to reviewed DESIGN.md");
   if (success.openpencil.status !== "included")
     fail(
       `OpenPencil success route did not include artifacts: ${JSON.stringify(success)}`,
@@ -283,9 +333,21 @@ version: 1.0.0
         fallback: fallback.openpencil.status,
         fallbackReason: fallback.openpencil.reason,
         sourceUnchanged: true,
-        source: success.openpencil.source,
-        exports: success.openpencil.exports,
+        sourceCompanion: success.openpencil.sourceCompanion,
+        exportCompanions: success.openpencil.exportCompanions,
         portableContract: ordinary.handoff.contract,
+        reviewGate: {
+          mode: ordinary.handoff.review.mode,
+          reviewOwner: ordinary.handoff.review.reviewOwner,
+          reviewer: ordinary.handoff.review.reviewer,
+          designSha256Bound:
+            ordinary.handoff.review.designSha256 ===
+            ordinary.handoff.artifacts.find(
+              (artifact) => artifact.path === "DESIGN.md",
+            )?.sha256,
+          selectedSourceCompanionsBound,
+          derivedExportsBoundToDesign,
+        },
         minimal: {
           artifacts: ordinary.handoff.artifacts.map((item) => item.path),
           companions: ordinary.companions,
@@ -314,6 +376,9 @@ version: 1.0.0
             nextRevisionAcceptance: revisedContent.handoff.acceptance,
             designCanonical: true,
             adsRuntimeRequiredByReceiver: false,
+            selectedSnapshotOnly: true,
+            liveSync: false,
+            recursiveRequest: false,
           },
         },
         contentGap,
@@ -331,6 +396,15 @@ function assertPortableSnapshot(sourceDirectory, outputDirectory, result) {
     fail(`unexpected portable handoff contract: ${result.handoff.contract}`);
   if (result.handoff.review.status !== "PASS")
     fail("portable handoff was generated without review PASS");
+  if (
+    result.handoff.review.mode !== "independent" ||
+    result.handoff.review.reviewOwner !== result.handoff.review.reviewer ||
+    !result.handoff.review.reviewer ||
+    result.handoff.review.designSha256 !==
+      result.handoff.artifacts.find((artifact) => artifact.path === "DESIGN.md")
+        ?.sha256
+  )
+    fail("portable handoff lacks its named, hash-bound independent Review");
   if (result.handoff.acceptance !== "PENDING")
     fail("new portable handoff did not begin pending acceptance");
   const design = result.handoff.artifacts.find(
@@ -357,6 +431,20 @@ function assertPortableSnapshot(sourceDirectory, outputDirectory, result) {
     "Acceptance state: PENDING",
   ])
     if (!binder.includes(marker)) fail(`portable HANDOFF.md lacks ${marker}`);
+}
+
+function sourceCompanionsMatchIntegrity(result, expectedCount) {
+  const reviewed = result.handoff.review.reviewedSourceCompanions;
+  return (
+    reviewed.length === expectedCount &&
+    reviewed.every((artifact) =>
+      result.handoff.artifacts.some(
+        (included) =>
+          included.path === artifact.path &&
+          included.sha256 === artifact.sha256,
+      ),
+    )
+  );
 }
 
 function acceptFixture(outputDirectory) {
@@ -408,6 +496,10 @@ function fingerprint(directory) {
     hash.update(readFileSync(path));
   }
   return hash.digest("hex");
+}
+
+function sha256(path) {
+  return createHash("sha256").update(readFileSync(path)).digest("hex");
 }
 
 function files(directory) {

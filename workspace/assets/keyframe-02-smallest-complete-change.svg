@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">One Demand constraint routed through the onlinesourdough method</title>
+  <desc id="desc">A warm cream method field routes one terracotta line through five stages, three execution choices, and one bounded AIOS evidence inset.</desc>
+  <defs>
+    <filter id="object-shadow" x="-25%" y="-25%" width="150%" height="170%">
+      <feDropShadow dx="0" dy="9" stdDeviation="8" flood-color="#2B1B12" flood-opacity=".15" />
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F8F2E8" />
+  <image href="onlinesourdough-mark.svg" x="70" y="62" width="98" height="74" />
+  <text x="188" y="107" fill="#2B1B12" font-family="ui-monospace, monospace" font-size="23" font-weight="700">onlinesourdough</text>
+  <text x="70" y="196" fill="#806C5C" font-family="ui-monospace, monospace" font-size="16" font-weight="700" letter-spacing="2.2">00:09–00:29 / ONE CONSTRAINT MOVES</text>
+  <text x="70" y="276" fill="#2B1B12" font-family="Arial, sans-serif" font-size="61" font-weight="720" letter-spacing="-3">One constraint.</text>
+  <text x="70" y="340" fill="#5A3D30" font-family="Arial, sans-serif" font-size="54" font-weight="610" letter-spacing="-2.5">One smallest complete change.</text>
+  <path d="M88 476H1158" stroke="#B86F36" stroke-width="7" stroke-linecap="round" />
+  <g font-family="ui-monospace, monospace" font-size="13" font-weight="700" letter-spacing="1">
+    <g transform="translate(84 433)">
+      <rect width="116" height="86" rx="9" fill="#FFFDF7" stroke="#D4BD9F" />
+      <text x="16" y="34" fill="#806C5C">01 / UNDERSTAND</text>
+      <text x="16" y="58" fill="#2B1B12">THE BUSINESS</text>
+    </g>
+    <g transform="translate(234 416)">
+      <rect width="178" height="120" rx="9" fill="#5A3D30" />
+      <text x="18" y="34" fill="#EEDBC9">02 / FIND</text>
+      <text x="18" y="60" fill="#FFF8EB">OFFER · OPERATIONS</text>
+      <rect x="18" y="77" width="92" height="27" rx="4" fill="#F36F2B" />
+      <text x="31" y="96" fill="#2B1B12">DEMAND ✓</text>
+    </g>
+    <g transform="translate(449 430)">
+      <rect width="216" height="92" rx="9" fill="#FFFDF7" stroke="#D4BD9F" />
+      <text x="17" y="35" fill="#806C5C">03 / CHOOSE</text>
+      <text x="17" y="60" fill="#2B1B12">SMALLEST COMPLETE</text>
+    </g>
+    <g transform="translate(704 438)">
+      <rect width="142" height="77" rx="9" fill="#FFFDF7" stroke="#D4BD9F" />
+      <text x="16" y="32" fill="#806C5C">04 / BUILD</text>
+      <text x="16" y="55" fill="#2B1B12">+ PROVE</text>
+    </g>
+    <g transform="translate(882 426)">
+      <rect width="240" height="101" rx="9" fill="#FFFDF7" stroke="#D4BD9F" />
+      <text x="17" y="34" fill="#806C5C">05 / LAUNCH</text>
+      <text x="17" y="60" fill="#2B1B12">OPERATE · RECOVER</text>
+      <text x="17" y="83" fill="#806C5C">KEEP OWNERSHIP CLEAR</text>
+    </g>
+  </g>
+  <g transform="translate(1193 78)">
+    <rect width="337" height="489" rx="18" fill="#0E1720" />
+    <text x="28" y="47" fill="#72D9ED" font-family="ui-monospace, monospace" font-size="16" font-weight="700" letter-spacing="2">AIOS / LOCAL PROOF</text>
+    <text x="28" y="98" fill="#F3FBFC" font-family="Arial, sans-serif" font-size="31" font-weight="650">Route what matters.</text>
+    <g font-family="ui-monospace, monospace" font-size="14" font-weight="700">
+      <rect x="28" y="139" width="281" height="54" rx="7" fill="#152534" stroke="#27475B" />
+      <text x="46" y="172" fill="#72D9ED">CONTEXT</text><text x="155" y="172" fill="#D8E9EE">Demand constraint</text>
+      <rect x="28" y="207" width="281" height="54" rx="7" fill="#152534" stroke="#27475B" />
+      <text x="46" y="240" fill="#72D9ED">ROUTE</text><text x="155" y="240" fill="#D8E9EE">ADS → ACS</text>
+      <rect x="28" y="275" width="281" height="54" rx="7" fill="#152534" stroke="#27475B" />
+      <text x="46" y="308" fill="#72D9ED">OWNER</text><text x="155" y="308" fill="#D8E9EE">Explicit per node</text>
+      <rect x="28" y="343" width="281" height="54" rx="7" fill="#152534" stroke="#27475B" />
+      <text x="46" y="376" fill="#72D9ED">EVIDENCE</text><text x="155" y="376" fill="#D8E9EE">Review + handoff</text>
+    </g>
+    <path d="M28 428H309" stroke="#27475B" />
+    <text x="28" y="459" fill="#8AA0AA" font-family="ui-monospace, monospace" font-size="12">SMALL MODULAR PRODUCTS</text>
+  </g>
+  <text x="70" y="618" fill="#806C5C" font-family="ui-monospace, monospace" font-size="14" font-weight="700" letter-spacing="1.4">CHOOSE WHO SHOULD DO THE CHANGE</text>
+  <g filter="url(#object-shadow)">
+    <g transform="translate(70 650)">
+      <rect width="310" height="179" rx="14" fill="#FFFDF7" stroke="#DECDB8" />
+      <image href="resources-diy.png" x="12" y="8" width="144" height="144" />
+      <text x="162" y="64" fill="#2B1B12" font-family="Arial, sans-serif" font-size="25" font-weight="700">Resources</text>
+      <text x="162" y="95" fill="#806C5C" font-family="ui-monospace, monospace" font-size="14" font-weight="700">DIY</text>
+      <text x="162" y="128" fill="#5A3D30" font-family="Arial, sans-serif" font-size="17">Do it yourself.</text>
+    </g>
+    <g transform="translate(410 634)">
+      <rect width="342" height="195" rx="14" fill="#F1EADF" stroke="#D4BD9F" />
+      <image href="fermentary-dwy.png" x="10" y="12" width="165" height="165" />
+      <text x="179" y="72" fill="#2B1B12" font-family="Arial, sans-serif" font-size="25" font-weight="700">The Fermentary</text>
+      <text x="179" y="103" fill="#806C5C" font-family="ui-monospace, monospace" font-size="14" font-weight="700">DONE WITH YOU</text>
+      <text x="179" y="137" fill="#5A3D30" font-family="Arial, sans-serif" font-size="17">Work together.</text>
+    </g>
+    <g transform="translate(782 646)">
+      <rect width="350" height="183" rx="14" fill="#F3EAD7" stroke="#146E59" stroke-width="2" />
+      <image href="complete-bake-dfy.png" x="10" y="12" width="158" height="158" />
+      <text x="174" y="61" fill="#146E59" font-family="Arial, sans-serif" font-size="24" font-weight="700">Complete Bake</text>
+      <text x="174" y="91" fill="#146E59" font-family="ui-monospace, monospace" font-size="14" font-weight="700">DONE FOR YOU</text>
+      <text x="174" y="124" fill="#2B1B12" font-family="Arial, sans-serif" font-size="17">Arc’IT AI · in practice</text>
+    </g>
+  </g>
+  <g transform="translate(1193 600)" font-family="ui-monospace, monospace" font-size="13" font-weight="700">
+    <rect width="337" height="229" rx="15" fill="#FFFDF7" stroke="#DECDB8" />
+    <text x="24" y="42" fill="#806C5C">INDEPENDENTLY OWNED</text>
+    <rect x="24" y="66" width="121" height="41" rx="6" fill="#F1EADF" />
+    <text x="42" y="92" fill="#5A3D30">REPOSITORY</text>
+    <rect x="161" y="66" width="151" height="41" rx="6" fill="#F1EADF" />
+    <text x="182" y="92" fill="#5A3D30">PROJECT TEMPLATE</text>
+    <rect x="24" y="123" width="92" height="41" rx="6" fill="#F1EADF" />
+    <text x="48" y="149" fill="#5A3D30">SKILL</text>
+    <rect x="132" y="123" width="180" height="41" rx="6" fill="#F1EADF" />
+    <text x="153" y="149" fill="#5A3D30">LOCAL PRODUCT</text>
+    <text x="24" y="199" fill="#806C5C">MODULAR, NEVER ONE STACK.</text>
+  </g>
+</svg>
+

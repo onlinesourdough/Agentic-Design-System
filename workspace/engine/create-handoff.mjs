@@ -49,10 +49,23 @@ for (const file of ["BRIEF.md", "DESIGN.md"]) {
   if (!existsSync(join(source, file)))
     fail(`${relative(root, source)}/${file} is missing.`);
 }
+assertAcceptedSnapshotIsImmutable(output);
 const portable = inspectPortableContract(source, receivingOwner);
 const companions = inspectCompanions(source, options, designmd);
 const openPencil = inspectOpenPencilRoute(source, options);
-assertAcceptedSnapshotIsImmutable(output);
+const reviewedSourceCompanions = assertReviewedSourceCompanions(
+  portable.review,
+  companions,
+  openPencil,
+);
+const reviewBoundary = {
+  reviewedSourceCompanions,
+  deterministicDerivedExports: companions.exports.map((artifact) => ({
+    path: artifact.handoffPath,
+    sha256: artifact.sha256,
+    derivedFromDesignSha256: portable.review.reviewedDesignSha256,
+  })),
+};
 
 rmSync(output, { recursive: true, force: true });
 mkdirSync(output, { recursive: true });
@@ -66,7 +79,10 @@ for (const artifact of companions.files) {
     fail(`Copied companion changed: ${artifact.handoffPath}`);
 }
 for (const exported of companions.exports) {
-  writeFileSync(join(output, exported.handoffPath), exported.content);
+  const target = join(output, exported.handoffPath);
+  writeFileSync(target, exported.content);
+  if (sha256(target) !== exported.sha256)
+    fail(`Generated export changed: ${exported.handoffPath}`);
 }
 
 if (openPencil.status === "included") {
@@ -88,6 +104,7 @@ writeFileSync(
     openPencil,
     portable,
     receivingOwner,
+    reviewBoundary,
     source: relative(root, source),
   }),
 );
@@ -108,28 +125,27 @@ process.stdout.write(
         revision: portable.revision,
         sourceRevision: portable.sourceRevision,
         receivingOutcome: portable.receivingOutcome,
-        review: portable.review,
+        review: publicReview(portable.review, reviewBoundary),
         acceptance: "PENDING",
         artifacts: manifest,
       },
       receivingOwner,
       companions: {
-        preview: companions.preview,
-        assets: companions.assets.map((artifact) => artifact.handoffPath),
-        exports: companions.exports.map((artifact) => artifact.handoffPath),
+        reviewedSourceCompanions: reviewBoundary.reviewedSourceCompanions,
+        deterministicDerivedExports: reviewBoundary.deterministicDerivedExports,
       },
       openpencil: {
         requested: openPencil.requested,
         status: openPencil.status,
         reason: openPencil.reason ?? null,
-        source:
+        sourceCompanion:
           openPencil.status === "included"
             ? {
                 path: openPencil.source.handoffPath,
                 sha256: openPencil.source.sha256,
               }
             : null,
-        exports:
+        exportCompanions:
           openPencil.status === "included"
             ? openPencil.exports.map((artifact) => ({
                 path: artifact.handoffPath,
@@ -244,6 +260,9 @@ function inspectCompanions(sourceRoot, values, exporter) {
     return {
       handoffPath,
       content: `${exported.stdout.trimEnd()}\n`,
+      sha256: createHash("sha256")
+        .update(`${exported.stdout.trimEnd()}\n`)
+        .digest("hex"),
     };
   });
 
@@ -299,6 +318,16 @@ function inspectPortableContract(sourceRoot, owner) {
     "Known limitations",
     "DESIGN.md",
   );
+  const reviewMode = requiredStrongField(
+    brief,
+    "Review mode",
+    "BRIEF.md",
+  ).toLowerCase();
+  if (!["independent", "owner"].includes(reviewMode))
+    fail(
+      `BRIEF.md **Review mode:** must be exactly independent or owner; received ${reviewMode}.`,
+    );
+  const reviewOwner = requiredStrongField(brief, "Review owner", "BRIEF.md");
   const version = design.match(/^version:\s*["']?([^\n"']+)["']?\s*$/m)?.[1];
   const name = design.match(/^name:\s*["']?([^\n"']+)["']?\s*$/m)?.[1];
   if (!version || !name)
@@ -306,13 +335,25 @@ function inspectPortableContract(sourceRoot, owner) {
       "DESIGN.md must declare non-empty frontmatter version and name values.",
     );
 
-  const review = inspectReview(sourceRoot);
-  if (review.status !== "PASS")
-    fail(
-      `Cross-owner handoff requires review PASS; received ${review.status}.`,
-    );
-
   const designSha256 = sha256(designPath);
+  const review = {
+    ...inspectReview(sourceRoot),
+    mode: reviewMode,
+    reviewOwner,
+  };
+  const reviewProblem = reviewGateProblem(review, designSha256);
+  const identityProblem =
+    review.reviewer &&
+    normalizeIdentity(review.reviewer) !== normalizeIdentity(reviewOwner)
+      ? `${review.evidence} Reviewer ${review.reviewer} does not match BRIEF.md Review owner ${reviewOwner}.`
+      : null;
+  if (reviewMode === "owner") {
+    if (reviewProblem || identityProblem)
+      waitingOwner(reviewProblem ?? identityProblem);
+  } else {
+    if (reviewProblem || identityProblem)
+      fail(reviewProblem ?? identityProblem);
+  }
   const identitySeed = `${name.trim()}\n${owner}\n${receivingOutcome}`;
   const identity = createHash("sha256")
     .update(identitySeed)
@@ -351,26 +392,114 @@ function requiredStrongField(markdown, label, filename) {
 function inspectReview(sourceRoot) {
   const reviewPath = join(sourceRoot, "REVIEW.md");
   if (existsSync(reviewPath)) {
-    const status = readFileSync(reviewPath, "utf8").match(
-      /^Result:\s*(PASS|REVISE|BLOCKED)\s*$/m,
+    const review = readFileSync(reviewPath, "utf8");
+    const status = review.match(/^Result:\s*(PASS|REVISE|BLOCKED)\s*$/m)?.[1];
+    const reviewer = review.match(/^Reviewer:\s*(\S[^\n]*)\s*$/m)?.[1]?.trim();
+    const reviewedDesignSha256 = review.match(
+      /^Reviewed DESIGN\.md SHA-256:\s*`?([0-9a-f]{64})`?\s*$/m,
     )?.[1];
-    if (!status) fail("REVIEW.md lacks Result: PASS | REVISE | BLOCKED.");
-    return { status, evidence: "REVIEW.md" };
+    const reviewedSourceCompanions = {};
+    for (const match of review.matchAll(
+      /^Reviewed (?:source )?companion:\s*`([^`]+)`\s+(?:—|-)\s+SHA-256\s+`([0-9a-f]{64})`\s*$/gm,
+    ))
+      reviewedSourceCompanions[match[1]] = match[2];
+    return {
+      status,
+      reviewer,
+      reviewedDesignSha256,
+      reviewedSourceCompanions,
+      evidence: "REVIEW.md",
+      error: status ? null : "REVIEW.md lacks Result: PASS | REVISE | BLOCKED.",
+    };
   }
   const proofPath = join(sourceRoot, "proof.json");
   if (!existsSync(proofPath))
-    fail(
-      "Cross-owner handoff requires REVIEW.md or proof.json review evidence.",
-    );
+    return {
+      error:
+        "Cross-owner handoff requires REVIEW.md or proof.json review evidence.",
+    };
   let proof;
   try {
     proof = JSON.parse(readFileSync(proofPath, "utf8"));
   } catch {
-    fail("proof.json is not readable JSON review evidence.");
+    return { error: "proof.json is not readable JSON review evidence." };
   }
   const status = proof?.review;
-  if (!status) fail("proof.json lacks a review value.");
-  return { status: String(status), evidence: "proof.json" };
+  return {
+    status: status ? String(status) : undefined,
+    reviewer:
+      typeof proof?.reviewer === "string" ? proof.reviewer.trim() : undefined,
+    reviewedDesignSha256:
+      typeof proof?.reviewed_design_sha256 === "string"
+        ? proof.reviewed_design_sha256
+        : undefined,
+    reviewedSourceCompanions: reviewedSourceCompanionsFromProof(proof),
+    evidence: "proof.json",
+    error: status ? null : "proof.json lacks a review value.",
+  };
+}
+
+function reviewGateProblem(review, designSha256) {
+  if (review.error) return review.error;
+  if (review.status !== "PASS")
+    return `Cross-owner handoff requires review PASS; received ${review.status}.`;
+  if (!review.reviewer)
+    return `${review.evidence} lacks a non-empty named reviewer.`;
+  if (!/^[0-9a-f]{64}$/.test(review.reviewedDesignSha256 ?? ""))
+    return `${review.evidence} lacks a valid Reviewed DESIGN.md SHA-256.`;
+  if (review.reviewedDesignSha256 !== designSha256)
+    return `${review.evidence} does not bind the current DESIGN.md SHA-256.`;
+  return null;
+}
+
+function reviewedSourceCompanionsFromProof(proof) {
+  for (const candidate of [
+    proof?.reviewed_source_companions,
+    proof?.reviewed_companions,
+  ]) {
+    if (candidate && typeof candidate === "object" && !Array.isArray(candidate))
+      return candidate;
+  }
+  return {};
+}
+
+function assertReviewedSourceCompanions(review, companions, openPencil) {
+  const selected = [...companions.files];
+  if (openPencil.status === "included")
+    selected.push(openPencil.source, ...openPencil.exports);
+  for (const artifact of selected) {
+    const reviewedHash =
+      review.reviewedSourceCompanions?.[artifact.handoffPath];
+    if (reviewedHash === artifact.sha256) continue;
+    const problem = reviewedHash
+      ? `${review.evidence} reviewed source companion ${artifact.handoffPath} at a different SHA-256.`
+      : `${review.evidence} does not list selected source companion ${artifact.handoffPath} with its reviewed SHA-256.`;
+    if (review.mode === "owner") waitingOwner(problem);
+    fail(problem);
+  }
+  return selected.map((artifact) => ({
+    path: artifact.handoffPath,
+    sha256: artifact.sha256,
+  }));
+}
+
+function normalizeIdentity(value) {
+  return String(value ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function publicReview(review, reviewBoundary) {
+  return {
+    status: review.status,
+    mode: review.mode,
+    reviewOwner: review.reviewOwner,
+    reviewer: review.reviewer,
+    evidence: review.evidence,
+    designSha256: review.reviewedDesignSha256,
+    reviewedSourceCompanions: reviewBoundary.reviewedSourceCompanions,
+    deterministicDerivedExports: reviewBoundary.deterministicDerivedExports,
+  };
 }
 
 function inspectOpenPencilRoute(sourceRoot, values) {
@@ -573,6 +702,7 @@ function handoffMarkdown({
   openPencil,
   portable,
   receivingOwner,
+  reviewBoundary,
   source: sourcePath,
 }) {
   const lines = [
@@ -593,6 +723,14 @@ function handoffMarkdown({
     `Receiving outcome: ${clean(portable.receivingOutcome)}`,
     "",
     `Review state: ${clean(portable.review.status)} (evidence: \`${clean(portable.review.evidence)}\`)`,
+    "",
+    `Review mode: ${clean(portable.review.mode)}`,
+    "",
+    `Review owner: ${clean(portable.review.reviewOwner)}`,
+    "",
+    `Reviewer: ${clean(portable.review.reviewer)}`,
+    "",
+    `Reviewed DESIGN.md SHA-256: \`${clean(portable.review.reviewedDesignSha256)}\``,
     "",
     "Acceptance state: PENDING",
     "",
@@ -617,6 +755,29 @@ function handoffMarkdown({
     ),
     "",
     "`HANDOFF.md` is the human-readable binder and is excluded from its own integrity list.",
+    "",
+    "## Review and derivation boundary",
+    "",
+    `The named reviewer matches BRIEF.md Review owner ${clean(portable.review.reviewOwner)}. This human Review identity is separate from receiving owner ${clean(receivingOwner)} and from the receiver's later acceptance decision.`,
+    "",
+    "The current `DESIGN.md` hash above is the reviewed canonical direction. Every pre-existing selected preview, asset, editable source, and native export must appear below with its exact reviewed source hash. CSS, design-token, and Tailwind files are instead deterministic derivatives generated from that exact reviewed `DESIGN.md`; they are integrity-hashed here but do not masquerade as pre-existing reviewed files.",
+    "",
+    "Reviewed source companions:",
+    "",
+    ...(reviewBoundary.reviewedSourceCompanions.length
+      ? reviewBoundary.reviewedSourceCompanions.map(
+          (item) => `- \`${item.path}\` — SHA-256 \`${item.sha256}\``,
+        )
+      : ["- None selected."]),
+    "",
+    "Deterministic derived exports:",
+    "",
+    ...(reviewBoundary.deterministicDerivedExports.length
+      ? reviewBoundary.deterministicDerivedExports.map(
+          (item) =>
+            `- \`${item.path}\` — SHA-256 \`${item.sha256}\`; derived from reviewed DESIGN.md SHA-256 \`${item.derivedFromDesignSha256}\``,
+        )
+      : ["- None selected."]),
     "",
     "## Provenance and licensing",
     "",
@@ -695,4 +856,11 @@ function fail(message) {
     `${JSON.stringify({ success: false, error: message })}\n`,
   );
   process.exit(1);
+}
+
+function waitingOwner(message) {
+  process.stderr.write(
+    `${JSON.stringify({ success: false, status: "waiting-owner", error: message })}\n`,
+  );
+  process.exit(2);
 }

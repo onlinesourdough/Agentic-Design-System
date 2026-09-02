@@ -237,7 +237,9 @@ def _repository_audit(
         "**Receiving outcome:**",
         "**Source/reference rights, provenance, and licensing:**",
         "**Ownership boundary:**",
-        "**Review and acceptance owner:**",
+        "**Review mode:**",
+        "**Review owner:**",
+        "**Receiver acceptance:**",
     ):
         if marker not in brief_text:
             findings.append(f"active BRIEF.md lacks capability boundary {marker}")

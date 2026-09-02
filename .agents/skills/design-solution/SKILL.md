@@ -15,8 +15,8 @@ authoring method it calls; it does not own the ledger or gallery.
 2. Name the intended outcome and receiving owner/reuse scope, audience/job,
    current constraint, primary action or decision, surfaces/form factors, real
    content/data, required states, material brand/content/technical/accessibility/
-   legal/delivery constraints, source rights/provenance, proof, and acceptance
-   owner.
+   legal/delivery constraints, source rights/provenance, proof, named Review
+   owner, and separate receiver-acceptance decision.
 3. Ask one question only when a missing answer would materially change the
    direction; otherwise state the smallest reasonable assumption.
 4. Reduce the interface to the smallest composition that completes that job.
@@ -60,8 +60,11 @@ After `review-design` passes, run
 `npm run handoff -- <directory> <output> --receiving-owner <owner>`. Confirm the
 output contains canonical `DESIGN.md`, `BRIEF.md`, copied `REVIEW.md` or
 `proof.json`, and versioned `HANDOFF.md`. Add preview, individual assets, or
-CSS/design-token/Tailwind exports only through explicit companion selections
-for that outcome. Confirm its receiving outcome, all included hashes,
+CSS/design-token/Tailwind exports only through explicit selections for that
+outcome. Pre-existing selected previews/assets/native files need exact Review
+path/hash evidence. Deterministic CSS/design-token/Tailwind outputs are instead
+generated from the reviewed `DESIGN.md` and bound to its hash in the binder.
+Confirm its receiving outcome, all included hashes,
 provenance/licensing, review, limitations, and pending or explicit receiver
 acceptance. No export tooling is required when exports are unselected. Only an
 explicitly selected OpenPencil route adds a reviewed `.op` source and PNG/SVG
@@ -70,3 +73,9 @@ instructions here.
 The receiving owner becomes canonical for its accepted implementation or
 production copy; `DESIGN.md` remains the handed-off visual source of truth and
 this repository remains a design workbench, not a runtime dependency.
+The brief-selected mode and named Review owner gate generation: in both modes
+the evidence reviewer must match that declared Review owner, never the CLI
+receiver. A matching independent PASS is sufficient for `independent`, while
+`owner` returns `waiting-owner` until the exact Review owner records the bound
+PASS. Receiver acceptance remains separate. The receiver copies an accepted
+snapshot; it never live-syncs this workspace or recursively invokes ADS.

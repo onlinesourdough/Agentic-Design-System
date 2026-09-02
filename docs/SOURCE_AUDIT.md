@@ -47,7 +47,12 @@ different roles into the current semantic direction and one named example.
 - **Role:** optional tool adapter
 - **Revision/version:** Release `v0.8.4` at peeled commit `c51d7ed41a96068a09127bbc096fee143fce0b22`; upstream main observed at `9c810776dab546076a5d9db791a49d9e8048dbd7`.
 - **License/reuse boundary:** MIT license blob `0dec8929ada31c1b4a60e64410e283a538ca9dfc`; temporary verified binaries were not vendored, and no OpenPencil UI/template/asset enters ADS.
-- **Maintenance/availability:** The macOS arm64 CLI and DMG plus SHA256 sums were publicly available on 2026-08-27; the CLI archive alone is only a client and needs a desktop or web host.
+- **Maintenance/availability:** The macOS arm64 CLI, DMG, and VSIX plus SHA256
+  sums were publicly available on 2026-08-27. The verified VSIX SHA-256 is
+  `7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342`;
+  its release daemon and web bundle run through the optional ADS-local
+  strict-loopback workbench without installing or vendoring them. The CLI
+  archive alone remains only a client/version probe.
 - **Framework/accessibility fit:** Tool-native editing and export fit an explicitly selected creative route, but accessibility remains owned by semantic `DESIGN.md`, HTML preview, and per-design Review.
 - **Visual reason:** It provides an editable composition and reviewed raster boundary for a receiving designer without making every ADS run tool-specific.
 - **Learned versus copied:** OpenPencil imported ADS-owned HTML into editable nodes; ADS removed one importer artifact and copied no upstream design content.

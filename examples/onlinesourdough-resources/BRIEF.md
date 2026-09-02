@@ -125,6 +125,7 @@ Ecosystem`, `Open Source`, and `In Practice`, in that order. Each folder is a
 - **Receiving project or repository:** The project selected to implement the
   accepted design; this example remains a portable design workbench artifact
   until accepted.
-- **Review and acceptance owner:** ADS Review approves this direction and its
-  optional native-source boundary; the named receiving owner explicitly
-  accepts any cross-owner `HANDOFF.md` snapshot.
+- **Review mode:** independent
+- **Review owner:** ADS Review
+- **Receiver acceptance:** The named receiving owner explicitly accepts any
+  cross-owner `HANDOFF.md` snapshot.

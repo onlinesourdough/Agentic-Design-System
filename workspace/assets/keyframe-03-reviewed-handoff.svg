@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">The reviewed handoff returns to Business Freedom</title>
+  <desc id="desc">Separate ADS, ACS, and Diffusion Studio ownership fields are connected by one selected terracotta handoff, supported by AIOS evidence and ending at a human review point.</desc>
+  <defs>
+    <filter id="soft-shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#2B1B12" flood-opacity=".12" />
+    </filter>
+    <clipPath id="practice-image"><rect x="1275" y="65" width="255" height="146" rx="12" /></clipPath>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFDF7" />
+  <rect x="0" y="0" width="1600" height="18" fill="#F36F2B" />
+  <text x="72" y="90" fill="#806C5C" font-family="ui-monospace, monospace" font-size="16" font-weight="700" letter-spacing="2.1">00:29–00:39 / REVIEWED HANDOFF</text>
+  <text x="72" y="171" fill="#2B1B12" font-family="Arial, sans-serif" font-size="59" font-weight="720" letter-spacing="-2.8">Reusable direction.</text>
+  <text x="72" y="232" fill="#5A3D30" font-family="Arial, sans-serif" font-size="50" font-weight="610" letter-spacing="-2.2">Reviewable production.</text>
+  <g clip-path="url(#practice-image)">
+    <image href="arcitai-panorama-day.jpg" x="1275" y="65" width="255" height="146" preserveAspectRatio="xMidYMid slice" />
+    <rect x="1275" y="65" width="255" height="146" fill="#146E59" opacity=".76" />
+  </g>
+  <image href="arcitai-mark.svg" x="1293" y="82" width="48" height="48" />
+  <text x="1293" y="159" fill="#FFFDF7" font-family="Arial, sans-serif" font-size="18" font-weight="700">Complete Bake</text>
+  <text x="1293" y="185" fill="#E1F4ED" font-family="ui-monospace, monospace" font-size="12" font-weight="700">ARC’IT AI / IN PRACTICE</text>
+  <path d="M94 463H1401" stroke="#B86F36" stroke-width="7" stroke-linecap="round" />
+  <circle cx="94" cy="463" r="15" fill="#B86F36" />
+  <path d="M1389 447l28 16-28 16z" fill="#B86F36" />
+  <g filter="url(#soft-shadow)">
+    <g transform="translate(122 335)">
+      <path d="M0 0h348l28 28v218H0z" fill="#F8F2E8" stroke="#DECDB8" />
+      <text x="26" y="48" fill="#806C5C" font-family="ui-monospace, monospace" font-size="14" font-weight="700" letter-spacing="1.6">ADS / VISUAL OWNER</text>
+      <text x="26" y="104" fill="#2B1B12" font-family="Arial, sans-serif" font-size="34" font-weight="700">Direction</text>
+      <text x="26" y="143" fill="#5A3D30" font-family="Arial, sans-serif" font-size="18">Brand roles · hierarchy</text>
+      <text x="26" y="174" fill="#5A3D30" font-family="Arial, sans-serif" font-size="18">keyframes · motion rules</text>
+      <rect x="26" y="200" width="182" height="29" rx="5" fill="#5A3D30" />
+      <text x="41" y="220" fill="#FFF8EB" font-family="ui-monospace, monospace" font-size="12" font-weight="700">REVIEWED DESIGN.md</text>
+    </g>
+    <g transform="translate(548 305)">
+      <path d="M0 0h404l32 32v276H0z" fill="#5A3D30" />
+      <text x="28" y="50" fill="#EEDBC9" font-family="ui-monospace, monospace" font-size="14" font-weight="700" letter-spacing="1.6">ACS / CONTENT OWNER</text>
+      <text x="28" y="108" fill="#FFF8EB" font-family="Arial, sans-serif" font-size="36" font-weight="700">Lineage + production</text>
+      <g font-family="Arial, sans-serif" font-size="18" fill="#FFF8EB">
+        <text x="28" y="157">01  Final thesis, hook, script</text>
+        <text x="28" y="194">02  Independent node review</text>
+        <text x="28" y="231">03  Edit, package, supervised handoff</text>
+      </g>
+      <rect x="28" y="255" width="206" height="31" rx="5" fill="#F36F2B" />
+      <text x="44" y="276" fill="#2B1B12" font-family="ui-monospace, monospace" font-size="12" font-weight="700">RECEIVER / PENDING</text>
+    </g>
+    <g transform="translate(1031 347)">
+      <path d="M0 0h329l28 28v219H0z" fill="#F1EADF" stroke="#D4BD9F" />
+      <text x="26" y="47" fill="#806C5C" font-family="ui-monospace, monospace" font-size="14" font-weight="700" letter-spacing="1.4">DIFFUSION STUDIO</text>
+      <text x="26" y="99" fill="#2B1B12" font-family="Arial, sans-serif" font-size="31" font-weight="700">Local render</text>
+      <text x="26" y="136" fill="#5A3D30" font-family="Arial, sans-serif" font-size="18">Electron / DAPI authority</text>
+      <rect x="26" y="165" width="118" height="59" rx="7" fill="#0E1720" />
+      <circle cx="45" cy="183" r="4" fill="#72D9ED" />
+      <rect x="41" y="194" width="88" height="4" rx="2" fill="#27475B" />
+      <rect x="41" y="204" width="62" height="4" rx="2" fill="#27475B" />
+      <g transform="translate(162 158)">
+        <rect width="148" height="71" rx="7" fill="#FFFDF7" stroke="#806C5C" />
+        <rect x="10" y="11" width="128" height="38" rx="3" fill="#F8F2E8" />
+        <path d="M64 24l19 8-19 8z" fill="#B86F36" />
+        <text x="20" y="64" fill="#5A3D30" font-family="ui-monospace, monospace" font-size="10" font-weight="700">HUMAN REVIEW</text>
+      </g>
+    </g>
+  </g>
+  <g transform="translate(122 646)">
+    <rect width="1238" height="83" rx="13" fill="#0E1720" />
+    <text x="24" y="31" fill="#72D9ED" font-family="ui-monospace, monospace" font-size="13" font-weight="700" letter-spacing="1.5">AIOS / ORDINARY CONTEXT + EVIDENCE</text>
+    <g font-family="ui-monospace, monospace" font-size="12" font-weight="700">
+      <rect x="24" y="45" width="202" height="25" rx="4" fill="#152534" /><text x="40" y="62" fill="#D8E9EE">CONTEXT / DEMAND</text>
+      <rect x="242" y="45" width="207" height="25" rx="4" fill="#152534" /><text x="258" y="62" fill="#D8E9EE">ROUTE / BOUNDED</text>
+      <rect x="465" y="45" width="232" height="25" rx="4" fill="#152534" /><text x="481" y="62" fill="#D8E9EE">OWNER / PER NODE</text>
+      <rect x="713" y="45" width="259" height="25" rx="4" fill="#152534" /><text x="729" y="62" fill="#D8E9EE">EVIDENCE / REVIEWED</text>
+      <text x="1001" y="62" fill="#8AA0AA">NO SHARED RUNTIME</text>
+    </g>
+  </g>
+  <circle cx="1419" cy="463" r="30" fill="#3B6F55" />
+  <path d="M1406 463l9 9 18-21" fill="none" stroke="#FFFDF7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="1218" y="775" fill="#3B6F55" font-family="ui-monospace, monospace" font-size="13" font-weight="700">HUMAN APPROVAL POINT</text>
+  <text x="72" y="812" fill="#2B1B12" font-family="ui-monospace, monospace" font-size="44" font-weight="700" letter-spacing="-2">Business Freedom</text>
+  <text x="72" y="854" fill="#5A3D30" font-family="Arial, sans-serif" font-size="24">Demand keeps moving. Gustav keeps the choice.</text>
+  <g transform="translate(1374 790)" font-family="ui-monospace, monospace" font-size="10" font-weight="700">
+    <rect x="0" y="0" width="156" height="69" rx="8" fill="#F8F2E8" stroke="#DECDB8" />
+    <text x="15" y="25" fill="#806C5C">REPOSITORIES</text>
+    <text x="15" y="44" fill="#806C5C">TEMPLATES · SKILLS</text>
+    <text x="15" y="61" fill="#5A3D30">OWNED SEPARATELY</text>
+  </g>
+</svg>

@@ -1,33 +1,49 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="The active Agentic Design System route for a canonical portable DESIGN.md and reviewed handoff."
-    />
-    <title>ADS workspace — Agentic Design System</title>
+    <meta name="color-scheme" content="light" />
+    <title>Business Freedom content system story · ADS r1</title>
     <style>
+      @font-face {
+        font-family: "Geist Sans";
+        src: url("assets/fonts/geist-sans-variable.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("assets/fonts/geist-mono-variable.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist Pixel";
+        src: url("assets/fonts/geist-pixel-square.woff2") format("woff2");
+        font-display: swap;
+      }
+
       :root {
-        color-scheme: light;
-        --paper: #f5f1e8;
-        --surface: #fffdf7;
-        --surface-soft: #ece9e0;
-        --ink: #1d282b;
-        --muted: #5c6868;
-        --line: #d7d2c7;
-        --teal: #173d45;
-        --teal-soft: #dbe8e5;
-        --rust: #d06b45;
-        --rust-dark: #a94c32;
-        --green: #2c765b;
-        --red: #a84335;
-        --shadow: 0 18px 50px rgb(37 47 44 / 0.08);
-        --sans:
-          ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+        --cream: #f8f2e8;
+        --paper: #fffdf7;
+        --paper-soft: #f1eadf;
+        --ink: #2b1b12;
+        --muted: #766252;
+        --border: #decdb8;
+        --border-strong: #d4bd9f;
+        --orange: #f36f2b;
+        --terracotta: #b86f36;
+        --walnut: #5a3d30;
+        --aios: #0e1720;
+        --aios-surface: #152534;
+        --cyan: #72d9ed;
+        --arcit: #146e59;
+        --arcit-sand: #f3ead7;
+        --success: #3b6f55;
+        --error: #9f3e2c;
+        --focus: #2b6f98;
+        --shadow: 0 18px 45px rgb(43 27 18 / 12%);
       }
 
       * {
@@ -35,690 +51,1620 @@
       }
 
       html {
-        min-width: 320px;
         scroll-behavior: smooth;
       }
 
       body {
-        min-width: 320px;
         margin: 0;
-        background: var(--paper);
+        background: var(--cream);
         color: var(--ink);
-        font-family: var(--sans);
-        line-height: 1.55;
-      }
-
-      a {
-        color: inherit;
-      }
-
-      button {
-        font: inherit;
+        font-family: "Geist Sans", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
       }
 
       button,
-      a {
-        -webkit-tap-highlight-color: transparent;
+      summary {
+        font: inherit;
       }
 
-      :focus-visible {
-        outline: 3px solid var(--rust);
-        outline-offset: 4px;
+      button {
+        color: inherit;
+      }
+
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      [hidden] {
+        display: none !important;
       }
 
       .skip-link {
         position: fixed;
-        z-index: 10;
-        top: 14px;
-        left: 14px;
-        transform: translateY(-180%);
-        border-radius: 6px;
-        background: var(--teal);
-        color: #fffdf7;
+        top: 10px;
+        left: 10px;
+        z-index: 100;
+        transform: translateY(-160%);
         padding: 10px 14px;
-        text-decoration: none;
+        border-radius: 7px;
+        background: var(--ink);
+        color: #fffaf1;
+        font-family: "Geist Mono", monospace;
+        font-size: 12px;
         font-weight: 700;
+        text-decoration: none;
       }
 
       .skip-link:focus {
         transform: translateY(0);
       }
 
-      .site-header {
-        border-bottom: 1px solid var(--line);
-        background: var(--teal);
-        color: #f5f1e8;
+      :focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 4px;
       }
 
-      .header-inner,
-      main,
-      .site-footer {
-        width: min(1200px, calc(100% - 48px));
-        margin: 0 auto;
+      .shell {
+        width: min(1180px, calc(100% - 40px));
+        margin-inline: auto;
       }
 
-      .header-inner {
+      .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        min-height: 70px;
-        gap: 24px;
+        gap: 20px;
+        min-height: 72px;
+        border-bottom: 1px solid var(--border);
       }
 
-      .brand {
-        display: inline-flex;
+      .identity,
+      .run-state,
+      .control-row,
+      .state-message-head,
+      .frame-meta {
+        display: flex;
         align-items: center;
-        gap: 11px;
-        color: inherit;
-        text-decoration: none;
       }
 
-      .brand-mark {
-        display: grid;
-        width: 30px;
-        height: 30px;
-        place-items: center;
-        border: 1px solid rgb(245 241 232 / 0.55);
-        border-radius: 50%;
-        color: var(--rust);
-        font-family: var(--mono);
-        font-size: 12px;
-        font-weight: 800;
+      .identity {
+        gap: 13px;
+        min-width: 0;
       }
 
-      .brand-copy {
-        display: grid;
-        gap: 1px;
+      .line-mark {
+        position: relative;
+        width: 38px;
+        height: 38px;
+        flex: 0 0 auto;
+        border: 1px solid var(--walnut);
+        border-radius: 9px;
       }
 
-      .brand-copy strong {
-        font-size: 14px;
-        letter-spacing: -0.02em;
+      .line-mark::before,
+      .line-mark::after {
+        content: "";
+        position: absolute;
+        left: 7px;
+        right: 7px;
+        height: 3px;
+        background: var(--terracotta);
       }
 
-      .brand-copy span,
+      .line-mark::before {
+        top: 12px;
+      }
+
+      .line-mark::after {
+        bottom: 11px;
+        left: 15px;
+      }
+
       .eyebrow,
       .meta,
-      .field-label,
-      .status-label,
-      .section-kicker {
-        font-family: var(--mono);
+      .run-state,
+      .scene-time,
+      .scene-kicker,
+      .scene-tab,
+      .button,
+      .state-button,
+      .offer-label,
+      .owner-label,
+      .proof-label,
+      .beat-time,
+      .concept-index {
+        font-family: "Geist Mono", ui-monospace, monospace;
         font-size: 11px;
-        letter-spacing: 0.07em;
+        font-weight: 700;
+        letter-spacing: 0.075em;
         text-transform: uppercase;
       }
 
-      .brand-copy span {
-        color: #b9c9c5;
+      .identity p,
+      .identity strong {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
-      .header-nav {
-        display: flex;
-        align-items: center;
-        gap: 20px;
+      .identity p {
+        margin: 0 0 2px;
+        color: var(--muted);
       }
 
-      .header-nav a {
-        color: #e8eee9;
+      .identity strong {
+        display: block;
         font-size: 14px;
-        text-decoration: none;
       }
 
-      .header-nav a:hover {
-        color: #fff;
-        text-decoration: underline;
-        text-underline-offset: 4px;
+      .run-state {
+        gap: 8px;
+        flex: 0 0 auto;
+        color: var(--success);
       }
 
-      main {
-        padding: 66px 0 92px;
+      .run-state::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: currentColor;
       }
 
-      .route-header {
+      .intro {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 325px;
-        gap: 72px;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 60px;
         align-items: end;
-        padding-bottom: 56px;
-        border-bottom: 1px solid var(--line);
+        padding: 80px 0 48px;
       }
 
-      .eyebrow,
-      .section-kicker,
-      .field-label,
-      .status-label {
-        color: var(--rust-dark);
-        font-weight: 750;
+      .intro h1,
+      .section-heading h2,
+      .freedom-title {
+        font-family: "Geist Pixel", "Geist Mono", monospace;
+        font-weight: 400;
+        letter-spacing: -0.045em;
       }
 
-      h1,
-      h2,
-      h3,
-      p {
-        margin-top: 0;
+      .intro h1 {
+        max-width: 840px;
+        margin: 10px 0 0;
+        font-size: clamp(48px, 7vw, 84px);
+        line-height: 0.94;
       }
 
-      h1 {
-        max-width: 780px;
-        margin-bottom: 22px;
-        font-size: clamp(48px, 7vw, 82px);
-        line-height: 0.96;
-        letter-spacing: -0.065em;
-      }
-
-      .lede {
-        max-width: 650px;
-        margin-bottom: 30px;
+      .intro-note {
+        margin: 0;
+        padding: 18px 0 4px 20px;
+        border-left: 3px solid var(--orange);
         color: var(--muted);
         font-size: 18px;
       }
 
-      .action-row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 12px;
+      .player-shell {
+        padding-bottom: 70px;
       }
 
-      .button-primary,
-      .button-secondary,
-      .state-button {
-        border: 1px solid transparent;
-        border-radius: 9px;
-        cursor: pointer;
-        font-weight: 750;
-        text-decoration: none;
-        transition:
-          transform 160ms ease,
-          background-color 160ms ease,
-          border-color 160ms ease;
-      }
-
-      .button-primary {
-        background: var(--teal);
-        color: #fffdf7;
-        padding: 13px 17px;
-      }
-
-      .button-primary:hover {
-        background: #245762;
-        transform: translateY(-1px);
-      }
-
-      .button-primary[aria-busy="true"] {
-        cursor: wait;
-        opacity: 0.78;
-      }
-
-      .button-secondary {
-        border-color: var(--line);
-        background: transparent;
-        color: var(--teal);
-        padding: 12px 16px;
-      }
-
-      .button-secondary:hover {
-        border-color: var(--teal);
-        background: var(--surface);
-      }
-
-      .status-card {
+      .stage {
         position: relative;
-        border-top: 2px solid var(--rust);
-        border-bottom: 1px solid var(--line);
-        padding: 18px 0 20px;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        min-height: 380px;
+        border: 1px solid var(--border-strong);
+        border-radius: 24px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
       }
 
-      .status-card::before {
-        position: absolute;
-        top: -8px;
-        left: -1px;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: var(--rust);
+      .stage::after {
         content: "";
+        position: absolute;
+        inset: auto 0 0;
+        z-index: 20;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--terracotta) var(--progress, 0%),
+          transparent 0
+        );
+        pointer-events: none;
       }
 
-      .status-title {
+      .scene {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .scene-inner {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        padding: clamp(30px, 5vw, 72px);
+      }
+
+      .scene-kicker,
+      .scene-time {
+        color: currentColor;
+        opacity: 0.7;
+      }
+
+      .scene-time {
+        position: absolute;
+        right: clamp(26px, 4vw, 58px);
+        bottom: clamp(22px, 4vw, 44px);
+        z-index: 5;
+      }
+
+      .scene h2,
+      .scene h3 {
+        margin: 0;
+        font-weight: 720;
+        letter-spacing: -0.045em;
+        line-height: 0.98;
+      }
+
+      .scene h2 {
+        font-size: clamp(38px, 6vw, 78px);
+      }
+
+      .scene h3 {
+        font-size: clamp(28px, 4.2vw, 58px);
+      }
+
+      .scene p {
+        margin: 18px 0 0;
+        font-size: clamp(16px, 2vw, 24px);
+      }
+
+      .scene-human {
+        background: var(--orange);
+        color: #fffaf1;
+      }
+
+      .scene-human .scene-inner {
+        display: grid;
+        grid-template-columns: 48% 1fr;
+        gap: 54px;
+        align-items: center;
+      }
+
+      .portrait-panel {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 48%;
+        overflow: hidden;
+      }
+
+      .portrait-panel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 43%;
+        filter: saturate(0.82) contrast(1.04);
+      }
+
+      .portrait-panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent 30%, var(--orange));
+      }
+
+      .human-copy {
+        grid-column: 2;
+        max-width: 580px;
+      }
+
+      .human-copy h2 {
+        margin-top: 20px;
+      }
+
+      .public-desk {
+        position: absolute;
+        right: 4.5%;
+        bottom: 4%;
+        width: 21%;
+        opacity: 0.88;
+        transform: rotate(1deg);
+      }
+
+      .scene-queue {
+        background: var(--cream);
+      }
+
+      .queue-layout {
+        display: grid;
+        grid-template-columns: 1fr minmax(360px, 0.9fr);
+        gap: 50px;
+        align-items: center;
+      }
+
+      .queue-copy h2 {
+        max-width: 660px;
+        margin-top: 22px;
+      }
+
+      .queue {
+        position: relative;
+        display: grid;
+        gap: 12px;
+        padding: 24px 0 24px 45px;
+      }
+
+      .queue::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 5px;
+        border-radius: 5px;
+        background: var(--terracotta);
+      }
+
+      .queue-slip {
+        position: relative;
+        z-index: 2;
+        width: min(100%, 330px);
+        padding: 15px 17px;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: var(--paper);
+        box-shadow: 0 8px 20px rgb(43 27 18 / 10%);
+        font-family: "Geist Mono", monospace;
+        font-size: clamp(12px, 1.4vw, 16px);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .queue-slip:nth-child(2) {
+        margin-left: 25px;
+      }
+
+      .queue-slip:nth-child(3) {
+        margin-left: 8px;
+      }
+
+      .queue-slip:nth-child(4) {
+        margin-left: 38px;
+      }
+
+      .scene-method,
+      .scene-offers,
+      .scene-freedom {
+        background: var(--cream);
+      }
+
+      .method-head {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 8px;
+        gap: 18px;
       }
 
-      .status-title strong {
-        font-size: 17px;
+      .method-head img {
+        width: clamp(50px, 7vw, 88px);
+        max-height: 70px;
       }
 
-      .status-marker {
-        border-radius: 5px;
-        background: #dbeee3;
-        color: var(--green);
-        padding: 4px 7px;
-        font-family: var(--mono);
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-
-      .status-copy {
-        margin-bottom: 13px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .meta {
-        color: var(--muted);
-        font-size: 10px;
-        line-height: 1.8;
-      }
-
-      .workspace-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 315px;
-        gap: 28px;
-        padding: 48px 0 70px;
-      }
-
-      .panel {
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: var(--surface);
-        box-shadow: var(--shadow);
-        padding: 26px;
-      }
-
-      .panel + .panel {
-        margin-top: 18px;
-      }
-
-      .panel-heading {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 14px;
-        margin-bottom: 22px;
-      }
-
-      .panel-heading h2,
-      .panel-heading h3 {
-        margin-bottom: 0;
-        font-size: 21px;
-        line-height: 1.1;
-        letter-spacing: -0.03em;
-      }
-
-      .panel-heading .meta {
-        text-align: right;
-      }
-
-      .brief-list,
-      .evidence-list,
-      .run-list {
-        display: grid;
-        gap: 0;
+      .method-head p {
         margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .brief-list li,
-      .evidence-list li,
-      .run-list li {
-        display: grid;
-        grid-template-columns: 115px minmax(0, 1fr);
-        gap: 16px;
-        border-top: 1px solid var(--line);
-        padding: 15px 0;
-      }
-
-      .brief-list li:first-child,
-      .evidence-list li:first-child,
-      .run-list li:first-child {
-        border-top: 0;
-        padding-top: 0;
-      }
-
-      .brief-list dt,
-      .evidence-list .field-label {
-        color: var(--muted);
-      }
-
-      .brief-list dd,
-      .evidence-list p,
-      .run-list p {
-        margin: 0;
-        font-size: 14px;
-      }
-
-      code {
-        color: var(--teal);
-        font-family: var(--mono);
-        font-size: 12px;
-        overflow-wrap: anywhere;
-      }
-
-      .route-note {
-        margin: 22px 0 0;
-        border-left: 3px solid var(--rust);
-        background: #fbf1e7;
-        padding: 13px 15px;
-        color: #68412e;
-        font-size: 14px;
-      }
-
-      .evidence-list li {
-        display: block;
-      }
-
-      .evidence-list .field-label {
-        display: block;
-        margin-bottom: 5px;
-      }
-
-      .evidence-list a {
-        color: var(--teal);
-        text-decoration: underline;
-        text-underline-offset: 3px;
-      }
-
-      .decision {
-        background: var(--teal);
-        color: #f5f1e8;
-      }
-
-      .decision .section-kicker {
-        color: #f1a17e;
-      }
-
-      .decision p {
-        color: #c7d5d1;
-        font-size: 14px;
-      }
-
-      .decision strong {
-        display: block;
-        margin: 6px 0 12px;
-        font-size: 20px;
-        letter-spacing: -0.03em;
-      }
-
-      .decision .decision-source {
-        border-top: 1px solid rgb(245 241 232 / 0.22);
-        margin-top: 18px;
-        padding-top: 16px;
-        color: #e7eee9;
-      }
-
-      .gallery-section {
-        border-top: 1px solid var(--line);
-        padding-top: 42px;
-      }
-
-      .section-intro {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 22px;
-      }
-
-      .section-intro h2 {
-        margin: 5px 0 0;
-        font-size: 28px;
-        letter-spacing: -0.04em;
-      }
-
-      .section-intro p {
-        max-width: 420px;
-        margin-bottom: 0;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-      }
-
-      .gallery-card {
-        display: flex;
-        min-height: 178px;
-        flex-direction: column;
-        justify-content: space-between;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: var(--surface);
-        padding: 18px;
-        text-decoration: none;
-        transition:
-          transform 160ms ease,
-          box-shadow 160ms ease,
-          border-color 160ms ease;
-      }
-
-      .gallery-card:hover {
-        border-color: var(--rust);
-        box-shadow: var(--shadow);
-        transform: translateY(-3px);
-      }
-
-      .gallery-card strong {
-        display: block;
-        max-width: 180px;
-        font-size: 16px;
-        line-height: 1.15;
-      }
-
-      .gallery-card p {
-        margin: 8px 0 0;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .card-link {
-        color: var(--rust-dark);
-        font-family: var(--mono);
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-
-      .state-section {
-        display: grid;
-        grid-template-columns: 250px minmax(0, 1fr);
-        gap: 42px;
-        border-top: 1px solid var(--line);
-        margin-top: 70px;
-        padding-top: 42px;
-      }
-
-      .state-section h2 {
-        margin: 5px 0 10px;
-        font-size: 24px;
-        letter-spacing: -0.04em;
-      }
-
-      .state-section > div > p {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .state-controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 14px;
-      }
-
-      .state-button {
-        border-color: var(--line);
-        background: transparent;
-        color: var(--muted);
-        padding: 9px 11px;
-        font-family: var(--mono);
-        font-size: 11px;
-        letter-spacing: 0.02em;
-      }
-
-      .state-button:hover,
-      .state-button[aria-pressed="true"] {
-        border-color: var(--teal);
-        background: var(--teal-soft);
-        color: var(--teal);
-      }
-
-      .state-output {
-        min-height: 96px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: var(--surface);
-        padding: 17px;
-      }
-
-      .state-output[data-state="error"] {
-        border-color: #e4aaa0;
-        background: #fff2ef;
-        color: var(--red);
-      }
-
-      .state-output[data-state="offline"] {
-        border-color: #d6c18a;
-        background: #fff8df;
-        color: #725a1f;
-      }
-
-      .state-output[data-state="empty"],
-      .state-output[data-state="permission"] {
-        color: var(--muted);
-      }
-
-      .state-output strong {
-        display: block;
-        margin-bottom: 4px;
-        font-size: 15px;
-      }
-
-      .state-output p {
-        margin: 0;
-        font-size: 14px;
-      }
-
-      .site-footer {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        border-top: 1px solid var(--line);
-        padding: 20px 0 34px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .site-footer p {
-        margin: 0;
-      }
-
-      .site-footer a {
-        color: var(--teal);
+        font-family: "Geist Mono", monospace;
+        font-size: clamp(13px, 1.4vw, 18px);
         font-weight: 700;
       }
 
-      @media (max-width: 920px) {
-        .route-header,
-        .workspace-grid {
+      .method-title {
+        margin-top: 38px !important;
+        max-width: 880px;
+      }
+
+      .method-line {
+        position: relative;
+        display: grid;
+        grid-template-columns: 0.9fr 1.15fr 1.3fr 0.8fr 1.1fr;
+        gap: 14px;
+        margin-top: clamp(28px, 5vw, 68px);
+      }
+
+      .method-line::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 47%;
+        height: 5px;
+        border-radius: 5px;
+        background: var(--terracotta);
+      }
+
+      .method-step {
+        position: relative;
+        z-index: 2;
+        min-height: 116px;
+        padding: 15px;
+        border: 1px solid var(--border-strong);
+        border-radius: 9px;
+        background: var(--paper);
+      }
+
+      .method-step strong,
+      .method-step span {
+        display: block;
+      }
+
+      .method-step strong {
+        margin-top: 10px;
+        font-size: clamp(13px, 1.5vw, 18px);
+        line-height: 1.16;
+      }
+
+      .method-step span {
+        color: var(--muted);
+        font-family: "Geist Mono", monospace;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .method-step.is-selected {
+        transform: translateY(-14px);
+        border-color: var(--orange);
+        background: var(--walnut);
+        color: #fffaf1;
+      }
+
+      .method-step.is-selected span {
+        color: #eedbc9;
+      }
+
+      .demand-chip {
+        display: inline-block !important;
+        margin-top: 9px;
+        padding: 4px 7px;
+        border-radius: 4px;
+        background: var(--orange);
+        color: var(--ink) !important;
+      }
+
+      .offer-layout {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-top: clamp(26px, 4vw, 50px);
+      }
+
+      .offer {
+        position: relative;
+        min-height: 320px;
+        padding: 22px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--paper);
+      }
+
+      .offer:nth-child(2) {
+        transform: translateY(14px);
+        background: var(--paper-soft);
+      }
+
+      .offer.is-arcit {
+        border-color: var(--arcit);
+        background: var(--arcit-sand);
+      }
+
+      .offer img {
+        position: absolute;
+        right: -12px;
+        bottom: -12px;
+        width: 56%;
+        max-height: 66%;
+        object-fit: contain;
+      }
+
+      .offer h3 {
+        max-width: 72%;
+        margin-top: 24px;
+        font-size: clamp(26px, 3vw, 42px);
+      }
+
+      .offer p {
+        max-width: 58%;
+        color: var(--muted);
+        font-size: clamp(14px, 1.5vw, 18px);
+      }
+
+      .is-arcit .offer-label,
+      .is-arcit h3 {
+        color: var(--arcit);
+      }
+
+      .scene-practice {
+        background: var(--arcit-sand);
+      }
+
+      .practice-image {
+        position: absolute;
+        inset: 0;
+      }
+
+      .practice-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .practice-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          rgb(20 110 89 / 94%) 0 42%,
+          rgb(20 110 89 / 42%) 70%,
+          rgb(20 110 89 / 12%)
+        );
+      }
+
+      .practice-copy {
+        position: relative;
+        z-index: 2;
+        width: 52%;
+        color: #fffdf7;
+      }
+
+      .practice-mark {
+        width: 70px;
+        margin-bottom: 42px;
+        filter: brightness(0) invert(1);
+      }
+
+      .practice-copy p {
+        max-width: 580px;
+      }
+
+      .scene-aios {
+        background: var(--aios);
+        color: #f3fbfc;
+      }
+
+      .aios-layout {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 70px;
+        align-items: center;
+      }
+
+      .aios-copy h2 {
+        margin-top: 20px;
+      }
+
+      .aios-copy h2 span {
+        color: var(--cyan);
+      }
+
+      .aios-proof {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .proof-cell {
+        min-height: 118px;
+        padding: 18px;
+        border: 1px solid #27475b;
+        border-radius: 9px;
+        background: var(--aios-surface);
+      }
+
+      .proof-cell strong,
+      .proof-cell span {
+        display: block;
+      }
+
+      .proof-cell strong {
+        margin-top: 18px;
+        color: #d8e9ee;
+        font-size: 19px;
+      }
+
+      .proof-label {
+        color: var(--cyan);
+      }
+
+      .modular-products {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 16px;
+      }
+
+      .modular-products span {
+        padding: 7px 9px;
+        border: 1px solid #27475b;
+        border-radius: 5px;
+        color: #8aa0aa;
+        font-family: "Geist Mono", monospace;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .scene-handoff {
+        background: var(--paper);
+      }
+
+      .handoff-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 26px;
+      }
+
+      .handoff-head h3 {
+        max-width: 740px;
+        margin-top: 16px;
+      }
+
+      .selected-route {
+        align-self: start;
+        padding: 10px 12px;
+        border-radius: 5px;
+        background: var(--paper-soft);
+        color: var(--muted);
+        font-family: "Geist Mono", monospace;
+        font-size: 10px;
+        font-weight: 700;
+        text-align: right;
+        text-transform: uppercase;
+      }
+
+      .owner-line {
+        position: relative;
+        display: grid;
+        grid-template-columns: 0.85fr 1.18fr 1fr;
+        gap: 18px;
+        margin-top: clamp(24px, 4vw, 48px);
+      }
+
+      .owner-line::before {
+        content: "";
+        position: absolute;
+        left: 3%;
+        right: 3%;
+        top: 50%;
+        height: 5px;
+        border-radius: 4px;
+        background: var(--terracotta);
+      }
+
+      .owner {
+        position: relative;
+        z-index: 2;
+        min-height: 198px;
+        padding: 19px;
+        border: 1px solid var(--border);
+        background: var(--cream);
+        clip-path: polygon(
+          0 0,
+          calc(100% - 22px) 0,
+          100% 22px,
+          100% 100%,
+          0 100%
+        );
+      }
+
+      .owner.is-acs {
+        transform: translateY(-12px);
+        background: var(--walnut);
+        color: #fffaf1;
+      }
+
+      .owner.is-diffusion {
+        background: var(--paper-soft);
+      }
+
+      .owner h4 {
+        margin: 24px 0 7px;
+        font-size: clamp(22px, 2.4vw, 32px);
+      }
+
+      .owner p {
+        margin: 0;
+        color: inherit;
+        font-size: clamp(13px, 1.4vw, 17px);
+        opacity: 0.82;
+      }
+
+      .browser-companion {
+        display: grid;
+        place-items: center;
+        width: 108px;
+        height: 56px;
+        margin-top: 16px;
+        border: 1px solid var(--muted);
+        border-radius: 6px;
+        background: var(--paper);
+        color: var(--muted);
+        font-family: "Geist Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .scene-freedom .scene-inner {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+        gap: 70px;
+      }
+
+      .freedom-title {
+        margin: 18px 0 0;
+        font-size: clamp(50px, 7.5vw, 96px);
+        line-height: 0.93;
+      }
+
+      .freedom-copy p {
+        max-width: 640px;
+      }
+
+      .approval-card {
+        position: relative;
+        min-height: 330px;
+        padding: 28px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .approval-card::before {
+        content: "✓";
+        display: grid;
+        place-items: center;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--success);
+        color: white;
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .approval-card h3 {
+        margin-top: 26px;
+        font-size: clamp(28px, 3vw, 42px);
+      }
+
+      .approval-card p {
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .constraint-tail {
+        position: absolute;
+        left: -70px;
+        right: 60px;
+        bottom: 42px;
+        height: 5px;
+        border-radius: 5px;
+        background: var(--terracotta);
+      }
+
+      .constraint-tail::after {
+        content: "";
+        position: absolute;
+        right: -8px;
+        top: -7px;
+        width: 19px;
+        height: 19px;
+        border-radius: 50%;
+        background: var(--success);
+      }
+
+      .player-controls {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: center;
+        padding-top: 22px;
+      }
+
+      .control-row {
+        gap: 8px;
+      }
+
+      .button,
+      .state-button,
+      .scene-tab {
+        border: 1px solid var(--border-strong);
+        background: var(--paper);
+        cursor: pointer;
+      }
+
+      .button {
+        min-height: 44px;
+        padding: 10px 14px;
+        border-radius: 8px;
+      }
+
+      .button-primary {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fffaf1;
+      }
+
+      .button:hover,
+      .state-button:hover,
+      .scene-tab:hover {
+        border-color: var(--walnut);
+        background: var(--paper-soft);
+      }
+
+      .button-primary:hover {
+        background: var(--walnut);
+        color: #fffaf1;
+      }
+
+      .progress-wrap {
+        display: grid;
+        gap: 8px;
+      }
+
+      .progress-track {
+        height: 7px;
+        overflow: hidden;
+        border-radius: 10px;
+        background: var(--border);
+      }
+
+      .progress-fill {
+        width: 0;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--terracotta);
+        transition: width 220ms linear;
+      }
+
+      .frame-meta {
+        justify-content: space-between;
+        gap: 14px;
+        color: var(--muted);
+      }
+
+      .status-line {
+        margin: 0;
+        font-family: "Geist Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .scene-list {
+        display: flex;
+        gap: 8px;
+        margin: 18px 0 0;
+        padding: 3px 3px 12px;
+        overflow-x: auto;
+        scrollbar-color: var(--border-strong) transparent;
+      }
+
+      .scene-tab {
+        flex: 0 0 auto;
+        min-height: 39px;
+        padding: 9px 11px;
+        border-radius: 7px;
+        color: var(--muted);
+      }
+
+      .scene-tab[aria-pressed="true"] {
+        border-color: var(--walnut);
+        background: var(--walnut);
+        color: #fffaf1;
+      }
+
+      .section {
+        padding: 74px 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(240px, 390px);
+        gap: 50px;
+        align-items: end;
+        margin-bottom: 40px;
+      }
+
+      .section-heading h2 {
+        margin: 8px 0 0;
+        font-size: clamp(42px, 5.8vw, 68px);
+        line-height: 0.96;
+      }
+
+      .section-heading p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .beat-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--border-strong);
+      }
+
+      .beat {
+        display: grid;
+        grid-template-columns: 96px 215px minmax(0, 1fr) minmax(220px, 0.7fr);
+        gap: 24px;
+        align-items: start;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .beat-time {
+        color: var(--terracotta);
+      }
+
+      .beat-owner {
+        font-weight: 720;
+      }
+
+      .beat p,
+      .beat q {
+        margin: 0;
+      }
+
+      .beat p {
+        color: var(--muted);
+      }
+
+      .beat q {
+        font-weight: 650;
+      }
+
+      .concepts {
+        display: grid;
+        gap: 72px;
+      }
+
+      .concept {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 32px;
+        align-items: end;
+      }
+
+      .concept:nth-child(even) {
+        grid-template-columns: 280px minmax(0, 1fr);
+      }
+
+      .concept:nth-child(even) .concept-visual {
+        grid-column: 2;
+      }
+
+      .concept:nth-child(even) figcaption {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .concept-visual {
+        overflow: hidden;
+        border: 1px solid var(--border-strong);
+        border-radius: 18px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .concept-visual img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+      }
+
+      .concept figcaption {
+        padding-bottom: 8px;
+      }
+
+      .concept h3 {
+        margin: 12px 0 10px;
+        font-size: 28px;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+
+      .concept p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .concept-index {
+        color: var(--terracotta);
+      }
+
+      .ownership-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 1.35fr 0.9fr;
+        gap: 18px;
+      }
+
+      .ownership-card {
+        min-height: 230px;
+        padding: 24px;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        clip-path: polygon(
+          0 0,
+          calc(100% - 23px) 0,
+          100% 23px,
+          100% 100%,
+          0 100%
+        );
+      }
+
+      .ownership-card:nth-child(2) {
+        background: var(--walnut);
+        color: #fffaf1;
+      }
+
+      .ownership-card h3 {
+        margin: 28px 0 12px;
+        font-size: 30px;
+        letter-spacing: -0.03em;
+      }
+
+      .ownership-card p {
+        margin: 0;
+        color: inherit;
+        opacity: 0.78;
+      }
+
+      .aios-support {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 12px;
+        background: var(--aios);
+      }
+
+      .aios-support span {
+        padding: 7px 9px;
+        border: 1px solid #27475b;
+        border-radius: 5px;
+        color: var(--cyan);
+        font-family: "Geist Mono", monospace;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .state-lab {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.36fr) minmax(0, 1fr);
+        gap: 32px;
+        align-items: start;
+      }
+
+      .state-buttons {
+        display: grid;
+        gap: 8px;
+      }
+
+      .state-button {
+        min-height: 42px;
+        padding: 9px 11px;
+        border-radius: 7px;
+        text-align: left;
+      }
+
+      .state-button[aria-pressed="true"] {
+        border-color: var(--walnut);
+        background: var(--walnut);
+        color: #fffaf1;
+      }
+
+      .state-message {
+        min-height: 260px;
+        padding: 28px;
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        background: var(--paper);
+      }
+
+      .state-message-head {
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .state-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--success);
+      }
+
+      .state-message h3 {
+        margin: 40px 0 8px;
+        font-size: 34px;
+        letter-spacing: -0.035em;
+      }
+
+      .state-message p {
+        max-width: 660px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .boundary {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        padding: 72px 0 82px;
+        border-top: 1px solid var(--border);
+      }
+
+      .boundary h2 {
+        max-width: 560px;
+        margin: 0;
+        font-family: "Geist Pixel", "Geist Mono", monospace;
+        font-size: clamp(38px, 5vw, 62px);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.045em;
+      }
+
+      .boundary-copy {
+        padding-top: 4px;
+      }
+
+      .boundary-copy p {
+        margin: 0 0 14px;
+        color: var(--muted);
+      }
+
+      .boundary-copy strong {
+        color: var(--ink);
+      }
+
+      footer {
+        background: var(--ink);
+        color: #fffaf1;
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        padding: 30px 0;
+        font-family: "Geist Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 900px) {
+        .intro,
+        .section-heading,
+        .boundary {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .stage {
+          min-height: 0;
+        }
+
+        .scene-human .scene-inner,
+        .queue-layout,
+        .aios-layout,
+        .scene-freedom .scene-inner {
           grid-template-columns: 1fr;
         }
 
-        .route-header {
+        .portrait-panel {
+          width: 45%;
+          opacity: 0.62;
+        }
+
+        .human-copy {
+          grid-column: 1;
+          width: 58%;
+          margin-left: auto;
+        }
+
+        .public-desk {
+          display: none;
+        }
+
+        .queue-layout {
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 24px;
+        }
+
+        .method-line {
+          gap: 8px;
+        }
+
+        .method-step {
+          min-height: 96px;
+          padding: 10px;
+        }
+
+        .offer {
+          min-height: 250px;
+          padding: 16px;
+        }
+
+        .aios-layout {
+          grid-template-columns: 0.82fr 1.18fr;
           gap: 30px;
         }
 
-        .status-card {
-          max-width: 520px;
+        .beat {
+          grid-template-columns: 75px 160px minmax(0, 1fr);
         }
 
-        .gallery-grid {
-          grid-template-columns: repeat(2, 1fr);
+        .beat q {
+          grid-column: 3;
+        }
+
+        .concept,
+        .concept:nth-child(even) {
+          grid-template-columns: 1fr;
+        }
+
+        .concept:nth-child(even) .concept-visual,
+        .concept:nth-child(even) figcaption {
+          grid-column: 1;
+          grid-row: auto;
+        }
+
+        .ownership-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .ownership-card:nth-child(3) {
+          grid-column: 1 / -1;
         }
       }
 
       @media (max-width: 620px) {
-        .header-inner,
-        main,
-        .site-footer {
-          width: min(100% - 30px, 500px);
+        .shell {
+          width: min(100% - 24px, 1180px);
         }
 
-        .header-inner {
-          min-height: 64px;
+        .topbar {
+          min-height: 62px;
         }
 
-        .header-nav {
-          gap: 10px;
-        }
-
-        .header-nav a:first-child {
+        .line-mark,
+        .run-state span {
           display: none;
         }
 
-        main {
-          padding-top: 42px;
+        .intro {
+          padding: 52px 0 32px;
         }
 
-        .route-header {
-          padding-bottom: 38px;
+        .intro h1 {
+          font-size: 47px;
         }
 
-        h1 {
-          font-size: clamp(46px, 15vw, 68px);
-        }
-
-        .lede {
+        .intro-note {
           font-size: 16px;
         }
 
-        .workspace-grid {
-          padding: 34px 0 48px;
+        .stage {
+          border-radius: 14px;
         }
 
-        .panel {
+        .scene-inner {
           padding: 20px;
         }
 
-        .brief-list li {
-          grid-template-columns: 1fr;
-          gap: 4px;
+        .scene h2 {
+          font-size: 34px;
         }
 
-        .section-intro,
-        .state-section,
-        .site-footer {
-          display: block;
+        .scene h3 {
+          font-size: 27px;
         }
 
-        .section-intro p {
-          margin-top: 12px;
+        .scene p {
+          margin-top: 10px;
+          font-size: 13px;
         }
 
-        .gallery-grid {
-          grid-template-columns: 1fr;
+        .scene-kicker,
+        .scene-time {
+          font-size: 8px;
         }
 
-        .state-section {
-          margin-top: 48px;
+        .portrait-panel {
+          width: 52%;
         }
 
-        .state-section > div + div {
-          margin-top: 22px;
+        .human-copy {
+          width: 58%;
         }
 
-        .site-footer p + p {
+        .queue-layout {
+          grid-template-columns: 0.9fr 1.1fr;
+          gap: 8px;
+        }
+
+        .queue-copy h2 {
+          font-size: 27px;
+        }
+
+        .queue {
+          gap: 5px;
+          padding-left: 16px;
+        }
+
+        .queue-slip {
+          padding: 6px 7px;
+          font-size: 8px;
+        }
+
+        .queue-slip:nth-child(n) {
+          margin-left: 0;
+        }
+
+        .method-title {
+          margin-top: 15px !important;
+          font-size: 28px !important;
+        }
+
+        .method-head img {
+          width: 42px;
+        }
+
+        .method-head p {
+          font-size: 10px;
+        }
+
+        .method-line {
+          margin-top: 15px;
+        }
+
+        .method-step {
+          min-height: 68px;
+          padding: 5px;
+          border-radius: 5px;
+        }
+
+        .method-step strong {
+          margin-top: 4px;
+          font-size: 8px;
+        }
+
+        .method-step span {
+          font-size: 6px;
+        }
+
+        .demand-chip {
+          margin-top: 3px;
+          padding: 2px 3px;
+        }
+
+        .offer-layout {
+          gap: 6px;
+          margin-top: 13px;
+        }
+
+        .offer {
+          min-height: 145px;
+          padding: 8px;
+          border-radius: 8px;
+        }
+
+        .offer:nth-child(2) {
+          transform: translateY(5px);
+        }
+
+        .offer h3 {
+          max-width: 100%;
+          margin-top: 8px;
+          font-size: 15px;
+        }
+
+        .offer p {
+          display: none;
+        }
+
+        .offer-label {
+          font-size: 7px;
+        }
+
+        .offer img {
+          width: 60%;
+        }
+
+        .practice-copy {
+          width: 70%;
+        }
+
+        .practice-mark {
+          width: 38px;
+          margin-bottom: 14px;
+        }
+
+        .aios-layout {
+          grid-template-columns: 0.78fr 1.22fr;
+          gap: 14px;
+        }
+
+        .aios-copy h2 {
+          margin-top: 8px;
+          font-size: 27px;
+        }
+
+        .aios-proof {
+          gap: 5px;
+        }
+
+        .proof-cell {
+          min-height: 65px;
+          padding: 7px;
+        }
+
+        .proof-cell strong {
+          margin-top: 8px;
+          font-size: 10px;
+        }
+
+        .proof-label {
+          font-size: 7px;
+        }
+
+        .modular-products {
+          display: none;
+        }
+
+        .handoff-head h3 {
+          font-size: 25px;
+        }
+
+        .selected-route {
+          display: none;
+        }
+
+        .owner-line {
+          gap: 6px;
+          margin-top: 15px;
+        }
+
+        .owner {
+          min-height: 118px;
+          padding: 8px;
+        }
+
+        .owner h4 {
+          margin: 9px 0 4px;
+          font-size: 14px;
+        }
+
+        .owner p {
+          font-size: 8px;
+        }
+
+        .owner-label {
+          font-size: 6px;
+        }
+
+        .browser-companion {
+          width: 65px;
+          height: 30px;
           margin-top: 7px;
+          font-size: 6px;
+        }
+
+        .scene-freedom .scene-inner {
+          grid-template-columns: 1fr 0.8fr;
+          gap: 16px;
+        }
+
+        .freedom-title {
+          font-size: 34px;
+        }
+
+        .approval-card {
+          min-height: 150px;
+          padding: 12px;
+          border-radius: 9px;
+        }
+
+        .approval-card::before {
+          width: 32px;
+          height: 32px;
+          font-size: 17px;
+        }
+
+        .approval-card h3 {
+          margin-top: 12px;
+          font-size: 18px;
+        }
+
+        .approval-card p {
+          font-size: 10px;
+        }
+
+        .constraint-tail {
+          left: -20px;
+          right: 16px;
+          bottom: 17px;
+          height: 3px;
+        }
+
+        .player-controls {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .control-row {
+          justify-content: space-between;
+        }
+
+        .control-row .button {
+          flex: 1;
+        }
+
+        .frame-meta .meta:last-child {
+          display: none;
+        }
+
+        .section {
+          padding: 54px 0;
+        }
+
+        .section-heading h2 {
+          font-size: 44px;
+        }
+
+        .section-heading p {
+          font-size: 16px;
+        }
+
+        .beat {
+          grid-template-columns: 62px 1fr;
+          gap: 7px 14px;
+          padding: 17px 0;
+        }
+
+        .beat p,
+        .beat q {
+          grid-column: 2;
+        }
+
+        .concepts {
+          gap: 52px;
+        }
+
+        .ownership-grid,
+        .state-lab {
+          grid-template-columns: 1fr;
+        }
+
+        .ownership-card:nth-child(3) {
+          grid-column: auto;
+        }
+
+        .state-message {
+          min-height: 220px;
+        }
+
+        .footer-inner {
+          display: grid;
         }
       }
 
@@ -730,361 +1676,908 @@
         *,
         *::before,
         *::after {
-          transition-duration: 0.01ms !important;
           animation-duration: 0.01ms !important;
           animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        .method-step.is-selected,
+        .offer:nth-child(2) {
+          transform: none;
         }
       }
     </style>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to active route</a>
-    <header class="site-header">
-      <div class="header-inner">
-        <a class="brand" href="#main-content">
-          <span class="brand-mark" aria-hidden="true">A</span>
-          <span class="brand-copy">
-            <strong>Agentic Design System</strong>
-            <span>persistent route console</span>
-          </span>
-        </a>
-        <nav class="header-nav" aria-label="Workspace navigation">
-          <a href="#evidence">Evidence</a>
-          <a href="#gallery">Gallery</a>
-          <a href="../examples/index.html">Open gallery ↗</a>
-        </nav>
+    <a class="skip-link" href="#main">Skip to storyboard</a>
+    <header class="shell topbar">
+      <div class="identity">
+        <span class="line-mark" aria-hidden="true"></span>
+        <div>
+          <p class="eyebrow">Agentic Design System · visual direction</p>
+          <strong>ads-business-freedom-content-e2e-r1</strong>
+        </div>
+      </div>
+      <div class="run-state" aria-label="Build state active">
+        <span>Build evidence · receiver pending</span>
       </div>
     </header>
 
-    <main id="main-content" tabindex="-1">
-      <section class="route-header" aria-labelledby="route-title">
+    <main id="main">
+      <section class="shell intro" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">Active route · design-example / run-014</p>
-          <h1 id="route-title">Make the next design decision visible.</h1>
-          <p class="lede">
-            Resume the canonical portable direction, inspect its evidence, and
-            decide whether it is ready for curation or an explicitly accepted
-            cross-owner handoff.
+          <p class="eyebrow">
+            39-second story · Demand constraint · revision r1
           </p>
-          <div class="action-row">
-            <button class="button-primary" id="resume-route" type="button">
-              Resume active route <span aria-hidden="true">→</span>
-            </button>
-            <a class="button-secondary" href="#brief">Read active brief</a>
-          </div>
-          <p class="meta" id="route-feedback" role="status" aria-live="polite">
-            Last checked 2026-08-24 · local preview is available
-          </p>
+          <h1 id="page-title">When Demand still waits for Gustav.</h1>
         </div>
-
-        <aside class="status-card" aria-label="Active route status">
-          <div class="status-title">
-            <strong>Ready for review</strong>
-            <span class="status-marker">success</span>
-          </div>
-          <p class="status-copy">
-            The active design has a brief, preview, review notes, and a source
-            decision. DESIGN.md stays canonical; promotion or handoff remains an
-            owner choice.
-          </p>
-          <div class="meta">
-            run-014<br />
-            previous: run-013 · predecessor<br />
-            workspace/state/active.json
-          </div>
-        </aside>
+        <p class="intro-note">
+          One founder-owned constraint moves through the method, explicit
+          owners, independent review, and a supervised handoff. The payoff is
+          Business Freedom, not maximum automation.
+        </p>
       </section>
 
-      <section class="workspace-grid" id="evidence" aria-label="Route evidence">
-        <article class="panel" id="brief" aria-labelledby="brief-title">
-          <div class="panel-heading">
-            <h2 id="brief-title">Active brief</h2>
-            <span class="meta">workspace / resolved</span>
-          </div>
-          <dl class="brief-list">
-            <div>
-              <dt>Need</dt>
-              <dd>
-                Keep repeated design work visible as a route from prior evidence
-                to a deliberate gallery decision.
-              </dd>
+      <section class="shell player-shell" aria-labelledby="storyboard-title">
+        <h2 id="storyboard-title" class="meta">Inspectable storyboard</h2>
+        <div class="stage" id="stage" style="--progress: 0%">
+          <article
+            class="scene scene-human"
+            data-scene="0"
+            aria-label="Scene 1, Gustav Online public learning"
+          >
+            <div class="portrait-panel" aria-hidden="true">
+              <img src="assets/gustav-portrait.jpg" alt="" />
             </div>
-            <div>
-              <dt>Audience</dt>
-              <dd>
-                Owner, agent, and reviewer working from the same inspectable
-                preview.
-              </dd>
+            <div class="scene-inner">
+              <div class="human-copy">
+                <span class="scene-kicker"
+                  >Gustav Online / human voice + Demand</span
+                >
+                <h2>The useful idea is here.</h2>
+                <p>
+                  Public learning, cases, and useful knowledge start with a real
+                  person.
+                </p>
+              </div>
+              <img
+                class="public-desk"
+                src="assets/content-publishing-desk.png"
+                alt=""
+              />
             </div>
-            <div>
-              <dt>Next decision</dt>
-              <dd>Resume, review the proof, then choose whether to promote.</dd>
-            </div>
-            <div>
-              <dt>Constraint</dt>
-              <dd>
-                Workspace owns state and history; examples stay curated and the
-                gallery stays on main.
-              </dd>
-            </div>
-          </dl>
-          <p class="route-note">
-            Source choice in this run: one small, dependency-free disclosure
-            adapter selected for the carried Resources preview. The external
-            libraries remain references, not defaults.
-          </p>
-        </article>
+            <span class="scene-time">00:00–00:04</span>
+          </article>
 
-        <aside>
-          <section class="panel" aria-labelledby="proof-title">
-            <div class="panel-heading">
-              <h2 id="proof-title">Proof trail</h2>
-              <span class="meta">3 artifacts</span>
+          <article
+            class="scene scene-queue"
+            data-scene="1"
+            aria-label="Scene 2, founder-owned content queue"
+            hidden
+          >
+            <div class="scene-inner queue-layout">
+              <div class="queue-copy">
+                <span class="scene-kicker">Demand / current constraint</span>
+                <h2>The content still waits for Gustav.</h2>
+                <p>
+                  Useful material stalls across repeated visual, version,
+                  production, and approval decisions.
+                </p>
+              </div>
+              <div class="queue" aria-label="Founder-owned decision queue">
+                <span class="queue-slip">Visual choice</span>
+                <span class="queue-slip">Version</span>
+                <span class="queue-slip">Production</span>
+                <span class="queue-slip">Approval</span>
+              </div>
             </div>
-            <ul class="evidence-list">
-              <li>
-                <span class="field-label">Output</span>
-                <p><code>workspace/runs/run-014/output.json</code></p>
-              </li>
-              <li>
-                <span class="field-label">Review</span>
-                <p><a href="#state-lab">PASS · visual and keyboard QA</a></p>
-              </li>
-              <li>
-                <span class="field-label">Relation</span>
-                <p><code>run-013 → predecessor</code></p>
-              </li>
-              <li>
-                <span class="field-label">Ledger</span>
-                <p><code>workspace/history/runs.jsonl#run-014</code></p>
-              </li>
-            </ul>
-          </section>
+            <span class="scene-time">00:04–00:09</span>
+          </article>
 
-          <section class="panel decision" aria-labelledby="decision-title">
-            <span class="section-kicker">Curated choice</span>
-            <strong id="decision-title">Promotion is intentional.</strong>
-            <p>
-              A successful route is not automatically a gallery example. The
-              owner selects the durable path after review.
-            </p>
-            <p class="decision-source">
-              Current candidate<br /><code
-                >examples/onlinesourdough-resources/</code
+          <article
+            class="scene scene-method"
+            data-scene="2"
+            aria-label="Scene 3, onlinesourdough method"
+            hidden
+          >
+            <div class="scene-inner">
+              <div class="method-head">
+                <img src="assets/onlinesourdough-mark.svg" alt="" />
+                <p>onlinesourdough / method + offer menu</p>
+              </div>
+              <h3 class="method-title">
+                One constraint. One smallest complete change.
+              </h3>
+              <div class="method-line" aria-label="The onlinesourdough method">
+                <div class="method-step">
+                  <span>01</span><strong>Understand the business</strong>
+                </div>
+                <div class="method-step is-selected">
+                  <span>02 · find</span><strong>Offer · Operations</strong
+                  ><span class="demand-chip">Demand ✓</span>
+                </div>
+                <div class="method-step">
+                  <span>03</span
+                  ><strong>Choose the smallest complete change</strong>
+                </div>
+                <div class="method-step">
+                  <span>04</span><strong>Build + prove</strong>
+                </div>
+                <div class="method-step">
+                  <span>05</span><strong>Launch · operate · recover</strong>
+                </div>
+              </div>
+            </div>
+            <span class="scene-time">00:09–00:15</span>
+          </article>
+
+          <article
+            class="scene scene-offers"
+            data-scene="3"
+            aria-label="Scene 4, offer execution choices"
+            hidden
+          >
+            <div class="scene-inner">
+              <span class="scene-kicker"
+                >Same method · choose who executes</span
               >
+              <h3>Three ways to change the constraint.</h3>
+              <div class="offer-layout">
+                <div class="offer">
+                  <span class="offer-label">DIY</span>
+                  <h3>Resources</h3>
+                  <p>Use the system yourself.</p>
+                  <img src="assets/resources-diy.png" alt="" />
+                </div>
+                <div class="offer">
+                  <span class="offer-label">Done with you</span>
+                  <h3>The Fermentary</h3>
+                  <p>Work through the current problem together.</p>
+                  <img src="assets/fermentary-dwy.png" alt="" />
+                </div>
+                <div class="offer is-arcit">
+                  <span class="offer-label">Done for you</span>
+                  <h3>Complete Bake</h3>
+                  <p>Built, documented, and handed over.</p>
+                  <img src="assets/complete-bake-dfy.png" alt="" />
+                </div>
+              </div>
+            </div>
+            <span class="scene-time">00:15–00:20</span>
+          </article>
+
+          <article
+            class="scene scene-practice"
+            data-scene="4"
+            aria-label="Scene 5, Complete Bake by Arc’IT AI in practice"
+            hidden
+          >
+            <div class="practice-image" aria-hidden="true">
+              <img src="assets/arcitai-panorama-day.jpg" alt="" />
+            </div>
+            <div class="scene-inner">
+              <div class="practice-copy">
+                <img
+                  class="practice-mark"
+                  src="assets/arcitai-mark.svg"
+                  alt=""
+                />
+                <span class="scene-kicker"
+                  >Complete Bake / Arc’IT AI · in practice</span
+                >
+                <h2>Built, documented, handed over.</h2>
+                <p>
+                  Arc’IT green and sand appear only where done-for-you delivery
+                  becomes concrete.
+                </p>
+              </div>
+            </div>
+            <span class="scene-time">00:20–00:24</span>
+          </article>
+
+          <article
+            class="scene scene-aios"
+            data-scene="5"
+            aria-label="Scene 6, AIOS context routing ownership and evidence"
+            hidden
+          >
+            <div class="scene-inner aios-layout">
+              <div class="aios-copy">
+                <span class="scene-kicker">AIOS / local operating layer</span>
+                <h2><span>Context.</span> Route. Owner. Evidence.</h2>
+                <p>
+                  One bounded technical beat keeps the next decision
+                  inspectable.
+                </p>
+                <div
+                  class="modular-products"
+                  aria-label="Independently owned modular products"
+                >
+                  <span>Repositories</span><span>Project templates</span
+                  ><span>Skills</span><span>Local products</span>
+                </div>
+              </div>
+              <div class="aios-proof">
+                <div class="proof-cell">
+                  <span class="proof-label">Context</span
+                  ><strong>Demand constraint</strong>
+                </div>
+                <div class="proof-cell">
+                  <span class="proof-label">Route</span
+                  ><strong>Smallest useful owner</strong>
+                </div>
+                <div class="proof-cell">
+                  <span class="proof-label">Owner</span
+                  ><strong>Explicit per node</strong>
+                </div>
+                <div class="proof-cell">
+                  <span class="proof-label">Evidence</span
+                  ><strong>Review + handoff</strong>
+                </div>
+              </div>
+            </div>
+            <span class="scene-time">00:24–00:29</span>
+          </article>
+
+          <article
+            class="scene scene-handoff"
+            data-scene="6"
+            aria-label="Scene 7, ADS ACS and Diffusion Studio ownership handoff"
+            hidden
+          >
+            <div class="scene-inner">
+              <div class="handoff-head">
+                <div>
+                  <span class="scene-kicker"
+                    >Selected handoff / explicit owners</span
+                  >
+                  <h3>Reusable direction. Reviewable production.</h3>
+                </div>
+                <span class="selected-route"
+                  >Ordinary files<br />no shared runtime</span
+                >
+              </div>
+              <div class="owner-line">
+                <div class="owner">
+                  <span class="owner-label">ADS</span>
+                  <h4>Direction</h4>
+                  <p>Brand roles · hierarchy · keyframes · motion rules</p>
+                </div>
+                <div class="owner is-acs">
+                  <span class="owner-label">ACS</span>
+                  <h4>Lineage + production</h4>
+                  <p>
+                    Final script · independent node review · edit · supervised
+                    handoff
+                  </p>
+                </div>
+                <div class="owner is-diffusion">
+                  <span class="owner-label">Diffusion Studio</span>
+                  <h4>Local render</h4>
+                  <p>Electron / DAPI authority</p>
+                  <span class="browser-companion"
+                    >Browser companion · human review</span
+                  >
+                </div>
+              </div>
+            </div>
+            <span class="scene-time">00:29–00:35</span>
+          </article>
+
+          <article
+            class="scene scene-freedom"
+            data-scene="7"
+            aria-label="Scene 8, Business Freedom payoff"
+            hidden
+          >
+            <div class="scene-inner">
+              <div class="freedom-copy">
+                <span class="scene-kicker"
+                  >Payoff / reduced founder dependency</span
+                >
+                <h2 class="freedom-title">Business Freedom</h2>
+                <p>Demand keeps moving. Gustav keeps the choice.</p>
+              </div>
+              <div class="approval-card">
+                <span class="owner-label">Human review point</span>
+                <h3>One review-ready Demand asset.</h3>
+                <p>
+                  Fewer repeated visual decisions. Explicit owner. Honest
+                  evidence.
+                </p>
+                <span class="constraint-tail" aria-hidden="true"></span>
+              </div>
+            </div>
+            <span class="scene-time">00:35–00:39</span>
+          </article>
+        </div>
+
+        <div class="player-controls">
+          <div class="control-row">
+            <button class="button button-primary" id="play" type="button">
+              Play story
+            </button>
+            <button class="button" id="pause" type="button">Pause</button>
+          </div>
+          <div class="progress-wrap">
+            <div
+              class="progress-track"
+              id="progress"
+              role="progressbar"
+              aria-label="Storyboard progress"
+              aria-valuemin="0"
+              aria-valuemax="39"
+              aria-valuenow="0"
+            >
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="frame-meta">
+              <p class="status-line" id="story-status" aria-live="polite">
+                Ready · scene 1 of 8
+              </p>
+              <span class="meta">Draft timing · no audio</span>
+            </div>
+          </div>
+          <span class="meta">00:39 total</span>
+        </div>
+
+        <div class="scene-list" aria-label="Choose a storyboard scene">
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="0"
+            aria-pressed="true"
+          >
+            01 Human
+          </button>
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="1"
+            aria-pressed="false"
+          >
+            02 Constraint
+          </button>
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="2"
+            aria-pressed="false"
+          >
+            03 Method
+          </button>
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="3"
+            aria-pressed="false"
+          >
+            04 Offers
+          </button>
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="4"
+            aria-pressed="false"
+          >
+            05 Practice
+          </button>
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="5"
+            aria-pressed="false"
+          >
+            06 AIOS
+          </button>
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="6"
+            aria-pressed="false"
+          >
+            07 Handoff
+          </button>
+          <button
+            class="scene-tab"
+            type="button"
+            data-scene-target="7"
+            aria-pressed="false"
+          >
+            08 Freedom
+          </button>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="beats-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">One line · eight beats</span>
+              <h2 id="beats-title">The constraint moves.</h2>
+            </div>
+            <p>
+              Each owner appears only when it changes the same Demand
+              constraint. The story returns to the human instead of ending on
+              the machinery.
             </p>
-          </section>
-        </aside>
+          </div>
+          <ol class="beat-list">
+            <li class="beat">
+              <span class="beat-time">00–04</span
+              ><span class="beat-owner">Gustav Online</span>
+              <p>
+                Human public-learning voice and the useful material already
+                present.
+              </p>
+              <q>The useful idea is here.</q>
+            </li>
+            <li class="beat">
+              <span class="beat-time">04–09</span
+              ><span class="beat-owner">Demand</span>
+              <p>
+                Visual choice, version, production, and approval collect around
+                Gustav.
+              </p>
+              <q>The content still waits for Gustav.</q>
+            </li>
+            <li class="beat">
+              <span class="beat-time">09–15</span
+              ><span class="beat-owner">onlinesourdough</span>
+              <p>
+                Understand, find the Demand constraint, choose the smallest
+                complete change, build/prove, launch/run/recover.
+              </p>
+              <q>One constraint. One smallest complete change.</q>
+            </li>
+            <li class="beat">
+              <span class="beat-time">15–20</span
+              ><span class="beat-owner">Offer menu</span>
+              <p>
+                Resources is DIY, The Fermentary is done with you, Complete Bake
+                is done for you.
+              </p>
+              <q>Choose who should do the change.</q>
+            </li>
+            <li class="beat">
+              <span class="beat-time">20–24</span
+              ><span class="beat-owner">Arc’IT AI</span>
+              <p>
+                Green and sand appear only at Complete Bake, showing the method
+                in practice.
+              </p>
+              <q>Built, documented, handed over.</q>
+            </li>
+            <li class="beat">
+              <span class="beat-time">24–29</span
+              ><span class="beat-owner">AIOS</span>
+              <p>
+                Local context, routing, ownership, and evidence; modular
+                products stay independently owned.
+              </p>
+              <q>Context. Route. Owner. Evidence.</q>
+            </li>
+            <li class="beat">
+              <span class="beat-time">29–35</span
+              ><span class="beat-owner">ADS · ACS · Diffusion</span>
+              <p>
+                Reusable direction, content lineage, independent review, local
+                render, and visible human inspection.
+              </p>
+              <q>Reusable direction. Reviewable production.</q>
+            </li>
+            <li class="beat">
+              <span class="beat-time">35–39</span
+              ><span class="beat-owner">Business Freedom</span>
+              <p>
+                One review-ready Demand asset reaches a human approval point
+                with fewer repeated decisions.
+              </p>
+              <q>Demand keeps moving. Gustav keeps the choice.</q>
+            </li>
+          </ol>
+        </div>
       </section>
 
-      <section
-        class="gallery-section"
-        id="gallery"
-        aria-labelledby="gallery-title"
-      >
-        <div class="section-intro">
-          <div>
-            <span class="section-kicker">Durable gallery</span>
-            <h2 id="gallery-title">Curated examples</h2>
+      <section class="section" aria-labelledby="concepts-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Three polished 16:9 concepts</span>
+              <h2 id="concepts-title">Thumbnail + keyframe set.</h2>
+            </div>
+            <p>
+              These are production-direction assets, not final published
+              thumbnails. ACS owns the final hook, copy, source-media decision,
+              packaging, and publication.
+            </p>
           </div>
-          <p>
-            Each example carries its own brief, design direction, preview, and
-            proof. Open one to inspect the work without this route console.
-          </p>
-        </div>
-        <div class="gallery-grid">
-          <a class="gallery-card" href="../examples/service-landing-page/">
-            <span>
-              <strong>Service landing page</strong>
-              <p>One offer, one useful next step, and honest states.</p>
-            </span>
-            <span class="card-link">Open preview →</span>
-          </a>
-          <a class="gallery-card" href="../examples/operations-workspace/">
-            <span>
-              <strong>Operations workspace</strong>
-              <p>A working surface organized around decisions.</p>
-            </span>
-            <span class="card-link">Open preview →</span>
-          </a>
-          <a
-            class="gallery-card"
-            href="../examples/executive-powerbi-dashboard/"
-          >
-            <span>
-              <strong>Executive reporting</strong>
-              <p>A report direction with a clear supported decision.</p>
-            </span>
-            <span class="card-link">Open preview →</span>
-          </a>
-          <a class="gallery-card" href="../examples/onlinesourdough-resources/">
-            <span>
-              <strong>Resources / onlinesourdough</strong>
-              <p>A folder-led library with a reviewed adapter integration.</p>
-            </span>
-            <span class="card-link">Open preview →</span>
-          </a>
+          <div class="concepts">
+            <figure class="concept">
+              <div class="concept-visual">
+                <img
+                  src="assets/keyframe-01-founder-constraint.png"
+                  alt="Orange Gustav Online opener showing a founder-owned queue of visual choice, version, production, and approval."
+                />
+              </div>
+              <figcaption>
+                <span class="concept-index">Concept 01 / recognition hook</span>
+                <h3>The founder-owned queue</h3>
+                <p>
+                  Lead with a real human signal and the visible Demand
+                  bottleneck. Strongest when the hook is founder recognition.
+                </p>
+              </figcaption>
+            </figure>
+            <figure class="concept">
+              <div class="concept-visual">
+                <img
+                  src="assets/keyframe-02-smallest-complete-change.png"
+                  alt="Warm onlinesourdough method keyframe with one Demand constraint, three execution offers, and a bounded AIOS proof inset."
+                />
+              </div>
+              <figcaption>
+                <span class="concept-index">Concept 02 / method frame</span>
+                <h3>One constraint, routed</h3>
+                <p>
+                  Explain the method, offer roles, and operating proof without
+                  presenting the products as one installed stack.
+                </p>
+              </figcaption>
+            </figure>
+            <figure class="concept">
+              <div class="concept-visual">
+                <img
+                  src="assets/keyframe-03-reviewed-handoff.png"
+                  alt="Warm Business Freedom payoff showing separate ADS, ACS, and Diffusion Studio owners connected through one reviewed handoff and human review point."
+                />
+              </div>
+              <figcaption>
+                <span class="concept-index">Concept 03 / payoff frame</span>
+                <h3>The reviewed handoff</h3>
+                <p>
+                  Preferred close: explicit owners, a visible human review
+                  companion, and Business Freedom as retained choice.
+                </p>
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 
-      <section
-        class="state-section"
-        id="state-lab"
-        aria-labelledby="state-title"
-      >
-        <div>
-          <span class="section-kicker">State lab</span>
-          <h2 id="state-title">Make uncertainty observable.</h2>
-          <p>
-            These fixtures are review evidence, not live customer truth. Use the
-            buttons with a keyboard to inspect each route state.
-          </p>
+      <section class="section" aria-labelledby="ownership-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Bounded ownership</span>
+              <h2 id="ownership-title">
+                A selected handoff, never one monolith.
+              </h2>
+            </div>
+            <p>
+              Arrows in the keyframe describe this selected outcome. They do not
+              create a required runtime chain or shared System model.
+            </p>
+          </div>
+          <div class="ownership-grid">
+            <article class="ownership-card">
+              <span class="owner-label">ADS</span>
+              <h3>Reusable visual direction</h3>
+              <p>
+                Brand roles, hierarchy, composition, color, typography, imagery,
+                keyframes, and motion rules.
+              </p>
+            </article>
+            <article class="ownership-card">
+              <span class="owner-label">ACS · receiving owner</span>
+              <h3>Content lineage + production</h3>
+              <p>
+                Final thesis, hook, script, source media, independent node
+                review, edit, render decisions, package, supervised handoff, and
+                publication.
+              </p>
+            </article>
+            <article class="ownership-card">
+              <span class="owner-label">Diffusion Studio</span>
+              <h3>Local motion/video engine</h3>
+              <p>
+                Code-native execution through Electron/DAPI authority; a minimal
+                browser companion keeps human review visible.
+              </p>
+            </article>
+          </div>
+          <div class="aios-support" aria-label="AIOS support facts">
+            <span>Context</span><span>Routing</span><span>Ownership</span
+            ><span>Evidence</span><span>Repositories owned separately</span
+            ><span>Templates owned separately</span
+            ><span>Skills owned separately</span>
+          </div>
         </div>
-        <div>
-          <div
-            class="state-controls"
-            role="group"
-            aria-label="Route state fixtures"
-          >
-            <button
-              class="state-button"
-              type="button"
-              data-state="success"
-              aria-pressed="true"
-            >
-              Success
-            </button>
-            <button
-              class="state-button"
-              type="button"
-              data-state="loading"
-              aria-pressed="false"
-            >
-              Loading
-            </button>
-            <button
-              class="state-button"
-              type="button"
-              data-state="error"
-              aria-pressed="false"
-            >
-              Error
-            </button>
-            <button
-              class="state-button"
-              type="button"
-              data-state="empty"
-              aria-pressed="false"
-            >
-              Empty
-            </button>
-            <button
-              class="state-button"
-              type="button"
-              data-state="permission"
-              aria-pressed="false"
-            >
-              Permission
-            </button>
-            <button
-              class="state-button"
-              type="button"
-              data-state="offline"
-              aria-pressed="false"
-            >
-              Offline
-            </button>
+      </section>
+
+      <section class="section" aria-labelledby="states-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Inspectable preview states</span>
+              <h2 id="states-title">Honest local proof.</h2>
+            </div>
+            <p>
+              These fixtures describe the local storyboard and receiver
+              boundary. They do not claim a rendered video, publication,
+              customer outcome, or receiver acceptance.
+            </p>
           </div>
-          <div
-            class="state-output"
-            data-state="success"
-            id="state-output"
-            role="status"
-            aria-live="polite"
-          >
-            <strong>Preview and review evidence are available.</strong>
-            <p>The owner can inspect the run and choose promotion.</p>
+          <div class="state-lab">
+            <div class="state-buttons" aria-label="Choose a proof state">
+              <button
+                class="state-button"
+                type="button"
+                data-state="success"
+                aria-pressed="true"
+              >
+                Success
+              </button>
+              <button
+                class="state-button"
+                type="button"
+                data-state="loading"
+                aria-pressed="false"
+              >
+                Loading
+              </button>
+              <button
+                class="state-button"
+                type="button"
+                data-state="error"
+                aria-pressed="false"
+              >
+                Error
+              </button>
+              <button
+                class="state-button"
+                type="button"
+                data-state="empty"
+                aria-pressed="false"
+              >
+                Empty
+              </button>
+              <button
+                class="state-button"
+                type="button"
+                data-state="permission"
+                aria-pressed="false"
+              >
+                Permission
+              </button>
+              <button
+                class="state-button"
+                type="button"
+                data-state="offline"
+                aria-pressed="false"
+              >
+                Offline
+              </button>
+            </div>
+            <div class="state-message" id="state-message" aria-live="polite">
+              <div class="state-message-head">
+                <span class="proof-label" id="state-label"
+                  >Success / local preview</span
+                ><span
+                  class="state-dot"
+                  id="state-dot"
+                  aria-hidden="true"
+                ></span>
+              </div>
+              <h3 id="state-title">Storyboard ready for ADS Review.</h3>
+              <p id="state-copy">
+                Eight beats, three keyframes, selected assets, responsive
+                behavior, focus, and reduced motion are available for direct
+                inspection.
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <section class="shell boundary" aria-labelledby="boundary-title">
+        <h2 id="boundary-title">
+          The design is ready to review. The content is not published.
+        </h2>
+        <div class="boundary-copy">
+          <p>
+            <strong>ADS owns:</strong> this portable visual direction and the
+            selected reusable design assets.
+          </p>
+          <p>
+            <strong>ACS receives:</strong> a pending snapshot and owns all
+            editorial/content production after explicit acceptance.
+          </p>
+          <p>
+            <strong>Build stops here:</strong> no ACS mutation, production
+            render, external send, commit, push, issue, pull request,
+            publication, or receiver acceptance.
+          </p>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>ADS workspace · active operational truth</p>
-      <p><a href="../docs/contract.md">Read the filesystem contract</a></p>
+    <footer>
+      <div class="shell footer-inner">
+        <span>ADS r1 · Business Freedom content system story</span>
+        <span>Receiver: Agentic Content System · PENDING</span>
+      </div>
     </footer>
 
     <script>
-      (() => {
-        const resumeButton = document.getElementById("resume-route");
-        const feedback = document.getElementById("route-feedback");
-        const stateOutput = document.getElementById("state-output");
-        const stateButtons = [
-          ...document.querySelectorAll("[data-state]"),
-        ].filter((button) => button.classList.contains("state-button"));
-        const states = {
-          success: [
-            "Preview and review evidence are available.",
-            "The owner can inspect the run and choose promotion.",
-          ],
-          loading: [
-            "Opening the active route…",
-            "The local preview is being prepared; keep this state visible.",
-          ],
-          error: [
-            "Review evidence could not be read.",
-            "Keep the failed run, inspect the referenced path, and record a recovery if needed.",
-          ],
-          empty: [
-            "No prior run is recorded for this brief.",
-            "Create the first route; the ledger will start with a null predecessor.",
-          ],
-          permission: [
-            "Promotion has not been selected.",
-            "A successful route remains in workspace until the owner chooses curation.",
-          ],
-          offline: [
-            "The local preview is unavailable.",
-            "Keep the proof paths and return when the checkout can be served again.",
-          ],
-        };
+      const durations = [4, 5, 6, 5, 4, 5, 6, 4];
+      const totalDuration = durations.reduce((sum, value) => sum + value, 0);
+      const scenes = [...document.querySelectorAll("[data-scene]")];
+      const sceneButtons = [
+        ...document.querySelectorAll("[data-scene-target]"),
+      ];
+      const stage = document.querySelector("#stage");
+      const playButton = document.querySelector("#play");
+      const pauseButton = document.querySelector("#pause");
+      const storyStatus = document.querySelector("#story-status");
+      const progress = document.querySelector("#progress");
+      const progressFill = document.querySelector("#progress-fill");
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+      let activeScene = 0;
+      let timer = null;
+      let playing = false;
+      let elapsedBeforeScene = 0;
+      let sceneStartedAt = 0;
 
-        function showState(name) {
-          const copy = states[name];
-          if (!copy) return;
-          stateOutput.dataset.state = name;
-          stateOutput.innerHTML = `<strong>${copy[0]}</strong><p>${copy[1]}</p>`;
-          stateButtons.forEach((button) =>
-            button.setAttribute(
-              "aria-pressed",
-              String(button.dataset.state === name),
-            ),
+      function cumulativeBefore(index) {
+        return durations.slice(0, index).reduce((sum, value) => sum + value, 0);
+      }
+
+      function setProgress(seconds) {
+        const bounded = Math.min(totalDuration, Math.max(0, seconds));
+        const percentage = (bounded / totalDuration) * 100;
+        progress.setAttribute("aria-valuenow", String(Math.round(bounded)));
+        progressFill.style.width = `${percentage}%`;
+        stage.style.setProperty("--progress", `${percentage}%`);
+      }
+
+      function showScene(index, reason = "Selected") {
+        activeScene = index;
+        scenes.forEach((scene, sceneIndex) => {
+          scene.hidden = sceneIndex !== index;
+        });
+        sceneButtons.forEach((button, buttonIndex) => {
+          button.setAttribute("aria-pressed", String(buttonIndex === index));
+        });
+        elapsedBeforeScene = cumulativeBefore(index);
+        setProgress(elapsedBeforeScene);
+        storyStatus.textContent = `${reason} · scene ${index + 1} of ${scenes.length}`;
+      }
+
+      function stopPlayback(
+        message = `Paused · scene ${activeScene + 1} of ${scenes.length}`,
+      ) {
+        playing = false;
+        window.clearTimeout(timer);
+        timer = null;
+        storyStatus.textContent = message;
+        playButton.textContent =
+          activeScene === scenes.length - 1 ? "Replay story" : "Play story";
+      }
+
+      function scheduleScene() {
+        if (!playing) return;
+        sceneStartedAt = performance.now();
+        timer = window.setTimeout(() => {
+          if (activeScene === scenes.length - 1) {
+            setProgress(totalDuration);
+            stopPlayback("Complete · 39 seconds · human review point visible");
+            return;
+          }
+          showScene(activeScene + 1, "Playing");
+          scheduleScene();
+        }, durations[activeScene] * 1000);
+      }
+
+      playButton.addEventListener("click", () => {
+        if (reduceMotion.matches) {
+          stopPlayback(
+            "Reduced motion · automatic scene changes disabled · choose scenes manually",
+          );
+          return;
+        }
+        if (activeScene === scenes.length - 1) showScene(0, "Replaying");
+        if (playing) return;
+        playing = true;
+        playButton.textContent = "Playing";
+        storyStatus.textContent = `Playing · scene ${activeScene + 1} of ${scenes.length}`;
+        scheduleScene();
+      });
+
+      pauseButton.addEventListener("click", () => {
+        if (playing) {
+          const sceneElapsed = (performance.now() - sceneStartedAt) / 1000;
+          setProgress(
+            elapsedBeforeScene + Math.min(sceneElapsed, durations[activeScene]),
           );
         }
+        stopPlayback();
+      });
 
-        resumeButton.addEventListener("click", () => {
-          resumeButton.setAttribute("aria-busy", "true");
-          resumeButton.disabled = true;
-          resumeButton.innerHTML = "Opening active route…";
-          feedback.textContent = "Loading · inspecting previous run evidence";
-          showState("loading");
-          window.setTimeout(() => {
-            resumeButton.removeAttribute("aria-busy");
-            resumeButton.disabled = false;
-            resumeButton.innerHTML =
-              'Route resumed <span aria-hidden="true">✓</span>';
-            feedback.textContent =
-              "Success · active preview and proof are available";
-            showState("success");
-          }, 520);
+      sceneButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          stopPlayback();
+          showScene(Number(button.dataset.sceneTarget), "Selected");
         });
+      });
 
-        stateButtons.forEach((button) =>
-          button.addEventListener("click", () =>
-            showState(button.dataset.state),
-          ),
-        );
-      })();
+      reduceMotion.addEventListener("change", () => {
+        if (reduceMotion.matches)
+          stopPlayback(
+            "Reduced motion · automatic scene changes disabled · choose scenes manually",
+          );
+      });
+
+      const stateContent = {
+        success: [
+          "Success / local preview",
+          "Storyboard ready for ADS Review.",
+          "Eight beats, three keyframes, selected assets, responsive behavior, focus, and reduced motion are available for direct inspection.",
+          "#3b6f55",
+        ],
+        loading: [
+          "Loading / local preview",
+          "Loading selected local assets.",
+          "Keep the active frame named and preserve controls while the browser resolves the approved portrait, pixel scenes, marks, and fonts.",
+          "#b86f36",
+        ],
+        error: [
+          "Error / local preview",
+          "A selected companion could not be read.",
+          "Keep DESIGN.md canonical, name the missing relative path, and rerun the local asset and link checks before Review.",
+          "#9f3e2c",
+        ],
+        empty: [
+          "Empty / local preview",
+          "No storyboard scene is selected.",
+          "Return to scene 01, keep the beat list available in document flow, and never replace missing direction with decorative filler.",
+          "#766252",
+        ],
+        permission: [
+          "Permission / receiver boundary",
+          "ADS cannot accept for ACS.",
+          "The handoff remains PENDING until Agentic Content System records explicit acceptance. Copying or viewing the snapshot is not acceptance.",
+          "#2b6f98",
+        ],
+        offline: [
+          "Offline / local preview",
+          "The browser companion is unavailable.",
+          "Use DESIGN.md, the three local SVG keyframes, and the integrity manifest. Re-run browser inspection when the local preview server is available.",
+          "#0e1720",
+        ],
+      };
+      const stateButtons = [...document.querySelectorAll("[data-state]")];
+      const stateLabel = document.querySelector("#state-label");
+      const stateTitle = document.querySelector("#state-title");
+      const stateCopy = document.querySelector("#state-copy");
+      const stateDot = document.querySelector("#state-dot");
+
+      stateButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          stateButtons.forEach((item) =>
+            item.setAttribute("aria-pressed", String(item === button)),
+          );
+          const [label, title, copy, color] =
+            stateContent[button.dataset.state];
+          stateLabel.textContent = label;
+          stateTitle.textContent = title;
+          stateCopy.textContent = copy;
+          stateDot.style.background = color;
+        });
+      });
     </script>
   </body>
 </html>

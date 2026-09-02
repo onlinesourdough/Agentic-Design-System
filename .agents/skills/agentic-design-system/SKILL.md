@@ -17,8 +17,11 @@ example into `examples/`.
    request or private context into the ledger.
 2. Read the active `workspace/BRIEF.md` and `workspace/DESIGN.md`. Confirm that
    the brief makes outcome and receiving owner/reuse scope, audience/job,
-   surfaces/states, material constraints, source rights/provenance, and
-   review/acceptance owner inspectable. Resume active work when its state says
+   surfaces/states, material constraints, source rights/provenance, review mode,
+   and separate Review owner and receiver-acceptance decision inspectable.
+   Review mode is exactly `independent` or `owner`; `Review owner` is a
+   non-empty named identity distinct from the receiving project or repository.
+   Resume active work when its state says
    it is in progress, or create the smallest surface needed for the intent.
 3. Use `$design-solution` for the focused design method when the direction or
    preview needs authoring. `DESIGN.md` is always the canonical portable,
@@ -37,18 +40,31 @@ example into `examples/`.
    and mobile widths, and verify landmarks, keyboard-visible focus, reduced
    motion, and relevant loading, empty, error, success, permission, and
    offline states.
-6. Use `$review-design` as the review method. Record its result and concrete
-   proof references in the run evidence; a review result is not a promotion
-   decision by itself.
+6. Use `$review-design` as the review method. The evidence names its reviewer,
+   records `PASS`, binds the reviewed `DESIGN.md` SHA-256, and lists the path and
+   SHA-256 of every pre-existing selected preview, asset, or tool-native
+   source/native export. Use the `Reviewed source companion` evidence label.
+   Deterministic CSS, design-token, and Tailwind exports are generated later
+   from the exact reviewed `DESIGN.md`; bind their output hashes and source
+   DESIGN hash in the handoff rather than requiring them as pre-existing Review
+   evidence. A review result is not a promotion decision by itself.
 7. When reviewed work crosses an owner boundary, generate `HANDOFF.md` with the
    existing handoff route. Verify `ADS-HANDOFF/1` identity/revision, receiving
    owner/outcome, source revision, included relative paths and SHA-256 values,
-   provenance/licensing, Review state, limitations, and explicit acceptance.
-   Generation starts `PENDING`; an accepted snapshot is immutable, and a later
-   direction requires a new handoff revision and re-acceptance.
-8. When a creative route explicitly selects OpenPencil, verify the pinned
-   source decision, open the editable `.op` file through a real supervised
-   upstream surface, compare its reviewed PNG/SVG export with `DESIGN.md`,
+   provenance/licensing, named Review state/mode, limitations, and explicit
+   acceptance. In both modes, the evidence reviewer must match the brief's
+   declared Review owner; never compare that identity with `--receiving-owner`.
+   A matching independent reviewer is sufficient for `independent`. For
+   `owner`, stop with `waiting-owner` until that exact Review owner records the
+   bound PASS and all selected source-companion hashes. Generation starts
+   `PENDING`; receiver acceptance is separate, an accepted snapshot is
+   immutable, and a later direction requires a new reviewed revision and
+   re-acceptance.
+8. When a creative route explicitly selects OpenPencil, use the internal
+   `$openpencil-workbench` method to verify the pinned source decision, return
+   its strict-loopback URL to the Codex-compatible built-in browser, open the
+   editable `.op` file through the real supervised upstream surface, compare
+   its reviewed PNG/SVG export with `DESIGN.md`,
    and bind paths, hashes, provenance, limitations, review, version/revision,
    and receiving owner in `HANDOFF.md`. If the tool is unavailable, expose
    the fallback and return the required portable handoff plus only any
@@ -104,3 +120,7 @@ require them. It returns ordinary paths, human-readable handoff, and proof. No
 raw prompts, credentials, customer truth, runtime protocol, registry, MCP,
 central database, shared state, duplicated ACS truth, or synchronized
 cross-System model belongs in ADS-owned evidence.
+
+A receiving System copies only its explicitly accepted immutable snapshot. It
+never live-syncs the ADS workspace and never sends an automatic recursive
+request back into ADS.

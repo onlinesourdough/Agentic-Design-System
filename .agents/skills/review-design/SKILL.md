@@ -15,6 +15,19 @@ when one is selected. For a direction-only review, evaluate the corresponding
 instructions in `DESIGN.md` and record receiving-surface validation as a
 limitation rather than inventing preview proof.
 
+The brief selects review mode as `independent` or `owner` and declares one
+non-empty `Review owner` separately from the receiving project. Name the
+reviewer and require that identity to match the declared Review owner in either
+mode. Bind the exact reviewed `DESIGN.md` SHA-256. List each pre-existing
+selected preview, asset, editable source, and native export as a `Reviewed
+source companion` with its SHA-256; unlisted source companions cannot enter
+that handoff revision. CSS, design-token, and Tailwind outputs are deterministic
+derivatives of that reviewed `DESIGN.md`: the generator hashes and binds them
+to the DESIGN hash, so Review must not pretend they existed beforehand. When
+owner mode is selected, return `waiting-owner` until the exact declared Review
+owner records the complete bound PASS. Independent mode needs no second review;
+receiver acceptance remains a separate post-generation decision.
+
 ## Checks
 
 1. **Job:** The first viewport makes the audience, value, primary action or
@@ -43,7 +56,11 @@ limitation rather than inventing preview proof.
    replace `DESIGN.md`. Cross-owner `HANDOFF.md` records
    `ADS-HANDOFF/1`, identity/revision, receiving owner/outcome, source revision,
    all included paths/hashes, provenance/licensing, Review, limitations, and an
-   explicit acceptance state; accepted snapshots cannot be overwritten.
+   explicit acceptance state; accepted snapshots cannot be overwritten. The
+   named Review owner/reviewer, brief-selected mode, reviewed DESIGN hash, and
+   selected source-companion hashes agree with the generated binder. Any
+   deterministic derived exports expose their own integrity hashes plus the
+   reviewed DESIGN hash from which they were generated.
 9. **Optional native source:** When OpenPencil was explicitly selected, use a
    real supervised upstream surface to open the `.op` source and export the
    declared PNG/SVG boundary. Compare that export with `DESIGN.md`; verify the
@@ -63,7 +80,10 @@ Return:
 
 ```text
 Review: design
+Reviewer: <named reviewer>
 Result: PASS | REVISE
+Reviewed DESIGN.md SHA-256: `<sha256>`
+Reviewed source companion: `<pre-existing-selected/source-relative-path>` — SHA-256 `<sha256>`
 Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source, ownership and sibling route]
 Next: create handoff | revise
 Findings: [only material failures]
