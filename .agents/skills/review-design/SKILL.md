@@ -46,10 +46,16 @@ receiver acceptance remains a separate post-generation decision.
    permission, and offline states are explicit and useful.
 6. **Accessibility:** Semantic landmarks, heading order, labels, contrast,
    keyboard-visible focus, skip navigation, alt text, and reduced motion are
-   appropriate. Mobile does not lose content or action access.
+   appropriate. Error feedback is adjacent to its control or group and
+   programmatically associated. Mobile does not lose content or action access.
 7. **Originality and source safety:** References informed principles rather
    than reproducing a third-party brand, layout, proprietary asset, or long
-   skill passage.
+   skill passage. Caller media remains an owned pointer with provenance,
+   rights, revision/hash when available, signals, role, confidence, and target
+   surface. The selected `direct`, `discover`, or `explore` evidence respects
+   owner-first precedence; discovery evaluates only one concrete gap and
+   selects at most one primary source plus one optional adapter. The ADS
+   baseline is original fallback vocabulary, never a template or brand.
 8. **Contract:** `BRIEF.md` and canonical portable `DESIGN.md` agree; any
    selected preview, asset, export, or tool source agrees with both. Design.md
    lint and applicable repository checks pass. Optional companions do not

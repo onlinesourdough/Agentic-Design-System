@@ -51,6 +51,16 @@ checks accumulated drift without repairing or creating anything. Global and
 cross-project skills are installed by the calling plugin or harness and do not
 become ADS-owned files.
 
+## Adaptive references
+
+The Codex conversation is the reference interface: callers provide links,
+screenshots, prior work, or vague intent, and ADS responds `direct`, `discover`,
+or `explore` inside its existing design route. Caller media stays caller-owned;
+ADS retains only pointers and extracted signals. For unresolved direction the
+agent may show a relevant subset of six compact internal baseline cards in the
+conversation—never a separate catalogue or configuration surface. Every
+accepted outcome still resolves into canonical `DESIGN.md`.
+
 ## Verify a route
 
 ```sh

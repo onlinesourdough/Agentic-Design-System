@@ -10,6 +10,12 @@ service or framework. It works from a clean checkout and keeps the active
 design work in `workspace/` until a deliberate curation decision promotes an
 example into `examples/`.
 
+The Codex conversation is the caller-facing input/output surface. Receive
+links, screenshots, prior work, or vague intent there; return the selected
+direction and relevant proof there. Create portable `DESIGN.md` and optional
+companions only when durable design or cross-owner handoff is needed. Never ask
+the caller to browse or configure a separate reference catalogue.
+
 ## Route
 
 1. Read `workspace/history/runs.jsonl` and inspect records relevant to the
@@ -23,6 +29,13 @@ example into `examples/`.
    non-empty named identity distinct from the receiving project or repository.
    Resume active work when its state says
    it is in progress, or create the smallest surface needed for the intent.
+   When the caller supplies visual evidence or the direction remains
+   unresolved, read
+   [`references/adaptive-references.md`](references/adaptive-references.md).
+   Preserve caller media as pointer metadata and extracted signals, apply its
+   owner-first precedence, and select exactly one `direct`, `discover`, or
+   `explore` mode before authoring. Route evidence remains subordinate to
+   canonical `DESIGN.md`.
 3. Use `$design-solution` for the focused design method when the direction or
    preview needs authoring. `DESIGN.md` is always the canonical portable,
    human-readable visual direction; keep optional preview, assets, tokens,
@@ -113,6 +126,10 @@ HeroUI, Origin UI/Originkit, ThreeUI, and DesEngs are source references or
 optional adapters selected per brief after source and license review. Never
 vendor one as the universal ADS library. Preserve the local design and review
 skills as internal repeatable methods; do not create another public route.
+New source discovery starts only for one concrete unresolved role and may
+select no more than one primary source plus one optional adapter after current
+first-party and rendered-task evaluation. Dated practitioner posts are
+discovery signals, not standalone adoption authority.
 
 ADS can run first, last, or alone. AIOS, APT, ACS, a Project, or another caller
 can supply ordinary resolved context, but this skill does not import, start, or

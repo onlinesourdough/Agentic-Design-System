@@ -90,6 +90,38 @@ can be recovered only once.
 route for quick resume. It is not a second history store. Learning notes are
 short and intentional under `workspace/learning/`.
 
+## Adaptive reference boundary
+
+When visual evidence is supplied or direction is unresolved, ADS selects one
+mode: `direct`, `discover`, or `explore`. It applies this precedence:
+
+1. explicit owner must-use and avoid constraints;
+2. current accepted brand truth and prior accepted production;
+3. task-specific supplied references;
+4. the original ADS six-lens baseline as fallback vocabulary; and
+5. bounded new discovery for one concrete unresolved role.
+
+Caller-owned screenshots, URLs, channels, landing pages, brand assets, and
+accepted productions remain outside ADS. The run may retain only pointer kind,
+locator, role, revision or hash when available, provenance and rights,
+extracted positive and avoid signals, confidence, and target surface. The route
+does not dereference or commit media bytes merely to preserve evidence.
+
+`direct` does not resolve unrelated source entries. `discover` evaluates only
+one named gap and can select at most one primary source plus one optional
+adapter after current license, revision, maintenance, accessibility,
+framework/runtime, reuse, and rendered-task proof. `explore` compares two
+compact directions by default, or three only for an explicitly bounded need.
+Route evidence and baseline choices never become a second design source; the
+selected direction becomes authoritative only in `DESIGN.md` and Review.
+
+The internal skill reference contains exactly quiet editorial, precise product,
+evidence-led, narrative frame, warm tactile, and cinematic human. The agent can
+show the relevant subset as compact cards in the conversation. There is no
+separate catalogue, registry, configuration surface, or owner-maintained UI.
+The cards are original guidance, not fonts, palettes, components, templates,
+copied brands, or production examples.
+
 ## Source-decision boundary
 
 `docs/SOURCE_AUDIT.md` owns source revision/version, license and reuse
@@ -98,6 +130,14 @@ reason, and learned-versus-copied evidence. The active `DESIGN.md` resolves
 those facts into named use/reject decisions. The design/source tracer records
 that resolution as run proof; it does not create a catalogue, registry,
 `design-list.md`, or second source of truth.
+
+Current dated X practitioner material is a primary discovery signal for
+contemporary agent-design practice when it exposes a relevant source or
+inspectable claim. It remains a signal rather than a standard: consequential
+adoption requires first-party evidence, provenance/rights, accessibility and
+framework/reuse fit, plus proof against the real rendered task. Older academic
+evidence can corroborate historical limitations but cannot represent current
+frontier-model performance.
 
 ## Canonical portable direction
 

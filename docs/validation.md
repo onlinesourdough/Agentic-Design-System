@@ -16,7 +16,8 @@ npm test
 `npm run check` verifies the three visible roots, required shell and workspace
 paths, gallery entries, Design.md lint, local preview accessibility markers,
 stale identity/path/link fragments, canonical DESIGN.md/brief semantics,
-versioned handoff/ownership discovery, source/audit discovery, and secret-safe
+versioned handoff/ownership discovery, adaptive-reference discovery, the
+Resources dynamic error relation, source/audit discovery, and secret-safe
 public text. `npm test` exercises source decisions, genuinely minimal and
 explicit optional-companion handoffs, accepted-snapshot immutability, audit
 outcomes/read-only behavior, ledger predecessor/recovery rules, and
@@ -51,6 +52,17 @@ inspiration/reference, and optional tool-adapter records from
 rejects each one. The run proof records the resolved fields but does not become
 a second source database.
 
+## Adaptive reference evidence
+
+Exercise reference behavior on the current task through the primary skill and
+return the brief, selected `direct`, `discover`, or `explore` mode, governing
+owner/brand/reference evidence, any one-gap discovery or two-card comparison,
+and the resulting direction in the Codex conversation. Do not ship an
+executable route model, registry, schema, or baseline selection store. The
+current editable-native-composition decision is the real one-gap source case;
+its first-party OpenPencil evidence, selected `DESIGN.md` direction, rendered
+output, and named Review are inspectable in this repository.
+
 ## Browser proof
 
 Run:
@@ -66,6 +78,16 @@ keyboard-operable, the skip link and focus ring are visible, reduced motion is
 honored, and the gallery links remain reachable without horizontal scrolling.
 Then run the gallery preview and the carried Resources preview. Record any
 missing browser automation or visual tool proof honestly in the Build handoff.
+
+For the Resources preview, submit the Account and Need help forms without their
+required values. Each invalid field must expose `aria-invalid="true"`, an
+`aria-describedby` value, and an adjacent `.form-error` whose `id` matches that
+value. Correcting and resubmitting the form must clear the dynamic error
+relation before the success state.
+
+There is intentionally no baseline catalogue page. A vague brief receives two
+relevant internal cards in the conversation, while rendered browser inspection
+remains attached to the actual task preview and target surface.
 
 ## Handoff
 
@@ -202,6 +224,12 @@ The fallback exits successfully, emits the exact unavailable-tool reason,
 copies no native artifact, and still produces the required portable handoff
 plus only any independently selected source companions or deterministic derived
 exports.
+
+Generic handoff success cases do not consume mutable `workspace/BRIEF.md`,
+`DESIGN.md`, or `REVIEW.md`. The handoff tracer builds temporary minimal,
+selected-companion, and OpenPencil fixtures, derives the matching Review owner
+from each fixture brief, and selects native companions only in the OpenPencil
+fixture. Its final proof reports the active workspace fingerprint unchanged.
 
 The same existing tracer also proves the public capability boundary in its
 temporary root:

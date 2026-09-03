@@ -47,6 +47,12 @@ maintenance signal, and visual value justify it. The adapter is implemented in
 the receiving preview or curated example; a source repository is never copied
 into ADS as a universal catalog.
 
+Adaptive reference selection is behavior inside the existing public route,
+not a lifecycle phase, skill, store, schema, or UI. The conversation receives
+references and can surface relevant internal baseline cards. The primary
+skill's compact reference is the sole behavior authority; task evidence stays
+in the conversation, and `DESIGN.md` remains canonical.
+
 `DESIGN.md` stays the canonical semantic and portable design owner for every
 work surface. Optional assets, previews, tokens, exports, and tool-native
 sources stay referenced companions.

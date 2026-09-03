@@ -49,6 +49,7 @@ const requiredPaths = [
   "README.md",
   ".agents/skills/README.md",
   ".agents/skills/agentic-design-system/SKILL.md",
+  ".agents/skills/agentic-design-system/references/adaptive-references.md",
   ".agents/skills/design-solution/SKILL.md",
   ".agents/skills/review-design/SKILL.md",
   ".agents/skills/openpencil-workbench/SKILL.md",
@@ -435,6 +436,18 @@ function checkWorkspace() {
     fail("Resources preview does not load the reviewed local adapter");
   if (!resourcePreview.includes('data-adapter="heroui-disclosure"'))
     fail("Resources preview does not expose the adapter state");
+  for (const marker of [
+    'field.removeAttribute("aria-describedby")',
+    'field.setAttribute("aria-describedby", errorId)',
+    'id="${errorId}"',
+  ]) {
+    if (!resourcePreview.includes(marker))
+      fail(
+        `Resources dynamic validation errors lack association marker ${marker}`,
+      );
+  }
+  if ((resourcePreview.match(/showFieldError\(/g) ?? []).length !== 3)
+    fail("Resources account/help forms do not share the field-error relation");
 
   const sourceAudit = read(join(root, "docs/SOURCE_AUDIT.md"));
   const design = read(join(root, "workspace/DESIGN.md"));

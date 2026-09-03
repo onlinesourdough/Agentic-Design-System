@@ -18,8 +18,8 @@ const toolIndex = process.argv.indexOf("--openpencil-tool");
 if (toolIndex === -1 || !process.argv[toolIndex + 1])
   fail("Pass --openpencil-tool with the verified release CLI path.");
 const tool = resolve(root, process.argv[toolIndex + 1]);
-const source = join(root, "workspace");
-const before = fingerprint(source);
+const activeWorkspace = join(root, "workspace");
+const before = fingerprint(activeWorkspace);
 const temporary = mkdtempSync(join(tmpdir(), "ads-handoff-trace-"));
 
 try {
@@ -50,16 +50,7 @@ version: 1.0.0
 `,
     "utf8",
   );
-  writeFileSync(
-    join(minimalSource, "REVIEW.md"),
-    `# Review evidence
-
-Reviewer: ADS Review
-Result: PASS
-Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
-`,
-    "utf8",
-  );
+  writeFixtureReview(minimalSource);
   const ordinary = run([
     minimalSource,
     join(temporary, "ordinary"),
@@ -67,7 +58,12 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
     "ADS proof receiver",
   ]);
   const companionSource = join(temporary, "optional-companion-source");
-  cpSync(source, companionSource, { recursive: true });
+  cpSync(minimalSource, companionSource, { recursive: true });
+  writeFileSync(
+    join(companionSource, "index.html"),
+    '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>:focus-visible{outline:3px solid}@media(prefers-reduced-motion:reduce){*{transition:none}}</style></head><body><a class="skip-link" href="#fixture">Skip</a><main id="fixture"><h1>Isolated preview fixture</h1></main></body></html>\n',
+    "utf8",
+  );
   mkdirSync(join(companionSource, "assets"), { recursive: true });
   writeFileSync(
     join(companionSource, "assets/selected.txt"),
@@ -79,12 +75,7 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
     "not selected\n",
     "utf8",
   );
-  const companionReviewPath = join(companionSource, "REVIEW.md");
-  writeFileSync(
-    companionReviewPath,
-    `${readFileSync(companionReviewPath, "utf8").trimEnd()}\n\nReviewed source companion: \`assets/selected.txt\` — SHA-256 \`${sha256(join(companionSource, "assets/selected.txt"))}\`\n`,
-    "utf8",
-  );
+  writeFixtureReview(companionSource, ["index.html", "assets/selected.txt"]);
   const selectedCompanions = run([
     companionSource,
     join(temporary, "selected-companions"),
@@ -100,8 +91,23 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
     "--export",
     "tailwind",
   ]);
+  const openPencilSource = join(temporary, "openpencil-source");
+  cpSync(minimalSource, openPencilSource, { recursive: true });
+  mkdirSync(join(openPencilSource, "openpencil/exports"), { recursive: true });
+  cpSync(
+    join(activeWorkspace, "openpencil/route-console.op"),
+    join(openPencilSource, "openpencil/route-console.op"),
+  );
+  cpSync(
+    join(activeWorkspace, "openpencil/exports/route-console.png"),
+    join(openPencilSource, "openpencil/exports/route-console.png"),
+  );
+  writeFixtureReview(openPencilSource, [
+    "openpencil/route-console.op",
+    "openpencil/exports/route-console.png",
+  ]);
   const success = run([
-    source,
+    openPencilSource,
     join(temporary, "openpencil"),
     "--receiving-owner",
     "ADS proof receiver",
@@ -126,7 +132,7 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
     "The HTML importer approximates some CSS and the release CLI needs a separately available desktop or web server for live document operations.",
   ]);
   const fallback = run([
-    source,
+    openPencilSource,
     join(temporary, "fallback"),
     "--receiving-owner",
     "ADS proof receiver",
@@ -300,8 +306,8 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
       fail(`ordinary fallback artifact is missing: ${file}`);
   if (existsSync(join(temporary, "fallback", "openpencil")))
     fail("fallback copied OpenPencil artifacts");
-  if (before !== fingerprint(source))
-    fail("handoff tracing changed the selected source directory");
+  if (before !== fingerprint(activeWorkspace))
+    fail("handoff tracing changed the active workspace");
   assertPortableSnapshot(
     join(root, "examples/service-landing-page"),
     websiteOutput,
@@ -333,6 +339,16 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
         fallback: fallback.openpencil.status,
         fallbackReason: fallback.openpencil.reason,
         sourceUnchanged: true,
+        fixtureIsolation: {
+          activeWorkspaceFingerprintUnchanged: true,
+          reviewOwnerDerived: true,
+          openPencilSelectedOnlyInFixture: true,
+          genericSuccessSources: [
+            "minimal-source",
+            "optional-companion-source",
+            "openpencil-source",
+          ],
+        },
         sourceCompanion: success.openpencil.sourceCompanion,
         exportCompanions: success.openpencil.exportCompanions,
         portableContract: ordinary.handoff.contract,
@@ -464,6 +480,28 @@ function acceptFixture(outputDirectory) {
       "Acceptance statement: Accepted for the isolated thumbnail and motion-direction fixture; ACS retains production ownership.",
     );
   writeFileSync(path, accepted, "utf8");
+}
+
+function writeFixtureReview(sourceDirectory, companions = []) {
+  const brief = readFileSync(join(sourceDirectory, "BRIEF.md"), "utf8");
+  const owner = brief.match(/^- \*\*Review owner:\*\*\s+(.+?)\s*$/m)?.[1];
+  if (!owner) fail("fixture BRIEF.md lacks a Review owner");
+  const companionLines = companions
+    .map(
+      (relativePath) =>
+        `Reviewed source companion: \`${relativePath}\` — SHA-256 \`${sha256(join(sourceDirectory, relativePath))}\``,
+    )
+    .join("\n");
+  writeFileSync(
+    join(sourceDirectory, "REVIEW.md"),
+    `# Review evidence
+
+Reviewer: ${owner}
+Result: PASS
+Reviewed DESIGN.md SHA-256: \`${sha256(join(sourceDirectory, "DESIGN.md"))}\`
+${companionLines ? `\n${companionLines}\n` : ""}`,
+    "utf8",
+  );
 }
 
 function run(arguments_) {

@@ -15,7 +15,7 @@ from typing import Optional
 ROOT = Path(__file__).resolve().parents[3]
 SCRIPT = ROOT / "workspace/engine/create-handoff.mjs"
 TRACER = ROOT / "workspace/engine/handoff_tracer.mjs"
-SOURCE = ROOT / "workspace"
+ACTIVE_WORKSPACE = ROOT / "workspace"
 
 
 def fingerprint(directory: Path) -> str:
@@ -67,9 +67,6 @@ class HandoffTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         return json.loads(result.stdout)
 
-    def _run(self, output: Path, *arguments: str) -> dict:
-        return self._run_from(SOURCE, output, *arguments)
-
     def _openpencil_arguments(self, tool: Path) -> list[str]:
         return [
             "--openpencil",
@@ -97,10 +94,12 @@ class HandoffTests(unittest.TestCase):
         self,
         source: Path,
         *,
-        reviewer: str = "ADS Review",
+        reviewer: Optional[str] = None,
         result: str = "PASS",
         companions: tuple[str, ...] = (),
     ) -> None:
+        if reviewer is None:
+            reviewer = self._declared_review_owner(source)
         lines = [
             "# Review evidence",
             "",
@@ -118,14 +117,14 @@ class HandoffTests(unittest.TestCase):
             "\n".join(lines) + "\n", encoding="utf-8"
         )
 
-    def _record_reviewed_companion(self, source: Path, relative: str) -> None:
-        review = source.joinpath("REVIEW.md")
-        digest = hashlib.sha256(source.joinpath(relative).read_bytes()).hexdigest()
-        review.write_text(
-            review.read_text(encoding="utf-8").rstrip()
-            + f"\nReviewed source companion: `{relative}` — SHA-256 `{digest}`\n",
-            encoding="utf-8",
+    def _declared_review_owner(self, source: Path) -> str:
+        match = re.search(
+            r"^- \*\*Review owner:\*\*\s+(.+?)\s*$",
+            source.joinpath("BRIEF.md").read_text(encoding="utf-8"),
+            re.MULTILINE,
         )
+        self.assertIsNotNone(match, "fixture BRIEF.md needs a Review owner")
+        return match.group(1)
 
     def _minimal_source(self, root: Path) -> Path:
         source = root / "source"
@@ -154,6 +153,39 @@ version: 1.0.0
             encoding="utf-8",
         )
         self._write_review(source)
+        return source
+
+    def _preview_source(self, root: Path) -> Path:
+        source = self._minimal_source(root)
+        source.joinpath("index.html").write_text(
+            """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>:focus-visible{outline:3px solid} @media (prefers-reduced-motion: reduce){*{transition:none}}</style></head><body><a class="skip-link" href="#main">Skip</a><main id="main"><h1>Fixture preview</h1></main></body></html>
+""",
+            encoding="utf-8",
+        )
+        self._write_review(source, companions=("index.html",))
+        return source
+
+    def _openpencil_source(self, root: Path) -> Path:
+        source = self._minimal_source(root)
+        native = source / "openpencil"
+        exports = native / "exports"
+        exports.mkdir(parents=True)
+        shutil.copyfile(
+            ACTIVE_WORKSPACE / "openpencil/route-console.op",
+            native / "route-console.op",
+        )
+        shutil.copyfile(
+            ACTIVE_WORKSPACE / "openpencil/exports/route-console.png",
+            exports / "route-console.png",
+        )
+        self._write_review(
+            source,
+            companions=(
+                "openpencil/route-console.op",
+                "openpencil/exports/route-console.png",
+            ),
+        )
         return source
 
     def test_minimal_handoff_needs_no_preview_assets_exports_or_tool_install(self):
@@ -358,13 +390,15 @@ version: 1.0.0
     def test_explicit_preview_asset_and_export_selection(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            source = root / "source"
-            shutil.copytree(SOURCE, source)
+            source = self._preview_source(root / "preview-fixture")
             assets = source / "assets"
             assets.mkdir(exist_ok=True)
             assets.joinpath("selected.svg").write_text("<svg/>\n", encoding="utf-8")
             assets.joinpath("unselected.svg").write_text("<svg/>\n", encoding="utf-8")
-            self._record_reviewed_companion(source, "assets/selected.svg")
+            self._write_review(
+                source,
+                companions=("index.html", "assets/selected.svg"),
+            )
             output = root / "handoff"
 
             result = self._run_from(
@@ -463,18 +497,23 @@ version: 1.0.0
             self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
 
     def test_ordinary_success_and_tool_unavailable_fallback_are_non_destructive(self):
-        before = fingerprint(SOURCE)
+        before = fingerprint(ACTIVE_WORKSPACE)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             tool = root / "op"
             tool.write_text('#!/bin/sh\nprintf \'{"version":"0.8.4"}\\n\'\n')
             tool.chmod(tool.stat().st_mode | 0o111)
+            ordinary_source = self._minimal_source(root / "ordinary-fixture")
+            included_source = self._openpencil_source(root / "openpencil-fixture")
 
-            ordinary = self._run(root / "ordinary")
-            included = self._run(
-                root / "included", *self._openpencil_arguments(tool)
+            ordinary = self._run_from(ordinary_source, root / "ordinary")
+            included = self._run_from(
+                included_source,
+                root / "included",
+                *self._openpencil_arguments(tool),
             )
-            fallback = self._run(
+            fallback = self._run_from(
+                included_source,
                 root / "fallback",
                 *self._openpencil_arguments(root / "missing-op"),
             )
@@ -530,15 +569,16 @@ version: 1.0.0
             self.assertIn("DESIGN.md", manifest)
             self.assertEqual(
                 manifest["DESIGN.md"],
-                hashlib.sha256(SOURCE.joinpath("DESIGN.md").read_bytes()).hexdigest(),
+                hashlib.sha256(
+                    included_source.joinpath("DESIGN.md").read_bytes()
+                ).hexdigest(),
             )
-        self.assertEqual(before, fingerprint(SOURCE))
+        self.assertEqual(before, fingerprint(ACTIVE_WORKSPACE))
 
     def test_accepted_snapshot_is_immutable_and_revision_uses_new_output(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            source = root / "source"
-            shutil.copytree(SOURCE, source)
+            source = self._minimal_source(root / "accepted-fixture")
             accepted_output = root / "accepted"
 
             first = self._run_from(source, accepted_output)
@@ -578,8 +618,9 @@ version: 1.0.0
             root = Path(temporary)
             for field in ("Receiving outcome", "Review owner"):
                 with self.subTest(field=field):
-                    source = root / field.lower().replace(" ", "-") / "source"
-                    shutil.copytree(SOURCE, source)
+                    source = self._minimal_source(
+                        root / field.lower().replace(" ", "-")
+                    )
                     brief_path = source / "BRIEF.md"
                     brief = brief_path.read_text(encoding="utf-8")
                     brief = brief.replace(f"**{field}:**", f"**Missing {field}:**", 1)
@@ -636,39 +677,50 @@ version: 1.0.0
             self.assertEqual(content["nextRevisionAcceptance"], "PENDING")
             self.assertEqual(proof["contentGap"]["routing"], "suggestion-only")
             self.assertFalse(proof["contentGap"]["invoked"])
+            self.assertTrue(
+                proof["fixtureIsolation"]["activeWorkspaceFingerprintUnchanged"]
+            )
+            self.assertTrue(proof["fixtureIsolation"]["reviewOwnerDerived"])
+            self.assertTrue(
+                proof["fixtureIsolation"]["openPencilSelectedOnlyInFixture"]
+            )
 
     def test_missing_owner_fails_before_output_deletion(self):
-        before = fingerprint(SOURCE)
+        before = fingerprint(ACTIVE_WORKSPACE)
         for owner in (None, "   "):
             with self.subTest(owner=owner), tempfile.TemporaryDirectory() as temporary:
-                output = Path(temporary) / "handoff"
+                fixture_root = Path(temporary)
+                source = self._minimal_source(fixture_root / "fixture")
+                output = fixture_root / "handoff"
                 output.mkdir()
                 sentinel = output / "preserve.txt"
                 sentinel.write_text("keep", encoding="utf-8")
 
                 result = self._invoke(
-                    SOURCE, output, receiving_owner=owner
+                    source, output, receiving_owner=owner
                 )
 
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn("non-empty --receiving-owner", result.stderr)
                 self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
-        self.assertEqual(before, fingerprint(SOURCE))
+        self.assertEqual(before, fingerprint(ACTIVE_WORKSPACE))
 
     def test_excess_positionals_fail_before_output_deletion(self):
-        before = fingerprint(SOURCE)
+        before = fingerprint(ACTIVE_WORKSPACE)
         with tempfile.TemporaryDirectory() as temporary:
-            output = Path(temporary) / "handoff"
+            fixture_root = Path(temporary)
+            source = self._minimal_source(fixture_root / "fixture")
+            output = fixture_root / "handoff"
             output.mkdir()
             sentinel = output / "preserve.txt"
             sentinel.write_text("keep", encoding="utf-8")
 
-            result = self._invoke(SOURCE, output, "excess-positional")
+            result = self._invoke(source, output, "excess-positional")
 
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("at most a source and output", result.stderr)
             self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
-        self.assertEqual(before, fingerprint(SOURCE))
+        self.assertEqual(before, fingerprint(ACTIVE_WORKSPACE))
 
     def test_unsafe_output_targets_are_denied_without_source_changes(self):
         cases = (
@@ -704,8 +756,7 @@ version: 1.0.0
     def test_lexical_artifact_escape_falls_back_without_copying_it(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            source = root / "source"
-            shutil.copytree(SOURCE, source)
+            source = self._openpencil_source(root / "source-fixture")
             outside = root / "outside.op"
             outside.write_text("outside", encoding="utf-8")
             tool = self._tool(root)
@@ -723,8 +774,7 @@ version: 1.0.0
     def test_symlink_artifact_escape_falls_back_without_copying_it(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            source = root / "source"
-            shutil.copytree(SOURCE, source)
+            source = self._openpencil_source(root / "source-fixture")
             outside = root / "outside.op"
             outside.write_text("outside", encoding="utf-8")
             escape = source / "openpencil/escape.op"
