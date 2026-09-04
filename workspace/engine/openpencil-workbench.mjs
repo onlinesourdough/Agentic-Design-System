@@ -22,6 +22,11 @@ const EXPECTED_VERSION = "0.8.4";
 const EXPECTED_VSIX_SHA256 =
   "7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342";
 const SCHEMA = "ADS-OPENPENCIL-WORKBENCH/1";
+const DEFAULT_LOCALE = "en-US";
+const LANGUAGE_READY_PARAMETER = "__ads_openpencil_language_ready";
+const LANGUAGE_READY_PATH = `/?${LANGUAGE_READY_PARAMETER}=1`;
+const SETTINGS_KEY_PREFIX = "openpencil-rust-web-settings";
+const ANONYMOUS_SETTINGS_KEY = `${SETTINGS_KEY_PREFIX}::anon`;
 const SCRIPT = fileURLToPath(import.meta.url);
 const ROOT = realpathSync(resolve(dirname(SCRIPT), "../.."));
 const DEFAULT_STATE_ROOT = join(
@@ -224,6 +229,10 @@ async function serve(arguments_) {
         setTimeout(() => void stopManager().then(() => process.exit(0)), 25);
         return;
       }
+      if (languageBootstrapRequired(incoming)) {
+        languageBootstrapResponse(response);
+        return;
+      }
       if (upstreamPort === null) {
         jsonResponse(response, 503, { error: "upstream-not-ready" });
         return;
@@ -301,6 +310,9 @@ async function serve(arguments_) {
       nodes: documentCheck.nodes,
       runtime_source: config.runtime_source,
       canvasKit_alias: "/pkg/canvaskit/* -> /canvaskit/*",
+      language_default: DEFAULT_LOCALE,
+      language_preference: `${SETTINGS_KEY_PREFIX}::<profile>`,
+      language_policy: "seed-when-absent",
       control_token: config.control_token,
       state_root: stateRoot,
       log_path: config.log_path,
@@ -417,12 +429,14 @@ async function check(arguments_) {
     );
 
   const root = await fetchBuffer(live.url);
+  const canvasRoot = await fetchBuffer(`${origin}${LANGUAGE_READY_PATH}`);
   const canonicalJs = await fetchBuffer(`${origin}/canvaskit/canvaskit.js`);
   const aliasJs = await fetchBuffer(`${origin}/pkg/canvaskit/canvaskit.js`);
   const canonicalWasm = await fetchBuffer(`${origin}/canvaskit/canvaskit.wasm`);
   const aliasWasm = await fetchBuffer(`${origin}/pkg/canvaskit/canvaskit.wasm`);
   for (const [name, response] of [
-    ["root", root],
+    ["language bootstrap", root],
+    ["canvas root", canvasRoot],
     ["canonical CanvasKit JS", canonicalJs],
     ["aliased CanvasKit JS", aliasJs],
     ["canonical CanvasKit wasm", canonicalWasm],
@@ -431,6 +445,12 @@ async function check(arguments_) {
     if (response.status !== 200)
       throw new Error(`${name} returned HTTP ${response.status}.`);
   }
+  if (
+    !root.body.includes(
+      Buffer.from("data-ads-openpencil-language-bootstrap", "utf8"),
+    )
+  )
+    throw new Error("OpenPencil language bootstrap is unavailable.");
   if (
     hashBytes(canonicalJs.body) !== hashBytes(aliasJs.body) ||
     hashBytes(canonicalWasm.body) !== hashBytes(aliasWasm.body)
@@ -467,6 +487,11 @@ async function check(arguments_) {
       canonical: "/canvaskit/*",
       compatibility: "/pkg/canvaskit/*",
       identical: true,
+    },
+    language: {
+      default: live.language_default,
+      preference: live.language_preference,
+      policy: live.language_policy,
     },
     browser_opening: "harness-owned",
   });
@@ -570,6 +595,7 @@ function inspectRuntimeRoot(path) {
 
 function proxyRequest(incoming, response, upstreamPort) {
   const url = new URL(incoming.url ?? "/", "http://127.0.0.1");
+  url.searchParams.delete(LANGUAGE_READY_PARAMETER);
   if (
     url.pathname === "/pkg/canvaskit" ||
     url.pathname.startsWith("/pkg/canvaskit/")
@@ -602,6 +628,61 @@ function proxyRequest(incoming, response, upstreamPort) {
     else response.end();
   });
   incoming.pipe(upstream);
+}
+
+function languageBootstrapRequired(incoming) {
+  if (incoming.method !== "GET") return false;
+  const url = new URL(incoming.url ?? "/", "http://127.0.0.1");
+  return (
+    url.pathname === "/" && !url.searchParams.has(LANGUAGE_READY_PARAMETER)
+  );
+}
+
+function languageBootstrapResponse(response) {
+  const initialSettings = JSON.stringify({
+    version: 1,
+    locale: DEFAULT_LOCALE,
+  });
+  const body = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Opening OpenPencil</title>
+  </head>
+  <body>
+    <p>Opening OpenPencil…</p>
+    <script nonce="ads-openpencil-language" data-ads-openpencil-language-bootstrap>
+      (() => {
+        const prefix = ${JSON.stringify(SETTINGS_KEY_PREFIX)};
+        const key = ${JSON.stringify(ANONYMOUS_SETTINGS_KEY)};
+        try {
+          let hasPreference = false;
+          for (let index = 0; index < localStorage.length; index += 1) {
+            const candidate = localStorage.key(index);
+            if (candidate === prefix || candidate?.startsWith(prefix + "::")) {
+              hasPreference = true;
+              break;
+            }
+          }
+          if (!hasPreference) localStorage.setItem(key, ${JSON.stringify(initialSettings)});
+        } catch {}
+        location.replace(${JSON.stringify(LANGUAGE_READY_PATH)});
+      })();
+    </script>
+    <noscript>OpenPencil requires JavaScript.</noscript>
+  </body>
+</html>
+`;
+  response.writeHead(200, {
+    "content-type": "text/html; charset=utf-8",
+    "content-length": Buffer.byteLength(body),
+    "cache-control": "no-store",
+    "content-security-policy":
+      "default-src 'none'; script-src 'nonce-ads-openpencil-language'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+  });
+  response.end(body);
 }
 
 async function waitForHealth(port, timeoutMs) {
@@ -813,8 +894,10 @@ Usage:
   npm run openpencil -- stop
 
 The workbench binds only 127.0.0.1 and prints a JSON \"url\" for a harness-owned
-built-in browser. It never invokes an OS browser. OpenPencil remains an external,
-verified, replaceable v${EXPECTED_VERSION} runtime and is cleaned by stop.
+built-in browser. A fresh origin seeds OpenPencil's supported persisted locale to
+English only when no user preference exists. It never invokes an OS browser.
+OpenPencil remains an external, verified, replaceable v${EXPECTED_VERSION}
+runtime and is cleaned by stop.
 `);
 }
 

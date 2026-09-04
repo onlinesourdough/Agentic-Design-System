@@ -172,6 +172,15 @@ browser, or Zen. It launches the verified release daemon directly and maps
 VSIX SHA-256 is
 `7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342`.
 
+On a fresh workbench origin, the ADS adapter uses OpenPencil v0.8.4's supported
+`openpencil-rust-web-settings::<profile>` local-storage record to seed the
+minimal `{"version":1,"locale":"en-US"}` anonymous preference before loading
+the upstream canvas. It does this only when no OpenPencil settings record
+exists, so a user's explicit non-English choice is never overwritten. The
+bootstrap uses a fixed ADS-owned ready redirect and never reflects request
+query data into its inline script. This is ADS-owned proxy behavior; verified
+upstream bundle bytes remain unchanged.
+
 After supervised inspection, prove the live surface and reviewed bytes. If the
 selected outcome stops at `waiting-review` for receiver or owner inspection,
 keep the workbench running, return the machine-readable URL, and defer cleanup
