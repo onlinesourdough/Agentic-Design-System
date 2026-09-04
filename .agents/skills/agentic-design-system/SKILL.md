@@ -75,13 +75,18 @@ the caller to browse or configure a separate reference catalogue.
    re-acceptance.
 8. When a creative route explicitly selects OpenPencil, use the internal
    `$openpencil-workbench` method to verify the pinned source decision, return
-   its strict-loopback URL to the Codex-compatible built-in browser, open the
-   editable `.op` file through the real supervised upstream surface, compare
-   its reviewed PNG/SVG export with `DESIGN.md`,
+   its strict-loopback URL to the caller/harness, open it with the
+   Codex-compatible built-in browser, and verify the actual editable `.op`
+   document is visible through the real supervised upstream surface. A printed
+   URL or chat-rendered PNG/SVG alone is not live-surface proof. Compare the
+   reviewed PNG/SVG export with `DESIGN.md`,
    and bind paths, hashes, provenance, limitations, review, version/revision,
    and receiving owner in `HANDOFF.md`. If the tool is unavailable, expose
    the fallback and return the required portable handoff plus only any
-   independently selected companions unchanged.
+   independently selected companions unchanged. When the selected outcome
+   stops at `waiting-review` for receiver or owner inspection, keep the
+   workbench running and return its machine-readable URL; cleanup is a later
+   explicit `stop`. Otherwise stop it after proof.
 9. Write structured input, output, and proof files under
    `workspace/runs/<run-id>/`. A failed route writes failure evidence there;
    an explicit recovery writes a new run and points to its unresolved failed

@@ -1,86 +1,102 @@
-# Brief — Business Freedom content system story
+# Brief — Gustav Online constraint thumbnails
 
-- **Run linkage:** AIOS lead goal `01a05799-b30b-7fa2-bb54-5cde3e0437f4`;
-  stable ADS worker identity `ads-business-freedom-content-e2e-r1`.
-- **Need:** Create one specific 30–45 second visual story about a Demand
-  constraint in Gustav's own business. Useful knowledge, ideas, and cases do
-  not reliably become coherent, brand-right, reviewable content because
-  repeated visual decisions, production versions, and approval are fragmented
-  and founder-owned.
-- **Audience:** Founder-led service and digital businesses, small teams, and
-  technically curious operators who recognize that Demand work still waits on
-  one person even when useful source material already exists.
-- **Desired action or decision:** Recognize founder-owned content production as
-  the current constraint, then understand how the smallest complete visual and
-  production handoff can reduce that dependency without removing human choice.
-- **Receiving outcome:** Agentic Content System receives one reviewed portable
-  visual direction, three keyframe/thumbnail concepts, selected brand assets,
-  a local storyboard preview, and an optional editable native composition. ACS
-  may use the accepted snapshot to decide the final thesis, hook, script,
-  source media, edit, render, package, supervised handoff, and publication.
-- **Current constraint:** Demand/content production depends on Gustav's time.
-  Ideas and cases exist, but repeated design decisions, version lineage,
-  production, and approval are fragmented around the founder.
-- **Resolved story:** One constraint travels through Gustav Online as the human
-  public-learning voice; onlinesourdough as the method and offer menu;
-  Resources as DIY, The Fermentary as done-with-you, and Complete Bake / Arc’IT
-  AI as done-for-you in practice; AIOS as the local context, routing, ownership,
-  and evidence layer; ADS as reusable visual direction; ACS as content lineage,
-  production, independent node review, and supervised handoff; and Diffusion
-  Studio as the local code-native motion/video engine operated through its
-  Electron/DAPI authority with a minimal browser companion for human review.
-- **Business payoff:** Reduce founder dependency in Demand and increase
-  Business Freedom: more control of time, capacity, and direction. The outcome
-  is not maximum automation, maximum content volume, or more agents.
-- **Brand roles:** Gustav Online opens with a human/orange signal.
-  onlinesourdough owns warm cream, walnut, terracotta, the method, and the offer
-  progression. AIOS gets one contained dark/cyan technical-proof beat. Arc’IT
-  green/sand appears only at Complete Bake/in-practice. The close returns to
-  warm Business Freedom. Do not blend these roles into one master brand.
-- **Method language:** Understand the business; find the current Offer,
-  Operations, or Demand constraint; choose the smallest complete change; build
-  and prove it; launch, operate, and recover. In this story, Demand is the
-  selected constraint.
-- **Modularity constraint:** Repositories, templates, and skills remain small,
-  independently owned modular products. Do not depict one installed stack,
-  monolith, central agent brain, or deterministic ADS-to-ACS runtime chain.
-- **Surfaces and form factors:** One responsive browser storyboard at desktop
-  and mobile widths; a 39-second beat map; three polished 16:9
-  thumbnail/keyframe concepts; and, when genuinely available, one editable
-  OpenPencil composition plus reviewed PNG export.
-- **Interaction and states:** Storyboard play, pause, scene selection, complete,
-  loading, empty, error, permission, and offline proof fixtures; visible hover,
-  active, and keyboard focus; semantic landmarks and labels; useful alt text;
-  and reduced motion that removes automatic scene changes and decorative
-  movement without hiding content.
-- **Content boundary:** On-screen phrases and timing are draft visual-size cues,
-  not an approved final script or public promise. Do not invent proof, customer
-  results, offer status, pricing, source footage, production output, or receiver
-  acceptance.
-- **Source/reference rights, provenance, and licensing:** Owner-listed AIOS
-  context and preserved ADS directions are ordinary read-only references.
-  Selected visual assets are copied unchanged from the clean local Gustav
-  Online, onlinesourdough, and Arc’IT project repositories. Geist 1.7.0 is
-  carried under the SIL Open Font License. OpenPencil is an optional MIT-licensed
-  v0.8.4 tool adapter; no upstream template, UI, or design asset is copied.
-- **Ownership boundary:** ADS owns this visual direction, hierarchy, brand-role
-  separation, composition, color, typography, imagery treatment, motion
-  direction, and selected reusable visual assets. ACS owns editorial/content
-  production, final copy, source-media decisions, edit/render execution,
-  packaging, supervised production handoff, and publication. Diffusion Studio
-  owns its implementation and execution authority. AIOS and each Project,
-  repository, template, or skill retain their own context or implementation
-  ownership.
-- **Proof:** A reviewer can inspect the full story, all three concepts, exact
-  brand-role transitions, offer roles, modular ownership, human review point,
-  and Business Freedom payoff at about 1440×1000 and 390×844 without horizontal
-  overflow. Deterministic checks, relevant tests, real browser inspection,
-  direct visual QA, and the independent `review-design` gate must pass.
-- **Receiving project or repository:** Agentic Content System is the named
-  receiving owner. No ACS files, repository state, or runtime are changed by
-  this ADS Build.
+- **Run linkage:** AIOS lead goal `01a06871-0ce2-7ee1-a0e9-b2f196f1cc65`;
+  stable ADS worker/run identity `ads-youtube-thumbnails-r1`.
+- **Need:** Create two original, review-ready 16:9 YouTube thumbnail directions
+  for plausible future Gustav Online / onlinesourdough long-form videos. The
+  work supports content planning only; neither video is claimed to exist or be
+  published.
+- **Audience and job:** Founder-led service and digital businesses, small
+  teams, and technically curious operators should recognize either a
+  founder-owned work queue or the need to diagnose the current Offer,
+  Operations, or Demand constraint before changing the business.
+- **Receiving outcome:** Gustav Anderson / Gustav Online receives two reviewed
+  portable thumbnail directions, editable 1280×720 SVG sources, exact 1280×720
+  PNG exports, a browser/contact-sheet preview at full 16:9 and approximately
+  320×180 card scale, one truthful editable OpenPencil composition, provenance
+  evidence, and a versioned `ADS-HANDOFF/1` binder for future content planning.
+- **Desired action or decision:** Topic 01 should make the human bottleneck
+  immediately legible without pretending it has been solved. Topic 02 should
+  make diagnosis—not tools or automation—the first decision, with Offer, Ops,
+  and Demand visibly distinct.
+- **Topic 01:** Working long-form title: “Why the work kept waiting for me.”
+  Story: useful ideas and cases existed, but repeated visual, production, and
+  approval decisions formed a founder-owned Demand queue. Reviewed thumbnail
+  cue: `THE WORK WAITED FOR ME`.
+- **Topic 02:** Working long-form title: “Offer, Operations or Demand? How I
+  find the real constraint.” Story: onlinesourdough begins by diagnosing the
+  current constraint and choosing the smallest complete change. Reviewed
+  thumbnail cue: `THE REAL CONSTRAINT`, supported by legible `OFFER / OPS /
+DEMAND` structure.
+- **Brand and voice:** English, spoken, direct, calm, warm, premium,
+  tactile/editorial, and minimalist. Use cream `#f8f2e8`, paper, walnut
+  `#2b1b12` / `#5a3d30`, terracotta `#b86f36`, and Gustav orange `#f36f2b`.
+  Geist Sans, Mono, and Pixel are available under their carried license.
+  Business Freedom means fewer repeated founder-owned decisions while Gustav
+  retains final choice.
+- **Composition constraint:** The two thumbnails must read as one Gustav
+  Online / onlinesourdough family without duplicating composition. Topic 01
+  uses Gustav’s real owner-supplied portrait and a queue metaphor. Topic 02 is
+  diagram/editorial-first and carries the truthful editable `.op` source. Keep
+  all essential text inside a 48px inset and keep the bottom-right timestamp
+  zone free of essential meaning.
+- **Avoid:** Generic purple AI gradients, agent swarms, logo walls, clickbait
+  shock faces, huge unsupported metrics, crypto/SaaS gloss, copied layouts,
+  third-party logos, synthetic portraits of a real creator, literal bread
+  gimmicks, maximum-automation language, and replace-humans framing.
+- **Surfaces and form factors:** Two editable SVGs and two PNG exports at exact
+  1280×720; a responsive browser preview showing both at full 16:9 and
+  approximately 320×180 YouTube-card scale; one live editable OpenPencil v0.8.4
+  surface for Topic 02; desktop and mobile preview inspection.
+- **States:** These are static image surfaces, so hover, active, loading,
+  success, error, empty, permission, and offline product states are not part of
+  the thumbnail compositions. The supporting preview still exposes visible
+  keyboard focus, semantic landmarks, useful alt text, reduced-motion safety,
+  and named proof-state fixtures required by the ADS workbench.
+- **Source/reference rights, provenance, and licensing:** Owner constraints and
+  prior accepted ADS production take precedence. The tracked
+  `assets/gustav-portrait.jpg` remains byte-unchanged from the approved Gustav
+  Online source at revision `87b59cdb069206e37425b8742cb7727e95caa4c1`;
+  SHA-256 `4b1001c1b9ef3ec23c46e0d745210671609488b608fdb6b31c0bad9307644ebd`.
+  The tracked Geist 1.7.0 fonts retain their SIL Open Font License. Frederik
+  Pahuus and Andreas Elmstrøm YouTube URLs and the owner’s local screenshot kit
+  are research-only pointers: ADS extracts short-copy, founder/environment,
+  single-diagram, and story-tension signals but copies no layout, logo,
+  portrait treatment, metric, claim, or screenshot bytes. OpenPencil v0.8.4 is
+  an MIT-licensed external editing tool started from verified VSIX bytes; no
+  upstream executable, UI, template, or design asset enters the repository or
+  handoff.
+- **Reference route:** `explore`. The two compared family frames are
+  cinematic-human plus founder queue, and warm-tactile plus evidence-led
+  diagnosis. The selected result deliberately uses one frame for each topic
+  under a shared palette, type system, safe-area rule, and editorial rhythm;
+  it is one coherent family, not two unrelated visual systems.
+- **OpenPencil selection:** Explicitly selected for Topic 02. The ADS-local
+  workbench must start verified v0.8.4 bytes on strict `127.0.0.1`, open the
+  actual `.op` document through the Codex-compatible built-in browser, verify
+  the composition is visible and editable, and remain running at
+  `waiting-review` for owner inspection. A chat image or printed URL alone is
+  not live-surface proof. Cleanup is a later explicit stop.
+- **Proof:** Inspect the exact PNGs at 1280×720 and approximately 320×180.
+  Verify copy legibility, hierarchy, safe crop, contrast, no clipping or
+  overlap, no missing asset, no accidental URL/brand contamination, and clear
+  topic distinction. Inspect the responsive preview in a real browser at
+  desktop and mobile widths. Inspect the actual Topic 02 `.op` document in the
+  live OpenPencil canvas. Run focused tests, `npm run check`, the full test
+  suite, export dimension/hash checks, link/provenance checks, and
+  `git diff --check`.
+- **Ownership boundary:** ADS owns visual direction, hierarchy, composition,
+  typography, color, imagery treatment, selected reusable assets, preview,
+  editable sources, and visual Review. Gustav Anderson / Gustav Online owns
+  receiver acceptance and any later content-planning use. ACS would own a
+  future editorial thesis, script, source-media decision, production render,
+  packaging, and publication if separately invoked; this Build does not invoke
+  ACS or claim those decisions.
+- **Receiving project or repository:** Gustav Anderson / Gustav Online is the
+  named receiving owner. No receiving repository or any other repository is
+  mutated by this Build.
 - **Review mode:** independent
 - **Review owner:** ADS Review
-- **Receiver acceptance:** Agentic Content System alone may explicitly accept
-  or reject the versioned
-  `ADS-HANDOFF/1`; Build generation begins and remains `PENDING`.
+- **Receiver acceptance:** Gustav Anderson / Gustav Online alone may explicitly
+  accept or reject the versioned `ADS-HANDOFF/1`; Build generation starts and
+  remains `PENDING`, and this worker stops at `waiting-review`.

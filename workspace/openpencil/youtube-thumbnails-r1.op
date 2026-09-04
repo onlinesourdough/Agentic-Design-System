@@ -1,0 +1,506 @@
+{
+  "version": "1.0",
+  "name": "Gustav Online constraint thumbnails r1",
+  "children": [
+    {
+      "type": "frame",
+      "id": "yt02-root",
+      "name": "02 — The real constraint — 1280x720",
+      "width": 1280,
+      "height": 720,
+      "clipContent": true,
+      "fill": [
+        {
+          "type": "solid",
+          "color": "#f8f2e8"
+        }
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "yt02-kicker",
+          "name": "Owner and method label",
+          "x": 58,
+          "y": 50,
+          "content": "ONLINESOURDOUGH / DIAGNOSIS",
+          "fontFamily": "Geist Mono",
+          "fontSize": 15,
+          "fontWeight": 700,
+          "letterSpacing": 1.8,
+          "textGrowth": "auto",
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#5a3d30"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "yt02-title-the",
+          "name": "Headline — THE",
+          "x": 56,
+          "y": 125,
+          "content": "THE",
+          "fontFamily": "Geist Pixel",
+          "fontSize": 104,
+          "fontWeight": 400,
+          "letterSpacing": -4.6,
+          "textGrowth": "auto",
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#2b1b12"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "yt02-title-real",
+          "name": "Headline — REAL",
+          "x": 56,
+          "y": 238,
+          "content": "REAL",
+          "fontFamily": "Geist Pixel",
+          "fontSize": 116,
+          "fontWeight": 400,
+          "letterSpacing": -4.6,
+          "textGrowth": "auto",
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#b86f36"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "yt02-title-constraint",
+          "name": "Headline — CONSTRAINT",
+          "x": 56,
+          "y": 352,
+          "content": "CONSTRAINT",
+          "fontFamily": "Geist Pixel",
+          "fontSize": 84,
+          "fontWeight": 400,
+          "letterSpacing": -4.2,
+          "textGrowth": "auto",
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#2b1b12"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "yt02-smallest-change",
+          "name": "Smallest complete change note",
+          "x": 58,
+          "y": 496,
+          "width": 618,
+          "height": 92,
+          "cornerRadius": 18,
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#fffdf7"
+            }
+          ],
+          "stroke": {
+            "thickness": 2,
+            "align": "inside",
+            "fill": [
+              {
+                "type": "solid",
+                "color": "#d8c3aa"
+              }
+            ]
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "yt02-smallest-arrow",
+              "name": "Constraint line",
+              "x": 26,
+              "y": 44,
+              "width": 64,
+              "height": 5,
+              "cornerRadius": 3,
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#b86f36"
+                }
+              ],
+              "children": []
+            },
+            {
+              "type": "text",
+              "id": "yt02-smallest-label",
+              "name": "Then choose label",
+              "x": 112,
+              "y": 18,
+              "content": "THEN CHOOSE",
+              "fontFamily": "Geist Mono",
+              "fontSize": 14,
+              "fontWeight": 700,
+              "letterSpacing": 1.7,
+              "textGrowth": "auto",
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#6f594a"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "yt02-smallest-copy",
+              "name": "Smallest complete change",
+              "x": 112,
+              "y": 43,
+              "content": "the smallest complete change",
+              "fontFamily": "Geist Sans",
+              "fontSize": 24,
+              "fontWeight": 690,
+              "textGrowth": "auto",
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#2b1b12"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "yt02-board",
+          "name": "Offer Ops Demand diagnosis board",
+          "x": 746,
+          "y": 56,
+          "width": 476,
+          "height": 598,
+          "cornerRadius": 26,
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#fffdf7"
+            }
+          ],
+          "stroke": {
+            "thickness": 2,
+            "align": "inside",
+            "fill": [
+              {
+                "type": "solid",
+                "color": "#d8c3aa"
+              }
+            ]
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "yt02-board-question",
+              "name": "Diagnosis question",
+              "x": 40,
+              "y": 32,
+              "content": "WHAT’S ACTUALLY STUCK?",
+              "fontFamily": "Geist Mono",
+              "fontSize": 14,
+              "fontWeight": 700,
+              "letterSpacing": 1.7,
+              "textGrowth": "auto",
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#6f594a"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yt02-board-rule",
+              "name": "Board rule",
+              "x": 40,
+              "y": 69,
+              "width": 396,
+              "height": 2,
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#d8c3aa"
+                }
+              ],
+              "children": []
+            },
+            {
+              "type": "frame",
+              "id": "yt02-offer-row",
+              "name": "Offer lane",
+              "x": 40,
+              "y": 100,
+              "width": 396,
+              "height": 105,
+              "cornerRadius": 16,
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#f8f2e8"
+                }
+              ],
+              "stroke": {
+                "thickness": 2,
+                "align": "inside",
+                "fill": [
+                  {
+                    "type": "solid",
+                    "color": "#d8c3aa"
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "yt02-offer-title",
+                  "name": "Offer label",
+                  "x": 26,
+                  "y": 22,
+                  "content": "OFFER",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "letterSpacing": 1.8,
+                  "textGrowth": "auto",
+                  "fill": [
+                    {
+                      "type": "solid",
+                      "color": "#2b1b12"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "yt02-offer-detail",
+                  "name": "Offer detail",
+                  "x": 26,
+                  "y": 60,
+                  "content": "VALUE · POSITION · PRICE",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 13,
+                  "fontWeight": 700,
+                  "letterSpacing": 1.4,
+                  "textGrowth": "auto",
+                  "fill": [
+                    {
+                      "type": "solid",
+                      "color": "#6f594a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yt02-ops-row",
+              "name": "Operations lane",
+              "x": 40,
+              "y": 224,
+              "width": 396,
+              "height": 105,
+              "cornerRadius": 16,
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#efe4d4"
+                }
+              ],
+              "stroke": {
+                "thickness": 2,
+                "align": "inside",
+                "fill": [
+                  {
+                    "type": "solid",
+                    "color": "#d8c3aa"
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "yt02-ops-title",
+                  "name": "Ops label",
+                  "x": 26,
+                  "y": 22,
+                  "content": "OPS",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "letterSpacing": 1.8,
+                  "textGrowth": "auto",
+                  "fill": [
+                    {
+                      "type": "solid",
+                      "color": "#2b1b12"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "yt02-ops-detail",
+                  "name": "Operations detail",
+                  "x": 26,
+                  "y": 60,
+                  "content": "DELIVERY · FLOW · CAPACITY",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 13,
+                  "fontWeight": 700,
+                  "letterSpacing": 1.4,
+                  "textGrowth": "auto",
+                  "fill": [
+                    {
+                      "type": "solid",
+                      "color": "#6f594a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yt02-demand-row",
+              "name": "Demand lane — current",
+              "x": 40,
+              "y": 348,
+              "width": 396,
+              "height": 123,
+              "cornerRadius": 16,
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#f36f2b"
+                }
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "yt02-demand-title",
+                  "name": "Demand label",
+                  "x": 26,
+                  "y": 28,
+                  "content": "DEMAND",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 22,
+                  "fontWeight": 700,
+                  "letterSpacing": 1.8,
+                  "textGrowth": "auto",
+                  "fill": [
+                    {
+                      "type": "solid",
+                      "color": "#2b1b12"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "yt02-demand-detail",
+                  "name": "Demand detail",
+                  "x": 26,
+                  "y": 72,
+                  "content": "ATTENTION · TRUST · SALES",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 13,
+                  "fontWeight": 700,
+                  "letterSpacing": 1.4,
+                  "textGrowth": "auto",
+                  "fill": [
+                    {
+                      "type": "solid",
+                      "color": "#2b1b12"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yt02-current-pill",
+                  "name": "Current state label",
+                  "x": 220,
+                  "y": 18,
+                  "width": 150,
+                  "height": 34,
+                  "cornerRadius": 17,
+                  "fill": [
+                    {
+                      "type": "solid",
+                      "color": "#2b1b12"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "yt02-current-copy",
+                      "name": "Current copy",
+                      "x": 27,
+                      "y": 9,
+                      "content": "CURRENT",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 12,
+                      "fontWeight": 700,
+                      "letterSpacing": 1.6,
+                      "textGrowth": "auto",
+                      "fill": [
+                        {
+                          "type": "solid",
+                          "color": "#fffaf1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "yt02-board-footer",
+              "name": "Diagnosis footer",
+              "x": 90,
+              "y": 512,
+              "content": "FIND IT BEFORE YOU BUILD",
+              "fontFamily": "Geist Mono",
+              "fontSize": 13,
+              "fontWeight": 700,
+              "letterSpacing": 1.5,
+              "textGrowth": "auto",
+              "fill": [
+                {
+                  "type": "solid",
+                  "color": "#5a3d30"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "yt02-footer",
+          "name": "Topic footer",
+          "x": 58,
+          "y": 676,
+          "content": "02 / OFFER · OPERATIONS · DEMAND",
+          "fontFamily": "Geist Mono",
+          "fontSize": 13,
+          "fontWeight": 700,
+          "letterSpacing": 1.5,
+          "textGrowth": "auto",
+          "fill": [
+            {
+              "type": "solid",
+              "color": "#6f594a"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

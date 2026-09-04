@@ -114,6 +114,27 @@ class SkillShelfTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0, result.stdout)
         self.assertIn("skill tree contains a symlink", result.stderr)
 
+    def test_selected_openpencil_route_requires_live_document_and_review_wait(self):
+        primary = (ROOT / ".agents/skills/agentic-design-system/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        workbench = (ROOT / ".agents/skills/openpencil-workbench/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+
+        for contract in (primary, workbench):
+            normalized = " ".join(contract.lower().split())
+            for marker in (
+                "codex-compatible built-in browser",
+                "actual",
+                "`.op`",
+                "printed url or chat-rendered png/svg alone is not",
+                "`waiting-review`",
+                "keep the workbench running",
+                "explicit `stop`",
+            ):
+                self.assertIn(marker, normalized)
+
     def test_index_requires_each_real_skill_once_and_no_unknown_skill(self):
         cases = (
             (["primary", "primary"], "document primary/SKILL.md exactly once"),

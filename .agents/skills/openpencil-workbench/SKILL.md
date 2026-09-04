@@ -19,17 +19,22 @@ exports stay optional, ADS-owned, and replaceable.
      --expected-nodes <reviewed-count>
    ```
 
-2. Parse the single JSON result and give its `url` to the Codex-compatible
-   harness's built-in browser. Do not run `op start --web`, `open`, `xdg-open`,
-   a Zen command, or any other OS-browser launcher.
-3. Inspect the editable canvas and compare it with canonical `DESIGN.md` and
-   the selected export. Run `npm run openpencil -- check` with reviewed node
-   count and hashes. The workbench serves both `/canvaskit/*` and the release
+2. Parse the single JSON result and give its `url` to the caller/harness. Open
+   that URL with the Codex-compatible built-in browser; do not run `op start
+--web`, `open`, `xdg-open`, a Zen command, or any other OS-browser launcher.
+   A printed URL or chat-rendered PNG/SVG alone is not proof.
+3. Verify the actual `.op` document is visible in the editable canvas, inspect
+   its document/layer state, and compare it with canonical `DESIGN.md` and the
+   selected export. Run `npm run openpencil -- check` with reviewed node count
+   and hashes. The workbench serves both `/canvaskit/*` and the release
    compatibility path `/pkg/canvaskit/*` on strict `127.0.0.1`.
-4. Use `status` and bounded `logs --lines <n>` while reviewing. Always run
-   `stop` after proof; it closes the release daemon and removes the extracted
-   temporary runtime. OpenPencil or its browser surface being unavailable must
-   leave the portable `DESIGN.md` handoff route valid.
+4. Use `status` and bounded `logs --lines <n>` while reviewing. For a selected
+   outcome that stops at `waiting-review` for receiver or owner inspection,
+   keep the workbench running and return its machine-readable URL; cleanup is a
+   later explicit `stop`. Otherwise run `stop` after proof. `stop` closes the
+   release daemon and removes the extracted temporary runtime. OpenPencil or
+   its browser surface being unavailable must leave the portable `DESIGN.md`
+   handoff route valid.
 5. The evidence reviewer must match the brief's declared Review owner and
    record `PASS` plus the exact `.op` and native export hashes as reviewed
    source companions before any cross-owner binder may include them. Editing

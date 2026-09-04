@@ -163,14 +163,19 @@ npm run openpencil -- start \
 ```
 
 The single JSON response contains a strict `http://127.0.0.1:<port>/` URL.
-Pass that URL to the Codex-compatible built-in browser. The workbench never
-invokes `op start --web`, an OS browser, or Zen. It launches the verified
-release daemon directly and maps `/pkg/canvaskit/*` to the upstream
-`/canvaskit/*` bytes. The pinned macOS arm64 VSIX SHA-256 is
+Pass that URL to the caller/harness and open it with the Codex-compatible
+built-in browser. Verify that the actual `.op` document and its editable
+canvas/layer state are visible. A printed URL or chat-rendered PNG/SVG alone is
+not live-surface proof. The workbench never invokes `op start --web`, an OS
+browser, or Zen. It launches the verified release daemon directly and maps
+`/pkg/canvaskit/*` to the upstream `/canvaskit/*` bytes. The pinned macOS arm64
+VSIX SHA-256 is
 `7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342`.
 
-After supervised inspection, prove the live surface and reviewed bytes, then
-clean it deterministically:
+After supervised inspection, prove the live surface and reviewed bytes. If the
+selected outcome stops at `waiting-review` for receiver or owner inspection,
+keep the workbench running, return the machine-readable URL, and defer cleanup
+to a later explicit `stop`. Otherwise clean it deterministically:
 
 ```sh
 npm run openpencil -- check \
