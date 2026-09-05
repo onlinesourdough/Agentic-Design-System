@@ -1,6 +1,6 @@
 ---
 name: design-solution
-description: Internal design method for turning a resolved ADS brief into a canonical portable DESIGN.md and inspectable preview for websites, applications, workspaces, dashboards, reports, slides, or content visuals. Use through the Agentic Design System primary route.
+description: Author canonical portable DESIGN.md and selected visual companions from a resolved ADS brief. Use through the Agentic Design System primary route.
 ---
 
 # Design solution — internal method
@@ -56,36 +56,26 @@ authoring method it calls; it does not own the ledger or gallery.
 
 ## Make it inspectable
 
-1. Build semantic, responsive `index.html` using only local assets.
+Direction-only work is inspectable through `DESIGN.md`; no HTML or render
+tooling is required unless the adaptive route needs rendered-task proof for
+new source adoption. Build companions only when selected for the outcome.
+For an HTML preview:
+
+1. Build semantic `index.html` using only local assets, responsive when relevant.
 2. Include a skip link, useful landmarks, labels, keyboard-visible focus, and
    reduced-motion behavior where motion exists. Place actionable error text by
    its control or group and associate it programmatically.
 3. Keep the preview faithful to `DESIGN.md`; do not hide missing behavior behind
    decorative screenshots.
-4. Inspect desktop and mobile widths, then run `npm run check`.
+4. Inspect the selected surface's relevant viewports (desktop and mobile for
+   responsive work), then run applicable repository checks.
 
 ## Hand off
 
-After `review-design` passes, run
-`npm run handoff -- <directory> <output> --receiving-owner <owner>`. Confirm the
-output contains canonical `DESIGN.md`, `BRIEF.md`, copied `REVIEW.md` or
-`proof.json`, and versioned `HANDOFF.md`. Add preview, individual assets, or
-CSS/design-token/Tailwind exports only through explicit selections for that
-outcome. Pre-existing selected previews/assets/native files need exact Review
-path/hash evidence. Deterministic CSS/design-token/Tailwind outputs are instead
-generated from the reviewed `DESIGN.md` and bound to its hash in the binder.
-Confirm its receiving outcome, all included hashes,
-provenance/licensing, review, limitations, and pending or explicit receiver
-acceptance. No export tooling is required when exports are unselected. Only an
-explicitly selected OpenPencil route adds a reviewed `.op` source and PNG/SVG
-exports; follow the primary skill's binding rather than duplicating upstream
-instructions here.
-The receiving owner becomes canonical for its accepted implementation or
-production copy; `DESIGN.md` remains the handed-off visual source of truth and
-this repository remains a design workbench, not a runtime dependency.
-The brief-selected mode and named Review owner gate generation: in both modes
-the evidence reviewer must match that declared Review owner, never the CLI
-receiver. A matching independent PASS is sufficient for `independent`, while
-`owner` returns `waiting-owner` until the exact Review owner records the bound
-PASS. Receiver acceptance remains separate. The receiver copies an accepted
-snapshot; it never live-syncs this workspace or recursively invokes ADS.
+Return the direction and selected companion paths to the primary route for
+`review-design`, evidence, and any cross-owner generation. Apply
+[the canonical handoff contract](../../../docs/contract.md#cross-owner-and-optional-native-handoff)
+when ownership crosses; [the validation recipe](../../../docs/validation.md#handoff)
+provides command syntax. Same-owner work needs no binder. The primary route
+coordinates review-mode gates and immutable snapshot delivery; the receiver
+owns its separate acceptance decision.

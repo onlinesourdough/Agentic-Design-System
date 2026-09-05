@@ -8,13 +8,15 @@ description: Internal review method for a canonical portable DESIGN.md, selected
 The public route is `$agentic-design-system`. This method evaluates without
 editing and returns evidence for the System run; it does not own promotion.
 
-Evaluate without editing. Return `PASS` only when every required check passes;
+Return `PASS` only when every required check passes;
 otherwise return `REVISE` with the smallest concrete correction.
 Apply viewport, interaction, and rendered-accessibility checks to a preview only
 when one is selected. For a direction-only review, evaluate the corresponding
 instructions in `DESIGN.md` and record receiving-surface validation as a
 limitation rather than inventing preview proof.
 
+For cross-owner work, apply [the canonical handoff contract](../../../docs/contract.md#cross-owner-and-optional-native-handoff)
+and [binder/evidence format](../../../docs/HANDOFF_TEMPLATE.md).
 The brief selects review mode as `independent` or `owner` and declares one
 non-empty `Review owner` separately from the receiving project. Name the
 reviewer and require that identity to match the declared Review owner in either
@@ -30,8 +32,9 @@ receiver acceptance remains a separate post-generation decision.
 
 ## Checks
 
-1. **Job:** The first viewport makes the audience, value, primary action or
-   supported decision clear. Each section or panel earns its place.
+1. **Job:** The direction makes the audience, value, primary action or
+   supported decision clear; a selected preview expresses these in its opening
+   composition. Each section or panel earns its place.
 2. **Specificity:** Claims, labels, names, numbers, and examples are believable
    and traceable to the brief or clearly fictional. There is no lorem ipsum,
    placeholder company, fake proof, or vague promise.
@@ -59,14 +62,10 @@ receiver acceptance remains a separate post-generation decision.
 8. **Contract:** `BRIEF.md` and canonical portable `DESIGN.md` agree; any
    selected preview, asset, export, or tool source agrees with both. Design.md
    lint and applicable repository checks pass. Optional companions do not
-   replace `DESIGN.md`. Cross-owner `HANDOFF.md` records
-   `ADS-HANDOFF/1`, identity/revision, receiving owner/outcome, source revision,
-   all included paths/hashes, provenance/licensing, Review, limitations, and an
-   explicit acceptance state; accepted snapshots cannot be overwritten. The
-   named Review owner/reviewer, brief-selected mode, reviewed DESIGN hash, and
-   selected source-companion hashes agree with the generated binder. Any
-   deterministic derived exports expose their own integrity hashes plus the
-   reviewed DESIGN hash from which they were generated.
+   replace `DESIGN.md`. Before cross-owner generation, verify readiness against
+   the linked contract; after generation, verify `HANDOFF.md` against that
+   contract and the bound Review evidence. A binder is not a prerequisite for
+   the PASS evidence needed to generate it.
 9. **Optional native source:** When OpenPencil was explicitly selected, use a
    real supervised upstream surface to open the `.op` source and export the
    declared PNG/SVG boundary. Compare that export with `DESIGN.md`; verify the

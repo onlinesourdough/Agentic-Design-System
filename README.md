@@ -10,7 +10,7 @@ surfaces, and other visual outcomes. It is a repeatable standalone work surface,
 not a project template, receiving implementation, or installed runtime library.
 
 ```text
-prior runs → brief → canonical DESIGN.md → preview → review → evidence → gallery
+prior runs → brief → canonical DESIGN.md → selected preview → review → evidence → deliberate gallery promotion
                                       ↘ cross-owner HANDOFF.md + optional companions
 accumulated truth ─────────────────────→ read-only periodic audit
 ```

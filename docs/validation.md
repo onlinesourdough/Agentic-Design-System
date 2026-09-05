@@ -65,6 +65,12 @@ output, and named Review are inspectable in this repository.
 
 ## Browser proof
 
+Use this section when an HTML preview is selected or preview implementation
+changes. Direction-only design work requires no render service or browser
+proof; it does not establish rendered-task evidence for new source adoption.
+Choose viewports and interaction checks appropriate to the surface;
+the following recipe covers the repository's responsive route console.
+
 Run:
 
 ```sh

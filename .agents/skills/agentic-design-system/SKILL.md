@@ -1,6 +1,6 @@
 ---
 name: agentic-design-system
-description: Route approved, portable visual directions for websites, applications, dashboards, reports, slides, and content surfaces from prior evidence through canonical DESIGN.md, preview, review, cross-owner handoff, ledger proof, and deliberate example promotion.
+description: Create or revise portable visual directions in ADS, with canonical DESIGN.md, review, and cross-owner handoff when needed. Use for design direction, not receiving implementation or content production.
 ---
 
 # Agentic Design System primary System skill
@@ -15,6 +15,11 @@ links, screenshots, prior work, or vague intent there; return the selected
 direction and relevant proof there. Create portable `DESIGN.md` and optional
 companions only when durable design or cross-owner handoff is needed. Never ask
 the caller to browse or configure a separate reference catalogue.
+
+ADS serves websites, applications, dashboards, reports, slides, and content surfaces.
+For cross-owner work, read [the canonical handoff contract](../../../docs/contract.md#cross-owner-and-optional-native-handoff)
+and [binder/evidence format](../../../docs/HANDOFF_TEMPLATE.md) before Review
+and generation. They own the exact review, integrity, rights, and acceptance gates.
 
 ## Route
 
@@ -49,30 +54,19 @@ the caller to browse or configure a separate reference catalogue.
    caller/coordinator. Never auto-run ACS, invent the decision, recurse, or
    create a deterministic ADS-to-ACS chain. Either sibling may be entered first;
    accepted sibling output returns only as ordinary referenced input.
-5. Run the local preview from `workspace/engine/serve.mjs`, inspect desktop
-   and mobile widths, and verify landmarks, keyboard-visible focus, reduced
-   motion, and relevant loading, empty, error, success, permission, and
-   offline states.
-6. Use `$review-design` as the review method. The evidence names its reviewer,
-   records `PASS`, binds the reviewed `DESIGN.md` SHA-256, and lists the path and
-   SHA-256 of every pre-existing selected preview, asset, or tool-native
-   source/native export. Use the `Reviewed source companion` evidence label.
-   Deterministic CSS, design-token, and Tailwind exports are generated later
-   from the exact reviewed `DESIGN.md`; bind their output hashes and source
-   DESIGN hash in the handoff rather than requiring them as pre-existing Review
-   evidence. A review result is not a promotion decision by itself.
-7. When reviewed work crosses an owner boundary, generate `HANDOFF.md` with the
-   existing handoff route. Verify `ADS-HANDOFF/1` identity/revision, receiving
-   owner/outcome, source revision, included relative paths and SHA-256 values,
-   provenance/licensing, named Review state/mode, limitations, and explicit
-   acceptance. In both modes, the evidence reviewer must match the brief's
-   declared Review owner; never compare that identity with `--receiving-owner`.
-   A matching independent reviewer is sufficient for `independent`. For
-   `owner`, stop with `waiting-owner` until that exact Review owner records the
-   bound PASS and all selected source-companion hashes. Generation starts
-   `PENDING`; receiver acceptance is separate, an accepted snapshot is
-   immutable, and a later direction requires a new reviewed revision and
-   re-acceptance.
+5. When an HTML preview is selected, run `workspace/engine/serve.mjs` and
+   inspect the relevant viewports, accessibility, interactions, and states.
+   Desktop/mobile checks apply to responsive surfaces. Direction-only work
+   needs no HTML or browser; record receiving-surface validation as a limitation.
+   New source adoption still requires the adaptive route's rendered-task proof;
+   direction-only review cannot substitute for that evidence.
+6. Use `$review-design` for the selected outcome and companions. A review
+   result is not a promotion decision by itself.
+7. When reviewed work crosses an owner boundary, generate `HANDOFF.md` through
+   the existing handoff route under the canonical contract linked above.
+   Matching independent PASS is sufficient in `independent` mode; `owner`
+   remains `waiting-owner` until the declared Review owner supplies the bound
+   decision. Receiver acceptance is separate in both modes.
 8. When a creative route explicitly selects OpenPencil, use the internal
    `$openpencil-workbench` method to verify the pinned source decision, return
    its strict-loopback URL to the caller/harness, open it with the
@@ -104,21 +98,11 @@ the caller to browse or configure a separate reference catalogue.
     do not use it as a second ledger or database. Keep durable learning notes
     intentional and short under `workspace/learning/`.
 
-## Reference commands
+## Validation and audit
 
-From the repository root:
-
-```sh
-npm run trace -- --slug clean-clone-proof --preview --review --promote-example
-npm run trace -- --slug source-decision-proof --source-decision --preview --review
-npm run trace -- --slug recovery-proof --simulate-failure
-npm run trace -- --slug recovery-proof --recover --preview --review --promote-example
-npm run audit -- --scope repository
-```
-
-The tracer accepts `--root` for a fresh temporary checkout, which keeps the
-repository's own operational state clean while proving creation/resume,
-preview, review, failure, recovery, ledger relations, and gallery promotion.
+Use [the validation recipe](../../../docs/validation.md) for selected preview,
+handoff, or lifecycle proof. Run demonstration tracers in disposable roots via
+`--root`; do not replace active operational work to prove the route.
 
 The ADS-local `audit-design-system` method is a periodic, read-only
 accumulated-state route. It is distinct from deterministic checks and
