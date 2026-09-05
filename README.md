@@ -1,3 +1,7 @@
+![Agentic Design System](docs/assets/branding/ads-banner-1536x512.png)
+
+<a href="docs/assets/branding/ads-icon-512.png"><img src="docs/assets/branding/ads-icon-512.png" alt="ADS icon" width="64" height="64" /></a>
+
 ![Agentic Design System route](docs/assets/agentic-design-system-overview.svg)
 
 # Agentic Design System
