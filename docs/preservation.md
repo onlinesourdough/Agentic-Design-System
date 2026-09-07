@@ -28,7 +28,8 @@ status and these hashes were re-read after the transfer; no source mutation or
 external repository mutation was performed.
 
 This carry proof records historical ingest provenance only. It is not a live
-receiving link or shared state: `examples/onlinesourdough-resources/DESIGN.md`
-is the canonical portable visual direction in ADS, and any later cross-owner
-copy receives its own versioned `HANDOFF.md`, integrity list, rights boundary,
-and explicit acceptance.
+receiving link or shared state: the migrated
+`workspace/designs/onlinesourdough-resources/DESIGN.md` is the canonical
+portable visual direction in ADS, and any later cross-owner copy receives its
+own versioned `HANDOFF.md`, integrity list, rights boundary, and explicit
+acceptance.

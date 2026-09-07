@@ -1,3 +1,7 @@
+![Agentic Design System](docs/assets/branding/ads-banner-1536x512.png)
+
+<a href="docs/assets/branding/ads-icon-512.png"><img src="docs/assets/branding/ads-icon-512.png" alt="ADS icon" width="64" height="64" /></a>
+
 ![Agentic Design System route](docs/assets/agentic-design-system-overview.svg)
 
 # Agentic Design System
@@ -10,7 +14,7 @@ surfaces, and other visual outcomes. It is a repeatable standalone work surface,
 not a project template, receiving implementation, or installed runtime library.
 
 ```text
-prior runs → brief → canonical DESIGN.md → preview → review → evidence → gallery
+selected design → brief → canonical DESIGN.md → preview → review → evidence → handoff
                                       ↘ cross-owner HANDOFF.md + optional companions
 accumulated truth ─────────────────────→ read-only periodic audit
 ```
@@ -18,9 +22,9 @@ accumulated truth ────────────────────�
 The durable model is small:
 
 ```text
-workspace/   active work, state, history, learning, and optional engine
-examples/    deliberately promoted, self-contained design proof
-docs/        contract, source audit, architecture, validation, references
+workspace/designs/<slug>/  one selected design, state, history, evidence, companions
+workspace/engine/          optional preview, lint, handoff, trace, and audit implementation
+docs/                      contract, source audit, architecture, validation, references
 ```
 
 ## Start locally
@@ -30,18 +34,17 @@ npm install
 npm run preview
 ```
 
-The server opens the examples gallery at `http://localhost:4173/`. Pass a
-directory after `--` to preview a specific surface, for example:
+Pass one selected design slug after `--` to preview its surface, for example:
 
 ```sh
-npm run preview -- workspace
-npm run preview -- examples/onlinesourdough-resources
+npm run preview -- --design gustav-social-banner-r1
+npm run preview -- --design onlinesourdough-resources
 ```
 
 The [local skill index](.agents/skills/README.md) is the ownership map for
 ADS-specific, repeatable methods. The primary agent entry is
 [`agentic-design-system`](.agents/skills/agentic-design-system/SKILL.md). It
-inspects prior runs, works in `workspace/`, and routes the internal
+inspects only the selected design’s prior runs, works in `workspace/designs/<slug>/`, and routes the internal
 [`design-solution`](.agents/skills/design-solution/SKILL.md) and
 [`review-design`](.agents/skills/review-design/SKILL.md) methods. Those methods
 remain separate so a design can be authored and reviewed without duplicating
@@ -56,9 +59,9 @@ become ADS-owned files.
 ```sh
 npm run check
 npm test
-npm run trace -- --slug clean-clone-proof --source-decision --preview --review --promote-example
+npm run trace -- --slug clean-clone-proof --source-decision --preview --review --curate
 npm run trace:audit
-npm run handoff -- workspace workspace/handoff --receiving-owner "Agentic Design System"
+npm run handoff -- --design gustav-social-banner-r1 --output handoffs/example --receiving-owner "Agentic Design System"
 ```
 
 The tracer uses only the standard library. It can also prove a recoverable
@@ -66,7 +69,7 @@ failure relation:
 
 ```sh
 npm run trace -- --slug recovery-proof --simulate-failure
-npm run trace -- --slug recovery-proof --recover --preview --review --promote-example
+npm run trace -- --slug recovery-proof --recover --preview --review --curate
 ```
 
 Use a temporary checkout for those demonstrations when the operational ledger
@@ -136,17 +139,13 @@ npm run trace:audit
 It returns exactly `PASS`, `FAIL`, or `BLOCKED` and never repairs,
 exports, promotes, creates an issue, or appends a run.
 
-## Gallery
+## Design collection
 
-The [examples index](examples/index.html) is owned by the main line and is the
-single durable entry point for curated work. Branches and worktrees are review
-isolation only. Current examples include service, operations, executive
-reporting, and the carried `resources.onlinesourdough` direction.
-
-Every curated example carries a brief, a portable `DESIGN.md`, a local
-browser preview, relevant assets, and a readable proof/review note. The
-Resources example also proves the selected dependency-free disclosure adapter
-in `examples/onlinesourdough-resources/assets/adapters/`.
+The [design collection](workspace/designs/index.html) is the one durable entry
+point for selected and curated work. Each slug keeps its own brief, portable
+`DESIGN.md`, local preview, companions, evidence, and optional handoffs. The
+Resources direction also proves the selected dependency-free disclosure adapter
+in `workspace/designs/onlinesourdough-resources/assets/adapters/`.
 
 ## References and ownership
 
@@ -154,7 +153,7 @@ Google Design.md remains the pinned format and export tool. The source audit
 records what was learned from external design repositories and why no one
 external UI library becomes the ADS default. Preserved historical references
 are under [`docs/references/preserved`](docs/references/preserved/), clearly
-separate from the active gallery.
+separate from the active collection.
 
 ADS owns visual direction, visual hierarchy, brand/style/voice expression,
 composition, typography, color, imagery, interaction/motion direction, and

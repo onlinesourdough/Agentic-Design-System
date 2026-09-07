@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import importlib.util
+import shutil
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -50,6 +52,30 @@ class AuditTests(unittest.TestCase):
                 for item in results["healthy"]["evidence"]
             )
         )
+
+    def test_valid_first_design_does_not_hide_malformed_second_ledger(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            copied_root = Path(temporary) / "checkout"
+            shutil.copytree(ROOT, copied_root, ignore=audit_tracer._ignore)
+            broken = copied_root / "workspace/designs/zz-malformed-ledger"
+            shutil.copytree(
+                copied_root / "workspace/designs/ads-business-freedom-content-e2e-r1",
+                broken,
+            )
+            (broken / "history/runs.jsonl").write_text(
+                "not a JSON ledger record\n", encoding="utf-8"
+            )
+
+            result = audit.audit_design_system(copied_root, "workspace")
+
+            self.assertEqual(result.status, "FAIL", result.as_dict())
+            self.assertTrue(
+                any(
+                    "zz-malformed-ledger ledger line 1 is invalid JSON" in finding
+                    for finding in result.evidence
+                ),
+                result.as_dict(),
+            )
 
 
 if __name__ == "__main__":

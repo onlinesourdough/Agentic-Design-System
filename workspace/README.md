@@ -1,25 +1,25 @@
 # ADS workspace
 
-`workspace/` is the active operational truth for Agentic Design System.
+`workspace/` contains the ADS design collection and its shared implementation
+helpers. Select exactly one direction beneath `designs/<slug>/` before reading,
+editing, previewing, reviewing, or handing off a design.
 
-- `BRIEF.md` is the resolved input, `DESIGN.md` is always the canonical portable
-  human-readable visual direction, and `index.html` is a supporting technical
-  preview.
-- `REVIEW.md` records the latest design-method result and any proof limitation.
-- `openpencil/` exists only for the active explicitly selected creative route:
-  one editable source and its reviewed export boundary. It is not required for
-  ordinary work and never replaces `DESIGN.md`.
-- `state/` holds a small current-state pointer, never a history replacement.
-- `runs/` holds structured evidence for route attempts.
-- `history/runs.jsonl` is append-only and relates predecessors and recoveries.
+- Each selected design owns `BRIEF.md`, canonical portable `DESIGN.md`, and its
+  supporting `index.html` preview.
+- Optional `openpencil/` content belongs only to the selected creative route;
+  it never replaces `DESIGN.md`.
+- Selected designs own their own `state/`, `runs/`, and append-only
+  `history/runs.jsonl`; these never form a cross-design database.
+- Selected designs own versioned `handoffs/` snapshots when delivery crosses an
+  owner boundary.
 - `learning/` holds short, intentional notes retained for future routes.
 - `engine/` contains optional preview, lint, export, check, test, tracer, and
   read-only audit tooling. It is implementation detail, not another ADS
   concept.
 
-The primary System skill reads this surface before it starts work. A clean
-checkout can use its `--root` tracer option to exercise the route in a fresh
-operational directory without importing another System.
+The primary System skill first lists the collection and requires an explicit
+slug. A clean checkout can use its `--root` tracer option to exercise a fresh
+selected direction without importing another System.
 
 When delivery crosses to another owner, the existing handoff generator creates
 the `ADS-HANDOFF/1` `HANDOFF.md` snapshot with receiver/outcome, revision,

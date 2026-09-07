@@ -1,0 +1,21 @@
+{
+  "run_id": "onlinesourdough-stack-r1",
+  "status": "accepted",
+  "accepted_at": "2026-09-05T19:06:29Z",
+  "accepted_by": "stack identity lead for Gustav Anderson / onlinesourdough",
+  "handoff_id": "ads-onlinesourdough-stack-identity-c4216b64727e",
+  "handoff_revision": "r1+4048b67914a4",
+  "pre_acceptance_sha256": "c97aee6e7ab7211b38979e711968d79ca04d8af146379eb04d44bb236fcd2a47",
+  "accepted_handoff_sha256": "71096346596981037fbb4b6046790acaa76bc0d6e1a9ca6ac22e54aab3a6dc09",
+  "only_supported_acceptance_fields_changed": true,
+  "payloads_unchanged": 80,
+  "ledger": {
+    "preimage_sha256": "4950cd86436a3c1126336a03d87a7dcef84736662178a39639895f5ae5992676",
+    "preimage_bytes": 1349,
+    "postimage_sha256": "621ce4e465fd421a8c805cac7079f1ba456b1431d664c45c648900450f717ec7",
+    "entries_appended": 1,
+    "duplicate_check": "passed",
+    "earlier_bytes": "preserved exactly"
+  },
+  "active_pointer": "unchanged"
+}

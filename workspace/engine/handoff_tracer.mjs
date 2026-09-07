@@ -18,7 +18,7 @@ const toolIndex = process.argv.indexOf("--openpencil-tool");
 if (toolIndex === -1 || !process.argv[toolIndex + 1])
   fail("Pass --openpencil-tool with the verified release CLI path.");
 const tool = resolve(root, process.argv[toolIndex + 1]);
-const source = join(root, "workspace");
+const source = join(root, "workspace/engine/tests/fixtures/handoff-source");
 const before = fingerprint(source);
 const temporary = mkdtempSync(join(tmpdir(), "ads-handoff-trace-"));
 
@@ -152,23 +152,27 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
   ]);
   const websiteOutput = join(temporary, "website-application");
   const website = run([
-    join(root, "examples/service-landing-page"),
+    join(root, "workspace/designs/service-landing-page"),
     websiteOutput,
     "--receiving-owner",
     "Plainwork implementation project",
   ]);
   const dashboardOutput = join(temporary, "dashboard-slide");
   const dashboard = run([
-    join(root, "examples/executive-powerbi-dashboard"),
+    join(root, "workspace/designs/executive-powerbi-dashboard"),
     dashboardOutput,
     "--receiving-owner",
     "Common Table analytics project",
   ]);
 
   const contentSource = join(temporary, "acs-originated-content-source");
-  cpSync(join(root, "examples/onlinesourdough-resources"), contentSource, {
-    recursive: true,
-  });
+  cpSync(
+    join(root, "workspace/designs/onlinesourdough-resources"),
+    contentSource,
+    {
+      recursive: true,
+    },
+  );
   writeFileSync(
     join(contentSource, "BRIEF.md"),
     `# Brief — ACS-originated content visual fixture
@@ -303,12 +307,12 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
   if (before !== fingerprint(source))
     fail("handoff tracing changed the selected source directory");
   assertPortableSnapshot(
-    join(root, "examples/service-landing-page"),
+    join(root, "workspace/designs/service-landing-page"),
     websiteOutput,
     website,
   );
   assertPortableSnapshot(
-    join(root, "examples/executive-powerbi-dashboard"),
+    join(root, "workspace/designs/executive-powerbi-dashboard"),
     dashboardOutput,
     dashboard,
   );
@@ -355,13 +359,13 @@ Reviewed DESIGN.md SHA-256: \`${sha256(join(minimalSource, "DESIGN.md"))}\`
         optionalCompanions: selectedCompanions.companions,
         surfaces: {
           websiteApplication: {
-            source: "examples/service-landing-page",
+            source: "workspace/designs/service-landing-page",
             handoff: website.handoff.id,
             revision: website.handoff.revision,
             designCanonical: true,
           },
           dashboardSlide: {
-            source: "examples/executive-powerbi-dashboard",
+            source: "workspace/designs/executive-powerbi-dashboard",
             handoff: dashboard.handoff.id,
             revision: dashboard.handoff.revision,
             designCanonical: true,
@@ -469,7 +473,10 @@ function acceptFixture(outputDirectory) {
 function run(arguments_) {
   const result = spawnSync(
     process.execPath,
-    [join(root, "workspace/engine/create-handoff.mjs"), ...arguments_],
+    [
+      join(root, "workspace/engine/create-handoff.mjs"),
+      ...handoffArguments(arguments_),
+    ],
     { cwd: root, encoding: "utf8" },
   );
   if (result.status !== 0)
@@ -482,11 +489,29 @@ function run(arguments_) {
 function runFailure(arguments_) {
   const result = spawnSync(
     process.execPath,
-    [join(root, "workspace/engine/create-handoff.mjs"), ...arguments_],
+    [
+      join(root, "workspace/engine/create-handoff.mjs"),
+      ...handoffArguments(arguments_),
+    ],
     { cwd: root, encoding: "utf8" },
   );
   if (result.status === 0) fail("expected handoff route to fail");
   return `${result.stderr}\n${result.stdout}`;
+}
+
+function handoffArguments(arguments_) {
+  const [sourceDirectory, outputDirectory, ...options] = arguments_;
+  if (!sourceDirectory || !outputDirectory)
+    fail(
+      "handoff tracer requires a source and isolated output for every fixture",
+    );
+  return [
+    "--design-dir",
+    sourceDirectory,
+    "--output",
+    outputDirectory,
+    ...options,
+  ];
 }
 
 function fingerprint(directory) {

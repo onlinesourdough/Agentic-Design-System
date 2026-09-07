@@ -1,0 +1,138 @@
+{
+  "sharp_version": "0.35.4",
+  "method": "width-only proportional Lanczos3 resampling; no crop, repaint, recolor or text replacement",
+  "records": [
+    {
+      "key": "org",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/org-banner.png",
+      "path": "assets/masters/org-banner.png",
+      "sha256": "1295c73d20c1f7c09efb4f721c140f076cd3c19ef9189e65f514464fc07aaa34",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/org-banner-1536x512.png",
+        "sha256": "17894efdbb945911d5ad778ef2b91633ec88f263c34a071b84e388193301228b",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "aios",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/aios-banner.png",
+      "path": "assets/masters/aios-banner.png",
+      "sha256": "ad01c5f505d3d664a7b8af1034de761be0913253a941891fc40777694185b8f8",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/aios-banner-1536x512.png",
+        "sha256": "a2c2276a380f26cf45886cfc4586c1502c3bed60b185eed5ac45988ed9ebc58a",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "ads",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/ads-banner.png",
+      "path": "assets/masters/ads-banner.png",
+      "sha256": "2f51e78a81937c6ded10717267d160e7338e099f7fd3c40e3724dd819e55e29c",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/ads-banner-1536x512.png",
+        "sha256": "b76282c9b3e7bc22307dc9cca8ddcd5e779f659e7a163c496008c714a423ce80",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "acs",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/acs-banner.png",
+      "path": "assets/masters/acs-banner.png",
+      "sha256": "d295dbabae1deeddaf3cdbb9bdbd48bad01dcce19c3c00bef80ce155c781020f",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/acs-banner-1536x512.png",
+        "sha256": "5617cf37dee607b698831f2b098e0717bdb0256a1bae3d37ba2ce7d8099f33cf",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "skills",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/skills-banner.png",
+      "path": "assets/masters/skills-banner.png",
+      "sha256": "675f7302eaca40f78218b024d81c13f55755082fe1ff983dd3012d6dd576a22a",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/skills-banner-1536x512.png",
+        "sha256": "1f078680bf93ad817b7bbb3a7036025ac50aec58b01a9ef1f1cde4d45e86113e",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "atlas",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/atlas-banner.png",
+      "path": "assets/masters/atlas-banner.png",
+      "sha256": "83b495a801be76aa724fa2d65bf2d25206a58bf2fff5f35675c80de57cc26ac8",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/atlas-banner-1536x512.png",
+        "sha256": "bbbf590d83008e3a5153a7d814bdb8b820038a6c978b46676c9bc904a920a108",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "resources",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/resources-banner.png",
+      "path": "assets/masters/resources-banner.png",
+      "sha256": "f064fbc2083455e803c540d8338a3cdd8c5cbb00563c6d0fb9b3b7e1189aa412",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/resources-banner-1536x512.png",
+        "sha256": "e35663b4bb98e0b609d0cc4e7268d55b56cc68cf3881d0b020e83b984666e47b",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "review",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/review-banner.png",
+      "path": "assets/masters/review-banner.png",
+      "sha256": "48c18dd2185bd9653195359c9d98ff38b48b1cf53e8bda13a38b7ed5f54b7a81",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/review-banner-1536x512.png",
+        "sha256": "8c47cc85902f6e89b31d438494778bacc75b8c3a2cff59bdaba20025cc854ffd",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "powerbi",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/powerbi-banner.png",
+      "path": "assets/masters/powerbi-banner.png",
+      "sha256": "088302bcd653a4af913c23a6ec738755319d8709e84c8801ce56e3b980fe6cd2",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/powerbi-banner-1536x512.png",
+        "sha256": "ccb119c9cbbe207a5a8061aeb2c7ea9baa43e10538e6ef6bd2a7d15143c0123f",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "project",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/project-banner.png",
+      "path": "assets/masters/project-banner.png",
+      "sha256": "97c7c79f45fdc06f14d510a427334b18213b1878072b2771676987a168fb7390",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/project-banner-1536x512.png",
+        "sha256": "b064a0251a638013297d4503c4233a0d72342df20d932f5b3d63fa777df120ab",
+        "dimensions": [1536, 512]
+      }
+    },
+    {
+      "key": "system",
+      "source_path": "/Users/gustavanderson/Documents/Codex/2026-09-05/s-dan-men-hvor-er-det/onlinesourdough-stack/masters/system-banner.png",
+      "path": "assets/masters/system-banner.png",
+      "sha256": "804741dbcd0730df56a0d0ed4705326798ab3c4c3f1eeb14a648b0054836a1d7",
+      "dimensions": [2172, 724],
+      "export": {
+        "path": "assets/exports/system-banner-1536x512.png",
+        "sha256": "33c5e5925f3720febba80a36ba417ab7f05916a2b0fcd036289ca5763a2ce536",
+        "dimensions": [1536, 512]
+      }
+    }
+  ]
+}

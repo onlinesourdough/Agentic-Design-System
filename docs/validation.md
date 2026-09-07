@@ -13,8 +13,9 @@ npm run check
 npm test
 ```
 
-`npm run check` verifies the three visible roots, required shell and workspace
-paths, gallery entries, Design.md lint, local preview accessibility markers,
+`npm run check` verifies the visible collection and documentation roots,
+required shell and workspace paths, selected-design entries, Design.md lint,
+local preview accessibility markers,
 stale identity/path/link fragments, canonical DESIGN.md/brief semantics,
 versioned handoff/ownership discovery, source/audit discovery, and secret-safe
 public text. `npm test` exercises source decisions, genuinely minimal and
@@ -28,16 +29,19 @@ Use a fresh temporary operational root when the checkout's own ledger should
 remain empty:
 
 ```sh
-python3 workspace/engine/tracer.py --root /tmp/ads-proof --slug clean-clone-proof --source-decision --preview --review --promote-example
+python3 workspace/engine/tracer.py --root /tmp/ads-proof --slug clean-clone-proof --source-decision --preview --review --curate
 python3 workspace/engine/tracer.py --root /tmp/ads-proof --slug recovery-proof --simulate-failure
-python3 workspace/engine/tracer.py --root /tmp/ads-proof --slug recovery-proof --recover --preview --review --promote-example
+python3 workspace/engine/tracer.py --root /tmp/ads-proof --slug recovery-proof --recover --preview --review --curate
 ```
 
-The tracer creates or resumes an example, writes input/output/proof evidence,
-checks the preview and review fixture, appends one ledger record per attempt,
-and updates the temporary gallery index only when promotion is requested. The
-failure stays in the ledger and the recovery points back to it. The test suite
-uses a managed temporary directory rather than relying on `/tmp` state.
+The tracer requires an explicit slug. It creates a previously absent selected
+design or resumes a complete one; an incomplete design, output collision, or
+symlinked collection path fails before mutation. It writes input/output/proof
+evidence only under that selected design, checks the preview and review fixture,
+and appends one ledger record per attempt. `--curate` records selected proof in
+place; it does not duplicate an example or update a gallery. The failure stays
+in the ledger and the recovery points back to it. The test suite uses a managed
+temporary directory rather than relying on `/tmp` state.
 
 For a clean-clone equivalent of an uncommitted Build, make a fresh directory
 from the final worktree while excluding `.git`, `node_modules`, ignored output,
@@ -56,23 +60,22 @@ a second source database.
 Run:
 
 ```sh
-npm run preview -- workspace
+npm run preview -- --design ads-business-freedom-content-e2e-r1
 ```
 
-Inspect the route console at desktop width around 1440×1000 and mobile width
-around 390×844. Confirm the first viewport names the route and action, the
-resume button moves through loading to success, every state fixture is
-keyboard-operable, the skip link and focus ring are visible, reduced motion is
-honored, and the gallery links remain reachable without horizontal scrolling.
-Then run the gallery preview and the carried Resources preview. Record any
-missing browser automation or visual tool proof honestly in the Build handoff.
+Inspect the selected design at desktop and mobile widths. Confirm its brief's
+hierarchy and selected static states, the skip link and focus ring, reduced
+motion behavior, and local assets. The server binds strict `127.0.0.1`, serves
+only canonical regular files beneath that selected design, and rejects malformed
+or escaping paths. Record any missing browser automation or visual proof
+honestly in the Build handoff.
 
 ## Handoff
 
 After the review method returns `PASS`:
 
 ```sh
-npm run handoff -- workspace workspace/handoff \
+npm run handoff -- --design ads-business-freedom-content-e2e-r1 --output handoffs/example \
   --receiving-owner "Agentic Design System"
 ```
 
@@ -102,7 +105,7 @@ accepted implementation copy; ADS retains its design direction and evidence.
 Add only the companions deliberately selected for the receiving outcome:
 
 ```sh
-npm run handoff -- workspace workspace/handoff \
+npm run handoff -- --design ads-business-freedom-content-e2e-r1 --output handoffs/example \
   --receiving-owner "Agentic Design System" \
   --preview \
   --export tokens \
@@ -135,7 +138,7 @@ Start the selected v0.8.4 editable source from the verified external VSIX:
 ```sh
 npm run openpencil -- start \
   --vsix <verified-openpencil-v0.8.4-platform.vsix> \
-  --document workspace/openpencil/route-console.op \
+  --document workspace/designs/ads-business-freedom-content-e2e-r1/openpencil/route-console.op \
   --expected-nodes 314 \
   --expected-document-sha256 33ab74b5315b89f68eefe8b6a3d3da193e968afab6f851de3c9f3b2f97b9b0e0
 ```
@@ -144,18 +147,66 @@ The single JSON response contains a strict `http://127.0.0.1:<port>/` URL.
 Pass that URL to the Codex-compatible built-in browser. The workbench never
 invokes `op start --web`, an OS browser, or Zen. It launches the verified
 release daemon directly and maps `/pkg/canvaskit/*` to the upstream
-`/canvaskit/*` bytes. The pinned macOS arm64 VSIX SHA-256 is
+`/canvaskit/*` bytes. Each launch copies the selected source into private
+workbench state and binds the daemon only to that disposable `working_document`;
+the selected design source stays hash-checkable. The fresh loopback page seeds
+OpenPencil's upstream anonymous browser-settings partition with `en-US` before
+the UI initializes. The pinned macOS arm64 VSIX SHA-256 is
 `7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342`.
+
+For an authoring proof, inspect rendered English in the built-in browser and
+make one bounded edit. `File → Save` is sufficient when it demonstrably changes
+the named private `working_document`: capture its before/after SHA-256 and node
+count, and prove that the selected source SHA-256 is unchanged. Copy that saved
+private file only to an explicitly chosen path that does not already exist,
+then reopen the copy with `File → Open` and visibly confirm the edit. This is a
+reviewable `.op` candidate without a browser download and never overwrites the
+selected source, a reviewed artifact, or an earlier candidate. `File → Save
+As` is an alternative only when the browser/harness surfaces its `.op` Blob
+download as a real local file. For a native PNG, use the bounded workbench
+route below while its state is live. It invokes the verified release's
+headless `--mcp` `export_frames` tool on the private working copy, first writes
+to private state, validates the returned regular PNGs and unchanged source/
+working hashes, then copies them to the chosen absent output directory. The
+returned dimensions describe upstream top-level-frame output; they do not imply
+a browser scale, whole-canvas render, or platform-upload crop.
+
+```sh
+npm run openpencil -- native-export \
+  --state-dir <live-workbench-state> \
+  --output-dir <explicit-absent-output-directory>
+```
+
+`File → Export image` is separate: its Save As/PNG results remain browser Blob
+downloads and need a real surfaced local file. If that is unavailable, record
+`unavailable-download` for the browser route only; do not extract hidden
+browser state or infer that the native MCP path was exercised.
 
 After supervised inspection, prove the live surface and reviewed bytes, then
 clean it deterministically:
 
 ```sh
 npm run openpencil -- check \
-  --expected-nodes 314 \
-  --expected-document-sha256 33ab74b5315b89f68eefe8b6a3d3da193e968afab6f851de3c9f3b2f97b9b0e0 \
-  --export workspace/openpencil/exports/route-console.png \
-  --expected-export-sha256 734c32836a61c42088141d84308392a198403d6e4a80991f65d3d2f9a8b5e92d
+  --document <reopened-candidate.op> \
+  --expected-nodes <reviewed-count> \
+  --expected-document-sha256 <reopened-candidate-sha256>
+```
+
+If a validated native MCP output or a real browser-surfaced PNG is selected,
+add its separate reviewed evidence:
+
+```sh
+npm run openpencil -- check \
+  --document <reopened-candidate.op> \
+  --expected-nodes <reviewed-count> \
+  --expected-document-sha256 <reopened-candidate-sha256> \
+  --export <native-download.png> \
+  --expected-export-sha256 <native-download-sha256>
+```
+
+Then inspect and clean the live session:
+
+```sh
 npm run openpencil -- status
 npm run openpencil -- logs --lines 80
 npm run openpencil -- stop
@@ -169,7 +220,7 @@ For an explicitly selected OpenPencil route, use the temporary verified CLI
 path and bind all native facts:
 
 ```sh
-npm run handoff -- workspace workspace/handoff \
+npm run handoff -- --design ads-business-freedom-content-e2e-r1 --output handoffs/example \
   --receiving-owner "Agentic Design System" \
   --openpencil \
   --openpencil-tool <verified-op-path> \
@@ -227,10 +278,12 @@ different scopes. A clean repository can audit its repository contract:
 npm run audit -- --scope repository
 ```
 
-The live `workspace` scope returns `BLOCKED` when required accumulated run,
-failure, or recovery evidence has not yet been created; it never infers a
-pass. The isolated tracer proves every outcome and byte-for-byte read-only
-behavior:
+The aggregate live `workspace` scope examines every valid design-local ledger;
+it never selects a fixture or one alphabetically first design. It returns
+`BLOCKED` when a managed ledger lacks required accumulated run, failure, or
+recovery evidence, while preserved legacy ledgers and curated snapshots retain
+their own provenance without manufacturing fresh failure/recovery records. The
+isolated tracer proves every outcome and byte-for-byte read-only behavior:
 
 ```sh
 npm run trace:audit

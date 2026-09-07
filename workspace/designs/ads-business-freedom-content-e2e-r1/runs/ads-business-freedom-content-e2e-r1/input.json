@@ -1,0 +1,50 @@
+{
+  "schema": "ADS-RUN-INPUT/1",
+  "run_id": "ads-business-freedom-content-e2e-r1",
+  "lead_goal_id": "01a05799-b30b-7fa2-bb54-5cde3e0437f4",
+  "worker_goal_thread_id": "01a0622d-18ce-7af2-9d09-6d841f3c8e8c",
+  "stable_worker_identity": "ads-business-freedom-content-e2e-r1",
+  "started_at": "2026-09-02T12:52:11Z",
+  "resolved_outcome": "Create one reviewed ADS-owned visual direction and creative handoff for a 30–45 second founder-owned Demand constraint story with three thumbnail/keyframe concepts.",
+  "receiving_owner": "Agentic Content System",
+  "selected_route": {
+    "primary": "agentic-design-system",
+    "design_method": "design-solution",
+    "review_method": "review-design",
+    "openpencil": "selected"
+  },
+  "reference_paths": [
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/about-me.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/about-business.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/voice.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/operating-framework.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/content-and-resources.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/gustav-online-space.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/onlinesourdough-space.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/context/arcitai-space.md",
+    "docs/references/preserved/onlinesourdough-menu-freedom-lofi/DESIGN.md",
+    "examples/onlinesourdough-resources/BRIEF.md",
+    "examples/onlinesourdough-resources/DESIGN.md",
+    "docs/references/preserved/arcitai-preview-02/DESIGN.md",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/projects/gustavonline/public/assets/",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/projects/onlinesourdough/public/assets/",
+    "/Users/gustavanderson/Downloads/AIOS/.aios/projects/arcitai/public/assets/"
+  ],
+  "constraints": [
+    "Business Freedom is the payoff; maximum automation and more agents are not.",
+    "Brand roles remain separate across Gustav Online, onlinesourdough, AIOS, Arc’IT AI, and the warm close.",
+    "Repositories, templates, skills, Projects, and Systems remain independently owned modular products.",
+    "No example promotion, ACS mutation, external send, commit, push, publish, issue, pull request, or Ship."
+  ],
+  "effective_environment": {
+    "model": "GPT-5 Codex",
+    "filesystem": "unrestricted",
+    "network": "enabled",
+    "approval_policy": "never",
+    "node": "22.21.1",
+    "npm": "11.14.1",
+    "python": "3.14.5",
+    "browser_automation": "Playwright CLI with headed Chrome",
+    "writer_count": 1
+  }
+}

@@ -37,18 +37,15 @@ create a new design-handoff type or a shared contract with another System.
 Only these visible functional roots exist:
 
 ```text
-workspace/                         active operational truth
-├── BRIEF.md                        resolved current input
-├── DESIGN.md                       canonical portable direction
-├── index.html                      technical preview
-├── openpencil/                      optional selected native source/exports
-├── state/                          small current-state pointer
-├── runs/                            one directory per route attempt
-├── history/runs.jsonl              append-only run relation
-├── learning/                       durable, intentional notes
-└── engine/                         optional ADS-owned tooling
-examples/                           deliberate standalone gallery
-docs/                               contract, audit, validation, references
+workspace/
+├── designs/<slug>/                 one selected operational truth
+│   ├── BRIEF.md, DESIGN.md, index.html
+│   ├── openpencil/                  optional selected native source/exports
+│   ├── state/, runs/, history/      design-local state and evidence
+│   └── handoffs/                    immutable cross-owner snapshots
+├── learning/                        durable, intentional notes
+└── engine/                          optional ADS-owned tooling
+docs/                                contract, audit, validation, references
 ```
 
 The root shell is `AGENTS.md`, `README.md`, and the primary skill at
@@ -57,7 +54,7 @@ hidden CI are toolchain support, not additional System concepts.
 
 ## Operational truth
 
-`workspace/` remains the active work surface. A run directory can contain:
+`workspace/designs/<slug>/` is the selected work surface. A run directory can contain:
 
 - `input.json`: small references and route facts, not a request transcript;
 - `output.json`: result and route status;
@@ -86,15 +83,15 @@ Values are references or small structured facts. `previous_run_relation` is
 and `recovery` for an explicit recovery. A failed run is never rewritten and
 can be recovered only once.
 
-`workspace/state/active.json` may identify the current active slug and latest
-route for quick resume. It is not a second history store. Learning notes are
-short and intentional under `workspace/learning/`.
+`workspace/designs/<slug>/state/active.json` may identify the latest route for
+quick resume. It is not a second history store. Learning notes are short and
+intentional under `workspace/learning/`.
 
 ## Source-decision boundary
 
 `docs/SOURCE_AUDIT.md` owns source revision/version, license and reuse
 boundary, maintenance/availability, framework/accessibility fit, visual
-reason, and learned-versus-copied evidence. The active `DESIGN.md` resolves
+reason, and learned-versus-copied evidence. The selected `DESIGN.md` resolves
 those facts into named use/reject decisions. The design/source tracer records
 that resolution as run proof; it does not create a catalogue, registry,
 `design-list.md`, or second source of truth.
@@ -135,8 +132,8 @@ as ordinary referenced input, not a runtime dependency.
 
 ## Cross-owner and optional native handoff
 
-Same-owner work may remain in `workspace/` or a curated example without a
-handoff binder. Every cross-owner delivery contains canonical `DESIGN.md` and
+Same-owner work remains under its selected `workspace/designs/<slug>/` surface
+without a handoff binder. Every cross-owner delivery contains canonical `DESIGN.md` and
 `HANDOFF.md`, with `BRIEF.md` and PASS review evidence bound into the snapshot;
 selected HTML/assets/tokens/exports are companions. The
 human-readable [`ADS-HANDOFF/1` template](HANDOFF_TEMPLATE.md) binds stable
@@ -193,13 +190,13 @@ evidence, gaps, and the smallest next action. Missing required evidence is
 depends on AIOS. Findings return to ADS Build/Review, or to AIOS improvement
 triage only when the work originated there.
 
-## Promotion boundary
+## Collection boundary
 
-`examples/` is not scratch space. A promoted example has a local README,
-`BRIEF.md`, `DESIGN.md`, an inspectable `index.html`, necessary local assets,
-and review/proof evidence. The example is listed in `examples/index.html` and
-is understandable without importing ADS. A successful run without explicit
-promotion remains operational evidence only.
+`workspace/designs/` is not scratch space or a project registry. Each selected
+slug owns its own brief, canonical direction, preview, companions, and run
+evidence. A curated direction has a local proof marker; a recovered snapshot
+keeps provenance and its historical acceptance state. Neither can overwrite or
+silently replace another selected design.
 
 ## Standalone and AIOS entry/return
 

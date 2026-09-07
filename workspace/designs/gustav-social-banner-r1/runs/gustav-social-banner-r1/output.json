@@ -1,0 +1,49 @@
+{
+  "run_id": "gustav-social-banner-r1",
+  "status": "waiting-review",
+  "updated_at": "2026-09-03T10:36:32Z",
+  "direction_version": "r1",
+  "design_ref": "workspace/DESIGN.md",
+  "design_sha256": "4c0d298a101b24bbf3b7a6a53de9c927f02039a8d13a11bfb1efc3feed50b805",
+  "review_ref": "workspace/REVIEW.md",
+  "review_state": "PENDING",
+  "last_lead_disposition": "REVISE",
+  "review_owner": "AIOS lead thread 01a066aa-ec32-7c51-a185-178ff44df838",
+  "handoff": {
+    "status": "DEFERRED_UNTIL_LEAD_PASS",
+    "ref": null,
+    "contract": "ADS-HANDOFF/1",
+    "receiver_acceptance": "PENDING"
+  },
+  "exports": [
+    {
+      "platform": "LinkedIn",
+      "path": "workspace/assets/gustav-social-banner-r1-linkedin.png",
+      "width": 1584,
+      "height": 396,
+      "format": "png",
+      "sha256": "d104fc94df2e54c56b50b70cb7d574706183801b42793d910e99e4994fcef5d8"
+    },
+    {
+      "platform": "X",
+      "path": "workspace/assets/gustav-social-banner-r1-x.png",
+      "width": 1500,
+      "height": 500,
+      "format": "png",
+      "sha256": "93f2796d8e08293dd1087aa5fa3136d0729e3f1b86a49b912ac97f6e8885ec08"
+    }
+  ],
+  "proof_ref": "workspace/runs/gustav-social-banner-r1/proof.json",
+  "verification": {
+    "deterministic_export": "PASS",
+    "exact_dimensions": "PASS",
+    "browser_inspection": "PASS",
+    "npm_run_check": "PASS",
+    "npm_test": "23 passed, 6 failed because success-path fixtures read current mutable workspace Result: REVISE",
+    "fixture_files_match_head": true,
+    "generated_handoff_present": false
+  },
+  "promoted_example": false,
+  "published": false,
+  "worker_goal_state": "active_pending_lead_review"
+}

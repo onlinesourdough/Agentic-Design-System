@@ -1,0 +1,24 @@
+{
+  "run_id": "onlinesourdough-stack-r1",
+  "phase": 1,
+  "status": "awaiting-selected-assets",
+  "previous_run": null,
+  "native_session_id": "01a072d2-1699-7bf0-97fa-612e363bef33",
+  "checks": {
+    "design_md_lint": "0 errors, 0 warnings",
+    "npm_run_check": "passed",
+    "preexisting_files_hashed": 244,
+    "preexisting_files_changed": 0,
+    "manifest_identities": 11
+  },
+  "limitations": [
+    "Preview structure only; browser viewport and keyboard checks deferred",
+    "Selected source images and native dimensions not yet observed",
+    "64px icon and 768px banner visual inspection pending actual assets",
+    "Independent review and receiver acceptance pending",
+    "Shared ledger and active state untouched under explicit isolation instruction"
+  ],
+  "outputs": ["BRIEF.md", "DESIGN.md", "index.html", "manifest.json"],
+  "resume": "SESSION.md",
+  "preservation_evidence": "preservation-baseline.json"
+}

@@ -9,6 +9,7 @@ import {
   sep,
 } from "node:path";
 import { spawnSync } from "node:child_process";
+import { listDesigns, resolveDesign } from "./designs.mjs";
 
 const root = resolve(
   process.argv.includes("--root")
@@ -24,7 +25,7 @@ const designmd = join(
   "dist",
   "index.js",
 );
-const visibleRoots = new Set(["workspace", "examples", "docs"]);
+const visibleRoots = new Set(["workspace", "docs"]);
 const allowedRootFiles = new Set([
   "AGENTS.md",
   "README.md",
@@ -54,12 +55,9 @@ const requiredPaths = [
   ".agents/skills/openpencil-workbench/SKILL.md",
   ".agents/skills/audit-design-system/SKILL.md",
   "workspace/README.md",
-  "workspace/BRIEF.md",
-  "workspace/DESIGN.md",
-  "workspace/index.html",
-  "workspace/state",
-  "workspace/runs",
-  "workspace/history/runs.jsonl",
+  "workspace/designs",
+  "workspace/designs/index.html",
+  "workspace/designs/README.md",
   "workspace/learning",
   "workspace/engine/checks.mjs",
   "workspace/engine/create-handoff.mjs",
@@ -69,10 +67,7 @@ const requiredPaths = [
   "workspace/engine/audit_tracer.py",
   "workspace/engine/serve.mjs",
   "workspace/engine/tracer.py",
-  "workspace/openpencil/route-console.op",
-  "workspace/openpencil/exports/route-console.png",
-  "examples/index.html",
-  "examples/README.md",
+  "workspace/engine/designs.mjs",
   "docs/contract.md",
   "docs/HANDOFF_TEMPLATE.md",
   "docs/ARCHITECTURE.md",
@@ -322,13 +317,22 @@ function checkPortableWorkSurface(directory) {
     "Receiving outcome",
     "Source/reference rights, provenance, and licensing",
     "Ownership boundary",
-    "Review owner",
-    "Receiver acceptance",
   ]) {
     if (!strongField(brief, field))
       fail(`${rel(briefPath)} lacks inspectable ${field}`);
   }
-  if (!/^- \*\*Review mode:\*\* (?:independent|owner)\s*$/m.test(brief))
+  const legacyReviewBoundary = strongField(
+    brief,
+    "Review and acceptance owner",
+  );
+  for (const field of ["Review owner", "Receiver acceptance"]) {
+    if (!strongField(brief, field) && !legacyReviewBoundary)
+      fail(`${rel(briefPath)} lacks inspectable ${field}`);
+  }
+  if (
+    !/^- \*\*Review mode:\*\* (?:independent|owner)\s*$/m.test(brief) &&
+    !legacyReviewBoundary
+  )
     fail(`${rel(briefPath)} lacks an exact independent or owner Review mode`);
   for (const marker of [
     "## Portable direction and ownership",
@@ -363,73 +367,52 @@ function checkLocalLinks(path) {
   }
 }
 
-function checkExamples() {
-  const examplesRoot = join(root, "examples");
-  const index = read(join(examplesRoot, "index.html"));
-  const readme = read(join(examplesRoot, "README.md"));
-  const exampleDirs = readdirSync(examplesRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
-    .map((entry) => entry.name)
-    .sort();
-  if (exampleDirs.length < 1) fail("examples/ has no curated directories");
-  for (const slug of exampleDirs) {
-    const directory = join(examplesRoot, slug);
-    for (const filename of [
-      "BRIEF.md",
-      "DESIGN.md",
-      "index.html",
-      "README.md",
-      "proof.json",
-    ]) {
+function checkDesignCollection() {
+  const collection = join(root, "workspace/designs");
+  const index = read(join(collection, "index.html"));
+  const readme = read(join(collection, "README.md"));
+  const designDirs = listDesigns(root);
+  if (designDirs.length < 1) fail("workspace/designs/ has no design folders");
+  for (const slug of designDirs) {
+    const directory = resolveDesign(root, slug);
+    for (const filename of ["BRIEF.md", "DESIGN.md", "index.html"]) {
       if (!existsSync(join(directory, filename)))
-        fail(`examples/${slug}/${filename} is missing`);
+        fail(`workspace/designs/${slug}/${filename} is missing`);
     }
     checkPortableWorkSurface(directory);
     lintDesign(join(directory, "DESIGN.md"));
     checkPreview(join(directory, "index.html"));
     checkLocalLinks(join(directory, "index.html"));
     if (!index.includes(`${slug}/index.html`))
-      fail(`examples/index.html does not list ${slug}`);
-    if (!readme.includes(slug) && slug !== "onlinesourdough-resources")
-      fail(`examples/README.md does not mention ${slug}`);
+      fail(`workspace/designs/index.html does not list ${slug}`);
+    if (!readme.includes(slug))
+      fail(`workspace/designs/README.md does not mention ${slug}`);
     const proofPath = join(directory, "proof.json");
-    try {
-      const proof = JSON.parse(read(proofPath));
-      if (proof.curated !== true || proof.review !== "PASS")
-        fail(`examples/${slug}/proof.json is not a curated PASS proof`);
-    } catch {
-      fail(`examples/${slug}/proof.json is not valid JSON`);
+    if (existsSync(proofPath)) {
+      try {
+        const proof = JSON.parse(read(proofPath));
+        if (proof.curated !== true || proof.review !== "PASS")
+          fail(
+            `workspace/designs/${slug}/proof.json is not a curated PASS proof`,
+          );
+      } catch {
+        fail(`workspace/designs/${slug}/proof.json is not valid JSON`);
+      }
     }
   }
 }
 
 function checkWorkspace() {
-  checkPortableWorkSurface(join(root, "workspace"));
-  lintDesign(join(root, "workspace/DESIGN.md"));
-  checkPreview(join(root, "workspace/index.html"));
-  checkLocalLinks(join(root, "workspace/index.html"));
-  const workspace = read(join(root, "workspace/index.html"));
-  for (const state of [
-    "success",
-    "loading",
-    "error",
-    "empty",
-    "permission",
-    "offline",
-  ]) {
-    if (!workspace.includes(`data-state="${state}"`))
-      fail(`workspace/index.html lacks ${state} state fixture`);
-  }
   const adapter = join(
     root,
-    "examples/onlinesourdough-resources/assets/adapters",
+    "workspace/designs/onlinesourdough-resources/assets/adapters",
   );
   for (const file of ["heroui-disclosure.css", "README.md"]) {
     if (!existsSync(join(adapter, file)))
       fail(`Resources adapter file is missing: ${file}`);
   }
   const resourcePreview = read(
-    join(root, "examples/onlinesourdough-resources/index.html"),
+    join(root, "workspace/designs/onlinesourdough-resources/index.html"),
   );
   if (!resourcePreview.includes("assets/adapters/heroui-disclosure.css"))
     fail("Resources preview does not load the reviewed local adapter");
@@ -437,7 +420,12 @@ function checkWorkspace() {
     fail("Resources preview does not expose the adapter state");
 
   const sourceAudit = read(join(root, "docs/SOURCE_AUDIT.md"));
-  const design = read(join(root, "workspace/DESIGN.md"));
+  const design = read(
+    join(
+      root,
+      "workspace/designs/ads-business-freedom-content-e2e-r1/DESIGN.md",
+    ),
+  );
   for (const marker of [
     "## Current design/source trace",
     "**Role:** UI/library source",
@@ -453,7 +441,7 @@ function checkWorkspace() {
     "source:openpencil-optional-adapter",
   ]) {
     if (!design.includes(marker))
-      fail(`workspace/DESIGN.md lacks source decision ${marker}`);
+      fail(`business-freedom DESIGN.md lacks source decision ${marker}`);
   }
 
   const handoff = read(join(root, "workspace/engine/create-handoff.mjs"));
@@ -481,9 +469,18 @@ function checkWorkspace() {
       fail(`handoff generator lacks optional binding marker ${marker}`);
   }
   if (
-    lstatSync(join(root, "workspace/openpencil/route-console.op")).size === 0 ||
-    lstatSync(join(root, "workspace/openpencil/exports/route-console.png"))
-      .size === 0
+    lstatSync(
+      join(
+        root,
+        "workspace/designs/ads-business-freedom-content-e2e-r1/openpencil/route-console.op",
+      ),
+    ).size === 0 ||
+    lstatSync(
+      join(
+        root,
+        "workspace/designs/ads-business-freedom-content-e2e-r1/openpencil/exports/route-console.png",
+      ),
+    ).size === 0
   )
     fail("OpenPencil source or reviewed export is empty");
 
@@ -588,8 +585,14 @@ function checkCapabilityContract() {
 }
 
 function checkLedger() {
-  const path = join(root, "workspace/history/runs.jsonl");
-  if (!existsSync(path)) return;
+  for (const slug of listDesigns(root)) {
+    const path = join(resolveDesign(root, slug), "history/runs.jsonl");
+    if (!existsSync(path)) continue;
+    checkOneLedger(path);
+  }
+}
+
+function checkOneLedger(path) {
   const required = new Set([
     "run_id",
     "started_at",
@@ -611,31 +614,34 @@ function checkLedger() {
     try {
       record = JSON.parse(line);
     } catch {
-      fail(`ledger line ${index + 1} is not valid JSON`);
+      fail(`${rel(path)} line ${index + 1} is not valid JSON`);
       return;
     }
     for (const field of required) {
-      if (!(field in record)) fail(`ledger line ${index + 1} lacks ${field}`);
+      if (!(field in record))
+        fail(`${rel(path)} line ${index + 1} lacks ${field}`);
     }
     const id = record.run_id;
-    if (!id || seen.has(id)) fail(`ledger repeats run_id ${id}`);
+    if (!id || seen.has(id)) fail(`${rel(path)} repeats run_id ${id}`);
     const previous = record.previous_run_id;
     if (previous !== null && !seen.has(previous))
-      fail(`ledger line ${index + 1} points to a later or missing run`);
+      fail(`${rel(path)} line ${index + 1} points to a later or missing run`);
     if (previous === null && record.previous_run_relation !== null)
-      fail(`ledger line ${index + 1} has a relation without a predecessor`);
+      fail(
+        `${rel(path)} line ${index + 1} has a relation without a predecessor`,
+      );
     if (
       previous !== null &&
       !["predecessor", "recovery"].includes(record.previous_run_relation)
     )
-      fail(`ledger line ${index + 1} has an invalid relation`);
+      fail(`${rel(path)} line ${index + 1} has an invalid relation`);
     if (record.status === "failed" && record.failure === null)
-      fail(`ledger line ${index + 1} failed without failure evidence`);
+      fail(`${rel(path)} line ${index + 1} failed without failure evidence`);
     if (record.previous_run_relation === "recovery") {
       if (!record.recovery || record.recovery.from_run_id !== previous)
-        fail(`ledger line ${index + 1} lacks matching recovery evidence`);
+        fail(`${rel(path)} line ${index + 1} lacks matching recovery evidence`);
       if (recovered.has(previous))
-        fail(`ledger recovers ${previous} more than once`);
+        fail(`${rel(path)} recovers ${previous} more than once`);
       recovered.add(previous);
     }
     if (id) seen.set(id, record);
@@ -661,7 +667,6 @@ function checkPublicText() {
     root,
     join(root, ".agents"),
     join(root, "workspace"),
-    join(root, "examples"),
     join(root, "docs"),
   ];
   const files = [...new Set(scanRoots.flatMap((path) => walk(path)))].filter(
@@ -689,7 +694,7 @@ if (!skillsOnly) {
   checkShell();
   checkWorkspace();
   checkCapabilityContract();
-  checkExamples();
+  checkDesignCollection();
   checkLedger();
   checkPublicText();
 }
@@ -709,15 +714,8 @@ if (failures.length) {
         ...(skillsOnly
           ? {}
           : {
-              visibleRoots: ["workspace/", "examples/", "docs/"],
-              examples: readdirSync(join(root, "examples"), {
-                withFileTypes: true,
-              })
-                .filter(
-                  (entry) => entry.isDirectory() && !entry.name.startsWith("."),
-                )
-                .map((entry) => entry.name)
-                .sort(),
+              visibleRoots: ["workspace/", "docs/"],
+              designs: listDesigns(root),
             }),
       },
       null,

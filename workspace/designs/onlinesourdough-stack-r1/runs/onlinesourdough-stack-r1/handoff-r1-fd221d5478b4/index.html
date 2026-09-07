@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>onlinesourdough stack identity r1</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font:
+          16px/1.5 system-ui,
+          sans-serif;
+        color: #30251f;
+        background: #f5ecdd;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      header,
+      main {
+        max-width: 1120px;
+        margin: auto;
+        padding: 24px;
+      }
+      h1 {
+        font-size: clamp(26px, 5vw, 42px);
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: 24px;
+      }
+      h3 {
+        font-size: 20px;
+        margin: 0;
+      }
+      a {
+        color: #7b3824;
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        color: #30251f;
+      }
+      a:active {
+        background: #e8d7c2;
+      }
+      a:focus-visible {
+        outline: 3px solid #7b3824;
+        outline-offset: 4px;
+      }
+      .skip {
+        position: absolute;
+        top: -80px;
+        left: 16px;
+      }
+      .skip:focus {
+        top: 8px;
+        background: #fff8ec;
+        padding: 8px;
+      }
+      .banner {
+        display: block;
+        width: 100%;
+        max-width: 768px;
+        height: auto;
+        margin: 16px 0;
+      }
+      .small-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        list-style: none;
+        padding: 0;
+      }
+      .small-row li {
+        width: 104px;
+      }
+      .small-row img {
+        display: block;
+        width: 64px;
+        height: 64px;
+      }
+      .small-row span {
+        display: block;
+        font-size: 13px;
+        margin-top: 8px;
+        overflow-wrap: anywhere;
+      }
+      .gallery {
+        list-style: none;
+        padding: 0;
+      }
+      .identity {
+        border-top: 1px solid #c9b6a1;
+        padding: 24px 0;
+        min-width: 0;
+      }
+      .identity .icon {
+        display: block;
+        width: 128px;
+        height: 128px;
+        margin-bottom: 16px;
+      }
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 12px 0;
+      }
+      .status {
+        color: #665448;
+      }
+      .error {
+        color: #7b3824;
+        overflow-wrap: anywhere;
+      }
+      section {
+        margin-bottom: 48px;
+      }
+      @media (max-width: 640px) {
+        header,
+        main {
+          padding: 16px;
+        }
+        .small-row {
+          gap: 16px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to gallery</a>
+    <header>
+      <p>onlinesourdough · stack identity r1</p>
+      <h1>Stack identity gallery</h1>
+      <p>
+        Eleven identities, with selected icons and banners. Download the
+        supplied masters or proportional PNG exports.
+      </p>
+      <nav aria-label="Run documents">
+        <a href="DESIGN.md">Design direction</a> ·
+        <a href="manifest.json">Asset manifest</a> ·
+        <a href="BRIEF.md">Brief</a> · <a href="PROVENANCE.md">Provenance</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section aria-labelledby="small-title">
+        <h2 id="small-title">64px inspection row</h2>
+        <p class="status">
+          Actual 64px exports. Independent review is pending.
+        </p>
+        <ul class="small-row">
+          <li>
+            <a
+              href="assets/exports/org-icon-64.png"
+              download
+              aria-label="Download onlinesourdough 64px PNG"
+              ><img
+                src="assets/exports/org-icon-64.png"
+                width="64"
+                height="64"
+                alt="onlinesourdough icon" /></a
+            ><span>onlinesourdough</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/aios-icon-64.png"
+              download
+              aria-label="Download AIOS 64px PNG"
+              ><img
+                src="assets/exports/aios-icon-64.png"
+                width="64"
+                height="64"
+                alt="AIOS icon" /></a
+            ><span>AIOS</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/ads-icon-64.png"
+              download
+              aria-label="Download ADS 64px PNG"
+              ><img
+                src="assets/exports/ads-icon-64.png"
+                width="64"
+                height="64"
+                alt="ADS icon" /></a
+            ><span>ADS</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/acs-icon-64.png"
+              download
+              aria-label="Download ACS 64px PNG"
+              ><img
+                src="assets/exports/acs-icon-64.png"
+                width="64"
+                height="64"
+                alt="ACS icon" /></a
+            ><span>ACS</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/skills-icon-64.png"
+              download
+              aria-label="Download Skills 64px PNG"
+              ><img
+                src="assets/exports/skills-icon-64.png"
+                width="64"
+                height="64"
+                alt="Skills icon" /></a
+            ><span>Skills</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/atlas-icon-64.png"
+              download
+              aria-label="Download Skill Atlas 64px PNG"
+              ><img
+                src="assets/exports/atlas-icon-64.png"
+                width="64"
+                height="64"
+                alt="Skill Atlas icon" /></a
+            ><span>Skill Atlas</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/resources-icon-64.png"
+              download
+              aria-label="Download Resources 64px PNG"
+              ><img
+                src="assets/exports/resources-icon-64.png"
+                width="64"
+                height="64"
+                alt="Resources icon" /></a
+            ><span>Resources</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/review-icon-64.png"
+              download
+              aria-label="Download Agent Work Review 64px PNG"
+              ><img
+                src="assets/exports/review-icon-64.png"
+                width="64"
+                height="64"
+                alt="Agent Work Review icon" /></a
+            ><span>Agent Work Review</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/powerbi-icon-64.png"
+              download
+              aria-label="Download Agentic Power BI System 64px PNG"
+              ><img
+                src="assets/exports/powerbi-icon-64.png"
+                width="64"
+                height="64"
+                alt="Agentic Power BI System icon" /></a
+            ><span>Agentic Power BI System</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/project-icon-64.png"
+              download
+              aria-label="Download Agentic Project Template 64px PNG"
+              ><img
+                src="assets/exports/project-icon-64.png"
+                width="64"
+                height="64"
+                alt="Agentic Project Template icon" /></a
+            ><span>Agentic Project Template</span>
+          </li>
+          <li>
+            <a
+              href="assets/exports/system-icon-64.png"
+              download
+              aria-label="Download Agentic System Template 64px PNG"
+              ><img
+                src="assets/exports/system-icon-64.png"
+                width="64"
+                height="64"
+                alt="Agentic System Template icon" /></a
+            ><span>Agentic System Template</span>
+          </li>
+        </ul>
+      </section>
+      <section aria-labelledby="gallery-title">
+        <h2 id="gallery-title">Icons and banners</h2>
+        <ul class="gallery">
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/org-icon-128.png"
+              width="128"
+              height="128"
+              alt="onlinesourdough: Approved textless sourdough mark"
+            />
+            <h3>onlinesourdough</h3>
+            <div class="links">
+              <a href="assets/masters/org-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/org-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/org-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/org-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/org-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/org-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="onlinesourdough README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/org-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/org-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/aios-icon-128.png"
+              width="128"
+              height="128"
+              alt="AIOS: Approved AIOS ceramic mark, label AIOS"
+            />
+            <h3>AIOS</h3>
+            <div class="links">
+              <a href="assets/masters/aios-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/aios-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/aios-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/aios-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/aios-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/aios-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="AIOS README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/aios-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/aios-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/ads-icon-128.png"
+              width="128"
+              height="128"
+              alt="ADS: Circle, triangle and square, label ADS"
+            />
+            <h3>ADS</h3>
+            <div class="links">
+              <a href="assets/masters/ads-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/ads-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/ads-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/ads-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/ads-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/ads-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="ADS README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/ads-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/ads-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/acs-icon-128.png"
+              width="128"
+              height="128"
+              alt="ACS: Clapperboard with play symbol, label ACS"
+            />
+            <h3>ACS</h3>
+            <div class="links">
+              <a href="assets/masters/acs-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/acs-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/acs-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/acs-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/acs-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/acs-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="ACS README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/acs-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/acs-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/skills-icon-128.png"
+              width="128"
+              height="128"
+              alt="Skills: Puzzle, label SKILLS"
+            />
+            <h3>Skills</h3>
+            <div class="links">
+              <a href="assets/masters/skills-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/skills-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/skills-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/skills-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/skills-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/skills-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="Skills README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/skills-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/skills-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/atlas-icon-128.png"
+              width="128"
+              height="128"
+              alt="Skill Atlas: Folded map with pin, label ATLAS"
+            />
+            <h3>Skill Atlas</h3>
+            <div class="links">
+              <a href="assets/masters/atlas-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/atlas-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/atlas-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/atlas-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/atlas-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/atlas-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="Skill Atlas README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/atlas-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/atlas-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/resources-icon-128.png"
+              width="128"
+              height="128"
+              alt="Resources: Open book, label RESOURCES"
+            />
+            <h3>Resources</h3>
+            <div class="links">
+              <a href="assets/masters/resources-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/resources-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/resources-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/resources-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/resources-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/resources-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="Resources README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/resources-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/resources-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/review-icon-128.png"
+              width="128"
+              height="128"
+              alt="Agent Work Review: Magnifier with check, label REVIEW"
+            />
+            <h3>Agent Work Review</h3>
+            <div class="links">
+              <a href="assets/masters/review-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/review-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/review-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/review-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/review-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/review-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="Agent Work Review README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/review-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/review-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/powerbi-icon-128.png"
+              width="128"
+              height="128"
+              alt="Agentic Power BI System: Ascending bars, label BI"
+            />
+            <h3>Agentic Power BI System</h3>
+            <div class="links">
+              <a href="assets/masters/powerbi-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/powerbi-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/powerbi-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/powerbi-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/powerbi-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/powerbi-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="Agentic Power BI System README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/powerbi-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/powerbi-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/project-icon-128.png"
+              width="128"
+              height="128"
+              alt="Agentic Project Template: Document with code, label APT"
+            />
+            <h3>Agentic Project Template</h3>
+            <div class="links">
+              <a href="assets/masters/project-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/project-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/project-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/project-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/project-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/project-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="Agentic Project Template README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/project-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/project-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+          <li class="identity">
+            <img
+              class="icon"
+              src="assets/exports/system-icon-128.png"
+              width="128"
+              height="128"
+              alt="Agentic System Template: Three connected blocks, label AST"
+            />
+            <h3>Agentic System Template</h3>
+            <div class="links">
+              <a href="assets/masters/system-icon.png" download
+                >Icon master · 1254px PNG</a
+              ><a href="assets/exports/system-icon-1024.png" download
+                >Icon · 1024px PNG</a
+              ><a href="assets/exports/system-icon-512.png" download
+                >Icon · 512px PNG</a
+              ><a href="assets/exports/system-icon-128.png" download
+                >Icon · 128px PNG</a
+              ><a href="assets/exports/system-icon-64.png" download
+                >Icon · 64px PNG</a
+              >
+            </div>
+            <img
+              class="banner"
+              src="assets/exports/system-banner-1536x512.png"
+              width="1536"
+              height="512"
+              alt="Agentic System Template README banner"
+            />
+            <div class="links">
+              <a href="assets/masters/system-banner.png" download
+                >Banner master · 2172 × 724 PNG</a
+              ><a href="assets/exports/system-banner-1536x512.png" download
+                >Banner export · 1536 × 512 PNG</a
+              >
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <script>
+      document.querySelectorAll("img").forEach((img) => {
+        const showError = () => {
+          if (img.nextElementSibling?.classList.contains("error")) return;
+          const p = document.createElement("p");
+          p.className = "error";
+          p.textContent = "Image unavailable: " + img.getAttribute("src");
+          img.after(p);
+        };
+        img.addEventListener("error", showError);
+        if (img.complete && img.naturalWidth === 0) showError();
+      });
+    </script>
+  </body>
+</html>

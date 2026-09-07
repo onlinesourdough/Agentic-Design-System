@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">X desktop crop and avatar proof</title>
+  <desc id="desc">The exact X header rendered at 600 by 200 with a simulated lower-left avatar, outer crop guard, and outlined copy-safe area.</desc>
+  <defs>
+    <style>
+      @font-face { font-family: "Geist ADS"; src: url("fonts/geist-sans-variable.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Geist Mono ADS"; src: url("fonts/geist-mono-variable.woff2") format("woff2"); font-weight: 100 900; }
+      .sans { font-family: "Geist ADS", Arial, sans-serif; }
+      .mono { font-family: "Geist Mono ADS", monospace; }
+    </style>
+    <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="9" stroke="#fffaf1" stroke-opacity="0.42" stroke-width="4"/>
+    </pattern>
+  </defs>
+  <rect width="960" height="600" fill="#efe4d4"/>
+  <text x="180" y="65" class="mono" font-size="14" font-weight="700" letter-spacing="2" fill="#bd6435">X · DESKTOP CROP PROOF</text>
+  <text x="180" y="101" class="sans" font-size="27" font-weight="700" letter-spacing="-0.6" fill="#2b1b12">Actual 600px profile-column display</text>
+  <text x="180" y="130" class="sans" font-size="15" font-weight="480" fill="#6f5b4c">1500×500 source → 600×200 display · overlays are proof-only</text>
+
+  <rect x="165" y="145" width="630" height="358" rx="22" fill="#fffaf1" stroke="#d9c8b2"/>
+  <image href="gustav-social-banner-r1-x.png" x="180" y="160" width="600" height="200"/>
+  <rect x="204" y="184" width="552" height="152" fill="none" stroke="#2b1b12" stroke-opacity="0.55" stroke-width="1.25" stroke-dasharray="6 6"/>
+  <rect x="468" y="194" width="293" height="146" rx="6" fill="#356d55" fill-opacity="0.04" stroke="#356d55" stroke-width="1.7"/>
+  <rect x="180" y="360" width="600" height="127" fill="#fffaf1"/>
+
+  <circle cx="266" cy="362" r="69" fill="#fffaf1" stroke="#fffaf1" stroke-width="10"/>
+  <circle cx="266" cy="362" r="61" fill="#d9672e"/>
+  <circle cx="266" cy="362" r="61" fill="url(#hatch)"/>
+  <text x="266" y="367" text-anchor="middle" class="mono" font-size="11" font-weight="750" letter-spacing="1.2" fill="#fffaf1">AVATAR</text>
+
+  <path d="M276 432H448" stroke="#d9c8b2" stroke-width="12" stroke-linecap="round"/>
+  <path d="M276 458H397" stroke="#e6d8c6" stroke-width="8" stroke-linecap="round"/>
+  <text x="634" y="187" class="mono" font-size="9" font-weight="720" letter-spacing="1" fill="#356d55">COPY SAFE</text>
+  <text x="207" y="178" class="mono" font-size="9" font-weight="720" letter-spacing="1" fill="#2b1b12">4% EDGE GUARD</text>
+  <path d="M243 300V274H347" fill="none" stroke="#d9672e" stroke-width="1.8"/>
+  <text x="354" y="278" class="mono" font-size="9" font-weight="720" letter-spacing="0.8" fill="#d9672e">NONESSENTIAL FIELD</text>
+  <text x="180" y="548" class="mono" font-size="11" font-weight="650" letter-spacing="0.9" fill="#6f5b4c">PASS · PROMISE AND DOMAIN CLEAR AT 600PX</text>
+  <text x="180" y="570" class="sans" font-size="12" font-weight="480" fill="#6f5b4c">Recheck platform crop at upload; no live profile was changed.</text>
+</svg>

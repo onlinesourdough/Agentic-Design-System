@@ -1,0 +1,40 @@
+{
+  "run_id": "gustav-social-banner-r1",
+  "started_at": "2026-09-03T10:01:57Z",
+  "lead_goal": "01a066aa-ec32-7c51-a185-178ff44df838",
+  "stable_linkage": "lead:01a066aa-ec32-7c51-a185-178ff44df838|repo:onlinesourdough/Agentic-Design-System@97449f2803a0d9bb98fc65cf3e4ebf81502a1731|worker:gustav-social-banner-r1",
+  "worker_contract_revision": 1,
+  "source_revision": "97449f2803a0d9bb98fc65cf3e4ebf81502a1731",
+  "brief_ref": "workspace/BRIEF.md",
+  "prior_relevant_run_id": null,
+  "prior_run_relation": null,
+  "launch_context": "Recovery attempt 1 after a pre-worker CLI flag parse failure; no predecessor ADS run or repository mutation existed.",
+  "receiving_owner": "Gustav Anderson",
+  "receiving_outcome": "Gustav Online social profiles: exact LinkedIn and X banner assets with crop/readability proof.",
+  "review_mode": "independent",
+  "review_owner": "AIOS lead thread 01a066aa-ec32-7c51-a185-178ff44df838",
+  "surfaces": [
+    "LinkedIn 1584x396 PNG",
+    "X 1500x500 PNG"
+  ],
+  "source_refs": {
+    "composition_reference": {
+      "path": "/Users/gustavanderson/Downloads/1500x500.jpg",
+      "sha256": "4d0855205e0bef4741640b11ece0437da780a54ee32c1454ac93aa354393c79f",
+      "use": "modular rhythm and unfinished-grid metaphor only"
+    },
+    "selected_background_seed": {
+      "source_path": "/Users/gustavanderson/.codex/generated_images/01a066aa-ec32-7c51-a185-178ff44df838/exec-c859fd67-944d-4e90-93fb-7f5c13ac50e6.png",
+      "workspace_path": "workspace/assets/gustav-social-banner-r1-background-seed.png",
+      "sha256": "055b90690a5db1c545e5608269d0f144ec0b4022c3c27c02d7a8db2e26eedfef",
+      "use": "textless noncritical background material"
+    },
+    "aios_context": [
+      "/Users/gustavanderson/Downloads/AIOS/.aios/context/about-me.md",
+      "/Users/gustavanderson/Downloads/AIOS/.aios/context/about-business.md",
+      "/Users/gustavanderson/Downloads/AIOS/.aios/context/voice.md",
+      "/Users/gustavanderson/Downloads/AIOS/.aios/context/operating-framework.md"
+    ]
+  },
+  "image_generation_prompt": "None — deterministic SVG/Chrome raster export from the selected supplied seed."
+}

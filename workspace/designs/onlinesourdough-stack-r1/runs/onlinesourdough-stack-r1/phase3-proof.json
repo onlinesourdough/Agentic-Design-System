@@ -1,0 +1,41 @@
+{
+  "run_id": "onlinesourdough-stack-r1",
+  "phase": 3,
+  "status": "awaiting-bound-independent-review",
+  "native_session_id": "01a072d2-1699-7bf0-97fa-612e363bef33",
+  "root": "/Users/gustavanderson/.AIOS/systems/agentic-design-system",
+  "head": "97449f2803a0d9bb98fc65cf3e4ebf81502a1731",
+  "checks": {
+    "master_pngs": 22,
+    "icon_exports": 44,
+    "banner_exports": 11,
+    "measured_pngs": 77,
+    "dimension_mismatches": 0,
+    "source_and_local_hash_checks": 99,
+    "hash_mismatches": 0,
+    "linked_png_files": 77,
+    "missing_local_links": 0,
+    "phase2_retained_asset_mismatches": 0,
+    "baseline_files_preserved": 244,
+    "baseline_files_changed": 0,
+    "design_lint_errors": 0,
+    "design_lint_warnings": 0,
+    "npm_run_check": "passed"
+  },
+  "browser": {
+    "route": "native cua.getBrowser",
+    "result": "No browser is available",
+    "desktop_mobile": "not performed",
+    "keyboard": "not performed",
+    "rendered_legibility": "not performed"
+  },
+  "review": {
+    "mode": "independent",
+    "owner": "stack identity lead",
+    "status": "pending exact bound PASS"
+  },
+  "receiver_acceptance": "pending",
+  "handoff": "not generated",
+  "shared_ledger": "untouched; append only after final acceptance and preimage verification",
+  "active_pointer": "untouched"
+}

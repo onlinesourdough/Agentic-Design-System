@@ -1,0 +1,54 @@
+{
+  "schema": "ADS-RUN-OUTPUT/1",
+  "run_id": "ads-business-freedom-content-e2e-r1",
+  "finished_at": "2026-09-02T13:50:45Z",
+  "status": "passed",
+  "canonical_direction": {
+    "path": "workspace/DESIGN.md",
+    "version": "r1",
+    "sha256": "958ac18a044822e4c39116db36992887ddd2b99589ddd4b5d1721a2f0ad68905"
+  },
+  "brief": {
+    "path": "workspace/BRIEF.md",
+    "sha256": "9fb0222efcc2fbc8388fd7d11d681a99ec14b11aa13afd0d99a8e51863b4eee8"
+  },
+  "preview": {
+    "path": "workspace/index.html",
+    "sha256": "9f4cf64bd7b158e0d64cb50509f7514af187f7d3a731c3dae70b85d40e18767c"
+  },
+  "story": {
+    "duration_seconds": 39,
+    "beats": 8,
+    "keyframes": [
+      "workspace/assets/keyframe-01-founder-constraint.svg",
+      "workspace/assets/keyframe-02-smallest-complete-change.svg",
+      "workspace/assets/keyframe-03-reviewed-handoff.svg"
+    ]
+  },
+  "review": {
+    "path": "workspace/REVIEW.md",
+    "result": "PASS",
+    "sha256": "fa6cbb5cf93ac7a7a8acafdd55cb1f3cefd3809e84f67c36138b4f679c57929d"
+  },
+  "handoff": {
+    "path": "workspace/handoff/HANDOFF.md",
+    "contract": "ADS-HANDOFF/1",
+    "id": "ads-business-freedom-content-system-story-e0cfce24fd44",
+    "revision": "r1+958ac18a0448",
+    "receiving_owner": "Agentic Content System",
+    "acceptance": "PENDING",
+    "sha256": "cd8af2487cf3c2df199337682cfa7042279feee92376bd06e540307ba9df956d"
+  },
+  "openpencil": {
+    "status": "included",
+    "version": "0.8.4",
+    "source": "workspace/openpencil/route-console.op",
+    "source_sha256": "33ab74b5315b89f68eefe8b6a3d3da193e968afab6f851de3c9f3b2f97b9b0e0",
+    "reviewed_png": "workspace/openpencil/exports/route-console.png",
+    "reviewed_png_sha256": "734c32836a61c42088141d84308392a198403d6e4a80991f65d3d2f9a8b5e92d",
+    "native_svg_export": "unavailable in v0.8.4"
+  },
+  "example_promotion": null,
+  "ship_authorized": false,
+  "next": "AIOS lead Review"
+}

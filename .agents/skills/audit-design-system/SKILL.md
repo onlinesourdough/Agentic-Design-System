@@ -17,6 +17,12 @@ receiver/outcome, hashes, provenance/licensing, review, limitations, and
 acceptance; and sibling boundaries remain suggestion-only with no automatic
 ADS-to-ACS chain.
 
+The aggregate `workspace` scope examines every valid design-local ledger in
+`workspace/designs/`; it never selects an `audit-proof` fixture or an
+alphabetically first design. Historical curated snapshots and preserved legacy
+ledgers are checked for their own provenance without requiring them to invent
+new failure/recovery records.
+
 1. Select exactly one scope: repository, workspace, or both.
 2. Run python3 workspace/engine/audit_design_system.py --scope <scope>.
 3. Return exactly the reported PASS, FAIL, or BLOCKED, with scope, evidence,

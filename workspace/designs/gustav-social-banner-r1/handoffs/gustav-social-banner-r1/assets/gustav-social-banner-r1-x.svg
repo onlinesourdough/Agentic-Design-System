@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500" role="img" aria-labelledby="title desc">
+  <title id="title">Gustav Online X header</title>
+  <desc id="desc">Warm paper workbench with an incomplete modular field at left and the promise Byg en virksomhed, der ikke venter på dig in the clear right safe area.</desc>
+  <metadata>
+    ADS run gustav-social-banner-r1; revision r1; 1500x500.
+    Background seed SHA-256 055b90690a5db1c545e5608269d0f144ec0b4022c3c27c02d7a8db2e26eedfef.
+    Final image-generation prompt: none; deterministic SVG and Chrome raster export.
+  </metadata>
+  <defs>
+    <style>
+      @font-face { font-family: "Geist ADS"; src: url("fonts/geist-sans-variable.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Geist Mono ADS"; src: url("fonts/geist-mono-variable.woff2") format("woff2"); font-weight: 100 900; }
+      .sans { font-family: "Geist ADS", Arial, sans-serif; }
+      .mono { font-family: "Geist Mono ADS", monospace; }
+    </style>
+    <linearGradient id="quiet" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fbf4e8" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="#fbf4e8" stop-opacity="0.22"/>
+      <stop offset="0.56" stop-color="#fbf4e8" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#fbf4e8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1500" height="500" fill="#fbf4e8"/>
+  <image href="gustav-social-banner-r1-background-seed.png" x="0" y="0" width="1500" height="500" preserveAspectRatio="none"/>
+  <rect width="1500" height="500" fill="url(#quiet)"/>
+
+  <path d="M125 109H495Q510 109 510 124V190Q510 205 495 205H340" fill="none" stroke="#bd6435" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="340" cy="205" r="5" fill="#bd6435"/>
+  <rect x="309" y="155" width="66" height="67" rx="15" fill="#fbf4e8" fill-opacity="0.08" stroke="#bd6435" stroke-width="2"/>
+
+  <g aria-label="onlinesourdough method">
+    <image href="onlinesourdough-mark.svg" x="72" y="88" width="39" height="28"/>
+    <text x="91.5" y="134" text-anchor="middle" class="mono" font-size="8" font-weight="690" letter-spacing="1.2" fill="#2b1b12">METHOD</text>
+  </g>
+  <g aria-label="Gustav Online public front door">
+    <text x="175" y="108" text-anchor="middle" class="sans" font-size="21" font-weight="760" letter-spacing="-0.8" fill="#fffaf1">G/O</text>
+    <text x="175" y="132" text-anchor="middle" class="mono" font-size="7.5" font-weight="690" letter-spacing="1.1" fill="#fffaf1">PUBLIC</text>
+  </g>
+  <text x="259" y="130" text-anchor="middle" class="mono" font-size="8" font-weight="720" letter-spacing="1" fill="#2b1b12">OFFER</text>
+  <text x="343" y="130" text-anchor="middle" class="mono" font-size="8" font-weight="720" letter-spacing="1" fill="#fffaf1">OPS</text>
+  <text x="428" y="130" text-anchor="middle" class="mono" font-size="8" font-weight="720" letter-spacing="0.8" fill="#2b1b12">DEMAND</text>
+
+  <g aria-label="AIOS bounded proof tile">
+    <rect x="141" y="155" width="68" height="69" rx="14" fill="#17334a" fill-opacity="0.96"/>
+    <path d="M158 176H191M158 183H183M158 190H194" stroke="#84dce8" stroke-width="2" stroke-linecap="round"/>
+    <text x="175" y="211" text-anchor="middle" class="mono" font-size="7.5" font-weight="710" letter-spacing="1" fill="#84dce8">AIOS / PROOF</text>
+  </g>
+  <g aria-label="ArcIT done for you in practice tile">
+    <rect x="225" y="155" width="68" height="69" rx="14" fill="#356d55" fill-opacity="0.96"/>
+    <image href="arcitai-mark.svg" x="246" y="164" width="28" height="28"/>
+    <text x="259" y="211" text-anchor="middle" class="mono" font-size="7" font-weight="710" letter-spacing="0.8" fill="#e8dfc8">ARC’IT / DFY</text>
+  </g>
+
+  <g fill="#2b1b12">
+    <text x="720" y="117" class="mono" font-size="20" font-weight="680" letter-spacing="2.3">FOR FOUNDER-LED VIRKSOMHEDER</text>
+    <text x="720" y="180" class="sans" font-size="61" font-weight="720" letter-spacing="-2.7">Byg en virksomhed,</text>
+    <text x="720" y="240" class="sans" font-size="61" font-weight="720" letter-spacing="-2.7">der ikke venter på dig.</text>
+    <text x="720" y="323" class="sans" font-size="26" font-weight="520" letter-spacing="-0.24">Enklere arbejde · ansvarlig AI ·</text>
+    <text x="720" y="356" class="sans" font-size="26" font-weight="520" letter-spacing="-0.24">software du kan forstå og eje</text>
+    <text x="720" y="421" class="mono" font-size="22" font-weight="680" letter-spacing="0.6">gustavonline.com</text>
+  </g>
+  <line x1="720" y1="442" x2="782" y2="442" stroke="#bd6435" stroke-width="3" stroke-linecap="round"/>
+</svg>

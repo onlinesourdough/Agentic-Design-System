@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Gustav Online social banners · ADS r1</title>
+    <style>
+      @font-face {
+        font-family: "Geist ADS";
+        src: url("assets/fonts/geist-sans-variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Geist Mono ADS";
+        src: url("assets/fonts/geist-mono-variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      :root {
+        --ink: #2b1b12;
+        --muted: #6f5b4c;
+        --paper: #fbf4e8;
+        --cream: #f4eadb;
+        --line: #d9c8b2;
+        --orange: #d9672e;
+        --terracotta: #bd6435;
+        --green: #356d55;
+        --blue: #176b9b;
+        --shadow: 0 18px 60px rgba(89, 57, 35, 0.11);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(
+            circle at 12% 4%,
+            rgba(255, 250, 241, 0.92),
+            transparent 30rem
+          ),
+          var(--cream);
+        font-family: "Geist ADS", Arial, sans-serif;
+        line-height: 1.45;
+      }
+      a {
+        color: inherit;
+      }
+      .skip-link {
+        position: fixed;
+        left: 1rem;
+        top: 1rem;
+        z-index: 20;
+        transform: translateY(-160%);
+        padding: 0.7rem 0.95rem;
+        border-radius: 0.45rem;
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+      :focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 4px;
+      }
+      .shell {
+        width: min(1180px, calc(100% - 2rem));
+        margin-inline: auto;
+      }
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 72px;
+        border-bottom: 1px solid rgba(111, 91, 76, 0.2);
+      }
+      .identity,
+      .eyebrow,
+      .meta,
+      .platform,
+      .proof-label,
+      .mini-label {
+        font-family: "Geist Mono ADS", monospace;
+        font-weight: 680;
+        letter-spacing: 0.075em;
+        text-transform: uppercase;
+      }
+      .identity {
+        font-size: 0.78rem;
+      }
+      nav {
+        display: flex;
+        gap: 1.15rem;
+        font-size: 0.9rem;
+      }
+      nav a {
+        text-underline-offset: 0.3em;
+      }
+      .intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(250px, 0.65fr);
+        gap: clamp(2rem, 6vw, 6rem);
+        align-items: end;
+        padding: clamp(4rem, 9vw, 8rem) 0 3.5rem;
+      }
+      .eyebrow {
+        margin: 0 0 1.3rem;
+        color: var(--terracotta);
+        font-size: 0.75rem;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+      h1 {
+        max-width: 820px;
+        margin-bottom: 1.2rem;
+        font-size: clamp(3rem, 6.8vw, 6.6rem);
+        font-weight: 730;
+        line-height: 0.91;
+        letter-spacing: -0.06em;
+      }
+      .lede {
+        max-width: 700px;
+        color: var(--muted);
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+      }
+      .control-panel {
+        padding: 1.3rem;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: rgba(255, 250, 241, 0.6);
+      }
+      .control-panel p {
+        margin-bottom: 1rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      button {
+        width: 100%;
+        min-height: 44px;
+        border: 1px solid var(--ink);
+        border-radius: 0.55rem;
+        padding: 0.75rem 1rem;
+        color: var(--paper);
+        background: var(--ink);
+        font:
+          670 0.78rem/1 "Geist Mono ADS",
+          monospace;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      button:hover {
+        color: var(--ink);
+        background: var(--paper);
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      button[aria-pressed="true"] {
+        border-color: var(--terracotta);
+        background: var(--terracotta);
+      }
+      .status {
+        min-height: 1.4em;
+        margin: 0.8rem 0 0;
+        font-size: 0.82rem;
+      }
+      section {
+        padding: clamp(3.5rem, 8vw, 7rem) 0;
+        border-top: 1px solid rgba(111, 91, 76, 0.2);
+      }
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.55fr) minmax(0, 1fr);
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        align-items: start;
+      }
+      h2 {
+        margin-bottom: 0;
+        font-size: clamp(2rem, 4vw, 4rem);
+        line-height: 0.98;
+        letter-spacing: -0.045em;
+      }
+      .section-head p {
+        max-width: 610px;
+        margin-left: auto;
+        color: var(--muted);
+      }
+      .export-stack {
+        display: grid;
+        gap: clamp(3rem, 7vw, 6rem);
+      }
+      .copy-manifest {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 0 1.5rem;
+        margin: -0.5rem 0 3rem;
+        padding: 1.1rem 1.25rem;
+        border-left: 3px solid var(--terracotta);
+        background: rgba(255, 250, 241, 0.42);
+      }
+      .copy-manifest dt,
+      .copy-manifest dd {
+        margin: 0;
+        padding: 0.28rem 0;
+      }
+      .copy-manifest dt {
+        font-family: "Geist Mono ADS", monospace;
+        color: var(--muted);
+        font-size: 0.7rem;
+        font-weight: 680;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+      .copy-manifest dd {
+        font-weight: 560;
+      }
+      .export-item {
+        display: grid;
+        gap: 1rem;
+      }
+      .export-heading {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem 1.5rem;
+      }
+      .export-heading h3 {
+        margin: 0;
+        font-size: 1.25rem;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.7rem;
+      }
+      .export-visual {
+        position: relative;
+        overflow: visible;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+      .export-visual.linkedin {
+        aspect-ratio: 4 / 1;
+      }
+      .export-visual.x {
+        aspect-ratio: 3 / 1;
+        max-width: 960px;
+      }
+      .export-visual > img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .overlay {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 160ms ease;
+      }
+      .show-proof .overlay {
+        opacity: 1;
+      }
+      .edge-guard {
+        inset: 4%;
+        border: 2px dashed rgba(43, 27, 18, 0.58);
+      }
+      .safe {
+        border: 2px solid var(--green);
+        background: rgba(53, 109, 85, 0.035);
+      }
+      .linkedin .safe {
+        left: 43.56%;
+        top: 16.67%;
+        width: 52.9%;
+        height: 71.7%;
+      }
+      .x .safe {
+        left: 48%;
+        top: 20.8%;
+        width: 48.8%;
+        height: 66.8%;
+      }
+      .avatar {
+        left: 4%;
+        bottom: -20%;
+        width: 17%;
+        aspect-ratio: 1;
+        border: clamp(4px, 0.7vw, 10px) solid var(--paper);
+        border-radius: 50%;
+        background: repeating-linear-gradient(
+          45deg,
+          var(--orange),
+          var(--orange) 8px,
+          #e47d49 8px,
+          #e47d49 12px
+        );
+        box-shadow: 0 7px 22px rgba(89, 57, 35, 0.18);
+      }
+      .x .avatar {
+        width: 22%;
+        bottom: -31%;
+      }
+      .proof-label {
+        display: inline-block;
+        margin-top: 0.65rem;
+        color: var(--muted);
+        font-size: 0.68rem;
+      }
+      .proof-grid {
+        display: grid;
+        grid-template-columns: 1.45fr 0.95fr;
+        gap: 2rem;
+        align-items: start;
+      }
+      .proof-card {
+        margin: 0;
+      }
+      .proof-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+      figcaption {
+        margin-top: 0.8rem;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .roles {
+        display: grid;
+        grid-template-columns: 210px minmax(0, 1fr);
+        gap: 0 2rem;
+      }
+      .role {
+        display: contents;
+      }
+      .role dt,
+      .role dd {
+        margin: 0;
+        padding: 1.35rem 0;
+        border-top: 1px solid var(--line);
+      }
+      .role dt {
+        font-weight: 720;
+      }
+      .role dd {
+        color: var(--muted);
+      }
+      .source-note {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.5fr);
+        gap: 3rem;
+        padding: clamp(2rem, 5vw, 4rem);
+        border-radius: 1.2rem;
+        color: var(--paper);
+        background: var(--ink);
+      }
+      .source-note h2 {
+        max-width: 620px;
+      }
+      .source-note p {
+        margin-bottom: 0.8rem;
+        color: #e7d8c6;
+      }
+      .source-note .mini-label {
+        color: #84dce8;
+        font-size: 0.7rem;
+      }
+      .state-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+      .state-item {
+        min-height: 132px;
+        padding: 1.25rem;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 250, 241, 0.44);
+      }
+      .state-item strong {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-family: "Geist Mono ADS", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .state-item p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      footer {
+        padding: 2.5rem 0 4rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 760px) {
+        .site-header {
+          align-items: flex-start;
+          padding: 1.1rem 0;
+        }
+        nav {
+          flex-direction: column;
+          gap: 0.4rem;
+          text-align: right;
+        }
+        .intro,
+        .section-head,
+        .proof-grid,
+        .source-note {
+          grid-template-columns: 1fr;
+        }
+        .intro {
+          align-items: start;
+          padding-top: 4rem;
+        }
+        .section-head p {
+          margin-left: 0;
+        }
+        .roles {
+          grid-template-columns: 1fr;
+        }
+        .role {
+          display: block;
+          padding: 1rem 0;
+          border-top: 1px solid var(--line);
+        }
+        .role dt,
+        .role dd {
+          padding: 0;
+          border: 0;
+        }
+        .role dd {
+          margin-top: 0.35rem;
+        }
+        .export-stack {
+          gap: 3.6rem;
+        }
+        .copy-manifest {
+          grid-template-columns: 1fr;
+        }
+        .state-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .overlay {
+          transition: none;
+        }
+        button:active {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to banner proof</a>
+    <header class="site-header shell">
+      <div class="identity">ADS / Gustav Online / r1</div>
+      <nav aria-label="Preview sections">
+        <a href="#exports">Exports</a>
+        <a href="#crop-proof">Crop proof</a>
+        <a href="#roles">Brand roles</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <div class="intro shell">
+        <div>
+          <p class="eyebrow">One promise · two surfaces · one open workbench</p>
+          <h1>Byg en virksomhed, der ikke venter på dig.</h1>
+          <p class="lede">
+            A reviewed social-profile direction for founder-led businesses: warm
+            paper, one present constraint, and only the modules needed to make
+            the smallest complete change.
+          </p>
+        </div>
+        <aside class="control-panel" aria-labelledby="inspection-title">
+          <h2
+            id="inspection-title"
+            style="font-size: 1rem; letter-spacing: -0.01em"
+          >
+            Inspection overlay
+          </h2>
+          <p>
+            Show the outer crop guard, copy-safe field, and simulated avatar on
+            both final exports.
+          </p>
+          <button id="proof-toggle" type="button" aria-pressed="false">
+            Show crop proof
+          </button>
+          <p id="proof-status" class="status" aria-live="polite">
+            Overlays hidden. Final artwork only.
+          </p>
+        </aside>
+      </div>
+
+      <section id="exports">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Final raster exports</h2>
+            <p>
+              Both PNGs use the exact approved copy. The modules remain left and
+              nonessential; the public promise stays in the right/center safe
+              field.
+            </p>
+          </div>
+          <dl class="copy-manifest" aria-label="Exact public copy manifest">
+            <dt>Prehead</dt>
+            <dd>FOR FOUNDER-LED VIRKSOMHEDER</dd>
+            <dt>Headline</dt>
+            <dd>Byg en virksomhed, der ikke venter på dig.</dd>
+            <dt>Support</dt>
+            <dd>
+              Enklere arbejde · ansvarlig AI · software du kan forstå og eje
+            </dd>
+            <dt>CTA / domain</dt>
+            <dd>gustavonline.com</dd>
+          </dl>
+          <div class="export-stack">
+            <article class="export-item">
+              <div class="export-heading">
+                <h3>LinkedIn banner</h3>
+                <div class="meta">PNG · 1584×396 · 4:1</div>
+              </div>
+              <div class="export-visual linkedin">
+                <img
+                  src="assets/gustav-social-banner-r1-linkedin.png"
+                  alt="LinkedIn banner: warm modular workbench on the left and the Gustav Online promise on the right"
+                />
+                <span class="overlay edge-guard" aria-hidden="true"></span>
+                <span class="overlay safe" aria-hidden="true"></span>
+                <span class="overlay avatar" aria-hidden="true"></span>
+              </div>
+              <span class="proof-label"
+                >Desktop proof display: 1128×282 · headline ≈ 37px</span
+              >
+            </article>
+
+            <article class="export-item">
+              <div class="export-heading">
+                <h3>X header</h3>
+                <div class="meta">PNG · 1500×500 · 3:1</div>
+              </div>
+              <div class="export-visual x">
+                <img
+                  src="assets/gustav-social-banner-r1-x.png"
+                  alt="X header: warm modular workbench on the left and the Gustav Online promise on the right"
+                />
+                <span class="overlay edge-guard" aria-hidden="true"></span>
+                <span class="overlay safe" aria-hidden="true"></span>
+                <span class="overlay avatar" aria-hidden="true"></span>
+              </div>
+              <span class="proof-label"
+                >Desktop proof display: 600×200 · headline ≈ 24px</span
+              >
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="crop-proof">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Direct crop proof</h2>
+            <p>
+              These proof plates render the final PNG bytes at profile scale.
+              Engineering marks are not part of the public exports.
+            </p>
+          </div>
+          <div class="proof-grid">
+            <figure class="proof-card">
+              <img
+                src="assets/gustav-social-banner-r1-linkedin-crop-proof.png"
+                alt="LinkedIn desktop crop proof with 1128 by 282 banner, simulated avatar, edge guard, and copy-safe outline"
+              />
+              <figcaption>
+                LinkedIn: the avatar covers only nonessential modules; all
+                public copy remains clear.
+              </figcaption>
+            </figure>
+            <figure class="proof-card">
+              <img
+                src="assets/gustav-social-banner-r1-x-crop-proof.png"
+                alt="X desktop crop proof with 600 by 200 header, simulated avatar, edge guard, and copy-safe outline"
+              />
+              <figcaption>
+                X: the complete promise and domain remain readable at a 600px
+                profile-column width.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="roles">
+        <div class="shell">
+          <div class="section-head">
+            <h2>One business, bounded roles</h2>
+            <p>
+              The incomplete field is a method map, not a collection of apps or
+              separate companies.
+            </p>
+          </div>
+          <dl class="roles">
+            <div class="role">
+              <dt>Gustav Online</dt>
+              <dd>
+                Public and personal Demand front door; the restrained orange
+                signal.
+              </dd>
+            </div>
+            <div class="role">
+              <dt>onlinesourdough</dt>
+              <dd>
+                Method and offer menu; warm paper and the open-workbench
+                metaphor.
+              </dd>
+            </div>
+            <div class="role">
+              <dt>Offer · Ops · Demand</dt>
+              <dd>
+                Three places a present business constraint can sit, connected by
+                one line.
+              </dd>
+            </div>
+            <div class="role">
+              <dt>AIOS</dt>
+              <dd>
+                One dark/cyan proof tile for context and evidence; never the
+                umbrella identity.
+              </dd>
+            </div>
+            <div class="role">
+              <dt>Arc’IT AI</dt>
+              <dd>
+                One green/sand done-for-you-in-practice tile; bounded delivery,
+                not the master brand.
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section id="state-applicability">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Static-state applicability</h2>
+            <p>
+              ADS keeps the reusable preview-state contract explicit without
+              inventing application behavior for two static image exports.
+            </p>
+          </div>
+          <div class="state-grid" aria-label="Preview state applicability">
+            <article class="state-item" data-state="success">
+              <strong>Success · applicable</strong>
+              <p>
+                The exact local PNG is present, dimension-checked, and visible
+                in the proof surface.
+              </p>
+            </article>
+            <article class="state-item" data-state="loading">
+              <strong>Loading · not applicable</strong>
+              <p>
+                The delivered images make no asynchronous request and expose no
+                loading workflow.
+              </p>
+            </article>
+            <article class="state-item" data-state="error">
+              <strong>Error · bounded fallback</strong>
+              <p>
+                If an image cannot load, descriptive alt text preserves the
+                subject and expected surface.
+              </p>
+            </article>
+            <article class="state-item" data-state="empty">
+              <strong>Empty · not applicable</strong>
+              <p>
+                Both surfaces carry resolved public copy; no empty data state
+                exists in the banner.
+              </p>
+            </article>
+            <article class="state-item" data-state="permission">
+              <strong>Permission · receiver-owned</strong>
+              <p>
+                ADS cannot publish or change a profile. Gustav Anderson owns
+                approval and upload access.
+              </p>
+            </article>
+            <article class="state-item" data-state="offline">
+              <strong>Offline · supported</strong>
+              <p>
+                The selected handoff remains local and inspectable without a
+                network or receiving runtime.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="shell source-note">
+          <h2>Inspiration stays a principle, not an asset.</h2>
+          <div>
+            <p class="mini-label">Source-safe boundary</p>
+            <p>
+              The Solt reference informed modular rhythm and an unfinished grid
+              only. No third-party logo, icon, character, badge, app identity,
+              or exact layout was copied.
+            </p>
+            <p>
+              The selected AI-generated seed is textless and noncritical. Every
+              public word, mark, line, crop overlay, and export size is
+              deterministic.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell">
+      ADS revision r1 · receiving owner Gustav Anderson · receiver acceptance
+      pending · no live profile changed
+    </footer>
+
+    <script>
+      const button = document.querySelector("#proof-toggle");
+      const status = document.querySelector("#proof-status");
+      button.addEventListener("click", () => {
+        const next = button.getAttribute("aria-pressed") !== "true";
+        button.setAttribute("aria-pressed", String(next));
+        button.textContent = next ? "Hide crop proof" : "Show crop proof";
+        document.body.classList.toggle("show-proof", next);
+        status.textContent = next
+          ? "Overlays shown. Promise stays outside avatar occlusion."
+          : "Overlays hidden. Final artwork only.";
+      });
+      if (new URLSearchParams(window.location.search).get("proof") === "1") {
+        button.click();
+      }
+    </script>
+  </body>
+</html>

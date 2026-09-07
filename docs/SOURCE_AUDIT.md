@@ -27,7 +27,7 @@ different roles into the current semantic direction and one named example.
 - **Framework/accessibility fit:** React 19/Next/Tailwind v4 does not fit the static ADS runtime; its React Aria and WCAG-oriented state model is useful accessibility research.
 - **Visual reason:** The disclosure state model supports the Resources reading job without imposing HeroUI's visual language.
 - **Learned versus copied:** ADS learned interaction states; the local disclosure CSS and behavior are original ADS-owned work.
-- **Active use or rejection:** `examples/onlinesourdough-resources/` uses the local disclosure adaptation; the active route console rejects HeroUI as a runtime or default library.
+- **Active use or rejection:** `workspace/designs/onlinesourdough-resources/` uses the local disclosure adaptation; the selected route rejects HeroUI as a runtime or default library.
 - **DESIGN marker:** §source:heroui-ui-library§
 
 ### DesEngs
@@ -39,7 +39,7 @@ different roles into the current semantic direction and one named example.
 - **Framework/accessibility fit:** Astro resource site is reference-only and supplies no component or accessibility contract to the dependency-free preview.
 - **Visual reason:** Its editorial hierarchy is relevant research for making source choices readable without turning ADS into a catalogue.
 - **Learned versus copied:** ADS learned the value of concise editorial grouping; the route-spine composition, content, and styling remain original.
-- **Active use or rejection:** `workspace/DESIGN.md` uses the editorial principle and rejects DesEngs as an adapter, dependency, or visual template.
+- **Active use or rejection:** the selected `workspace/designs/<slug>/DESIGN.md` uses the editorial principle and rejects DesEngs as an adapter, dependency, or visual template.
 - **DESIGN marker:** §source:desengs-inspiration§
 
 ### OpenPencil
@@ -56,7 +56,7 @@ different roles into the current semantic direction and one named example.
 - **Framework/accessibility fit:** Tool-native editing and export fit an explicitly selected creative route, but accessibility remains owned by semantic `DESIGN.md`, HTML preview, and per-design Review.
 - **Visual reason:** It provides an editable composition and reviewed raster boundary for a receiving designer without making every ADS run tool-specific.
 - **Learned versus copied:** OpenPencil imported ADS-owned HTML into editable nodes; ADS removed one importer artifact and copied no upstream design content.
-- **Active use or rejection:** The active route uses `workspace/openpencil/route-console.op` and its reviewed PNG; minimal handoffs reject any OpenPencil requirement.
+- **Active use or rejection:** the selected business-freedom route uses `workspace/designs/ads-business-freedom-content-e2e-r1/openpencil/route-console.op` and its reviewed PNG; minimal handoffs reject any OpenPencil requirement.
 - **DESIGN marker:** §source:openpencil-optional-adapter§
 
 ## Selection rule
@@ -77,8 +77,8 @@ audit or source record.
 
 ## Integration proof
 
-`examples/onlinesourdough-resources/` uses the HeroUI state model only as an
+`workspace/designs/onlinesourdough-resources/` uses the HeroUI state model only as an
 original local disclosure adaptation. Its native button, `aria-expanded`,
 `aria-controls`, keyboard handler, focus ring, and reduced-motion behavior are
 observable in the preview and documented in
-[`assets/adapters/README.md`](../examples/onlinesourdough-resources/assets/adapters/README.md).
+[`assets/adapters/README.md`](../workspace/designs/onlinesourdough-resources/assets/adapters/README.md).

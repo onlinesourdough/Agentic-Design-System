@@ -9,21 +9,20 @@ outcomes without owning their receiving implementation or content production.
 
 ## Operating model
 
-- `workspace/` is the active operational truth: the current brief and canonical
-  portable design direction,
-  browser preview, state, learning notes, run evidence, and append-only run
-  history live here.
+- `workspace/designs/<slug>/` is the selected operational truth: one brief,
+  canonical portable direction, browser preview, optional companions, state,
+  run evidence, history, and handoffs live together under the selected slug.
 - `workspace/engine/` is optional technical implementation for preview,
   linting, export, checks, tests, deterministic tracers, and the read-only
   periodic audit. It is not a
   separate System concept.
-- `examples/` is the durable gallery. An example is added or promoted only by
-  deliberate choice and carries its own brief, design direction, preview,
-  assets, and review proof.
+- `workspace/designs/` is the only persistent design collection. Curated
+  directions carry a local proof marker; recovery snapshots retain their
+  provenance and are not promoted merely by being copied.
 - `docs/` is the public contract, source audit, architecture, validation
   recipe, evidence map, and preserved reference material.
 
-The only visible functional roots are `workspace/`, `examples/`, and `docs/`.
+The only visible functional roots are `workspace/` and `docs/`.
 The root shell is this file, `README.md`, the primary System skill at
 `.agents/skills/agentic-design-system/SKILL.md`, and the package manifest used
 by the local toolchain. The [local skill index](.agents/skills/README.md)
@@ -32,10 +31,9 @@ documents ADS-owned routes and the boundary with externally installed skills.
 ## Primary route
 
 Use the primary ADS skill for every design-system run. It first inspects
-relevant records in `workspace/history/runs.jsonl`, resumes or creates the
-active work in `workspace/`, routes preview and review, records output and
-proof references plus failure/recovery relations, and promotes an example
-only when that choice is explicit.
+relevant records in `workspace/designs/<slug>/history/runs.jsonl`, requires an
+explicit selected slug, routes preview and review, and records output/proof plus
+failure/recovery relations under that same slug.
 
 `DESIGN.md` is always the canonical human-readable visual direction. Optional
 assets, previews, tokens, exports, and editable sources remain referenced
@@ -75,13 +73,12 @@ The ADS-local `audit-design-system` route checks accumulated drift without
 mutation. It is separate from deterministic checks and per-design Review and
 returns exactly `PASS`, `FAIL`, or `BLOCKED`.
 
-## Examples workflow
+## Design collection workflow
 
-`main` owns the examples index and the durable gallery. Branches and worktrees
-are temporary isolation for review; they are not a permanent home for an
-example. A clean checkout can use the standard-library tracer to create or
-resume an example, preview and review it, append its run relation, and promote
-it into the gallery.
+`main` owns the collection index. Branches and worktrees are temporary
+isolation for review; they are not a permanent home for a design. A clean
+checkout can use the standard-library tracer to create or resume one selected
+design, preview and review it, and append its design-local run relation.
 
 ## Source policy
 
@@ -125,14 +122,14 @@ From the repository root:
 npm install
 npm run check
 npm test
-npm run trace -- --slug clean-clone-proof --source-decision --preview --review --promote-example
+npm run trace -- --slug clean-clone-proof --source-decision --preview --review --curate
 npm run trace:handoff -- --openpencil-tool <verified-op-path>
 npm run trace:audit
-npm run handoff -- workspace workspace/handoff --receiving-owner "Agentic Design System"
+npm run handoff -- --design gustav-social-banner-r1 --output handoffs/example --receiving-owner "Agentic Design System"
 ```
 
-Inspect the browser preview at `http://localhost:4173/` and resize it to a
+Inspect the browser preview started with `--design <slug>` and resize it to a
 desktop and mobile viewport. Keyboard focus, reduced motion, state changes,
-and the gallery links must remain usable. The repository rename and any
+and selected collection links must remain usable. The repository rename and any
 commit, push, issue, pull-request, or GitHub setting change belong to a later
 authorized Ship after lead review; this Build performs none of those actions.

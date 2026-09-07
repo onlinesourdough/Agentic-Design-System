@@ -3,7 +3,10 @@ import { spawn, spawnSync } from "node:child_process";
 import {
   chmodSync,
   closeSync,
+  constants,
+  copyFileSync,
   existsSync,
+  lstatSync,
   mkdirSync,
   openSync,
   readFileSync,
@@ -15,13 +18,26 @@ import {
 } from "node:fs";
 import { createServer, request as httpRequest } from "node:http";
 import { tmpdir } from "node:os";
-import { basename, dirname, extname, join, resolve } from "node:path";
+import {
+  basename,
+  dirname,
+  extname,
+  join,
+  relative,
+  resolve,
+  sep,
+} from "node:path";
 import { fileURLToPath } from "node:url";
 
 const EXPECTED_VERSION = "0.8.4";
 const EXPECTED_VSIX_SHA256 =
   "7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342";
 const SCHEMA = "ADS-OPENPENCIL-WORKBENCH/1";
+const DEFAULT_LOCALE = "en-US";
+const UPSTREAM_SETTINGS_KEY = "openpencil-rust-web-settings::anon";
+const LOCALE_SEED_MARKER = "ads-openpencil-fresh-locale";
+const MCP_TIMEOUT_MS = 2_000;
+const MCP_OUTPUT_LIMIT_BYTES = 1_000_000;
 const SCRIPT = fileURLToPath(import.meta.url);
 const ROOT = realpathSync(resolve(dirname(SCRIPT), "../.."));
 const DEFAULT_STATE_ROOT = join(
@@ -40,6 +56,7 @@ async function main() {
     else if (command === "logs") logs(arguments_);
     else if (command === "stop") await stop(arguments_);
     else if (command === "check") await check(arguments_);
+    else if (command === "native-export") await nativeExport(arguments_);
     else if (command === "__serve") await serve(arguments_);
     else if (command === "help" || command === "--help" || command === "-h")
       help();
@@ -58,6 +75,7 @@ function parseArguments(args) {
     "--export",
     "--host",
     "--lines",
+    "--output-dir",
     "--runtime-root",
     "--state-dir",
     "--vsix",
@@ -115,10 +133,29 @@ async function start(arguments_) {
   if (existsSync(stateRoot)) {
     const current = await readLiveState(stateRoot, 1_500);
     if (current) {
-      if (realpathSync(current.document) !== document)
+      if (!current.source_document || !current.source_document_sha256) {
+        throw new Error(
+          "OpenPencil workbench live state predates private working-document isolation; leave it running for any active review, then stop and restart it before authoring.",
+        );
+      }
+      const currentSource = requiredFile(
+        current.source_document,
+        ".op",
+        "OpenPencil workbench source document",
+      );
+      if (currentSource !== document)
         throw new Error(
           `OpenPencil workbench already serves a different document: ${current.document}`,
         );
+      if (current.source_document_sha256 !== documentCheck.sha256)
+        throw new Error(
+          "OpenPencil workbench source snapshot changed; stop and restart it before authoring.",
+        );
+      assertPrivateWorkingDocument(
+        stateRoot,
+        current.working_document,
+        document,
+      );
       output(publicState(current));
       return;
     }
@@ -134,19 +171,33 @@ async function start(arguments_) {
   mkdirSync(stateRoot, { mode: 0o700 });
   const logPath = join(stateRoot, "workbench.log");
   try {
+    const workingDirectory = join(stateRoot, "document");
+    mkdirSync(workingDirectory, { mode: 0o700 });
+    const workingDocument = join(workingDirectory, basename(document));
+    copyFileSync(document, workingDocument, constants.COPYFILE_EXCL);
+    const workingDocumentCheck = inspectDocument(workingDocument);
+    if (
+      workingDocumentCheck.sha256 !== documentCheck.sha256 ||
+      workingDocumentCheck.nodes !== documentCheck.nodes
+    )
+      throw new Error(
+        "OpenPencil workbench could not isolate the selected document.",
+      );
     const runtime = arguments_.vsix
       ? prepareVsixRuntime(arguments_.vsix, stateRoot)
       : inspectRuntimeRoot(arguments_.runtime_root);
     const config = {
       schema: SCHEMA,
       control_token: randomBytes(24).toString("hex"),
-      document,
-      document_sha256: documentCheck.sha256,
+      source_document: document,
+      source_document_sha256: documentCheck.sha256,
+      working_document: workingDocument,
       expected_nodes: expectedNodes,
       host,
       log_path: logPath,
       runtime_root: runtime.root,
       runtime_source: runtime.source,
+      locale: DEFAULT_LOCALE,
       state_root: stateRoot,
     };
     const configPath = join(stateRoot, "config.json");
@@ -228,7 +279,7 @@ async function serve(arguments_) {
         jsonResponse(response, 503, { error: "upstream-not-ready" });
         return;
       }
-      proxyRequest(incoming, response, upstreamPort);
+      proxyRequest(incoming, response, upstreamPort, config.locale);
     });
     await listen(proxy, config.host, 0);
     const address = proxy.address();
@@ -248,7 +299,7 @@ async function serve(arguments_) {
         "--port",
         String(upstreamPort),
         "--file",
-        config.document,
+        config.working_document ?? config.document,
         "--allow-origin",
         origin,
       ],
@@ -279,7 +330,10 @@ async function serve(arguments_) {
     if (canonicalCanvasKit.status !== 200)
       throw new Error("OpenPencil daemon lacks /canvaskit/canvaskit.js.");
 
-    const documentCheck = inspectDocument(config.document);
+    const sourceDocument = config.source_document ?? config.document;
+    const workingDocument = config.working_document ?? config.document;
+    const documentCheck = inspectDocument(sourceDocument);
+    const workingDocumentCheck = inspectDocument(workingDocument);
     if (
       config.expected_nodes !== null &&
       documentCheck.nodes !== config.expected_nodes
@@ -296,10 +350,16 @@ async function serve(arguments_) {
       url: `${origin}/`,
       pid: process.pid,
       upstream_pid: upstream.pid,
-      document: config.document,
+      document: sourceDocument,
       document_sha256: documentCheck.sha256,
       nodes: documentCheck.nodes,
+      source_document: sourceDocument,
+      source_document_sha256: documentCheck.sha256,
+      working_document: workingDocument,
+      working_document_sha256: workingDocumentCheck.sha256,
+      working_nodes: workingDocumentCheck.nodes,
       runtime_source: config.runtime_source,
+      locale: config.locale,
       canvasKit_alias: "/pkg/canvaskit/* -> /canvaskit/*",
       control_token: config.control_token,
       state_root: stateRoot,
@@ -431,6 +491,10 @@ async function check(arguments_) {
     if (response.status !== 200)
       throw new Error(`${name} returned HTTP ${response.status}.`);
   }
+  if (!root.body.toString("utf8").includes(LOCALE_SEED_MARKER))
+    throw new Error(
+      "OpenPencil workbench did not serve the fresh-origin English locale seed.",
+    );
   if (
     hashBytes(canonicalJs.body) !== hashBytes(aliasJs.body) ||
     hashBytes(canonicalWasm.body) !== hashBytes(aliasWasm.body)
@@ -469,6 +533,144 @@ async function check(arguments_) {
       identical: true,
     },
     browser_opening: "harness-owned",
+    locale: {
+      value: live.locale,
+      mechanism: "upstream browser settings seed on a fresh loopback origin",
+      served: true,
+    },
+  });
+}
+
+async function nativeExport(arguments_) {
+  const { stateRoot } = options(arguments_);
+  if (!arguments_.output_dir)
+    throw new Error("native-export requires --output-dir <absent-directory>.");
+  const live = await readLiveState(stateRoot, 2_000);
+  if (!live) throw new Error("OpenPencil workbench is not running.");
+  if (!live.source_document || !live.source_document_sha256)
+    throw new Error(
+      "OpenPencil workbench live state predates private working-document isolation; stop and restart it before native export.",
+    );
+  const sourceDocument = requiredFile(
+    live.source_document,
+    ".op",
+    "OpenPencil workbench source document",
+  );
+  const workingDocument = assertPrivateWorkingDocument(
+    stateRoot,
+    live.working_document,
+    sourceDocument,
+  );
+  const sourceBefore = hashFile(sourceDocument);
+  if (sourceBefore !== live.source_document_sha256)
+    throw new Error(
+      "OpenPencil workbench source document changed since this private session started; stop and restart before native export.",
+    );
+  const workingBefore = inspectDocument(workingDocument);
+  const config = readJson(join(stateRoot, "config.json"));
+  if (!config || config.schema !== SCHEMA)
+    throw new Error("OpenPencil workbench native export lacks a valid config.");
+  const runtime = inspectRuntimeRoot(config.runtime_root);
+  const outputDirectory = resolve(arguments_.output_dir);
+  assertAbsentOutputDirectory(outputDirectory);
+  const privateExportsRoot = join(stateRoot, "native-exports");
+  if (!existsSync(privateExportsRoot))
+    mkdirSync(privateExportsRoot, { mode: 0o700 });
+  assertRegularDirectoryPath(privateExportsRoot);
+  const privateOutputDirectory = join(
+    privateExportsRoot,
+    `${Date.now()}-${randomBytes(8).toString("hex")}`,
+  );
+  assertAbsentOutputDirectory(privateOutputDirectory);
+  const result = await invokeMcpTool(
+    runtime.server,
+    workingDocument,
+    "export_frames",
+    {
+      outputDir: privateOutputDirectory,
+      format: "png",
+    },
+  );
+  const report = parseMcpToolReport(result, "export_frames");
+  if (report.directory !== privateOutputDirectory)
+    throw new Error(
+      "OpenPencil native export returned an unexpected output directory.",
+    );
+  if (
+    !existsSync(privateOutputDirectory) ||
+    lstatSync(privateOutputDirectory).isSymbolicLink() ||
+    !statSync(privateOutputDirectory).isDirectory()
+  )
+    throw new Error(
+      "OpenPencil native export did not create a regular private output directory.",
+    );
+  if (!Array.isArray(report.written) || report.written.length === 0)
+    throw new Error("OpenPencil native export did not report a written PNG.");
+  if (Array.isArray(report.failed) && report.failed.length)
+    throw new Error(
+      `OpenPencil native export reported failures: ${report.failed.join(", ")}`,
+    );
+  const privateFiles = report.written.map((name) => {
+    if (typeof name !== "string" || !name || name !== basename(name))
+      throw new Error(
+        "OpenPencil native export returned an invalid file name.",
+      );
+    const candidate = resolve(privateOutputDirectory, name);
+    if (!isWithin(privateOutputDirectory, candidate))
+      throw new Error("OpenPencil native export escaped its output directory.");
+    if (!existsSync(candidate) || lstatSync(candidate).isSymbolicLink())
+      throw new Error("OpenPencil native export did not create a regular PNG.");
+    const path = requiredFile(
+      candidate,
+      ".png",
+      "OpenPencil native PNG export",
+    );
+    return { path, sha256: hashFile(path), ...inspectPng(path) };
+  });
+  const sourceAfter = hashFile(sourceDocument);
+  const workingAfter = inspectDocument(workingDocument);
+  if (sourceAfter !== sourceBefore)
+    throw new Error(
+      "OpenPencil native export changed the selected source document.",
+    );
+  if (workingAfter.sha256 !== workingBefore.sha256)
+    throw new Error(
+      "OpenPencil native export changed the private working document.",
+    );
+  mkdirSync(outputDirectory, { mode: 0o700 });
+  const files = privateFiles.map((file) => {
+    const destination = join(outputDirectory, basename(file.path));
+    copyFileSync(file.path, destination, constants.COPYFILE_EXCL);
+    if (lstatSync(destination).isSymbolicLink())
+      throw new Error("OpenPencil native export copy became a symlink.");
+    const sha256 = hashFile(destination);
+    if (sha256 !== file.sha256)
+      throw new Error(
+        "OpenPencil native export copy does not match its private PNG.",
+      );
+    return {
+      path: destination,
+      sha256,
+      width: file.width,
+      height: file.height,
+    };
+  });
+  output({
+    schema: SCHEMA,
+    status: "PASS",
+    source_document: sourceDocument,
+    source_document_sha256: sourceBefore,
+    working_document: workingDocument,
+    working_document_sha256: workingAfter.sha256,
+    working_nodes: workingAfter.nodes,
+    export: {
+      method: "verified-native-mcp:export_frames",
+      scope:
+        "top-level frames; not an assertion that every node or a platform-upload crop rendered",
+      output_directory: outputDirectory,
+      private_output_directory: privateOutputDirectory,
+      files,
+    },
   });
 }
 
@@ -568,7 +770,7 @@ function inspectRuntimeRoot(path) {
   };
 }
 
-function proxyRequest(incoming, response, upstreamPort) {
+function proxyRequest(incoming, response, upstreamPort, locale) {
   const url = new URL(incoming.url ?? "/", "http://127.0.0.1");
   if (
     url.pathname === "/pkg/canvaskit" ||
@@ -577,6 +779,7 @@ function proxyRequest(incoming, response, upstreamPort) {
     url.pathname = url.pathname.slice(4);
   const headers = { ...incoming.headers };
   headers.host = `127.0.0.1:${upstreamPort}`;
+  headers["accept-encoding"] = "identity";
   const upstream = httpRequest(
     {
       hostname: "127.0.0.1",
@@ -586,6 +789,25 @@ function proxyRequest(incoming, response, upstreamPort) {
       headers,
     },
     (upstreamResponse) => {
+      if (url.pathname === "/" && isHtml(upstreamResponse)) {
+        const chunks = [];
+        upstreamResponse.on("data", (chunk) => chunks.push(chunk));
+        upstreamResponse.on("end", () => {
+          const seeded = injectFreshLocale(
+            Buffer.concat(chunks).toString("utf8"),
+            locale,
+          );
+          const responseHeaders = { ...upstreamResponse.headers };
+          delete responseHeaders["content-length"];
+          response.writeHead(
+            upstreamResponse.statusCode ?? 502,
+            responseHeaders,
+          );
+          response.end(seeded);
+        });
+        upstreamResponse.on("error", () => response.destroy());
+        return;
+      }
       response.writeHead(
         upstreamResponse.statusCode ?? 502,
         upstreamResponse.headers,
@@ -602,6 +824,22 @@ function proxyRequest(incoming, response, upstreamPort) {
     else response.end();
   });
   incoming.pipe(upstream);
+}
+
+function isHtml(response) {
+  return String(response.headers["content-type"] ?? "").includes("text/html");
+}
+
+function injectFreshLocale(html, locale) {
+  const seed = `<script id="${LOCALE_SEED_MARKER}">(()=>{const key=${JSON.stringify(
+    UPSTREAM_SETTINGS_KEY,
+  )};if(localStorage.getItem(key)===null)localStorage.setItem(key,JSON.stringify({version:1,locale:${JSON.stringify(
+    locale,
+  )}}));})();</script>`;
+  if (html.includes("</head>"))
+    return html.replace("</head>", `${seed}</head>`);
+  if (html.includes("<body")) return html.replace("<body", `${seed}<body`);
+  return `${seed}${html}`;
 }
 
 async function waitForHealth(port, timeoutMs) {
@@ -727,6 +965,194 @@ function requiredFile(path, extensions, label) {
   return realpathSync(absolute);
 }
 
+function assertAbsentOutputDirectory(path) {
+  if (existsSync(path))
+    throw new Error(`OpenPencil native export output already exists: ${path}`);
+  const parent = dirname(path);
+  assertRegularDirectoryPath(parent);
+}
+
+function assertRegularDirectoryPath(path) {
+  const absolute = resolve(path);
+  const parts = absolute.split(sep).filter(Boolean);
+  const systemAliases = new Set(["/tmp", "/var"]);
+  let cursor = sep;
+  for (const part of parts) {
+    cursor = join(cursor, part);
+    if (!existsSync(cursor))
+      throw new Error(
+        `OpenPencil native export parent is unavailable: ${cursor}`,
+      );
+    if (lstatSync(cursor).isSymbolicLink() && !systemAliases.has(cursor))
+      throw new Error(
+        `OpenPencil native export path must not traverse a symlink: ${cursor}`,
+      );
+    if (!statSync(cursor).isDirectory())
+      throw new Error(
+        `OpenPencil native export parent is not a directory: ${cursor}`,
+      );
+  }
+}
+
+function isWithin(parent, candidate) {
+  const pathRelative = relative(parent, candidate);
+  return (
+    pathRelative === "" ||
+    (!pathRelative.startsWith(`..${sep}`) && pathRelative !== "..")
+  );
+}
+
+function inspectPng(path) {
+  const bytes = readFileSync(path);
+  const signature = "89504e470d0a1a0a";
+  if (bytes.length < 24 || bytes.subarray(0, 8).toString("hex") !== signature)
+    throw new Error(`OpenPencil native export is not a PNG: ${path}`);
+  return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+}
+
+async function invokeMcpTool(server, document, name, arguments_) {
+  const child = spawn(server, ["--mcp", document], {
+    stdio: ["pipe", "pipe", "pipe"],
+  });
+  const stdout = [];
+  const stderr = [];
+  const streamsEnded = Promise.all([
+    new Promise((resolve_) => child.stdout.once("end", resolve_)),
+    new Promise((resolve_) => child.stderr.once("end", resolve_)),
+  ]);
+  let outputBytes = 0;
+  let outputLimitExceeded = false;
+  let terminating = false;
+  let timeout = null;
+  let reap = null;
+  const addOutput = (target, chunk) => {
+    outputBytes += chunk.length;
+    if (outputBytes > MCP_OUTPUT_LIMIT_BYTES && !terminating) {
+      outputLimitExceeded = true;
+      terminating = true;
+      child.kill("SIGTERM");
+      reap = setTimeout(() => child.kill("SIGKILL"), 500);
+      return;
+    }
+    if (!terminating) target.push(chunk);
+  };
+  child.stdout.on("data", (chunk) => addOutput(stdout, chunk));
+  child.stderr.on("data", (chunk) => addOutput(stderr, chunk));
+  const requests = [
+    {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: {
+        protocolVersion: "2024-11-05",
+        capabilities: {},
+        clientInfo: { name: "ads-openpencil-workbench", version: "1" },
+      },
+    },
+    { jsonrpc: "2.0", method: "notifications/initialized", params: {} },
+    {
+      jsonrpc: "2.0",
+      id: 2,
+      method: "tools/call",
+      params: { name, arguments: arguments_ },
+    },
+  ];
+  child.stdin.end(
+    `${requests.map((request) => JSON.stringify(request)).join("\n")}\n`,
+  );
+  await new Promise((resolve_, reject) => {
+    const finish = (error) => {
+      if (timeout) clearTimeout(timeout);
+      if (reap) clearTimeout(reap);
+      if (error) reject(error);
+      else resolve_();
+    };
+    timeout = setTimeout(() => {
+      if (terminating) return;
+      terminating = true;
+      child.kill("SIGTERM");
+      reap = setTimeout(() => child.kill("SIGKILL"), 500);
+    }, MCP_TIMEOUT_MS);
+    child.once("error", (error) => finish(error));
+    child.once("close", (code) => {
+      if (outputLimitExceeded)
+        finish(
+          new Error(
+            `OpenPencil native MCP output exceeded ${MCP_OUTPUT_LIMIT_BYTES} bytes.`,
+          ),
+        );
+      else if (terminating)
+        finish(
+          new Error(
+            `OpenPencil native MCP export exceeded ${MCP_TIMEOUT_MS}ms and was terminated.`,
+          ),
+        );
+      else if (code === 0) finish();
+      else
+        finish(
+          new Error(
+            `OpenPencil native MCP exited ${code}: ${Buffer.concat(stderr).toString("utf8").trim()}`,
+          ),
+        );
+    });
+  });
+  await streamsEnded;
+  if (outputLimitExceeded)
+    throw new Error(
+      `OpenPencil native MCP output exceeded ${MCP_OUTPUT_LIMIT_BYTES} bytes.`,
+    );
+  const messages = Buffer.concat(stdout)
+    .toString("utf8")
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
+  const response = messages.find((message) => message.id === 2);
+  if (!response)
+    throw new Error("OpenPencil native MCP did not return an export response.");
+  if (response.error)
+    throw new Error(
+      `OpenPencil native MCP export failed: ${response.error.message}`,
+    );
+  return response.result;
+}
+
+function parseMcpToolReport(result, name) {
+  const text = result?.content?.find((item) => item?.type === "text")?.text;
+  if (typeof text !== "string")
+    throw new Error(`OpenPencil native ${name} returned no text report.`);
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(`OpenPencil native ${name} returned invalid JSON.`);
+  }
+}
+
+function assertPrivateWorkingDocument(
+  stateRoot,
+  workingDocument,
+  sourceDocument,
+) {
+  if (!workingDocument)
+    throw new Error(
+      "OpenPencil workbench live state does not have a private working document; leave it running for any active review, then stop and restart it before authoring.",
+    );
+  const working = requiredFile(
+    workingDocument,
+    ".op",
+    "OpenPencil workbench working document",
+  );
+  const expected = requiredFile(
+    join(stateRoot, "document", basename(sourceDocument)),
+    ".op",
+    "OpenPencil workbench private working document",
+  );
+  if (working !== expected || working === sourceDocument)
+    throw new Error(
+      "OpenPencil workbench live state does not have an isolated private working document; leave it running for any active review, then stop and restart it before authoring.",
+    );
+  return working;
+}
+
 function optionalPositiveInteger(value, label) {
   if (value === undefined || value === null) return null;
   const number = Number(value);
@@ -748,6 +1174,15 @@ function processRunning(pid) {
 function publicState(state) {
   if (!state) return { schema: SCHEMA, status: "starting" };
   const { control_token: _controlToken, ...public_ } = state;
+  if (public_.working_document && existsSync(public_.working_document)) {
+    try {
+      const working = inspectDocument(public_.working_document);
+      public_.working_document_sha256 = working.sha256;
+      public_.working_nodes = working.nodes;
+    } catch {
+      public_.working_document_status = "unreadable";
+    }
+  }
   return public_;
 }
 
@@ -810,6 +1245,7 @@ Usage:
   npm run openpencil -- status
   npm run openpencil -- logs [--lines 80]
   npm run openpencil -- check [--expected-nodes N] [--export reviewed.png]
+  npm run openpencil -- native-export --state-dir <live-state> --output-dir <absent-directory>
   npm run openpencil -- stop
 
 The workbench binds only 127.0.0.1 and prints a JSON \"url\" for a harness-owned

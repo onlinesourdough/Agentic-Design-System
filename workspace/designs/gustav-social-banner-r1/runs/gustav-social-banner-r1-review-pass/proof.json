@@ -1,0 +1,116 @@
+{
+  "run_id": "gustav-social-banner-r1-review-pass",
+  "status": "passed",
+  "review": {
+    "result": "PASS",
+    "mode": "independent",
+    "owner": "AIOS lead thread 01a066aa-ec32-7c51-a185-178ff44df838",
+    "reviewer": "AIOS lead thread 01a066aa-ec32-7c51-a185-178ff44df838",
+    "evidence_path": "workspace/REVIEW.md",
+    "evidence_sha256": "e8fdb4f3383672d3a7dd66efeac9c50fec82dc74f684e9f9d5572ebb65bb8b26",
+    "reviewed_design_sha256": "4c0d298a101b24bbf3b7a6a53de9c927f02039a8d13a11bfb1efc3feed50b805",
+    "lead_scope": [
+      "exact public copy and hierarchy",
+      "source safety and distinct composition",
+      "platform dimensions and opaque PNG format",
+      "desktop-profile avatar and crop safety",
+      "ownership boundaries"
+    ]
+  },
+  "reviewed_source_companions": {
+    "index.html": "d56b57cea4dee07c57fd775b0f8bc90037096d7b937af03704116268ae419065",
+    "assets/gustav-social-banner-r1-background-seed.png": "055b90690a5db1c545e5608269d0f144ec0b4022c3c27c02d7a8db2e26eedfef",
+    "assets/gustav-social-banner-r1-linkedin.svg": "ef8116294c680583c8a3f72b9e6fcf996e396f2a2a4698c1b19a3b7f53512f80",
+    "assets/gustav-social-banner-r1-linkedin.png": "d104fc94df2e54c56b50b70cb7d574706183801b42793d910e99e4994fcef5d8",
+    "assets/gustav-social-banner-r1-x.svg": "3ff18dccc8a741ed54161405c2f1270bf10a3723aa2822e5b432201379be16f2",
+    "assets/gustav-social-banner-r1-x.png": "93f2796d8e08293dd1087aa5fa3136d0729e3f1b86a49b912ac97f6e8885ec08",
+    "assets/gustav-social-banner-r1-linkedin-crop-proof.svg": "1be04d26e4b3ea48fc50d655bd9f152cb2544d81899b2040df8b365cefa50968",
+    "assets/gustav-social-banner-r1-linkedin-crop-proof.png": "620cb5f443cca57d7db4f3f0b41b6a88806465ba08549337c9d36c7369199693",
+    "assets/gustav-social-banner-r1-x-crop-proof.svg": "09d407212ccdaaa83e29fffe3743aef0d9aca4af9ec393378bd022272ac8ec6a",
+    "assets/gustav-social-banner-r1-x-crop-proof.png": "cd8b973358185031b554e9673a765118719b338ecec7b227c3878ae4ee6bfed0",
+    "assets/onlinesourdough-mark.svg": "64d293422445f3343d3a3367e90425ee19a7127fee18239c56f904bf5c35da35",
+    "assets/arcitai-mark.svg": "e2e7db4b96105e5b2f7a87d4295adbe788a9af6577faa03aac980c239306cd93",
+    "assets/fonts/geist-sans-variable.woff2": "e24cec106619c03f0b3519e31b9bc55e0d5e926b6a95b8d798cd8cef215b1505",
+    "assets/fonts/geist-mono-variable.woff2": "5f687a5dd4c87da13deaff9f6b9503d5e62249ff501265a96b134565f9aa8c87",
+    "assets/fonts/LICENSE.txt": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137"
+  },
+  "exact_exports": {
+    "linkedin": {
+      "path": "workspace/assets/gustav-social-banner-r1-linkedin.png",
+      "dimensions": "1584x396",
+      "format": "PNG",
+      "alpha": false,
+      "sha256": "d104fc94df2e54c56b50b70cb7d574706183801b42793d910e99e4994fcef5d8"
+    },
+    "x": {
+      "path": "workspace/assets/gustav-social-banner-r1-x.png",
+      "dimensions": "1500x500",
+      "format": "PNG",
+      "alpha": false,
+      "sha256": "93f2796d8e08293dd1087aa5fa3136d0729e3f1b86a49b912ac97f6e8885ec08"
+    }
+  },
+  "crop_readability": {
+    "linkedin": {
+      "path": "workspace/assets/gustav-social-banner-r1-linkedin-crop-proof.png",
+      "proof_dimensions": "1440x720",
+      "rendered_banner": "1128x282",
+      "sha256": "620cb5f443cca57d7db4f3f0b41b6a88806465ba08549337c9d36c7369199693",
+      "result": "PASS"
+    },
+    "x": {
+      "path": "workspace/assets/gustav-social-banner-r1-x-crop-proof.png",
+      "proof_dimensions": "960x600",
+      "rendered_banner": "600x200",
+      "sha256": "cd8b973358185031b554e9673a765118719b338ecec7b227c3878ae4ee6bfed0",
+      "result": "PASS"
+    }
+  },
+  "browser_inspection": {
+    "path": "workspace/runs/gustav-social-banner-r1/browser-inspection.json",
+    "sha256": "92d5f452c27e125fa0cf55d166056ab600f84c46c05ab9bada600d3c55de1e90",
+    "browser": "Chrome/152.0.7977.65",
+    "viewports": ["1440x1000", "390x844"],
+    "result": "PASS"
+  },
+  "handoff": {
+    "contract": "ADS-HANDOFF/1",
+    "id": "ads-gustav-online-social-banners-b54dc49df11a",
+    "revision": "r1+4c0d298a101b",
+    "path": "workspace/handoffs/gustav-social-banner-r1/HANDOFF.md",
+    "sha256": "f06847e16afe7fcab5f37706ab7b837a772413c4762c8ad80824c6f17f923dc1",
+    "review_state": "PASS",
+    "receiver_acceptance": "PENDING"
+  },
+  "checks": {
+    "deterministic_export": "PASS; final and crop-proof hashes reproduced",
+    "exact_dimensions_format_and_opacity": "PASS",
+    "npm_run_check": "PASS",
+    "npm_test": {
+      "total": 29,
+      "passed": 25,
+      "failed": 4,
+      "result": "FAILED",
+      "cause": "Generic handoff tests copy or directly inspect the mutable active workspace Review owner and optional OpenPencil selection.",
+      "disposition": "Evidence-bound improvement for separate issue review; no fixture implementation change in this banner outcome."
+    },
+    "fixture_files_match_head": true
+  },
+  "repository_attestation": {
+    "root": "/Users/gustavanderson/Downloads/AIOS/.aios/systems/agentic-design-system",
+    "branch": "main",
+    "head": "97449f2803a0d9bb98fc65cf3e4ebf81502a1731",
+    "live_origin_main": "97449f2803a0d9bb98fc65cf3e4ebf81502a1731",
+    "index_clean": true,
+    "mutations_limited_to_ads_root": true,
+    "commit_push_publish_upload_or_live_profile_change": false
+  },
+  "limitations": [
+    "Platform compression and crop or avatar geometry must be rechecked at upload time.",
+    "The supplied background seed upstream prompt is unavailable; its exact bytes and bounded noncritical use are disclosed.",
+    "A different Chrome or font rasterizer version may change PNG bytes.",
+    "Receiver acceptance remains PENDING; no live profile was changed."
+  ],
+  "image_generation_prompt": "None — deterministic SVG/Chrome raster export from the selected supplied seed.",
+  "improvement_signal": "Handoff fixtures are coupled to the mutable active workspace Review owner and optional OpenPencil selection; failures were reproduced during this banner run, and the implementation workaround was removed for separate issue-based review."
+}

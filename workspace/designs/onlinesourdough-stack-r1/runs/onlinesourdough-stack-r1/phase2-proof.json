@@ -1,0 +1,30 @@
+{
+  "run_id": "onlinesourdough-stack-r1",
+  "phase": 2,
+  "status": "pending-product-banners",
+  "native_session_id": "01a072d2-1699-7bf0-97fa-612e363bef33",
+  "checks": {
+    "exact_master_copies": 12,
+    "icons_measured_1254_square": 11,
+    "org_banner_measured": [2172, 724],
+    "proportional_icon_exports": 44,
+    "export_sizes": [1024, 512, 128, 64],
+    "source_and_export_hash_mismatches": 0,
+    "missing_gallery_links": 0,
+    "preexisting_files_outside_run_checked": 244,
+    "preexisting_files_outside_run_changed": 0,
+    "design_lint_errors": 0,
+    "design_lint_warnings": 0,
+    "npm_run_check": "passed"
+  },
+  "preservation_scope": "All files outside this run; supplied masters also rehashed unchanged. Only authorized run documents were updated.",
+  "pending": [
+    "Ten lead-generated product banners",
+    "Banner export derivatives",
+    "Browser inspection and rendered legibility review",
+    "Independent review by stack identity lead",
+    "Receiver acceptance and final handoff"
+  ],
+  "intake_evidence": "phase2-intake.json",
+  "preservation_evidence": "phase2-preservation-baseline.json"
+}

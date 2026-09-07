@@ -1,0 +1,152 @@
+{
+  "schema": "ADS-DESIGN-MIGRATION-MAP/1",
+  "selected_design": "gustav-social-banner-r1",
+  "migration_kind": "split-singleton-workspace-history",
+  "historical_ledger": {
+    "original_path": "workspace/history/runs.jsonl",
+    "preserved_path": "workspace/designs/gustav-social-banner-r1/history/original-workspace-runs.jsonl",
+    "sha256": "621ce4e465fd421a8c805cac7079f1ba456b1431d664c45c648900450f717ec7",
+    "note": "The preserved file is byte-identical to the pre-migration combined singleton ledger. It also retains records owned by other selected designs."
+  },
+  "split_ledger": {
+    "path": "workspace/designs/gustav-social-banner-r1/history/runs.jsonl",
+    "records": [
+      "gustav-social-banner-r1",
+      "gustav-social-banner-r1-review-pass"
+    ],
+    "note": "Only relocated R1 records are rewritten to current design-local references; the historical combined ledger remains unchanged above."
+  },
+  "record_refs": [
+    {
+      "run_id": "gustav-social-banner-r1",
+      "historical": {
+        "input_ref": "workspace/runs/gustav-social-banner-r1/input.json",
+        "output_ref": "workspace/runs/gustav-social-banner-r1/output.json",
+        "proof_ref": "workspace/runs/gustav-social-banner-r1/proof.json"
+      },
+      "current": {
+        "input_ref": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/input.json",
+        "output_ref": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/output.json",
+        "proof_ref": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/proof.json"
+      }
+    },
+    {
+      "run_id": "gustav-social-banner-r1-review-pass",
+      "historical": {
+        "input_ref": "workspace/runs/gustav-social-banner-r1-review-pass/input.json",
+        "output_ref": "workspace/runs/gustav-social-banner-r1-review-pass/output.json",
+        "proof_ref": "workspace/runs/gustav-social-banner-r1-review-pass/proof.json"
+      },
+      "current": {
+        "input_ref": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1-review-pass/input.json",
+        "output_ref": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1-review-pass/output.json",
+        "proof_ref": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1-review-pass/proof.json"
+      }
+    }
+  ],
+  "legacy_path_map": [
+    {
+      "historical_path": "workspace/BRIEF.md",
+      "current_path": "workspace/designs/gustav-social-banner-r1/BRIEF.md",
+      "sha256": "0a3acbcd530181bdfa83fc7f1f799db9bcd21271d620820857be728c0c682cdc"
+    },
+    {
+      "historical_path": "workspace/DESIGN.md",
+      "current_path": "workspace/designs/gustav-social-banner-r1/DESIGN.md",
+      "sha256": "4c0d298a101b24bbf3b7a6a53de9c927f02039a8d13a11bfb1efc3feed50b805"
+    },
+    {
+      "historical_path": "workspace/REVIEW.md",
+      "current_path": "workspace/designs/gustav-social-banner-r1/REVIEW.md",
+      "sha256": "e8fdb4f3383672d3a7dd66efeac9c50fec82dc74f684e9f9d5572ebb65bb8b26"
+    },
+    {
+      "historical_path": "workspace/assets/gustav-social-banner-r1-background-seed.png",
+      "current_path": "workspace/designs/gustav-social-banner-r1/assets/gustav-social-banner-r1-background-seed.png",
+      "sha256": "055b90690a5db1c545e5608269d0f144ec0b4022c3c27c02d7a8db2e26eedfef"
+    },
+    {
+      "historical_path": "workspace/assets/gustav-social-banner-r1-linkedin-crop-proof.png",
+      "current_path": "workspace/designs/gustav-social-banner-r1/assets/gustav-social-banner-r1-linkedin-crop-proof.png",
+      "sha256": "620cb5f443cca57d7db4f3f0b41b6a88806465ba08549337c9d36c7369199693"
+    },
+    {
+      "historical_path": "workspace/assets/gustav-social-banner-r1-linkedin.png",
+      "current_path": "workspace/designs/gustav-social-banner-r1/assets/gustav-social-banner-r1-linkedin.png",
+      "sha256": "d104fc94df2e54c56b50b70cb7d574706183801b42793d910e99e4994fcef5d8"
+    },
+    {
+      "historical_path": "workspace/assets/gustav-social-banner-r1-linkedin.svg",
+      "current_path": "workspace/designs/gustav-social-banner-r1/assets/gustav-social-banner-r1-linkedin.svg",
+      "sha256": "ef8116294c680583c8a3f72b9e6fcf996e396f2a2a4698c1b19a3b7f53512f80"
+    },
+    {
+      "historical_path": "workspace/assets/gustav-social-banner-r1-x-crop-proof.png",
+      "current_path": "workspace/designs/gustav-social-banner-r1/assets/gustav-social-banner-r1-x-crop-proof.png",
+      "sha256": "cd8b973358185031b554e9673a765118719b338ecec7b227c3878ae4ee6bfed0"
+    },
+    {
+      "historical_path": "workspace/assets/gustav-social-banner-r1-x.png",
+      "current_path": "workspace/designs/gustav-social-banner-r1/assets/gustav-social-banner-r1-x.png",
+      "sha256": "93f2796d8e08293dd1087aa5fa3136d0729e3f1b86a49b912ac97f6e8885ec08"
+    },
+    {
+      "historical_path": "workspace/assets/gustav-social-banner-r1-x.svg",
+      "current_path": "workspace/designs/gustav-social-banner-r1/assets/gustav-social-banner-r1-x.svg",
+      "sha256": "3ff18dccc8a741ed54161405c2f1270bf10a3723aa2822e5b432201379be16f2"
+    },
+    {
+      "historical_path": "workspace/handoffs/gustav-social-banner-r1/HANDOFF.md",
+      "current_path": "workspace/designs/gustav-social-banner-r1/handoffs/gustav-social-banner-r1/HANDOFF.md",
+      "sha256": "f06847e16afe7fcab5f37706ab7b837a772413c4762c8ad80824c6f17f923dc1"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1/browser-inspection.json",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/browser-inspection.json",
+      "sha256": "92d5f452c27e125fa0cf55d166056ab600f84c46c05ab9bada600d3c55de1e90"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1/input.json",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/input.json",
+      "sha256": "73f38bdcda4a85c83a74607802780fd8f4684662f1449fbd041369197e0ed097"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1/output.json",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/output.json",
+      "sha256": "c725fcbc54b7dffd93477087f1f55a19077c40aaba800950ad63eddd7c32dc9c"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1/preview-desktop-1440x1000.png",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/preview-desktop-1440x1000.png",
+      "sha256": "1a79403d2197d22c39265af1b1bf1c08e0810767d0038a4e8c4edaf712e8818b"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1/preview-mobile-390x844.png",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/preview-mobile-390x844.png",
+      "sha256": "5de7abfce0ecaf8a517ae7b2a060aa749b136a6d919afc203ca286936ad3a130"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1/proof.json",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/proof.json",
+      "sha256": "ea09562a7189f4a2a7dcd0e89d4de75c57705107c5fbe3d7252aeddc47fb042b"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1-review-pass/input.json",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1-review-pass/input.json",
+      "sha256": "425cc6cd40b31416a93233364fec1129e2c89d2f122b66c3ab3c3b1510cf0d03"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1-review-pass/output.json",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1-review-pass/output.json",
+      "sha256": "1dbacbc966a9e650bf36d85fe78781f6c65daeec8743b5343957d64593758c36"
+    },
+    {
+      "historical_path": "workspace/runs/gustav-social-banner-r1-review-pass/proof.json",
+      "current_path": "workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1-review-pass/proof.json",
+      "sha256": "72cfef67e7bc07faaa9fdcaf300a9f2692c68b0012dc1aa00cb7a599fec2b940"
+    }
+  ],
+  "immutable_paths_not_rewritten": [
+    "workspace/designs/gustav-social-banner-r1/handoffs/gustav-social-banner-r1/"
+  ]
+}

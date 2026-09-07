@@ -21,7 +21,9 @@ def repository_root() -> Path:
 
 def _ignore(_directory: str, names: list[str]) -> set[str]:
     ignored = {
-        name for name in names if name in {".git", "node_modules", "__pycache__"}
+        name
+        for name in names
+        if name in {".git", "node_modules", "__pycache__", ".playwright-cli"}
     }
     if "handoff" in names:
         ignored.add("handoff")
@@ -31,6 +33,10 @@ def _ignore(_directory: str, names: list[str]) -> set[str]:
 def _fingerprint(root: Path) -> str:
     digest = hashlib.sha256()
     for path in sorted(item for item in root.rglob("*") if item.is_file()):
+        if {".git", "node_modules", "__pycache__", ".playwright-cli"}.intersection(
+            path.relative_to(root).parts
+        ):
+            continue
         digest.update(path.relative_to(root).as_posix().encode("utf-8"))
         digest.update(path.read_bytes())
     return digest.hexdigest()
@@ -38,37 +44,9 @@ def _fingerprint(root: Path) -> str:
 
 def _prepare_seed(source: Path, destination: Path) -> None:
     shutil.copytree(source, destination, ignore=_ignore)
-    transient_slugs = []
-    for proof_path in sorted((destination / "examples").glob("*/proof.json")):
-        proof = json.loads(proof_path.read_text(encoding="utf-8"))
-        if re.fullmatch(r"run-\d{4,}", str(proof.get("source_run_id", ""))):
-            transient_slugs.append(proof_path.parent.name)
-            shutil.rmtree(proof_path.parent)
-    if transient_slugs:
-        gallery_path = destination / "examples/index.html"
-        gallery = gallery_path.read_text(encoding="utf-8")
-        readme_path = destination / "examples/README.md"
-        readme = readme_path.read_text(encoding="utf-8")
-        for slug in transient_slugs:
-            gallery = re.sub(
-                rf'<p data-tracer-example="{re.escape(slug)}">.*?</p>',
-                "",
-                gallery,
-            )
-            readme = re.sub(
-                rf"\n- \[{re.escape(slug)} proof\]\({re.escape(slug)}/index\.html\)",
-                "",
-                readme,
-            )
-        gallery_path.write_text(gallery, encoding="utf-8")
-        readme_path.write_text(readme, encoding="utf-8")
-    runs = destination / "workspace/runs"
-    state = destination / "workspace/state"
-    shutil.rmtree(runs)
-    shutil.rmtree(state)
-    runs.mkdir(parents=True)
-    state.mkdir(parents=True)
-    (destination / "workspace/history/runs.jsonl").write_text("", encoding="utf-8")
+    audit_design = destination / "workspace/designs/audit-proof"
+    if audit_design.exists():
+        shutil.rmtree(audit_design)
     tracer.trace_once(destination, slug="audit-proof", simulate_failure=True)
     tracer.trace_once(
         destination,
@@ -76,7 +54,7 @@ def _prepare_seed(source: Path, destination: Path) -> None:
         recover=True,
         preview=True,
         review=True,
-        promote_example=True,
+        curate=True,
     )
 
 
@@ -109,7 +87,7 @@ def trace_cases(source: Path) -> Dict[str, object]:
         records = [
             json.loads(line)
             for line in (
-                contradictory / "workspace/history/runs.jsonl"
+                contradictory / "workspace/designs/audit-proof/history/runs.jsonl"
             ).read_text(encoding="utf-8").splitlines()
             if line.strip()
         ]
@@ -125,7 +103,7 @@ def trace_cases(source: Path) -> Dict[str, object]:
         blocked = base / "blocked"
         shutil.copytree(healthy, blocked)
         first = json.loads(
-            (blocked / "workspace/history/runs.jsonl")
+            (blocked / "workspace/designs/audit-proof/history/runs.jsonl")
             .read_text(encoding="utf-8")
             .splitlines()[0]
         )

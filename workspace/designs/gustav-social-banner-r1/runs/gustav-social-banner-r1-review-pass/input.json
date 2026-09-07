@@ -1,0 +1,22 @@
+{
+  "run_id": "gustav-social-banner-r1-review-pass",
+  "started_at": "2026-09-03T10:40:00Z",
+  "lead_goal": "01a066aa-ec32-7c51-a185-178ff44df838",
+  "stable_linkage": "lead:01a066aa-ec32-7c51-a185-178ff44df838|repo:onlinesourdough/Agentic-Design-System@97449f2803a0d9bb98fc65cf3e4ebf81502a1731|worker:gustav-social-banner-r1",
+  "worker_contract_revision": 1,
+  "source_revision": "97449f2803a0d9bb98fc65cf3e4ebf81502a1731",
+  "previous_run_id": "gustav-social-banner-r1",
+  "previous_run_relation": "predecessor",
+  "continuation_reason": "The declared independent Review owner returned an actual PASS for the unchanged r1 candidate and authorized final review binding and handoff generation.",
+  "receiving_owner": "Gustav Anderson",
+  "receiving_outcome": "Gustav Online social profiles: exact LinkedIn and X banner assets with crop/readability proof.",
+  "review_mode": "independent",
+  "review_owner": "AIOS lead thread 01a066aa-ec32-7c51-a185-178ff44df838",
+  "lead_disposition": "PASS",
+  "candidate_design_sha256": "4c0d298a101b24bbf3b7a6a53de9c927f02039a8d13a11bfb1efc3feed50b805",
+  "candidate_exports": {
+    "linkedin_sha256": "d104fc94df2e54c56b50b70cb7d574706183801b42793d910e99e4994fcef5d8",
+    "x_sha256": "93f2796d8e08293dd1087aa5fa3136d0729e3f1b86a49b912ac97f6e8885ec08"
+  },
+  "image_generation_prompt": "None — deterministic SVG/Chrome raster export from the selected supplied seed."
+}

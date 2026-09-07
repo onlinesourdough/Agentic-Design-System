@@ -1,0 +1,57 @@
+{
+  "run_id": "gustav-social-banner-r1-review-pass",
+  "status": "passed",
+  "finished_at": "2026-09-03T10:45:06Z",
+  "direction_version": "r1",
+  "design_ref": "workspace/DESIGN.md",
+  "design_sha256": "4c0d298a101b24bbf3b7a6a53de9c927f02039a8d13a11bfb1efc3feed50b805",
+  "review_ref": "workspace/REVIEW.md",
+  "review_sha256": "e8fdb4f3383672d3a7dd66efeac9c50fec82dc74f684e9f9d5572ebb65bb8b26",
+  "review_state": "PASS",
+  "review_owner": "AIOS lead thread 01a066aa-ec32-7c51-a185-178ff44df838",
+  "handoff": {
+    "status": "generated",
+    "contract": "ADS-HANDOFF/1",
+    "id": "ads-gustav-online-social-banners-b54dc49df11a",
+    "revision": "r1+4c0d298a101b",
+    "ref": "workspace/handoffs/gustav-social-banner-r1/HANDOFF.md",
+    "sha256": "f06847e16afe7fcab5f37706ab7b837a772413c4762c8ad80824c6f17f923dc1",
+    "receiver_acceptance": "PENDING"
+  },
+  "exports": [
+    {
+      "platform": "LinkedIn",
+      "path": "workspace/assets/gustav-social-banner-r1-linkedin.png",
+      "width": 1584,
+      "height": 396,
+      "format": "png",
+      "alpha": false,
+      "sha256": "d104fc94df2e54c56b50b70cb7d574706183801b42793d910e99e4994fcef5d8"
+    },
+    {
+      "platform": "X",
+      "path": "workspace/assets/gustav-social-banner-r1-x.png",
+      "width": 1500,
+      "height": 500,
+      "format": "png",
+      "alpha": false,
+      "sha256": "93f2796d8e08293dd1087aa5fa3136d0729e3f1b86a49b912ac97f6e8885ec08"
+    }
+  ],
+  "proof_ref": "workspace/runs/gustav-social-banner-r1-review-pass/proof.json",
+  "verification": {
+    "deterministic_export": "PASS; all four reviewed raster hashes reproduced",
+    "exact_dimensions_format_and_opacity": "PASS",
+    "browser_inspection": "PASS at 1440x1000 and 390x844",
+    "crop_readability": "PASS at LinkedIn 1128x282 and X 600x200 display sizes",
+    "npm_run_check": "PASS",
+    "npm_test": "25 passed, 4 failed from mutable-workspace fixture coupling",
+    "fixture_files_match_head": true,
+    "handoff_acceptance": "PENDING"
+  },
+  "promoted_example": false,
+  "published": false,
+  "worker_goal_state": "complete_after_lead_pass",
+  "image_generation_prompt": "None — deterministic SVG/Chrome raster export from the selected supplied seed.",
+  "improvement_signal": "Handoff fixtures are coupled to the mutable active workspace Review owner and optional OpenPencil selection; failures were reproduced during this banner run, and the implementation workaround was removed for separate issue-based review."
+}

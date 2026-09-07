@@ -1,0 +1,202 @@
+{
+  "success": true,
+  "browser": {
+    "product": "Chrome/152.0.7977.65",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36"
+  },
+  "previewUrl": "http://127.0.0.1:4173/?proof=1",
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "screenshot": "workspace/runs/gustav-social-banner-r1/preview-desktop-1440x1000.png",
+      "screenshotDimensions": {
+        "width": 1440,
+        "height": 1000
+      },
+      "inspection": {
+        "title": "Gustav Online social banners · ADS r1",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scroll": {
+          "width": 1440,
+          "height": 5074
+        },
+        "noHorizontalOverflow": true,
+        "landmarks": {
+          "header": 1,
+          "main": 1,
+          "sections": 5,
+          "footer": 1
+        },
+        "headings": [
+          "Byg en virksomhed, der ikke venter på dig.",
+          "Inspection overlay",
+          "Final raster exports",
+          "LinkedIn banner",
+          "X header",
+          "Direct crop proof",
+          "One business, bounded roles",
+          "Static-state applicability",
+          "Inspiration stays a principle, not an asset."
+        ],
+        "images": [
+          {
+            "src": "assets/gustav-social-banner-r1-linkedin.png",
+            "complete": true,
+            "naturalWidth": 1584,
+            "naturalHeight": 396,
+            "alt": "LinkedIn banner: warm modular workbench on the left and the Gustav Online promise on the right"
+          },
+          {
+            "src": "assets/gustav-social-banner-r1-x.png",
+            "complete": true,
+            "naturalWidth": 1500,
+            "naturalHeight": 500,
+            "alt": "X header: warm modular workbench on the left and the Gustav Online promise on the right"
+          },
+          {
+            "src": "assets/gustav-social-banner-r1-linkedin-crop-proof.png",
+            "complete": true,
+            "naturalWidth": 1440,
+            "naturalHeight": 720,
+            "alt": "LinkedIn desktop crop proof with 1128 by 282 banner, simulated avatar, edge guard, and copy-safe outline"
+          },
+          {
+            "src": "assets/gustav-social-banner-r1-x-crop-proof.png",
+            "complete": true,
+            "naturalWidth": 960,
+            "naturalHeight": 600,
+            "alt": "X desktop crop proof with 600 by 200 header, simulated avatar, edge guard, and copy-safe outline"
+          }
+        ],
+        "copy": {
+          "prehead": true,
+          "headline": true,
+          "support": true,
+          "domain": true
+        },
+        "control": {
+          "pressedBefore": "true",
+          "focused": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "outlineOffset": "4px",
+          "status": "Overlays shown. Promise stays outside avatar occlusion."
+        },
+        "reducedMotionRulePresent": true
+      },
+      "interactionAfterClick": {
+        "pressedAfter": "false",
+        "bodyHasProofClass": false,
+        "status": "Overlays hidden. Final artwork only."
+      },
+      "accessibilityRoles": {
+        "banner": true,
+        "main": true,
+        "contentinfo": true,
+        "button": true,
+        "headingCount": 9
+      }
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "screenshot": "workspace/runs/gustav-social-banner-r1/preview-mobile-390x844.png",
+      "screenshotDimensions": {
+        "width": 390,
+        "height": 844
+      },
+      "inspection": {
+        "title": "Gustav Online social banners · ADS r1",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scroll": {
+          "width": 390,
+          "height": 5478
+        },
+        "noHorizontalOverflow": true,
+        "landmarks": {
+          "header": 1,
+          "main": 1,
+          "sections": 5,
+          "footer": 1
+        },
+        "headings": [
+          "Byg en virksomhed, der ikke venter på dig.",
+          "Inspection overlay",
+          "Final raster exports",
+          "LinkedIn banner",
+          "X header",
+          "Direct crop proof",
+          "One business, bounded roles",
+          "Static-state applicability",
+          "Inspiration stays a principle, not an asset."
+        ],
+        "images": [
+          {
+            "src": "assets/gustav-social-banner-r1-linkedin.png",
+            "complete": true,
+            "naturalWidth": 1584,
+            "naturalHeight": 396,
+            "alt": "LinkedIn banner: warm modular workbench on the left and the Gustav Online promise on the right"
+          },
+          {
+            "src": "assets/gustav-social-banner-r1-x.png",
+            "complete": true,
+            "naturalWidth": 1500,
+            "naturalHeight": 500,
+            "alt": "X header: warm modular workbench on the left and the Gustav Online promise on the right"
+          },
+          {
+            "src": "assets/gustav-social-banner-r1-linkedin-crop-proof.png",
+            "complete": true,
+            "naturalWidth": 1440,
+            "naturalHeight": 720,
+            "alt": "LinkedIn desktop crop proof with 1128 by 282 banner, simulated avatar, edge guard, and copy-safe outline"
+          },
+          {
+            "src": "assets/gustav-social-banner-r1-x-crop-proof.png",
+            "complete": true,
+            "naturalWidth": 960,
+            "naturalHeight": 600,
+            "alt": "X desktop crop proof with 600 by 200 header, simulated avatar, edge guard, and copy-safe outline"
+          }
+        ],
+        "copy": {
+          "prehead": true,
+          "headline": true,
+          "support": true,
+          "domain": true
+        },
+        "control": {
+          "pressedBefore": "true",
+          "focused": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "outlineOffset": "4px",
+          "status": "Overlays shown. Promise stays outside avatar occlusion."
+        },
+        "reducedMotionRulePresent": true
+      },
+      "interactionAfterClick": {
+        "pressedAfter": "false",
+        "bodyHasProofClass": false,
+        "status": "Overlays hidden. Final artwork only."
+      },
+      "accessibilityRoles": {
+        "banner": true,
+        "main": true,
+        "contentinfo": true,
+        "button": true,
+        "headingCount": 9
+      }
+    }
+  ]
+}

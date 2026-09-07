@@ -1,0 +1,168 @@
+{
+  "schema": "ADS-RUN-PROOF/1",
+  "run_id": "ads-business-freedom-content-e2e-r1",
+  "status": "passed",
+  "review": "PASS",
+  "acceptance": "PENDING",
+  "preflight": {
+    "cwd": "/Users/gustavanderson/Downloads/AIOS/.aios/systems/agentic-design-system",
+    "git_top_level": "/Users/gustavanderson/Downloads/AIOS/.aios/systems/agentic-design-system",
+    "head": "5c30b86d5ba52e5f20efb098be44fecd09749999",
+    "branch": "main",
+    "upstream": "origin/main",
+    "origin_main": "5c30b86d5ba52e5f20efb098be44fecd09749999",
+    "live_origin_main": "5c30b86d5ba52e5f20efb098be44fecd09749999",
+    "initial_worktree": "clean",
+    "repository_instructions": "read in full",
+    "primary_design_review_skills": "read in full",
+    "competing_ads_writer": false,
+    "effective_environment_ref": "workspace/runs/ads-business-freedom-content-e2e-r1/input.json"
+  },
+  "assertions": [
+    {
+      "name": "bounded_story",
+      "status": "pass",
+      "evidence": "The canonical direction defines one 39-second, eight-beat founder-owned Demand constraint story and a warm Business Freedom close."
+    },
+    {
+      "name": "brand_roles",
+      "status": "pass",
+      "evidence": "Human/orange opens; warm onlinesourdough owns the method; dark/cyan AIOS is one bounded proof beat; Arc’IT green/sand appears only at Complete Bake; the close returns warm."
+    },
+    {
+      "name": "three_keyframes",
+      "status": "pass",
+      "evidence": "Three original 1600×900 SVG concepts and three matching browser-rendered PNGs were visually inspected."
+    },
+    {
+      "name": "responsive_preview",
+      "status": "pass",
+      "evidence": "Real headed Chrome inspection at 1440×1000 and 390×844 found no horizontal overflow, missing keyframes, console errors, or console warnings."
+    },
+    {
+      "name": "interaction_and_accessibility",
+      "status": "pass",
+      "evidence": "Manual scenes, play/pause/progress, all six proof states, skip navigation, visible keyboard focus, semantic labels, alt text, and reduced-motion behavior were directly exercised."
+    },
+    {
+      "name": "openpencil_e2e",
+      "status": "pass",
+      "evidence": "A genuine supervised v0.8.4 surface imported 314 editable nodes, saved the .op source, exported PNG, and the result was visually compared with DESIGN.md."
+    },
+    {
+      "name": "cross_owner_handoff",
+      "status": "pass",
+      "evidence": "ADS-HANDOFF/1 records the Agentic Content System receiver, PASS Review, PENDING acceptance, identity/revision, paths/hashes, provenance, licensing, limitations, and ownership boundary."
+    },
+    {
+      "name": "source_safety",
+      "status": "pass",
+      "evidence": "All copied brand assets matched files in the three clean approved source repositories by SHA-256; source HEADs remained unchanged."
+    }
+  ],
+  "commands": [
+    {
+      "command": "npm run check",
+      "result": "pass"
+    },
+    {
+      "command": "npm test",
+      "result": "pass",
+      "detail": "22 tests"
+    },
+    {
+      "command": "npm run trace:handoff -- --openpencil-tool <verified-v0.8.4-op>",
+      "result": "pass",
+      "detail": "OpenPencil included, unavailable-tool fallback proved, source unchanged"
+    },
+    {
+      "command": "git diff --check",
+      "result": "pass"
+    }
+  ],
+  "browser_evidence": {
+    "desktop": {
+      "path": "workspace/runs/ads-business-freedom-content-e2e-r1/preview-desktop-1440x1000.png",
+      "viewport": "1440x1000",
+      "image_dimensions": "1440x6103",
+      "sha256": "b182bf771bd6745ab87f84fa56813bcc02572ee4722bc7ecc106668ffd79389b",
+      "horizontal_overflow": false
+    },
+    "mobile": {
+      "path": "workspace/runs/ads-business-freedom-content-e2e-r1/preview-mobile-390x844.png",
+      "viewport": "390x844",
+      "image_dimensions": "390x7600",
+      "sha256": "0cc8ad649006aec3aae10178c57c263ddec09a609194b1ab7294007c070a3280",
+      "horizontal_overflow": false
+    },
+    "console_errors": 0,
+    "console_warnings": 0,
+    "reduced_motion": "automatic scene changes disabled; CSS transforms removed; scroll behavior auto",
+    "focus": "skip link visible with 3px cyan outline"
+  },
+  "keyframe_sha256": {
+    "keyframe-01-founder-constraint.svg": "fffc13295787ce4e9684a39afe2401f68ff5c9b4a40d9fed4d87b558884dbf43",
+    "keyframe-01-founder-constraint.png": "8c8d07eda1fce269a5b527f960007db556eed115ce460e22f8c3c9c16666b9ee",
+    "keyframe-02-smallest-complete-change.svg": "3696d42d827180e314fea4e3ca4107eff8400ec29fc93ce0743b20b2cd7ffb88",
+    "keyframe-02-smallest-complete-change.png": "47dff749c8140468229dba75cfc8fb94657c2b359018dc770244123b530fedbb",
+    "keyframe-03-reviewed-handoff.svg": "3453028a0b054e5fd3a302b920926b75c1646b68650c3e0712a85d486d68ab89",
+    "keyframe-03-reviewed-handoff.png": "bff62e7fe4306a672c6c87fd69050949b4049765cf7fe6a4b64ea0b956174b5a"
+  },
+  "openpencil": {
+    "version": "0.8.4",
+    "surface": "genuine supervised web surface backed by the pre-existing Developer-ID-signed and notarized desktop release",
+    "release_commit": "c51d7ed41a96068a09127bbc096fee143fce0b22",
+    "observed_upstream_revision": "9c810776dab546076a5d9db791a49d9e8048dbd7",
+    "dmg_sha256": "576af5beb22bb0e6df5b82fbedae757c6b10e9f2e5d635f99f96d1d184319180",
+    "source_sha256": "33ab74b5315b89f68eefe8b6a3d3da193e968afab6f851de3c9f3b2f97b9b0e0",
+    "png_sha256": "734c32836a61c42088141d84308392a198403d6e4a80991f65d3d2f9a8b5e92d",
+    "limitations": [
+      "HTML import approximates webfonts, grid, transforms, overflow, filters, margins, flex wrapping, radii, and shadows, with visible non-keyframe collisions.",
+      "Reduced-motion media behavior is not preserved by the native import.",
+      "The v0.8.4 native export boundary supports PNG but not SVG; the selected ADS-owned keyframe SVGs are independent companions.",
+      "The semantic browser preview remains authoritative for layout, interaction, accessibility, and reduced motion."
+    ]
+  },
+  "source_integrity": {
+    "gustavonline": {
+      "head": "87b59cdb069206e37425b8742cb7727e95caa4c1",
+      "status": "clean"
+    },
+    "onlinesourdough": {
+      "head": "c3c045d93eda78799b0e2ce2e790b60d7b681c0c",
+      "status": "clean"
+    },
+    "arcitai": {
+      "head": "74dc67adf0a97072e0afd8e92876e9bd18f693cd",
+      "status": "clean"
+    },
+    "agentic_content_system": {
+      "head": "9af619af36fd952f56553e41e6e884a4e24f62fa",
+      "status": "clean and unmodified"
+    }
+  },
+  "ads_repository_final": {
+    "head": "5c30b86d5ba52e5f20efb098be44fecd09749999",
+    "origin_main": "5c30b86d5ba52e5f20efb098be44fecd09749999",
+    "live_origin_main": "5c30b86d5ba52e5f20efb098be44fecd09749999",
+    "branch": "main",
+    "upstream": "origin/main",
+    "status": "expected bounded Build changes only",
+    "diff_check": "pass",
+    "servers": "ports 4173 and 31984 closed",
+    "task_browser_sessions": "closed"
+  },
+  "handoff": {
+    "path": "workspace/handoff/HANDOFF.md",
+    "id": "ads-business-freedom-content-system-story-e0cfce24fd44",
+    "revision": "r1+958ac18a0448",
+    "sha256": "cd8af2487cf3c2df199337682cfa7042279feee92376bd06e540307ba9df956d",
+    "acceptance": "PENDING"
+  },
+  "test_fixture_correction": {
+    "path": "workspace/engine/tests/test_handoff.py",
+    "reason": "The revision test now changes whatever version the active DESIGN.md declares instead of assuming version: alpha.",
+    "scope": "test-only"
+  },
+  "goal_state": "active for lead Review; not completed by Build"
+}

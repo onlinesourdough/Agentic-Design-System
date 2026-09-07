@@ -6,12 +6,12 @@ description: Internal design method for turning a resolved ADS brief into a cano
 # Design solution — internal method
 
 The public route is `$agentic-design-system`. This skill is the focused
-authoring method it calls; it does not own the ledger or gallery.
+authoring method it calls; it does not own the ledger or collection index.
 
 ## Establish the job
 
-1. Read the active `BRIEF.md` from `workspace/` or the explicitly selected
-   example and preserve resolved facts.
+1. Read `workspace/designs/<selected-slug>/BRIEF.md` and preserve resolved
+   facts. Do not load or change another selected design.
 2. Name the intended outcome and receiving owner/reuse scope, audience/job,
    current constraint, primary action or decision, surfaces/form factors, real
    content/data, required states, material brand/content/technical/accessibility/
@@ -20,8 +20,8 @@ authoring method it calls; it does not own the ledger or gallery.
 3. Ask one question only when a missing answer would materially change the
    direction; otherwise state the smallest reasonable assumption.
 4. Reduce the interface to the smallest composition that completes that job.
-   Keep active work in `workspace/`; only the primary route decides when a
-   result becomes a curated example.
+   Keep all work under the selected design; only the primary route records a
+   deliberate in-place curation marker.
 
 ## Set the direction
 
@@ -57,7 +57,7 @@ authoring method it calls; it does not own the ledger or gallery.
 ## Hand off
 
 After `review-design` passes, run
-`npm run handoff -- <directory> <output> --receiving-owner <owner>`. Confirm the
+`npm run handoff -- --design <slug> --output handoffs/<revision> --receiving-owner <owner>`. Confirm the
 output contains canonical `DESIGN.md`, `BRIEF.md`, copied `REVIEW.md` or
 `proof.json`, and versioned `HANDOFF.md`. Add preview, individual assets, or
 CSS/design-token/Tailwind exports only through explicit selections for that

@@ -1,0 +1,36 @@
+{
+  "status": "prepared-awaiting-lead-review-no-commit",
+  "native_session_id": "01a072d2-1699-7bf0-97fa-612e363bef33",
+  "root": "/Users/gustavanderson/.AIOS/systems/agentic-design-system",
+  "branch": "main",
+  "origin": "https://github.com/onlinesourdough/Agentic-Design-System.git",
+  "local_head": "97449f2803a0d9bb98fc65cf3e4ebf81502a1731",
+  "fetched_origin_main": "21b8a72fc368f4100b1938bacf6879df51d96966",
+  "behind_origin_main": 4,
+  "public_commit_allowlist": [
+    "README.md",
+    "docs/assets/branding/ads-icon-512.png",
+    "docs/assets/branding/ads-banner-1536x512.png"
+  ],
+  "public_hashes": {
+    "README.md": "c86ba0afb52f9b449fab16bb552f51dc9d2e8305ba3e14cb3891f525003734f1",
+    "docs/assets/branding/ads-icon-512.png": "b1338c416a9afd1fbf3f99268f67c410f75ff2bbf9213e71b37dad46c999f062",
+    "docs/assets/branding/ads-banner-1536x512.png": "b76282c9b3e7bc22307dc9cca8ddcd5e779f659e7a163c496008c714a423ce80"
+  },
+  "readme_original_bytes": "retained as exact suffix",
+  "png_source": "accepted handoff-r1-cli/assets/exports; exact byte copies",
+  "checks": [
+    "npm run check passed",
+    "git diff --check passed",
+    "80 accepted payload hashes unchanged",
+    "ledger old prefix unchanged; one entry",
+    "README prose retained",
+    "index empty"
+  ],
+  "excluded_from_public_commit": [
+    "workspace/history/runs.jsonl",
+    "all workspace/runs materials",
+    "all other pre-existing workspace changes"
+  ],
+  "remaining": "Lead review and reconciliation with four upstream commits before any commit/push"
+}

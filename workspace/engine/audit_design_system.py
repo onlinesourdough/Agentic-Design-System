@@ -37,10 +37,11 @@ REPOSITORY_EVIDENCE = (
     "docs/HANDOFF_TEMPLATE.md",
     "docs/contract.md",
     "docs/validation.md",
-    "workspace/BRIEF.md",
-    "workspace/DESIGN.md",
-    "workspace/REVIEW.md",
-    "workspace/index.html",
+    "workspace/designs/index.html",
+    "workspace/designs/ads-business-freedom-content-e2e-r1/BRIEF.md",
+    "workspace/designs/ads-business-freedom-content-e2e-r1/DESIGN.md",
+    "workspace/designs/ads-business-freedom-content-e2e-r1/REVIEW.md",
+    "workspace/designs/ads-business-freedom-content-e2e-r1/index.html",
     "workspace/engine/checks.mjs",
     "workspace/engine/create-handoff.mjs",
     "workspace/engine/handoff_tracer.mjs",
@@ -123,10 +124,10 @@ def _scoped_path(root: Path, reference: object) -> Optional[Path]:
     return candidate
 
 
-def _owned_run_path(root: Path, run_id: object, reference: object) -> Optional[Path]:
+def _owned_run_path(design: Path, root: Path, run_id: object, reference: object) -> Optional[Path]:
     if not isinstance(run_id, str) or not run_id:
         return None
-    owning_run = (root / "workspace" / "runs" / run_id).resolve()
+    owning_run = (design / "runs" / run_id).resolve()
     candidate = _scoped_path(root, reference)
     if candidate is None:
         return None
@@ -224,8 +225,9 @@ def _repository_audit(
             findings.append(f"audit lifecycle boundary is undocumented: {boundary}")
 
     source_text = (root / "docs/SOURCE_AUDIT.md").read_text(encoding="utf-8")
-    design_text = (root / "workspace/DESIGN.md").read_text(encoding="utf-8")
-    brief_text = (root / "workspace/BRIEF.md").read_text(encoding="utf-8")
+    selected = root / "workspace/designs/ads-business-freedom-content-e2e-r1"
+    design_text = (selected / "DESIGN.md").read_text(encoding="utf-8")
+    brief_text = (selected / "BRIEF.md").read_text(encoding="utf-8")
     for marker in (
         "This `DESIGN.md` is the canonical",
         "## Portable direction and ownership",
@@ -233,14 +235,18 @@ def _repository_audit(
     ):
         if marker not in design_text:
             findings.append(f"active DESIGN.md lacks portable contract marker {marker}")
-    for marker in (
+    brief_markers = (
         "**Receiving outcome:**",
         "**Source/reference rights, provenance, and licensing:**",
         "**Ownership boundary:**",
-        "**Review mode:**",
-        "**Review owner:**",
-        "**Receiver acceptance:**",
-    ):
+    )
+    if "**Review and acceptance owner:**" not in brief_text:
+        brief_markers += (
+            "**Review mode:**",
+            "**Review owner:**",
+            "**Receiver acceptance:**",
+        )
+    for marker in brief_markers:
         if marker not in brief_text:
             findings.append(f"active BRIEF.md lacks capability boundary {marker}")
     sources, source_findings = _parse_source_trace(source_text)
@@ -253,8 +259,8 @@ def _repository_audit(
             )
 
     openpencil_selected = "source:openpencil-optional-adapter" in design_text
-    op_source = root / "workspace/openpencil/route-console.op"
-    op_export = root / "workspace/openpencil/exports/route-console.png"
+    op_source = selected / "openpencil/route-console.op"
+    op_export = selected / "openpencil/exports/route-console.png"
     if openpencil_selected:
         for path in (op_source, op_export):
             if not path.is_file():
@@ -318,7 +324,7 @@ def _repository_audit(
         evidence.extend(
             [
                 "deterministic checks, per-design Review, and periodic audit are distinct",
-                f"source decision resolves {len(sources)} source roles into workspace/DESIGN.md",
+                f"source decision resolves {len(sources)} source roles into selected DESIGN.md",
                 "DESIGN.md is canonical and the versioned cross-owner handoff is discoverable",
                 "minimal handoff and explicit optional-companion/OpenPencil routes are discoverable",
                 "ADS/ACS ownership and suggestion-only sibling routing are explicit",
@@ -338,19 +344,55 @@ def _repository_audit(
     return evidence
 
 
-def _workspace_audit(
-    root: Path, findings: List[str], gaps: List[str]
+def _legacy_owned_run_path(
+    design: Path, root: Path, run_id: object, reference: object
+) -> Optional[Path]:
+    """Resolve a preserved pre-collection workspace/runs reference locally."""
+
+    if not isinstance(run_id, str) or not isinstance(reference, str):
+        return None
+    prefix = f"workspace/runs/{run_id}/"
+    if not reference.startswith(prefix):
+        return None
+    candidate = (design / "runs" / run_id / reference[len(prefix) :]).resolve()
+    try:
+        candidate.relative_to((design / "runs" / run_id).resolve())
+        candidate.relative_to(root.resolve())
+    except ValueError:
+        return None
+    return candidate
+
+
+def _run_reference(
+    design: Path,
+    root: Path,
+    run_id: object,
+    reference: object,
+    *,
+    legacy: bool,
+) -> Optional[Path]:
+    current = _owned_run_path(design, root, run_id, reference)
+    if current is not None:
+        return current
+    if legacy:
+        return _legacy_owned_run_path(design, root, run_id, reference)
+    return None
+
+
+def _audit_design_ledger(
+    root: Path, design: Path, findings: List[str], gaps: List[str], *, legacy: bool
 ) -> List[str]:
     evidence: List[str] = []
-    history = root / "workspace/history/runs.jsonl"
-    runs_root = root / "workspace/runs"
+    label = design.relative_to(root).as_posix()
+    history = design / "history/runs.jsonl"
+    runs_root = design / "runs"
     if not history.is_file():
         gaps.append(
-            "required workspace evidence is unavailable: workspace/history/runs.jsonl"
+            f"{label} required ledger is unavailable: history/runs.jsonl"
         )
         return evidence
     if not runs_root.is_dir():
-        gaps.append("required workspace evidence is unavailable: workspace/runs/")
+        gaps.append(f"{label} required run root is unavailable: runs/")
         return evidence
 
     records: List[Dict[str, Any]] = []
@@ -362,16 +404,19 @@ def _workspace_audit(
         try:
             record = json.loads(line)
         except json.JSONDecodeError as exc:
-            findings.append(f"ledger line {line_number} is invalid JSON: {exc.msg}")
+            findings.append(f"{label} ledger line {line_number} is invalid JSON: {exc.msg}")
             continue
         if not isinstance(record, dict):
-            findings.append(f"ledger line {line_number} is not an object")
+            findings.append(f"{label} ledger line {line_number} is not an object")
             continue
         if set(record) != LEDGER_FIELDS:
-            findings.append(f"ledger line {line_number} contradicts the ADS ledger contract")
+            findings.append(
+                f"{label} ledger line {line_number} contradicts the ADS ledger contract"
+            )
         records.append(record)
     if not records:
-        gaps.append("required accumulated run evidence is unavailable")
+        if not findings:
+            gaps.append(f"{label} required accumulated run evidence is unavailable")
         return evidence
 
     by_id: Dict[object, Dict[str, Any]] = {}
@@ -380,35 +425,39 @@ def _workspace_audit(
     for record in records:
         run_id = record.get("run_id")
         if not isinstance(run_id, str) or not run_id:
-            findings.append("ledger record lacks a valid run_id")
+            findings.append(f"{label} ledger record lacks a valid run_id")
             continue
         if run_id in by_id:
-            findings.append(f"ledger repeats run_id {run_id}")
+            findings.append(f"{label} ledger repeats run_id {run_id}")
         previous = record.get("previous_run_id")
         relation = record.get("previous_run_relation")
         if previous is None and relation is not None:
-            findings.append(f"{run_id} has a relation without a predecessor")
+            findings.append(f"{label} {run_id} has a relation without a predecessor")
         if previous is not None and previous not in by_id:
-            findings.append(f"{run_id} points to a later or unavailable predecessor")
+            findings.append(f"{label} {run_id} points to a later or unavailable predecessor")
         if previous is not None and relation not in {"predecessor", "recovery"}:
-            findings.append(f"{run_id} has an invalid predecessor relation")
+            findings.append(f"{label} {run_id} has an invalid predecessor relation")
 
         for field in ("output_ref", "proof_ref"):
-            reference = _owned_run_path(root, run_id, record.get(field))
+            reference = _run_reference(
+                design, root, run_id, record.get(field), legacy=legacy
+            )
             if reference is None:
-                findings.append(f"{run_id} has an escaping or invalid {field}")
+                findings.append(f"{label} {run_id} has an escaping or invalid {field}")
             elif not reference.is_file():
-                gaps.append(f"required {field} is unavailable for {run_id}")
+                gaps.append(f"{label} required {field} is unavailable for {run_id}")
 
         if record.get("status") == "failed":
             failed.append(record)
             failure = record.get("failure")
             failure_ref = failure.get("ref") if isinstance(failure, dict) else None
-            failure_path = _owned_run_path(root, run_id, failure_ref)
+            failure_path = _run_reference(
+                design, root, run_id, failure_ref, legacy=legacy
+            )
             if failure_path is None:
-                findings.append(f"{run_id} has invalid failure evidence")
+                findings.append(f"{label} {run_id} has invalid failure evidence")
             elif not failure_path.is_file():
-                gaps.append(f"required failure evidence is unavailable for {run_id}")
+                gaps.append(f"{label} required failure evidence is unavailable for {run_id}")
             else:
                 value = _read_json(
                     failure_path, f"failure evidence for {run_id}", findings
@@ -416,12 +465,14 @@ def _workspace_audit(
                 if value and (
                     value.get("run_id") != run_id or not value.get("code")
                 ):
-                    findings.append(f"failure evidence for {run_id} is contradictory")
+                    findings.append(f"{label} failure evidence for {run_id} is contradictory")
 
         recovery = record.get("recovery")
         if isinstance(recovery, dict):
             recovered.append(record)
-            recovery_path = _owned_run_path(root, run_id, recovery.get("ref"))
+            recovery_path = _run_reference(
+                design, root, run_id, recovery.get("ref"), legacy=legacy
+            )
             failed_id = recovery.get("from_run_id")
             if (
                 relation != "recovery"
@@ -429,11 +480,13 @@ def _workspace_audit(
                 or failed_id not in by_id
                 or by_id[failed_id].get("status") != "failed"
             ):
-                findings.append(f"recovery {run_id} contradicts its failed predecessor")
+                findings.append(
+                    f"{label} recovery {run_id} contradicts its failed predecessor"
+                )
             if recovery_path is None:
-                findings.append(f"{run_id} has invalid recovery evidence")
+                findings.append(f"{label} {run_id} has invalid recovery evidence")
             elif not recovery_path.is_file():
-                gaps.append(f"required recovery evidence is unavailable for {run_id}")
+                gaps.append(f"{label} required recovery evidence is unavailable for {run_id}")
             else:
                 value = _read_json(
                     recovery_path, f"recovery evidence for {run_id}", findings
@@ -443,25 +496,24 @@ def _workspace_audit(
                     or value.get("from_run_id") != failed_id
                     or value.get("status") != "recovered"
                 ):
-                    findings.append(f"recovery evidence for {run_id} is contradictory")
+                    findings.append(f"{label} recovery evidence for {run_id} is contradictory")
         by_id[run_id] = record
 
-    if not failed:
-        gaps.append("retained failed work is unavailable")
-    if not recovered:
-        gaps.append("discoverable recovered work is unavailable")
+    if not legacy:
+        if not failed:
+            gaps.append(f"{label} retained failed work is unavailable")
+        if not recovered:
+            gaps.append(f"{label} discoverable recovered work is unavailable")
 
     curated = 0
-    for proof_path in sorted((root / "examples").glob("*/proof.json")):
+    for proof_path in sorted(design.glob("proof.json")):
         proof = _read_json(proof_path, str(proof_path.relative_to(root)), findings)
         if not proof or not proof.get("source_run_id"):
             continue
         source = by_id.get(proof["source_run_id"])
         if source is None:
             if RUN_ID_PATTERN.fullmatch(str(proof["source_run_id"])):
-                findings.append(
-                    f"curated proof {proof_path.relative_to(root)} cites an unavailable run"
-                )
+                findings.append(f"curated proof {proof_path.relative_to(root)} cites an unavailable run")
             continue
         elif source.get("status") != "succeeded" or proof.get("review") != "PASS":
             findings.append(
@@ -469,24 +521,82 @@ def _workspace_audit(
             )
         else:
             curated += 1
-    if not curated:
+    if not legacy and not curated:
         gaps.append("curated proof linked to accumulated run evidence is unavailable")
 
-    active_path = root / "workspace/state/active.json"
-    if not active_path.is_file():
+    active_path = design / "state/active.json"
+    if not legacy and not active_path.is_file():
         gaps.append("required active-state evidence is unavailable")
-    else:
+    elif not legacy:
         active = _read_json(active_path, "active state", findings)
         if active and active.get("latest_run_id") != records[-1].get("run_id"):
             findings.append("active state contradicts the latest ledger record")
 
     if not findings and not gaps:
-        evidence.extend(
-            [
-                f"ledger has {len(records)} scoped run records",
-                f"failed and recovered work is discoverable ({len(failed)} failed, {len(recovered)} recovered)",
-                f"{curated} curated proof item resolves to a successful reviewed run",
-            ]
+        if legacy:
+            evidence.extend(
+                [
+                    f"{label} preserved legacy ledger has {len(records)} scoped run records",
+                    f"{label} retains provenance without requiring newly manufactured failure or recovery evidence",
+                ]
+            )
+        else:
+            evidence.extend(
+                [
+                    f"{label} managed ledger has {len(records)} scoped run records",
+                    f"{label} failed and recovered work is discoverable ({len(failed)} failed, {len(recovered)} recovered)",
+                    f"{label} has {curated} curated proof item(s) resolving to a successful reviewed run",
+                ]
+            )
+    return evidence
+
+
+def _workspace_audit(
+    root: Path, findings: List[str], gaps: List[str]
+) -> List[str]:
+    evidence: List[str] = []
+    collection = root / "workspace/designs"
+    if not collection.is_dir():
+        gaps.append("workspace design collection is unavailable")
+        return evidence
+
+    ledger_designs = 0
+    legacy_snapshots = 0
+    for design in sorted(path for path in collection.iterdir() if path.is_dir()):
+        if not (design / "BRIEF.md").is_file() or not (design / "DESIGN.md").is_file():
+            continue
+        ledger = design / "history/runs.jsonl"
+        if ledger.is_file():
+            legacy = (design / "history/MIGRATION.json").is_file() or any(
+                line.startswith('{"run_id"') and "workspace/runs/" in line
+                for line in ledger.read_text(encoding="utf-8").splitlines()
+            )
+            evidence.extend(
+                _audit_design_ledger(root, design, findings, gaps, legacy=legacy)
+            )
+            ledger_designs += 1
+        elif (design / "history").is_dir():
+            gaps.append(
+                f"{design.relative_to(root)} has history without history/runs.jsonl"
+            )
+        elif (design / "proof.json").is_file():
+            proof = _read_json(
+                design / "proof.json",
+                f"legacy curated proof {design.relative_to(root)}",
+                findings,
+            )
+            if proof and proof.get("review") == "PASS" and proof.get("status") == "succeeded":
+                legacy_snapshots += 1
+            elif proof:
+                findings.append(
+                    f"legacy curated proof {design.relative_to(root)} lacks PASS succeeded provenance"
+                )
+
+    if not ledger_designs:
+        gaps.append("workspace has no managed or preserved design ledger to audit")
+    if not findings and not gaps:
+        evidence.append(
+            f"workspace audit inspected {ledger_designs} design ledger(s) and {legacy_snapshots} legacy curated snapshot(s)"
         )
     return evidence
 

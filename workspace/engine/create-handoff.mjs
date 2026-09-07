@@ -22,18 +22,27 @@ import {
   sep,
 } from "node:path";
 import { spawnSync } from "node:child_process";
+import { resolveDesign } from "./designs.mjs";
 
 const root = process.cwd();
 const { positional, options } = parseArguments(process.argv.slice(2));
-if (positional.length > 2)
-  fail("Handoff accepts at most a source and output positional argument.");
+if (positional.length)
+  fail(
+    "Handoff uses --design <slug> and --output <design-relative-handoff-path>.",
+  );
 const receivingOwner = options.receivingOwner?.trim();
 if (!receivingOwner)
   fail(
     "Pass a non-empty --receiving-owner for the receiving project or repository.",
   );
-const source = resolve(root, positional[0] ?? "workspace");
-const output = resolve(root, positional[1] ?? join(source, "handoff"));
+if (Boolean(options.design) === Boolean(options.designDir))
+  fail("Pass exactly one of --design <slug> or --design-dir <isolated-path>.");
+if (!options.output)
+  fail("Pass --output <handoffs/name> beneath the selected design.");
+const source = options.design
+  ? resolveDesign(root, options.design)
+  : resolve(root, options.designDir);
+const output = resolve(source, options.output);
 const designmd = join(
   root,
   "node_modules",
@@ -43,8 +52,8 @@ const designmd = join(
   "index.js",
 );
 
-if (!existsSync(source)) fail(`${relative(root, source)} is missing.`);
 assertSafeOutput(output, source);
+if (options.design) assertSelectedOutput(output, source);
 for (const file of ["BRIEF.md", "DESIGN.md"]) {
   if (!existsSync(join(source, file)))
     fail(`${relative(root, source)}/${file} is missing.`);
@@ -163,6 +172,9 @@ function parseArguments(args) {
   const positional = [];
   const options = { assets: [], exports: [], openPencilExports: [] };
   const values = new Map([
+    ["--design", "design"],
+    ["--design-dir", "designDir"],
+    ["--output", "output"],
     ["--receiving-owner", "receivingOwner"],
     ["--asset", "assets"],
     ["--export", "exports"],
@@ -635,6 +647,14 @@ function assertSafeOutput(outputPath, sourcePath) {
         `Unsafe handoff output: ${outputPath} is ${name === "repository root" ? "the repository root or an ancestor of it" : "the selected source or an ancestor of it"}.`,
       );
   }
+}
+
+function assertSelectedOutput(outputPath, sourcePath) {
+  const handoffs = resolve(sourcePath, "handoffs");
+  if (!isSameOrAncestor(handoffs, canonicalPath(outputPath)))
+    fail(
+      `--output must stay beneath ${relative(root, handoffs)}/ for the selected design.`,
+    );
 }
 
 function assertAcceptedSnapshotIsImmutable(outputPath) {

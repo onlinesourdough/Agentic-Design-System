@@ -1,0 +1,119 @@
+{
+  "run_id": "gustav-social-banner-r1",
+  "status": "waiting-review",
+  "review_state": "PENDING",
+  "last_lead_disposition": "REVISE",
+  "review_owner": "AIOS lead thread 01a066aa-ec32-7c51-a185-178ff44df838",
+  "review_evidence": {
+    "path": "workspace/REVIEW.md",
+    "sha256": "a228ed5b7edbc8b9069374e1767abb150e3008145fc00eaeb294bf41ad4b2c8f",
+    "result": "REVISE",
+    "visual_disposition": "PASS",
+    "re_review": "PENDING"
+  },
+  "candidate_design": {
+    "path": "workspace/DESIGN.md",
+    "version": "r1",
+    "sha256": "4c0d298a101b24bbf3b7a6a53de9c927f02039a8d13a11bfb1efc3feed50b805"
+  },
+  "exact_exports": {
+    "linkedin": {
+      "path": "workspace/assets/gustav-social-banner-r1-linkedin.png",
+      "dimensions": "1584x396",
+      "format": "PNG",
+      "alpha": false,
+      "sha256": "d104fc94df2e54c56b50b70cb7d574706183801b42793d910e99e4994fcef5d8"
+    },
+    "x": {
+      "path": "workspace/assets/gustav-social-banner-r1-x.png",
+      "dimensions": "1500x500",
+      "format": "PNG",
+      "alpha": false,
+      "sha256": "93f2796d8e08293dd1087aa5fa3136d0729e3f1b86a49b912ac97f6e8885ec08"
+    }
+  },
+  "editable_sources": {
+    "linkedin": {
+      "path": "workspace/assets/gustav-social-banner-r1-linkedin.svg",
+      "sha256": "ef8116294c680583c8a3f72b9e6fcf996e396f2a2a4698c1b19a3b7f53512f80"
+    },
+    "x": {
+      "path": "workspace/assets/gustav-social-banner-r1-x.svg",
+      "sha256": "3ff18dccc8a741ed54161405c2f1270bf10a3723aa2822e5b432201379be16f2"
+    }
+  },
+  "crop_readability": {
+    "linkedin": {
+      "path": "workspace/assets/gustav-social-banner-r1-linkedin-crop-proof.png",
+      "proof_dimensions": "1440x720",
+      "rendered_banner": "1128x282",
+      "sha256": "620cb5f443cca57d7db4f3f0b41b6a88806465ba08549337c9d36c7369199693",
+      "lead_visual_result": "PASS"
+    },
+    "x": {
+      "path": "workspace/assets/gustav-social-banner-r1-x-crop-proof.png",
+      "proof_dimensions": "960x600",
+      "rendered_banner": "600x200",
+      "sha256": "cd8b973358185031b554e9673a765118719b338ecec7b227c3878ae4ee6bfed0",
+      "lead_visual_result": "PASS"
+    }
+  },
+  "browser_inspection": {
+    "path": "workspace/runs/gustav-social-banner-r1/browser-inspection.json",
+    "sha256": "92d5f452c27e125fa0cf55d166056ab600f84c46c05ab9bada600d3c55de1e90",
+    "browser": "Chrome/152.0.7977.65",
+    "viewports": ["1440x1000", "390x844"],
+    "assertions": [
+      "no horizontal overflow",
+      "exact copy present",
+      "natural image dimensions present",
+      "semantic accessibility roles present",
+      "aria-pressed true to false interaction",
+      "3px focus outline with 4px offset",
+      "reduced-motion rule present"
+    ],
+    "result": "PASS"
+  },
+  "lifecycle_corrections": {
+    "workspace/engine/handoff_tracer.mjs": "matches HEAD",
+    "workspace/engine/tests/test_handoff.py": "matches HEAD",
+    "generated_handoff": "absent; deferred until explicit lead PASS",
+    "receiver_acceptance": "PENDING"
+  },
+  "checks": {
+    "deterministic_export": "PASS; reviewed PNG hashes unchanged",
+    "exact_dimension_and_format_inspection": "PASS",
+    "browser_inspection": "PASS",
+    "npm_run_check": "PASS",
+    "npm_test": {
+      "total": 29,
+      "passed": 23,
+      "failed": 6,
+      "result": "FAILED",
+      "cause": "success-path handoff tests and tracer read the mutable active workspace while its truthful review Result is REVISE",
+      "disposition": "pending separate issue-based improvement; not fixed in this banner outcome"
+    }
+  },
+  "historical_improvement_evidence": {
+    "before_out_of_scope_workaround": "4 of 29 failed while a pre-authored PASS existed",
+    "with_out_of_scope_workaround": "29 of 29 passed",
+    "after_restoring_head_and_truthful_revise": "23 of 29 passed; 6 failed",
+    "canonical_owner": "onlinesourdough/Agentic-Design-System",
+    "impact": "medium",
+    "confidence": "high"
+  },
+  "handoff": {
+    "contract": "ADS-HANDOFF/1",
+    "status": "DEFERRED_UNTIL_LEAD_PASS",
+    "path": null,
+    "receiver_acceptance": "PENDING"
+  },
+  "limitations": [
+    "Platform compression and crop or avatar geometry must be rechecked at upload time.",
+    "The supplied background seed upstream prompt is unavailable; its exact bytes and bounded noncritical use are disclosed.",
+    "A different Chrome or font rasterizer version may change PNG bytes.",
+    "No live profile was edited, no binder is currently generated, and receiver acceptance is not implied."
+  ],
+  "image_generation_prompt": "None — deterministic SVG/Chrome raster export from the selected supplied seed.",
+  "improvement_signal": "Handoff fixtures are coupled to the mutable active workspace Review owner and optional OpenPencil selection; 4/29 tests failed during this banner run, and the implementation workaround is deliberately being removed from this outcome for separate issue-based review."
+}

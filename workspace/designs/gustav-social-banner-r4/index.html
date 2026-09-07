@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gustav social banner R4 · waiting review</title>
+    <style>
+      @font-face {
+        font-family: "Geist";
+        src: url("handoffs/gustav-social-banner-r4/assets/fonts/geist-sans-variable.woff2")
+          format("woff2");
+        font-weight: 100 900;
+      }
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("handoffs/gustav-social-banner-r4/assets/fonts/geist-mono-variable.woff2")
+          format("woff2");
+        font-weight: 100 900;
+      }
+      :root {
+        color-scheme: light;
+        --field: #e5e5e0;
+        --surface: #f1f1ed;
+        --ink: #20211f;
+        --muted: #5f625d;
+        --line: #cdcec7;
+        --accent: #a85a40;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        background: var(--field);
+        color: var(--ink);
+        font-family: "Geist", Arial, sans-serif;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+      }
+      a:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 4px;
+      }
+      .skip-link {
+        position: fixed;
+        left: 16px;
+        top: 12px;
+        z-index: 3;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: var(--ink);
+        color: white;
+        transform: translateY(-180%);
+      }
+      .skip-link:focus {
+        transform: none;
+      }
+      header,
+      main,
+      footer {
+        width: min(1420px, calc(100% - 40px));
+        margin-inline: auto;
+      }
+      header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: end;
+        padding: 48px 0 28px;
+        border-bottom: 1px solid var(--line);
+      }
+      .eyebrow,
+      .status,
+      .meta {
+        font-family: "Geist Mono", monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+      .eyebrow,
+      .meta {
+        color: var(--muted);
+      }
+      h1 {
+        max-width: 18ch;
+        margin: 12px 0 0;
+        font-size: clamp(2rem, 5vw, 4.7rem);
+        line-height: 0.95;
+        letter-spacing: -0.055em;
+      }
+      .status {
+        padding: 9px 12px;
+        border: 1px solid var(--accent);
+        border-radius: 999px;
+        color: var(--accent);
+      }
+      main {
+        padding-block: 44px 72px;
+      }
+      section + section {
+        margin-top: 64px;
+      }
+      h2 {
+        margin: 0 0 10px;
+        font-size: 1.45rem;
+        letter-spacing: -0.025em;
+      }
+      p {
+        max-width: 72ch;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      figure {
+        margin: 24px 0 0;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--surface);
+        box-shadow: 0 5px 18px rgb(32 33 31 / 7%);
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+      figcaption {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 12px 4px 2px;
+      }
+      .downloads {
+        display: flex;
+        gap: 14px;
+        font-size: 0.9rem;
+        font-weight: 650;
+      }
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+      .proof-grid figure {
+        margin-top: 20px;
+      }
+      footer {
+        padding: 24px 0 40px;
+        border-top: 1px solid var(--line);
+      }
+      @media (max-width: 760px) {
+        header {
+          grid-template-columns: 1fr;
+          align-items: start;
+          padding-top: 32px;
+        }
+        .status {
+          width: fit-content;
+        }
+        .proof-grid {
+          grid-template-columns: 1fr;
+        }
+        figure {
+          padding: 8px;
+          border-radius: 12px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#candidate">Skip to candidate exports</a>
+    <div hidden aria-hidden="true">
+      <span data-state="success">Static export available</span>
+      <span data-state="loading">Not applicable to static media</span>
+      <span data-state="error">Not applicable to static media</span>
+      <span data-state="empty">Not applicable to static media</span>
+      <span data-state="permission">Not applicable to static media</span>
+      <span data-state="offline">Local assets remain inspectable offline</span>
+    </div>
+    <header>
+      <div>
+        <div class="eyebrow">Agentic Design System · R4</div>
+        <h1>Occupied cells, quieter balance.</h1>
+      </div>
+      <div class="status">Waiting review</div>
+    </header>
+    <main id="candidate">
+      <section aria-labelledby="linkedin-heading">
+        <h2 id="linkedin-heading">LinkedIn · 1584 × 396</h2>
+        <p>
+          Exact candidate export. The first brand cell clears the center crop by
+          93px; the complete headline retains 139px right clearance.
+        </p>
+        <figure>
+          <img
+            src="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-linkedin.png"
+            alt="Cool mineral LinkedIn banner with Gustav Online, onlinesourdough, and Arc'IT AI occupying three equal adjacent grid cells without connector graphics beside the Danish business-freedom headline."
+          />
+          <figcaption>
+            <span class="meta">Upload candidate · exact size</span>
+            <span class="downloads">
+              <a
+                href="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-linkedin.png"
+                >PNG</a
+              >
+              <a
+                href="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-linkedin.svg"
+                >SVG</a
+              >
+            </span>
+          </figcaption>
+        </figure>
+      </section>
+      <section aria-labelledby="x-heading">
+        <h2 id="x-heading">X · 1500 × 500</h2>
+        <p>
+          Exact candidate export. The first brand cell clears the center crop by
+          56px; the complete headline retains 80px right clearance.
+        </p>
+        <figure>
+          <img
+            src="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-x.png"
+            alt="Cool mineral X banner with Gustav Online, onlinesourdough, and Arc'IT AI occupying three equal adjacent grid cells without connector graphics beside the Danish business-freedom headline."
+          />
+          <figcaption>
+            <span class="meta">Upload candidate · exact size</span>
+            <span class="downloads">
+              <a
+                href="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-x.png"
+                >PNG</a
+              >
+              <a
+                href="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-x.svg"
+                >SVG</a
+              >
+            </span>
+          </figcaption>
+        </figure>
+      </section>
+      <section aria-labelledby="proof-heading">
+        <h2 id="proof-heading">Crop and profile-overlap proofs</h2>
+        <p>
+          Proof overlays are inspection-only. Dashed frames show conservative
+          center/mobile crops; circles show lower-left profile obstruction.
+        </p>
+        <div class="proof-grid">
+          <figure>
+            <img
+              src="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-linkedin-crop-proof.png"
+              alt="LinkedIn crop proof labeling the 1350-pixel center crop, profile overlap, and 139-pixel headline clearance."
+            />
+            <figcaption><span class="meta">LinkedIn proof</span></figcaption>
+          </figure>
+          <figure>
+            <img
+              src="handoffs/gustav-social-banner-r4/assets/gustav-social-banner-r4-x-crop-proof.png"
+              alt="X crop proof labeling the 1200-pixel center crop, profile overlap, and 80-pixel headline clearance."
+            />
+            <figcaption><span class="meta">X proof</span></figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>
+        Canonical direction: DESIGN.md · Review owner: AIOS lead Review ·
+        Receiver acceptance: pending · No publication performed.
+      </p>
+    </footer>
+  </body>
+</html>

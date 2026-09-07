@@ -9,7 +9,6 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from shutil import copyfile
 from typing import Any, Dict, List, Optional, Tuple
 
 
@@ -32,7 +31,7 @@ class TraceResult:
     output_path: Path
     proof_path: Path
     ledger_path: Path
-    example_path: Optional[Path]
+    design_path: Path
     previous_run_id: Optional[str]
     previous_run_relation: Optional[str]
     inspected_prior_runs: int
@@ -53,8 +52,51 @@ def _relative(path: Path, root: Path) -> str:
     return path.relative_to(root).as_posix()
 
 
+def _exists_or_symlink(path: Path) -> bool:
+    """Include broken links: they are never a safe collection component."""
+
+    return path.exists() or path.is_symlink()
+
+
+def _assert_managed_path(root: Path, path: Path, *, directory: bool = False) -> None:
+    """Reject lexical escapes, symlink traversals, and incompatible collisions."""
+
+    try:
+        relative = path.relative_to(root)
+    except ValueError as exc:
+        raise TraceError(f"managed path escapes repository root: {path}") from exc
+    cursor = root
+    for index, part in enumerate(relative.parts):
+        cursor = cursor / part
+        if cursor.is_symlink():
+            raise TraceError(f"managed path must not traverse a symlink: {_relative(cursor, root)}")
+        if not _exists_or_symlink(cursor):
+            continue
+        is_leaf = index == len(relative.parts) - 1
+        if not is_leaf and not cursor.is_dir():
+            raise TraceError(f"managed path has a non-directory parent: {_relative(cursor, root)}")
+        if is_leaf and directory and not cursor.is_dir():
+            raise TraceError(f"managed directory collides with a non-directory: {_relative(cursor, root)}")
+
+
+def _require_regular_file(root: Path, path: Path, label: str) -> None:
+    _assert_managed_path(root, path)
+    if path.is_symlink() or not path.is_file():
+        raise TraceError(f"{label} must be a regular file: {_relative(path, root)}")
+
+
+def _ensure_managed_directory(root: Path, path: Path) -> None:
+    _assert_managed_path(root, path, directory=True)
+    if not _exists_or_symlink(path):
+        path.mkdir(parents=True)
+    _assert_managed_path(root, path, directory=True)
+
+
 def _write_json(path: Path, value: Dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.parent.is_symlink() or not path.parent.is_dir():
+        raise TraceError(f"output parent is unavailable: {path.parent}")
+    if path.is_symlink() or (path.exists() and not path.is_file()):
+        raise TraceError(f"output path is not a regular file: {path}")
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -85,7 +127,10 @@ def _next_run_id(records: List[Dict[str, Any]]) -> str:
 
 
 def _append_ledger(path: Path, record: Dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.parent.is_symlink() or not path.parent.is_dir():
+        raise TraceError(f"ledger parent is unavailable: {path.parent}")
+    if path.is_symlink() or (path.exists() and not path.is_file()):
+        raise TraceError(f"ledger path is not a regular file: {path}")
     with path.open("a", encoding="utf-8") as stream:
         stream.write(json.dumps(record, sort_keys=True) + "\n")
 
@@ -114,14 +159,13 @@ def _review_check(path: Path) -> Tuple[str, List[str]]:
     return ("REVISE", generic) if generic else ("PASS", [])
 
 
-def _source_decision_check(root: Path) -> List[Dict[str, str]]:
-    """Resolve the canonical source audit into the active semantic direction."""
+def _source_decision_check(root: Path, design_path: Path) -> List[Dict[str, str]]:
+    """Resolve the canonical source audit into the selected semantic direction."""
 
     audit_path = root / "docs" / "SOURCE_AUDIT.md"
-    design_path = root / "workspace" / "DESIGN.md"
     if not audit_path.is_file() or not design_path.is_file():
         raise TraceError(
-            "source decision requires docs/SOURCE_AUDIT.md and workspace/DESIGN.md"
+            "source decision requires docs/SOURCE_AUDIT.md and a selected DESIGN.md"
         )
     text = audit_path.read_text(encoding="utf-8")
     marker = "## Current design/source trace"
@@ -176,7 +220,7 @@ def _source_decision_check(root: Path) -> List[Dict[str, str]]:
         design_marker = source.get("DESIGN marker", "").strip("§")
         if design_marker and design_marker not in design:
             findings.append(
-                f"workspace/DESIGN.md does not resolve marker {design_marker}"
+                f"{_relative(design_path, root)} does not resolve marker {design_marker}"
             )
     if findings:
         raise TraceError("source decision failed: " + "; ".join(findings))
@@ -200,7 +244,7 @@ def _generated_preview(slug: str) -> str:
         '    <a class="skip-link" href="#proof">Skip to proof</a>\n'
         '    <main id="proof" tabindex="-1">\n'
         f"      <h1>{slug}</h1>\n"
-        "      <p>This curated example was created or resumed by the ADS tracer.</p>\n"
+        "      <p>This selected design was created or resumed by the ADS tracer.</p>\n"
         '      <button type="button">Review proof</button>\n'
         "    </main>\n"
         "  </body>\n"
@@ -208,64 +252,71 @@ def _generated_preview(slug: str) -> str:
     )
 
 
-def _ensure_promoted_example(root: Path, slug: str, run_id: str, proof_ref: str) -> Path:
-    directory = root / "examples" / slug
-    directory.mkdir(parents=True, exist_ok=True)
-    if not (directory / "index.html").exists():
-        source_workspace = root / "workspace"
-        copyfile(source_workspace / "BRIEF.md", directory / "BRIEF.md")
-        copyfile(source_workspace / "DESIGN.md", directory / "DESIGN.md")
+def _ensure_selected_design(root: Path, slug: str) -> Tuple[Path, str]:
+    directory = root / "workspace" / "designs" / slug
+    _assert_managed_path(root, directory, directory=True)
+    if _exists_or_symlink(directory):
+        for name in ("BRIEF.md", "DESIGN.md", "index.html"):
+            _require_regular_file(root, directory / name, f"cannot resume incomplete selected design: {slug}/{name}")
+        return directory, "resume"
+
+    _ensure_managed_directory(root, directory)
+    try:
+        (directory / "BRIEF.md").write_text(
+            "# Deterministic ADS design brief\n\n"
+            "- **Receiving outcome:** Exercise the ADS selected-design proof route.\n"
+            "- **Source/reference rights, provenance, and licensing:** Repository-owned fixture text; no external asset is selected.\n"
+            "- **Ownership boundary:** ADS owns the direction; any receiver separately owns implementation.\n"
+            "- **Review mode:** independent\n"
+            "- **Review owner:** ADS Review\n"
+            "- **Receiver acceptance:** The named receiver separately accepts any generated handoff.\n",
+            encoding="utf-8",
+        )
+        (directory / "DESIGN.md").write_text(
+            "---\nname: Deterministic ADS selected design\nversion: 1.0.0\n---\n\n"
+            "# Deterministic ADS selected design\n\n"
+            "## Portable direction and ownership\n\n"
+            "This `DESIGN.md` is the canonical portable human-readable visual direction.\n\n"
+            "**Scope and non-goals:** Prove the isolated selected-design workflow only.\n\n"
+            "**Review, revision, and acceptance:** ADS Review records evidence; receiver acceptance remains separate.\n\n"
+            "**Known limitations:** This fixture does not claim a production rendering.\n\n"
+            "source:heroui-ui-library\nsource:desengs-inspiration\nsource:openpencil-optional-adapter\n",
+            encoding="utf-8",
+        )
         (directory / "index.html").write_text(_generated_preview(slug), encoding="utf-8")
-        (directory / "README.md").write_text(
-            f"# Curated {slug} proof\n\n"
-            f"This standalone example was deliberately promoted by ADS run `{run_id}`.\n\n"
-            "Its canonical portable `DESIGN.md`, brief, local preview, and proof remain usable without importing ADS. Optional companions never replace the direction.\n",
-            encoding="utf-8",
-        )
-    else:
-        for name in ("BRIEF.md", "DESIGN.md", "README.md"):
-            if not (directory / name).exists():
-                raise TraceError(f"cannot resume incomplete example: examples/{slug}/{name}")
-    _write_json(
-        directory / "proof.json",
-        {
-            "curated": True,
-            "example": slug,
-            "review": "PASS",
-            "route": ROUTE,
-            "source_proof_ref": proof_ref,
-            "source_run_id": run_id,
-            "status": "succeeded",
-        },
-    )
-    gallery = root / "examples" / "index.html"
-    if not gallery.exists():
-        gallery.parent.mkdir(parents=True, exist_ok=True)
-        gallery.write_text(
-            '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>:focus-visible{outline:3px solid #d06b45}</style></head><body><main><h1>Curated ADS examples</h1></main></body></html>\n',
-            encoding="utf-8",
-        )
-    gallery_text = gallery.read_text(encoding="utf-8")
-    marker = f'data-tracer-example="{slug}"'
-    if marker not in gallery_text:
-        link = f'<p {marker}><a href="{slug}/index.html">Open {slug} proof example</a></p>'
-        gallery.write_text(gallery_text.replace("</main>", f"{link}</main>", 1), encoding="utf-8")
-    gallery_readme = root / "examples" / "README.md"
-    if gallery_readme.exists():
-        readme_text = gallery_readme.read_text(encoding="utf-8")
-        if slug not in readme_text:
-            gallery_readme.write_text(
-                f"{readme_text.rstrip()}\n\n- [{slug} proof]({slug}/index.html)\n",
-                encoding="utf-8",
-            )
-    return directory
+    except Exception:
+        # A partial creation is an incomplete selection on the next run, never
+        # a cue to overwrite owner files.
+        raise
+    return directory, "create"
+
+
+def _prepare_trace_outputs(root: Path, design_path: Path, run_id: str, *, curate: bool) -> None:
+    """Validate every mutable collection path before creating a run artifact."""
+
+    for name in ("history", "runs", "state"):
+        _assert_managed_path(root, design_path / name, directory=True)
+    ledger_path = design_path / "history" / "runs.jsonl"
+    if _exists_or_symlink(ledger_path):
+        _require_regular_file(root, ledger_path, "run ledger")
+    run_dir = design_path / "runs" / run_id
+    _assert_managed_path(root, run_dir, directory=True)
+    if _exists_or_symlink(run_dir):
+        raise TraceError(f"run directory already exists: {_relative(run_dir, root)}")
+    active_path = design_path / "state" / "active.json"
+    if _exists_or_symlink(active_path):
+        _require_regular_file(root, active_path, "active state")
+    if curate and _exists_or_symlink(design_path / "proof.json"):
+        _require_regular_file(root, design_path / "proof.json", "curated proof")
+    for name in ("history", "runs", "state"):
+        _ensure_managed_directory(root, design_path / name)
 
 
 def trace_once(
     root: Path,
     *,
-    slug: str = "clean-clone-proof",
-    promote_example: bool = False,
+    slug: str,
+    curate: bool = False,
     simulate_failure: bool = False,
     recover: bool = False,
     preview: bool = False,
@@ -280,14 +331,22 @@ def trace_once(
         raise TraceError("slug must use lowercase letters, numbers, and hyphens")
     if simulate_failure and recover:
         raise TraceError("choose either --simulate-failure or --recover")
-    if promote_example:
+    if curate:
         preview = True
         review = True
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", timestamp):
         raise TraceError("timestamp must use UTC form YYYY-MM-DDTHH:MM:SSZ")
-    source_records = _source_decision_check(root) if source_decision else None
+    design_path, action = _ensure_selected_design(root, slug)
+    source_records = (
+        _source_decision_check(root, design_path / "DESIGN.md")
+        if source_decision
+        else None
+    )
 
-    ledger_path = root / "workspace" / "history" / "runs.jsonl"
+    ledger_path = design_path / "history" / "runs.jsonl"
+    _assert_managed_path(root, design_path / "history", directory=True)
+    if _exists_or_symlink(ledger_path):
+        _require_regular_file(root, ledger_path, "run ledger")
     records = _read_ledger(ledger_path)
     input_ref = f"fixture://agentic-design-system/example/{slug}"
     relevant = [record for record in records if record.get("input_ref") == input_ref]
@@ -318,22 +377,20 @@ def trace_once(
         previous_relation = "predecessor" if previous_run_id else None
 
     run_id = _next_run_id(records)
-    run_dir = root / "workspace" / "runs" / run_id
-    if run_dir.exists():
-        raise TraceError(f"run directory already exists: {_relative(run_dir, root)}")
-    run_dir.mkdir(parents=True)
+    _prepare_trace_outputs(root, design_path, run_id, curate=curate)
+    run_dir = design_path / "runs" / run_id
+    run_dir.mkdir()
     output_path = run_dir / "output.json"
     proof_path = run_dir / "proof.json"
     failure_path: Optional[Path] = None
     recovery_path: Optional[Path] = None
-    action = "resume" if (root / "examples" / slug).exists() else "create"
     _write_json(
         run_dir / "input.json",
         {
             "action": action,
-            "example_slug": slug,
+            "design_slug": slug,
             "input_ref": input_ref,
-            "request_kind": "design-example",
+            "request_kind": "selected-design",
             "route": ROUTE,
         },
     )
@@ -344,7 +401,7 @@ def trace_once(
         review_status = "not-run"
         output = {
             "action": action,
-            "example_slug": slug,
+            "design_slug": slug,
             "previous_run_id": previous_run_id,
             "previous_run_relation": previous_relation,
             "result": "The deterministic review fixture stopped before preview.",
@@ -371,22 +428,22 @@ def trace_once(
         preview_status = "not-requested"
         review_status = "not-requested"
         if preview:
-            preview_status, preview_findings = _preview_check(root / "workspace" / "index.html")
+            preview_status, preview_findings = _preview_check(design_path / "index.html")
             if preview_status != "ready":
-                raise TraceError("workspace preview failed: " + ", ".join(preview_findings))
+                raise TraceError("selected preview failed: " + ", ".join(preview_findings))
         if review:
-            review_status, review_findings = _review_check(root / "workspace" / "index.html")
+            review_status, review_findings = _review_check(design_path / "index.html")
             if review_status != "PASS":
-                raise TraceError("workspace review failed: " + ", ".join(review_findings))
+                raise TraceError("selected review failed: " + ", ".join(review_findings))
         status = "succeeded"
         recovered_from = failed_prior.get("run_id") if recover and failed_prior else None
         output = {
             "action": action,
-            "example_slug": slug,
+            "design_slug": slug,
             "previous_run_id": previous_run_id,
             "previous_run_relation": previous_relation,
             "recovered_from": recovered_from,
-            "result": "The ADS design-example route completed deterministically.",
+            "result": "The ADS selected-design route completed deterministically.",
             "route": ROUTE,
             "run_id": run_id,
             "status": status,
@@ -394,7 +451,7 @@ def trace_once(
         assertions = [
             "the primary skill inspected relevant prior runs",
             "the route recorded preview and review status",
-            "output and proof were written under workspace/runs",
+            "output and proof were written under the selected design runs directory",
             "the standalone route required no AIOS or sibling System runtime",
         ]
         if recover:
@@ -402,7 +459,7 @@ def trace_once(
             _write_json(
                 recovery_path,
                 {
-                    "action": "reroute the design example after its recorded failure",
+                    "action": "reroute the selected design after its recorded failure",
                     "from_run_id": failed_prior.get("run_id"),
                     "run_id": run_id,
                     "status": "recovered",
@@ -423,10 +480,10 @@ def trace_once(
         proof_path,
         {
             "assertions": assertions,
-            "curated_example_ref": f"examples/{slug}/" if promote_example else None,
+            "curated_design_ref": f"workspace/designs/{slug}/" if curate else None,
             "failure_ref": _relative(failure_path, root) if failure_path else None,
             "input_ref": input_ref,
-            "ledger_ref": f"workspace/history/runs.jsonl#{run_id}",
+            "ledger_ref": f"workspace/designs/{slug}/history/runs.jsonl#{run_id}",
             "preview": preview_status,
             "previous_run_id": previous_run_id,
             "previous_run_relation": previous_relation,
@@ -463,13 +520,23 @@ def trace_once(
         },
     )
 
-    example_path = None
-    if promote_example:
-        example_path = _ensure_promoted_example(root, slug, run_id, _relative(proof_path, root))
+    if curate:
+        _write_json(
+            design_path / "proof.json",
+            {
+                "curated": True,
+                "design": slug,
+                "review": "PASS",
+                "route": ROUTE,
+                "source_proof_ref": _relative(proof_path, root),
+                "source_run_id": run_id,
+                "status": "succeeded",
+            },
+        )
     _write_json(
-        root / "workspace" / "state" / "active.json",
+        design_path / "state" / "active.json",
         {
-            "example_slug": slug,
+            "design_slug": slug,
             "latest_run_id": run_id,
             "preview": preview_status,
             "review": review_status,
@@ -485,7 +552,7 @@ def trace_once(
         output_path=output_path,
         proof_path=proof_path,
         ledger_path=ledger_path,
-        example_path=example_path,
+        design_path=design_path,
         previous_run_id=previous_run_id,
         previous_run_relation=previous_relation,
         inspected_prior_runs=len(relevant),
@@ -500,8 +567,12 @@ def trace_once(
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run the deterministic ADS filesystem proof.")
     parser.add_argument("--root", type=Path, default=None, help="checkout root to operate on")
-    parser.add_argument("--slug", default="clean-clone-proof", help="lowercase example slug")
-    parser.add_argument("--promote-example", action="store_true", help="curate this route into examples/")
+    parser.add_argument(
+        "--slug",
+        required=True,
+        help="lowercase selected design slug; selects exactly one collection member",
+    )
+    parser.add_argument("--curate", action="store_true", help="mark this selected route as curated in place")
     parser.add_argument("--simulate-failure", action="store_true", help="record a recoverable fixture failure")
     parser.add_argument("--recover", action="store_true", help="recover the latest failed route for this slug")
     parser.add_argument("--preview", action="store_true", help="check the local workspace preview")
@@ -509,7 +580,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--source-decision",
         action="store_true",
-        help="trace audited source roles into the active DESIGN.md",
+        help="trace audited source roles into the selected DESIGN.md",
     )
     parser.add_argument("--timestamp", default=DEFAULT_TIMESTAMP, help="UTC timestamp for deterministic evidence")
     return parser
@@ -521,7 +592,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         result = trace_once(
             (args.root or repository_root()),
             slug=args.slug,
-            promote_example=args.promote_example,
+            curate=args.curate,
             simulate_failure=args.simulate_failure,
             recover=args.recover,
             preview=args.preview,
@@ -554,9 +625,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if result.recovery_path:
         print(f"recovery: {_relative(result.recovery_path, root)}")
     print(
-        f"curated_example: {_relative(result.example_path, root)}/"
-        if result.example_path
-        else "curated_example: none"
+        f"selected_design: {_relative(result.design_path, root)}/"
     )
     return 0
 

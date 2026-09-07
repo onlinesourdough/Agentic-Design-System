@@ -15,36 +15,32 @@ root shell
 │   ├── review-design/                internal per-design review method
 │   └── audit-design-system/          internal periodic read-only audit
 ├── workspace/
-│   ├── BRIEF.md, DESIGN.md, index.html active input, canonical direction, preview
-│   ├── state/                         current resume pointer
-│   ├── runs/                          route evidence
-│   ├── history/runs.jsonl             append-only relations
+│   ├── designs/<slug>/                selected input, canonical direction, preview, and companions
+│   │   └── state/, runs/, history/, handoffs/ design-local evidence and snapshots
 │   ├── learning/                      durable learning
-│   ├── openpencil/                    optional native source/export boundary
 │   └── engine/                        optional preview/lint/export/tracer
-├── examples/                          curated gallery, index owned by main
 └── docs/                              contract, audits, validation, references
 ```
 
 The primary skill is the only owner-facing route. It delegates focused
 authoring and review methods, but keeps routing, state, ledger, failure and
-promotion decisions in ADS. The technical engine is nested under workspace so
+curation decisions in ADS. The technical engine is nested under workspace so
 it cannot be mistaken for a new top-level System concept.
 
-The active workspace and durable examples have different ownership rules:
+The selected design collection has explicit ownership rules:
 
-| Surface              | Owner                   | Lifecycle                                 |
-| -------------------- | ----------------------- | ----------------------------------------- |
-| `workspace/`         | current ADS route       | resumed and replaced as work evolves      |
-| `workspace/history/` | ADS operational history | append-only relations                     |
-| `examples/`          | main gallery            | deliberate curated promotion              |
-| branches/worktrees   | temporary isolation     | removed or merged after review            |
-| receiving project    | receiving project       | canonical implementation after acceptance |
+| Surface                                       | Owner                   | Lifecycle                                 |
+| --------------------------------------------- | ----------------------- | ----------------------------------------- |
+| `workspace/designs/<slug>/`                   | current ADS route       | resumed only when explicitly selected     |
+| `history/runs.jsonl` inside a selected design | ADS operational history | append-only relations                     |
+| local `proof.json`                            | selected design         | deliberate in-place curation marker       |
+| branches/worktrees                            | temporary isolation     | removed or merged after review            |
+| receiving project                             | receiving project       | canonical implementation after acceptance |
 
 External UI sources remain a reviewed source boundary. An adapter can be
 selected for a brief when its license, accessibility, framework fit,
 maintenance signal, and visual value justify it. The adapter is implemented in
-the receiving preview or curated example; a source repository is never copied
+the receiving preview or selected design; a source repository is never copied
 into ADS as a universal catalog.
 
 `DESIGN.md` stays the canonical semantic and portable design owner for every

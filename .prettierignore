@@ -3,3 +3,5 @@ output/
 tmp/
 **/handoff/
 **/handoff/*.json
+workspace/designs/*/runs/
+workspace/designs/*/handoffs/

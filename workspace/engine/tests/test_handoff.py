@@ -15,7 +15,7 @@ from typing import Optional
 ROOT = Path(__file__).resolve().parents[3]
 SCRIPT = ROOT / "workspace/engine/create-handoff.mjs"
 TRACER = ROOT / "workspace/engine/handoff_tracer.mjs"
-SOURCE = ROOT / "workspace"
+SOURCE = ROOT / "workspace/engine/tests/fixtures/handoff-source"
 
 
 def fingerprint(directory: Path) -> str:
@@ -37,7 +37,14 @@ class HandoffTests(unittest.TestCase):
         receiving_owner: Optional[str] = "Receiving repository owner",
         cwd: Path = ROOT,
     ) -> subprocess.CompletedProcess[str]:
-        command = ["node", str(SCRIPT), str(source), str(output)]
+        command = [
+            "node",
+            str(SCRIPT),
+            "--design-dir",
+            str(source),
+            "--output",
+            str(output),
+        ]
         if receiving_owner is not None:
             command.extend(["--receiving-owner", receiving_owner])
         command.extend(arguments)
@@ -68,7 +75,8 @@ class HandoffTests(unittest.TestCase):
         return json.loads(result.stdout)
 
     def _run(self, output: Path, *arguments: str) -> dict:
-        return self._run_from(SOURCE, output, *arguments)
+        source = self._minimal_source(output.parent / f"{output.name}-source")
+        return self._run_from(source, output, *arguments)
 
     def _openpencil_arguments(self, tool: Path) -> list[str]:
         return [
@@ -154,6 +162,18 @@ version: 1.0.0
             encoding="utf-8",
         )
         self._write_review(source)
+        source.joinpath("openpencil").mkdir()
+        source.joinpath("openpencil/route-console.op").write_text(
+            "fixture OpenPencil source\n", encoding="utf-8"
+        )
+        source.joinpath("openpencil/exports").mkdir()
+        source.joinpath("openpencil/exports/route-console.png").write_bytes(
+            b"fixture OpenPencil export\n"
+        )
+        self._record_reviewed_companion(source, "openpencil/route-console.op")
+        self._record_reviewed_companion(
+            source, "openpencil/exports/route-console.png"
+        )
         return source
 
     def test_minimal_handoff_needs_no_preview_assets_exports_or_tool_install(self):
@@ -530,7 +550,7 @@ version: 1.0.0
             self.assertIn("DESIGN.md", manifest)
             self.assertEqual(
                 manifest["DESIGN.md"],
-                hashlib.sha256(SOURCE.joinpath("DESIGN.md").read_bytes()).hexdigest(),
+                included["handoff"]["review"]["designSha256"],
             )
         self.assertEqual(before, fingerprint(SOURCE))
 
@@ -666,7 +686,7 @@ version: 1.0.0
             result = self._invoke(SOURCE, output, "excess-positional")
 
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn("at most a source and output", result.stderr)
+            self.assertIn("uses --design <slug>", result.stderr)
             self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
         self.assertEqual(before, fingerprint(SOURCE))
 
