@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title description">
+  <title id="title">The real constraint</title>
+  <desc id="description">A warm editorial diagnosis board comparing Offer, Ops, and Demand, with Demand marked as the current worked example and connected to the smallest complete change.</desc>
+  <defs>
+    <pattern id="paper-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#5a3d30" stroke-opacity="0.065" stroke-width="1" />
+    </pattern>
+    <filter id="board-shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#5a3d30" flood-opacity="0.15" />
+    </filter>
+    <style>
+      @font-face { font-family: "Geist Sans"; src: url("fonts/geist-sans-variable.woff2") format("woff2"); }
+      @font-face { font-family: "Geist Mono"; src: url("fonts/geist-mono-variable.woff2") format("woff2"); }
+      @font-face { font-family: "Geist Pixel"; src: url("fonts/geist-pixel-square.woff2") format("woff2"); }
+      .display { font-family: "Geist Pixel", "Geist Mono", monospace; font-weight: 400; letter-spacing: -4.6px; }
+      .sans { font-family: "Geist Sans", Arial, sans-serif; font-weight: 690; }
+      .mono { font-family: "Geist Mono", monospace; font-weight: 700; letter-spacing: 1.8px; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="#f8f2e8" />
+  <rect width="1280" height="720" fill="url(#paper-grid)" />
+  <path d="M 0 612 C 230 578, 420 656, 718 606" fill="none" stroke="#b86f36" stroke-opacity="0.22" stroke-width="3" />
+
+  <g class="mono" font-size="15" fill="#5a3d30">
+    <text x="58" y="72">ONLINESOURDOUGH / DIAGNOSIS</text>
+    <circle cx="351" cy="66" r="5" fill="#f36f2b" />
+    <text x="369" y="72" fill="#6f594a">START WITH THE BUSINESS</text>
+  </g>
+
+  <g class="display" fill="#2b1b12">
+    <text x="56" y="210" font-size="104">THE</text>
+    <text x="56" y="328" font-size="116" fill="#b86f36">REAL</text>
+    <text x="56" y="435" font-size="84">CONSTRAINT</text>
+  </g>
+
+  <g transform="translate(58 496)">
+    <rect width="618" height="92" rx="18" fill="#fffdf7" stroke="#d8c3aa" stroke-width="2" />
+    <path d="M 26 46 H 84" stroke="#b86f36" stroke-width="5" stroke-linecap="round" />
+    <path d="M 74 35 L 88 46 L 74 57" fill="none" stroke="#b86f36" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="112" y="39" class="mono" font-size="14" fill="#6f594a">THEN CHOOSE</text>
+    <text x="112" y="67" class="sans" font-size="24" fill="#2b1b12">the smallest complete change</text>
+  </g>
+
+  <g filter="url(#board-shadow)">
+    <rect x="746" y="56" width="476" height="598" rx="26" fill="#fffdf7" stroke="#d8c3aa" stroke-width="2" />
+  </g>
+  <text x="786" y="104" class="mono" font-size="14" fill="#6f594a">WHAT’S ACTUALLY STUCK?</text>
+  <path d="M 786 126 H 1182" stroke="#d8c3aa" stroke-width="2" />
+
+  <g aria-label="Offer Ops Demand diagnosis" class="mono">
+    <g>
+      <rect x="786" y="156" width="396" height="105" rx="16" fill="#f8f2e8" stroke="#d8c3aa" stroke-width="2" />
+      <text x="812" y="194" font-size="20" fill="#2b1b12">OFFER</text>
+      <text x="812" y="225" font-size="13" fill="#6f594a">VALUE · POSITION · PRICE</text>
+      <path d="M 1080 208 H 1144" stroke="#5a3d30" stroke-width="4" stroke-linecap="round" />
+      <circle cx="1154" cy="208" r="9" fill="#f8f2e8" stroke="#5a3d30" stroke-width="3" />
+    </g>
+    <g>
+      <rect x="786" y="280" width="396" height="105" rx="16" fill="#efe4d4" stroke="#d8c3aa" stroke-width="2" />
+      <text x="812" y="318" font-size="20" fill="#2b1b12">OPS</text>
+      <text x="812" y="349" font-size="13" fill="#6f594a">DELIVERY · FLOW · CAPACITY</text>
+      <path d="M 1080 332 H 1123" stroke="#5a3d30" stroke-width="4" stroke-linecap="round" />
+      <rect x="1127" y="322" width="28" height="20" rx="4" fill="#5a3d30" />
+    </g>
+    <g>
+      <rect x="786" y="404" width="396" height="123" rx="16" fill="#f36f2b" />
+      <rect x="1006" y="422" width="150" height="34" rx="17" fill="#2b1b12" />
+      <text x="1033" y="444" font-size="12" fill="#fffaf1">CURRENT</text>
+      <text x="812" y="449" font-size="22" fill="#2b1b12">DEMAND</text>
+      <text x="812" y="486" font-size="13" fill="#2b1b12">ATTENTION · TRUST · SALES</text>
+      <path d="M 1091 497 H 1152" stroke="#2b1b12" stroke-width="5" stroke-linecap="round" />
+      <path d="M 1138 485 L 1156 497 L 1138 509" fill="none" stroke="#2b1b12" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+  </g>
+
+  <g class="mono">
+    <path d="M 986 529 V 557 H 816" fill="none" stroke="#b86f36" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="816" cy="557" r="7" fill="#b86f36" />
+    <text x="816" y="593" font-size="13" fill="#5a3d30">FIND IT BEFORE YOU BUILD</text>
+  </g>
+
+  <path d="M 58 672 H 1018" stroke="#5a3d30" stroke-opacity="0.22" stroke-width="1" />
+  <text x="58" y="695" class="mono" font-size="13" fill="#6f594a">02 / OFFER · OPERATIONS · DEMAND</text>
+</svg>

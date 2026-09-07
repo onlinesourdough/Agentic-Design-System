@@ -4129,12 +4129,23 @@
         }
 
         function clearValidation(form) {
-          form
-            .querySelectorAll("[aria-invalid='true']")
-            .forEach((field) => field.removeAttribute("aria-invalid"));
+          form.querySelectorAll("[aria-invalid='true']").forEach((field) => {
+            field.removeAttribute("aria-invalid");
+            field.removeAttribute("aria-describedby");
+          });
           form
             .querySelectorAll(".form-error")
             .forEach((error) => error.remove());
+        }
+
+        function showFieldError(field, message) {
+          const errorId = `${field.id}-error`;
+          field.setAttribute("aria-invalid", "true");
+          field.setAttribute("aria-describedby", errorId);
+          field.insertAdjacentHTML(
+            "afterend",
+            `<p class="form-error" id="${errorId}">${message}</p>`,
+          );
         }
 
         function updateSearchResults(query, target) {
@@ -4213,11 +4224,10 @@
               const input = accountForm.querySelector("input");
               clearValidation(accountForm);
               if (!accountForm.checkValidity()) {
-                input?.setAttribute("aria-invalid", "true");
-                if (!accountForm.querySelector(".form-error"))
-                  input?.insertAdjacentHTML(
-                    "afterend",
-                    '<p class="form-error">Enter a valid email address before continuing.</p>',
+                if (input)
+                  showFieldError(
+                    input,
+                    "Enter a valid email address before continuing.",
                   );
                 showToast(
                   "Enter a valid email address to see the success state.",
@@ -4245,18 +4255,12 @@
               if (!helpForm.checkValidity()) {
                 fields
                   .filter((field) => !field.value.trim())
-                  .forEach((field) => {
-                    field.setAttribute("aria-invalid", "true");
-                    if (
-                      !field.nextElementSibling?.classList.contains(
-                        "form-error",
-                      )
-                    )
-                      field.insertAdjacentHTML(
-                        "afterend",
-                        '<p class="form-error">Add this detail so the note can be handed off.</p>',
-                      );
-                  });
+                  .forEach((field) =>
+                    showFieldError(
+                      field,
+                      "Add this detail so the note can be handed off.",
+                    ),
+                  );
                 showToast("Add the route and a short description first.");
                 return;
               }

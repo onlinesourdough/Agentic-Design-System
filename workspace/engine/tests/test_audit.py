@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import shutil
 import sys
 import tempfile
@@ -74,6 +75,65 @@ class AuditTests(unittest.TestCase):
                     "zz-malformed-ledger ledger line 1 is invalid JSON" in finding
                     for finding in result.evidence
                 ),
+                result.as_dict(),
+            )
+
+    def test_legacy_omissions_are_pinned_not_a_general_missing_evidence_bypass(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            copied_root = Path(temporary) / "checkout"
+            shutil.copytree(ROOT, copied_root, ignore=audit_tracer._ignore)
+            ledger_path = (
+                copied_root
+                / "workspace/designs/ads-business-freedom-content-e2e-r1/history/runs.jsonl"
+            )
+            records = [
+                json.loads(line)
+                for line in ledger_path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            appended = {
+                **records[-1],
+                "run_id": "ads-migration-new-missing-proof",
+                "previous_run_id": records[-1]["run_id"],
+                "previous_run_relation": "predecessor",
+                "output_ref": "workspace/designs/ads-business-freedom-content-e2e-r1/runs/ads-migration-new-missing-proof/output.json",
+                "proof_ref": "workspace/designs/ads-business-freedom-content-e2e-r1/runs/ads-migration-new-missing-proof/proof.json",
+            }
+            ledger_path.write_text(
+                "\n".join(json.dumps(record) for record in [*records, appended])
+                + "\n",
+                encoding="utf-8",
+            )
+            result = audit.audit_design_system(copied_root, "workspace")
+            self.assertEqual(result.status, "BLOCKED", result.as_dict())
+            self.assertTrue(
+                any("ads-migration-new-missing-proof" in gap for gap in result.gaps),
+                result.as_dict(),
+            )
+
+        with tempfile.TemporaryDirectory() as temporary:
+            copied_root = Path(temporary) / "checkout"
+            shutil.copytree(ROOT, copied_root, ignore=audit_tracer._ignore)
+            ledger_path = (
+                copied_root
+                / "workspace/designs/ads-business-freedom-content-e2e-r1/history/runs.jsonl"
+            )
+            records = [
+                json.loads(line)
+                for line in ledger_path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            records[1]["proof_ref"] = (
+                "workspace/runs/ads-youtube-thumbnails-r1/changed-proof.json"
+            )
+            ledger_path.write_text(
+                "\n".join(json.dumps(record) for record in records) + "\n",
+                encoding="utf-8",
+            )
+            result = audit.audit_design_system(copied_root, "workspace")
+            self.assertEqual(result.status, "BLOCKED", result.as_dict())
+            self.assertTrue(
+                any("ads-youtube-thumbnails-r1" in gap for gap in result.gaps),
                 result.as_dict(),
             )
 

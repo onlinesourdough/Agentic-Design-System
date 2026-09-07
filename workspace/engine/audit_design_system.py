@@ -379,6 +379,53 @@ def _run_reference(
     return None
 
 
+def _declared_unavailable_legacy_fields(
+    root: Path, design: Path, record: Dict[str, Any]
+) -> set[str]:
+    """Return the exact historic omissions that a verified migration pins."""
+
+    migration_path = design / "history/MIGRATION.json"
+    if not migration_path.is_file():
+        return set()
+    try:
+        migration = json.loads(migration_path.read_text(encoding="utf-8"))
+        historical = migration["historical_ledger"]
+        preserved_relative = historical["preserved_path"]
+        expected_sha256 = historical["sha256"]
+        unavailable = migration["unavailable_precollection_records"]
+    except (KeyError, TypeError, json.JSONDecodeError):
+        return set()
+    if (
+        migration.get("schema") != "ADS-DESIGN-MIGRATION-MAP/1"
+        or not isinstance(preserved_relative, str)
+        or not isinstance(expected_sha256, str)
+        or not isinstance(unavailable, list)
+    ):
+        return set()
+    preserved = (root / preserved_relative).resolve()
+    try:
+        preserved.relative_to(design.resolve())
+        preserved.relative_to(root.resolve())
+    except ValueError:
+        return set()
+    if not preserved.is_file() or _sha256(preserved) != expected_sha256:
+        return set()
+    try:
+        historical_records = {
+            value["run_id"]: value
+            for line in preserved.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+            for value in (json.loads(line),)
+            if isinstance(value, dict) and isinstance(value.get("run_id"), str)
+        }
+    except json.JSONDecodeError:
+        return set()
+    run_id = record.get("run_id")
+    if run_id not in unavailable or historical_records.get(run_id) != record:
+        return set()
+    return {"output_ref", "proof_ref"}
+
+
 def _audit_design_ledger(
     root: Path, design: Path, findings: List[str], gaps: List[str], *, legacy: bool
 ) -> List[str]:
@@ -438,6 +485,9 @@ def _audit_design_ledger(
         if previous is not None and relation not in {"predecessor", "recovery"}:
             findings.append(f"{label} {run_id} has an invalid predecessor relation")
 
+        declared_legacy_omissions = _declared_unavailable_legacy_fields(
+            root, design, record
+        )
         for field in ("output_ref", "proof_ref"):
             reference = _run_reference(
                 design, root, run_id, record.get(field), legacy=legacy
@@ -445,7 +495,12 @@ def _audit_design_ledger(
             if reference is None:
                 findings.append(f"{label} {run_id} has an escaping or invalid {field}")
             elif not reference.is_file():
-                gaps.append(f"{label} required {field} is unavailable for {run_id}")
+                if field in declared_legacy_omissions:
+                    evidence.append(
+                        f"{label} preserves declared immutable {run_id} {field} as an unresolved pre-collection reference; no replacement evidence was manufactured"
+                    )
+                else:
+                    gaps.append(f"{label} required {field} is unavailable for {run_id}")
 
         if record.get("status") == "failed":
             failed.append(record)

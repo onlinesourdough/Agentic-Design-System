@@ -14,7 +14,7 @@ surfaces, and other visual outcomes. It is a repeatable standalone work surface,
 not a project template, receiving implementation, or installed runtime library.
 
 ```text
-selected design → brief → canonical DESIGN.md → preview → review → evidence → handoff
+selected design → brief → canonical DESIGN.md → selected preview → review → evidence → handoff
                                       ↘ cross-owner HANDOFF.md + optional companions
 accumulated truth ─────────────────────→ read-only periodic audit
 ```

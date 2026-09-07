@@ -185,7 +185,7 @@ try {
     const roles = axTree.nodes.map((node) => node.role?.value).filter(Boolean);
     evidence.push({
       ...viewport,
-      screenshot: `workspace/runs/gustav-social-banner-r1/${screenshotPath.split("/").pop()}`,
+      screenshot: `workspace/designs/gustav-social-banner-r1/runs/gustav-social-banner-r1/${screenshotPath.split("/").pop()}`,
       screenshotDimensions,
       inspection: inspected.result.value,
       interactionAfterClick: clicked.result.value,

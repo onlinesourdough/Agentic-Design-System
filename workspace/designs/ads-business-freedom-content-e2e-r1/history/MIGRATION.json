@@ -1,0 +1,24 @@
+{
+  "schema": "ADS-DESIGN-MIGRATION-MAP/1",
+  "migrated_from": "workspace/",
+  "historical_ledger": {
+    "preserved_path": "workspace/designs/ads-business-freedom-content-e2e-r1/history/original-workspace-runs.jsonl",
+    "sha256": "f71838d3da63c77317297ce900c544f2c8c90f4cbb0fc3d48f6dd874040cd8ab"
+  },
+  "record_refs": [
+    {
+      "run_id": "ads-business-freedom-content-e2e-r1",
+      "current": {
+        "input_ref": "workspace/designs/ads-business-freedom-content-e2e-r1/runs/ads-business-freedom-content-e2e-r1/input.json",
+        "output_ref": "workspace/designs/ads-business-freedom-content-e2e-r1/runs/ads-business-freedom-content-e2e-r1/output.json",
+        "proof_ref": "workspace/designs/ads-business-freedom-content-e2e-r1/runs/ads-business-freedom-content-e2e-r1/proof.json"
+      }
+    }
+  ],
+  "unavailable_precollection_records": [
+    "ads-youtube-thumbnails-r1",
+    "ads-openpencil-default-english-r1",
+    "ads-openpencil-default-english-r2"
+  ],
+  "note": "The old singleton ledger is immutable provenance. No absent historical output or proof was fabricated during collection migration."
+}

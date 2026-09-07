@@ -27,11 +27,12 @@ ADS-owned, and replaceable.
    missing, colliding, or outside the selected design is a stop condition, not
    an opportunity to overwrite another design.
 3. Parse the single JSON result and give its `url` to the Codex-compatible
-   harness's built-in browser. Do not run `op start --web`, `open`, `xdg-open`,
+   built-in browser owned by the harness. Do not run `op start --web`, `open`, `xdg-open`,
    a Zen command, or any other OS-browser launcher. On a fresh loopback origin
    the proxy writes OpenPencil's upstream anonymous settings key with
-   `locale: "en-US"` before UI initialization. Record the returned locale
-   proof and inspect the actual canvas before claiming rendered English.
+   `locale: "en-US"` before UI initialization. A printed URL or chat-rendered
+   PNG/SVG alone is not live-surface proof. Record the returned locale proof
+   and inspect the actual canvas before claiming rendered English.
 4. Author in the browser only after the canvas is visibly present. `File → New`
    and edits affect the disposable workbench document. `File → Save` is a
    supported authoring route when it demonstrably changes that known private
@@ -64,7 +65,9 @@ ADS-owned, and replaceable.
    `--export <native-export.png>` only for a validated file. The workbench
    serves both `/canvaskit/*` and the release compatibility path
    `/pkg/canvaskit/*` on strict `127.0.0.1`.
-8. Use `status` and bounded `logs --lines <n>` while reviewing. Always run
+8. Use `status` and bounded `logs --lines <n>` while reviewing. When the
+   selected outcome is `waiting-review`, keep the workbench running and return
+   its machine-readable URL; cleanup is a later explicit `stop`. Otherwise run
    `stop` after proof; it closes the release daemon and removes the extracted
    temporary runtime. OpenPencil or its browser surface being unavailable must
    leave the portable `DESIGN.md` handoff route valid.

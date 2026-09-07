@@ -114,7 +114,7 @@ runtime protocol, registry, shared cross-System data model, duplicated ACS
 truth, or copied external skill catalog. Preserve the local design and review
 skills as repeatable internal methods.
 
-## Proof commands
+## Validation and delivery
 
 From the repository root:
 
@@ -122,14 +122,18 @@ From the repository root:
 npm install
 npm run check
 npm test
-npm run trace -- --slug clean-clone-proof --source-decision --preview --review --curate
+npm run trace -- --root /tmp/ads-proof --slug clean-clone-proof --source-decision --preview --review --curate
 npm run trace:handoff -- --openpencil-tool <verified-op-path>
 npm run trace:audit
 npm run handoff -- --design gustav-social-banner-r1 --output handoffs/example --receiving-owner "Agentic Design System"
 ```
 
-Inspect the browser preview started with `--design <slug>` and resize it to a
-desktop and mobile viewport. Keyboard focus, reduced motion, state changes,
-and selected collection links must remain usable. The repository rename and any
-commit, push, issue, pull-request, or GitHub setting change belong to a later
-authorized Ship after lead review; this Build performs none of those actions.
+Exercise lifecycle tracers in disposable roots, preserving active selected
+design evidence. When an HTML preview is selected, inspect its relevant
+viewports, keyboard focus, reduced motion, states, and links; desktop and mobile
+checks apply to responsive surfaces. Direction-only outcomes require no HTML
+preview or browser proof, but cannot establish the adaptive route's rendered
+proof for new source adoption. Repository rename, commit, push, issue,
+pull-request, and GitHub setting changes require separately authorized Ship
+after lead review. Local Build authorization does not authorize external
+delivery actions.

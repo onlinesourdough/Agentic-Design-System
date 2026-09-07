@@ -138,9 +138,9 @@ Start the selected v0.8.4 editable source from the verified external VSIX:
 ```sh
 npm run openpencil -- start \
   --vsix <verified-openpencil-v0.8.4-platform.vsix> \
-  --document workspace/designs/ads-business-freedom-content-e2e-r1/openpencil/route-console.op \
-  --expected-nodes 314 \
-  --expected-document-sha256 33ab74b5315b89f68eefe8b6a3d3da193e968afab6f851de3c9f3b2f97b9b0e0
+  --document workspace/designs/ads-business-freedom-content-e2e-r1/openpencil/youtube-thumbnails-r1.op \
+  --expected-nodes 25 \
+  --expected-document-sha256 e6ef1098f55f284972fb0b1a1b6b3d09abeb58dcc03c197f9fc8ffaa5da961cb
 ```
 
 The single JSON response contains a strict `http://127.0.0.1:<port>/` URL.
@@ -150,8 +150,10 @@ release daemon directly and maps `/pkg/canvaskit/*` to the upstream
 `/canvaskit/*` bytes. Each launch copies the selected source into private
 workbench state and binds the daemon only to that disposable `working_document`;
 the selected design source stays hash-checkable. The fresh loopback page seeds
-OpenPencil's upstream anonymous browser-settings partition with `en-US` before
-the UI initializes. The pinned macOS arm64 VSIX SHA-256 is
+OpenPencil's upstream browser-settings partition with `en-US` only when no
+existing OpenPencil preference exists, then follows a fixed local ready redirect
+without reflecting request query data into the bootstrap. The pinned macOS arm64
+VSIX SHA-256 is
 `7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342`.
 
 For an authoring proof, inspect rendered English in the built-in browser and
@@ -182,8 +184,10 @@ downloads and need a real surfaced local file. If that is unavailable, record
 `unavailable-download` for the browser route only; do not extract hidden
 browser state or infer that the native MCP path was exercised.
 
-After supervised inspection, prove the live surface and reviewed bytes, then
-clean it deterministically:
+After supervised inspection, prove the live surface and reviewed bytes. If the
+selected outcome is `waiting-review`, keep the workbench running and return its
+machine-readable URL; cleanup is a later explicit `stop`. Otherwise clean it
+deterministically:
 
 ```sh
 npm run openpencil -- check \

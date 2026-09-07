@@ -25,19 +25,25 @@ authoring method it calls; it does not own the ledger or collection index.
 
 ## Set the direction
 
-1. Choose one visual idea and explain why it fits the job.
-2. Write `DESIGN.md` in the pinned Google Design.md format. Define semantic
+1. When references or an unresolved direction are present, follow the primary
+   skill's selected `direct`, `discover`, or `explore` route. Decompose only
+   caller-owned pointers into role, target surface, visual signals, avoidances,
+   rights, and confidence; do not copy their bytes into ADS. A `discover`
+   route resolves only its named gap, while `explore` compares two directions
+   by default and stops once one is selected.
+2. Choose one visual idea and explain why it fits the job.
+3. Write `DESIGN.md` in the pinned Google Design.md format. Define semantic
    colors, typography, spacing, shape language, layout, components, states, and
    explicit do/don't rules.
-3. Make hierarchy, content density, and responsive collapse deliberate. Use
+4. Make hierarchy, content density, and responsive collapse deliberate. Use
    optical rhythm rather than uniform cards and spacing everywhere.
-4. Use real draft copy and believable non-sensitive data. Write one clear CTA
+5. Use real draft copy and believable non-sensitive data. Write one clear CTA
    for a landing page and decision-first labels for dashboards.
-5. Represent hover, active, visible focus, loading, empty, error, success, and
+6. Represent hover, active, visible focus, loading, empty, error, success, and
    permission/offline states when the brief makes them relevant.
-6. Use optional references such as awesome-design-md to study variety, never to
+7. Use optional references such as awesome-design-md to study variety, never to
    copy a brand or make it the default.
-7. Keep the ownership boundary explicit. ADS owns visual direction,
+8. Keep the ownership boundary explicit. ADS owns visual direction,
    brand/style/voice expression, composition, motion direction, and selected
    reusable visual assets. A receiving Project owns implementation after
    acceptance; ACS owns editorial/content production, edit/render execution,
@@ -47,16 +53,23 @@ authoring method it calls; it does not own the ledger or collection index.
 
 ## Make it inspectable
 
-1. Build semantic, responsive `index.html` using only local assets.
+Direction-only work is inspectable through `DESIGN.md`; it needs no HTML or
+browser tooling unless a selected source requires rendered-task proof. Build
+companions only when selected for the outcome. For an HTML preview:
+
+1. Build semantic `index.html` using only local assets, responsive when relevant.
 2. Include a skip link, useful landmarks, labels, keyboard-visible focus, and
-   reduced-motion behavior where motion exists.
+   reduced-motion behavior where motion exists. Place actionable error text by
+   its control or group and associate it programmatically.
 3. Keep the preview faithful to `DESIGN.md`; do not hide missing behavior behind
    decorative screenshots.
-4. Inspect desktop and mobile widths, then run `npm run check`.
+4. Inspect the selected surface's relevant viewports (desktop and mobile for
+   responsive work), then run applicable repository checks.
 
 ## Hand off
 
-After `review-design` passes, run
+After `review-design` passes, apply [the canonical handoff contract](../../../docs/contract.md#cross-owner-and-optional-native-handoff)
+and [validation recipe](../../../docs/validation.md#handoff), then run
 `npm run handoff -- --design <slug> --output handoffs/<revision> --receiving-owner <owner>`. Confirm the
 output contains canonical `DESIGN.md`, `BRIEF.md`, copied `REVIEW.md` or
 `proof.json`, and versioned `HANDOFF.md`. Add preview, individual assets, or
@@ -72,7 +85,9 @@ exports; follow the primary skill's binding rather than duplicating upstream
 instructions here.
 The receiving owner becomes canonical for its accepted implementation or
 production copy; `DESIGN.md` remains the handed-off visual source of truth and
-this repository remains a design workbench, not a runtime dependency.
+this repository remains a design workbench, not a runtime dependency. Same-owner
+work needs no binder. The canonical handoff contract and validation recipe own
+the final immutable-snapshot syntax and delivery checks.
 The brief-selected mode and named Review owner gate generation: in both modes
 the evidence reviewer must match that declared Review owner, never the CLI
 receiver. A matching independent PASS is sufficient for `independent`, while

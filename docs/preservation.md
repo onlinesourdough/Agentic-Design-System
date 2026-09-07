@@ -27,6 +27,41 @@ The four media files remain byte-for-byte identical. The source checkout's
 status and these hashes were re-read after the transfer; no source mutation or
 external repository mutation was performed.
 
+## 2026-09-07 selected-collection integration
+
+The five commits at fresh `origin/main` revision
+`8950a98b44aab9ed380e1c9b424d3c8f96e24e49` were integrated through a normal
+merge after the local selected-design migration commit. Their behavior is kept,
+not reintroduced as the obsolete singleton runtime:
+
+- adaptive `direct`, `discover`, and `explore` remain one owner-first route in
+  the primary skill, with pointer-only caller media and canonical decisions in
+  `DESIGN.md`;
+- HTML is optional: direction-only work has no invented preview requirement,
+  while selected responsive surfaces retain their relevant viewport and
+  accessibility checks;
+- handoff instructions retain canonical contract, binder, and validation links;
+  `waiting-review` keeps the OpenPencil workbench alive until explicit cleanup;
+  and
+- the remote Gustav Online thumbnail brief, direction, review, PNG/SVG assets,
+  contact sheet, and editable `.op` source live under
+  `workspace/designs/ads-business-freedom-content-e2e-r1/`.
+
+The old singleton ledger is retained byte-for-byte at that design's
+`history/original-workspace-runs.jsonl`; `history/MIGRATION.json` maps evidence
+that exists locally and pins the three historical records whose output/proof
+files were never present in the imported tree. The audit accepts only a record
+whose contents still match that hash-verified original ledger and its declared
+missing field; a new or altered missing reference remains `BLOCKED`. It reports
+the pinned facts as provenance rather than fabricating evidence or restoring a
+singleton path.
+
+For review, compare the final tree with the fetched remote using
+`git diff --stat 8950a98b44aab9ed380e1c9b424d3c8f96e24e49..HEAD`. The expected
+delta is the selected-design migration, preserved local social-banner work,
+and the scoped compatibility bindings above; remote commits and their assets
+remain reachable from the merge history.
+
 This carry proof records historical ingest provenance only. It is not a live
 receiving link or shared state: the migrated
 `workspace/designs/onlinesourdough-resources/DESIGN.md` is the canonical

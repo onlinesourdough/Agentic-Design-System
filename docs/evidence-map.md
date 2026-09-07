@@ -6,6 +6,9 @@
 | One selected design owns active work, history, and state          | `workspace/README.md`, `workspace/designs/<slug>/BRIEF.md`, `DESIGN.md`, `state/`, `history/`, and `runs/`            |
 | Optional engine stays under workspace                             | `workspace/engine/`, root `npm` scripts, structural checks in `workspace/engine/checks.mjs`                           |
 | One public route with useful local methods                        | primary skill plus internal `design-solution`, `review-design`, and optional `openpencil-workbench` skills            |
+| Adaptive `direct`/`discover`/`explore` reference behavior         | primary skill, `references/adaptive-references.md`, and task-specific route evidence                                  |
+| Caller reference ownership and owner-first precedence             | adaptive-reference method, contract boundary, and selected `DESIGN.md` decisions                                      |
+| Direction-only and selected-surface preview boundaries            | primary/design-solution methods, selected `DESIGN.md`, and `docs/validation.md`                                       |
 | Create/resume, preview, review, ledger, and deliberate curation   | `workspace/engine/tracer.py`, its isolation tests, `docs/validation.md`, collection index                             |
 | Failure and recovery relations                                    | tracer `--simulate-failure` / `--recover`, `workspace/engine/tests/test_tracer.py`                                    |
 | Main-owned design collection index; temporary branches only       | `workspace/designs/README.md`, `workspace/designs/index.html`, primary skill and architecture docs                    |
@@ -22,6 +25,7 @@
 | Minimal handoff and explicit optional companions                  | `create-handoff.mjs`, minimal/selected-companion tests, `handoff_tracer.mjs`, `docs/validation.md`                    |
 | Optional editable OpenPencil handoff and portable fallback        | active `.op`/PNG, `create-handoff.mjs`, `handoff_tracer.mjs`, per-design `REVIEW.md`                                  |
 | Strict-loopback OpenPencil browser workbench and cleanup          | local skill, `openpencil-workbench.mjs`, focused tests, `docs/validation.md`, built-in-browser proof                  |
+| English bootstrap and `waiting-review` keepalive                  | workbench locale bootstrap tests, primary/OpenPencil methods, and selected brief                                      |
 | Website/app, dashboard/report, and content-visual portability     | expanded `handoff_tracer.mjs` matrix using curated sources and an isolated ACS-originated content-visual fixture      |
 | ADS/ACS ownership and suggestion-only sibling routing             | public contract, primary/author/review skills, tracer bounded-content-gap proof                                       |
 | Accepted snapshots remain immutable across later ADS revisions    | generator guard, handoff unit test, accepted/revision handoff tracer case                                             |

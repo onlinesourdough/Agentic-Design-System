@@ -34,8 +34,10 @@ const EXPECTED_VSIX_SHA256 =
   "7ce6cde22f7e8584de2faca0279f6d74438675291c2547a7d99230fc0e629342";
 const SCHEMA = "ADS-OPENPENCIL-WORKBENCH/1";
 const DEFAULT_LOCALE = "en-US";
-const UPSTREAM_SETTINGS_KEY = "openpencil-rust-web-settings::anon";
-const LOCALE_SEED_MARKER = "ads-openpencil-fresh-locale";
+const LANGUAGE_READY_PARAMETER = "__ads_openpencil_language_ready";
+const LANGUAGE_READY_PATH = `/?${LANGUAGE_READY_PARAMETER}=1`;
+const SETTINGS_KEY_PREFIX = "openpencil-rust-web-settings";
+const ANONYMOUS_SETTINGS_KEY = `${SETTINGS_KEY_PREFIX}::anon`;
 const MCP_TIMEOUT_MS = 2_000;
 const MCP_OUTPUT_LIMIT_BYTES = 1_000_000;
 const SCRIPT = fileURLToPath(import.meta.url);
@@ -275,11 +277,15 @@ async function serve(arguments_) {
         setTimeout(() => void stopManager().then(() => process.exit(0)), 25);
         return;
       }
+      if (languageBootstrapRequired(incoming)) {
+        languageBootstrapResponse(response);
+        return;
+      }
       if (upstreamPort === null) {
         jsonResponse(response, 503, { error: "upstream-not-ready" });
         return;
       }
-      proxyRequest(incoming, response, upstreamPort, config.locale);
+      proxyRequest(incoming, response, upstreamPort);
     });
     await listen(proxy, config.host, 0);
     const address = proxy.address();
@@ -360,6 +366,9 @@ async function serve(arguments_) {
       working_nodes: workingDocumentCheck.nodes,
       runtime_source: config.runtime_source,
       locale: config.locale,
+      language_default: DEFAULT_LOCALE,
+      language_policy: "seed-when-absent",
+      language_preference: `${SETTINGS_KEY_PREFIX}::<profile>`,
       canvasKit_alias: "/pkg/canvaskit/* -> /canvaskit/*",
       control_token: config.control_token,
       state_root: stateRoot,
@@ -491,7 +500,11 @@ async function check(arguments_) {
     if (response.status !== 200)
       throw new Error(`${name} returned HTTP ${response.status}.`);
   }
-  if (!root.body.toString("utf8").includes(LOCALE_SEED_MARKER))
+  if (
+    !root.body
+      .toString("utf8")
+      .includes("data-ads-openpencil-language-bootstrap")
+  )
     throw new Error(
       "OpenPencil workbench did not serve the fresh-origin English locale seed.",
     );
@@ -537,6 +550,11 @@ async function check(arguments_) {
       value: live.locale,
       mechanism: "upstream browser settings seed on a fresh loopback origin",
       served: true,
+    },
+    language: {
+      default: live.language_default,
+      preference: live.language_preference,
+      policy: live.language_policy,
     },
   });
 }
@@ -770,8 +788,9 @@ function inspectRuntimeRoot(path) {
   };
 }
 
-function proxyRequest(incoming, response, upstreamPort, locale) {
+function proxyRequest(incoming, response, upstreamPort) {
   const url = new URL(incoming.url ?? "/", "http://127.0.0.1");
+  url.searchParams.delete(LANGUAGE_READY_PARAMETER);
   if (
     url.pathname === "/pkg/canvaskit" ||
     url.pathname.startsWith("/pkg/canvaskit/")
@@ -779,7 +798,6 @@ function proxyRequest(incoming, response, upstreamPort, locale) {
     url.pathname = url.pathname.slice(4);
   const headers = { ...incoming.headers };
   headers.host = `127.0.0.1:${upstreamPort}`;
-  headers["accept-encoding"] = "identity";
   const upstream = httpRequest(
     {
       hostname: "127.0.0.1",
@@ -789,25 +807,6 @@ function proxyRequest(incoming, response, upstreamPort, locale) {
       headers,
     },
     (upstreamResponse) => {
-      if (url.pathname === "/" && isHtml(upstreamResponse)) {
-        const chunks = [];
-        upstreamResponse.on("data", (chunk) => chunks.push(chunk));
-        upstreamResponse.on("end", () => {
-          const seeded = injectFreshLocale(
-            Buffer.concat(chunks).toString("utf8"),
-            locale,
-          );
-          const responseHeaders = { ...upstreamResponse.headers };
-          delete responseHeaders["content-length"];
-          response.writeHead(
-            upstreamResponse.statusCode ?? 502,
-            responseHeaders,
-          );
-          response.end(seeded);
-        });
-        upstreamResponse.on("error", () => response.destroy());
-        return;
-      }
       response.writeHead(
         upstreamResponse.statusCode ?? 502,
         upstreamResponse.headers,
@@ -826,20 +825,33 @@ function proxyRequest(incoming, response, upstreamPort, locale) {
   incoming.pipe(upstream);
 }
 
-function isHtml(response) {
-  return String(response.headers["content-type"] ?? "").includes("text/html");
+function languageBootstrapRequired(incoming) {
+  if (incoming.method !== "GET") return false;
+  const url = new URL(incoming.url ?? "/", "http://127.0.0.1");
+  return (
+    url.pathname === "/" && !url.searchParams.has(LANGUAGE_READY_PARAMETER)
+  );
 }
 
-function injectFreshLocale(html, locale) {
-  const seed = `<script id="${LOCALE_SEED_MARKER}">(()=>{const key=${JSON.stringify(
-    UPSTREAM_SETTINGS_KEY,
-  )};if(localStorage.getItem(key)===null)localStorage.setItem(key,JSON.stringify({version:1,locale:${JSON.stringify(
-    locale,
-  )}}));})();</script>`;
-  if (html.includes("</head>"))
-    return html.replace("</head>", `${seed}</head>`);
-  if (html.includes("<body")) return html.replace("<body", `${seed}<body`);
-  return `${seed}${html}`;
+function languageBootstrapResponse(response) {
+  const initialSettings = JSON.stringify({
+    version: 1,
+    locale: DEFAULT_LOCALE,
+  });
+  const body = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Opening OpenPencil</title></head>
+<body><p>Opening OpenPencil…</p><script nonce="ads-openpencil-language" data-ads-openpencil-language-bootstrap>
+(()=>{const prefix=${JSON.stringify(SETTINGS_KEY_PREFIX)};const key=${JSON.stringify(ANONYMOUS_SETTINGS_KEY)};try{let hasPreference=false;for(let index=0;index<localStorage.length;index+=1){const candidate=localStorage.key(index);if(candidate===prefix||candidate?.startsWith(prefix+"::")){hasPreference=true;break;}}if(!hasPreference)localStorage.setItem(key,${JSON.stringify(initialSettings)});}catch{}location.replace(${JSON.stringify(LANGUAGE_READY_PATH)});})();
+</script><noscript>OpenPencil requires JavaScript.</noscript></body></html>`;
+  response.writeHead(200, {
+    "content-type": "text/html; charset=utf-8",
+    "content-length": Buffer.byteLength(body),
+    "cache-control": "no-store",
+    "content-security-policy":
+      "default-src 'none'; script-src 'nonce-ads-openpencil-language'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+  });
+  response.end(body);
 }
 
 async function waitForHealth(port, timeoutMs) {
