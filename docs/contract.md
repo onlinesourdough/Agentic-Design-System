@@ -151,6 +151,36 @@ Assets, token/theme files, HTML previews, PNG/SVG/PDF exports, implementation
 notes, and editable `.op` files are optional referenced companions. They never
 replace `DESIGN.md`.
 
+## Decision, change, and handback discipline
+
+For a material ADS-owned visual or source-rights decision, ADS inspects the
+actual constraint and reasonable alternatives before choosing a direction. Its
+selected record states the rationale and practical consequence; routine
+authorized work does not wait for a redundant approval. A product, architecture,
+or trust decision outside ADS responsibility is accepted input or a bounded
+missing-owner route, not new ADS authority. Existing records remain the source
+of truth for that context and any later supersession—ADS does not add a parallel
+ADR catalogue or runtime merely to retain it.
+
+When correcting a design, preview, handoff, or route defect, reproduce the
+affected caller or receiver behavior at the nearest safe representative
+boundary before changing it. If that is not possible, say so. Verify a
+meaningful regression afterward; never make a check green by deleting,
+skipping, weakening, or narrowing its expectation. An explicitly authorized
+contract change instead records its rationale and replacement evidence.
+
+Use the existing maintainable patterns and small coherent components. Explain
+only non-obvious intent where an implementation companion needs it; do not add
+narrative comments or a new framework. Secrets never enter artifacts or logs.
+Necessary approved private source material remains only in its exact scoped
+operational context and is not copied into directions, previews, evidence,
+examples, or fixtures; use believable synthetic data elsewhere.
+
+Each handback is concise, in the caller's language and requested depth. It
+distinguishes inspected evidence from executed proof, names material
+limitations and recovery boundaries, preserves unrelated work, and identifies
+the exact reviewed final bytes.
+
 ## Ownership and sibling routing
 
 | ADS owns                                                                                                                                                                                   | Receiving or sibling owner                                                                                                              |

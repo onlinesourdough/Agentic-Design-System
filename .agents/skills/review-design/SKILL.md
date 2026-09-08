@@ -80,6 +80,11 @@ receiver acceptance remains a separate post-generation decision.
     relevant. Either may enter first. A material sibling gap produces only a
     bounded suggestion to the caller; no automatic call, invented content,
     recursion, or deterministic chain passes Review.
+11. **Change evidence:** Evaluate a defect correction, contract change, private
+    source boundary, and handback against the [decision, change, and handback
+    discipline](../../../docs/contract.md#decision-change-and-handback-discipline).
+    Reject an unsubstantiated correction, a green-by-exemption change, or
+    secrets/private source material outside its permitted scope.
 
 Return:
 
@@ -89,7 +94,7 @@ Reviewer: <named reviewer>
 Result: PASS | REVISE
 Reviewed DESIGN.md SHA-256: `<sha256>`
 Reviewed source companion: `<pre-existing-selected/source-relative-path>` — SHA-256 `<sha256>`
-Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source, ownership and sibling route]
+Checks: [job, specificity, voice, composition, states, accessibility, source safety, contract, optional native source, ownership and sibling route, change evidence]
 Next: create handoff | revise
 Findings: [only material failures]
 ```
