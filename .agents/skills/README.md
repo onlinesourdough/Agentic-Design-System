@@ -22,3 +22,8 @@ Add only ADS- or System-specific repeatable methods and evaluations here.
 Cross-project and Global skills remain plugin- or harness-installed outside
 ADS. AIOS, project templates, and releases may invoke these local skills, but
 they do not overwrite this shelf.
+
+Shared Spec, Build, Review and Ship come from the installed AIOS plugin.
+This shelf contains specialist methods only; a domain review or audit adds
+local criteria without copying the generic lifecycle. Direct tasks use the
+current session; no lead/worker launch is required merely to enter this System.
