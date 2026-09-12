@@ -47,69 +47,34 @@ The root shell is this file, `README.md`, the primary System skill at
 by the local toolchain. The [local skill index](.agents/skills/README.md)
 documents ADS-owned routes and the boundary with externally installed skills.
 
-## Primary route
+## Task routes
 
-Task tracking uses the shared AIOS lifecycle; the selected design's files keep
-domain evidence and the local fallback list when native tracking is unavailable.
+- Design authoring, preview, review, or handoff: use the
+  [primary ADS skill](.agents/skills/agentic-design-system/SKILL.md) with one
+  explicit `workspace/designs/<slug>/`. Its selected brief/history and method
+  supply the task context; maintenance does not require a slug or launch it.
+- Cross-owner delivery: the [handoff contract](docs/contract.md#cross-owner-and-optional-native-handoff)
+  and [binder](docs/HANDOFF_TEMPLATE.md) own review identity, exact hashes,
+  provenance/licensing, and immutable snapshots. Preserve the brief-selected
+  `independent` or `owner` review mode, named Review owner, and separate
+  receiving-owner acceptance. Owner mode waits for that exact owner's bound
+  decision; a matching independent PASS needs no extra owner review.
+- Source adoption or revision: read [SOURCE_AUDIT.md](docs/SOURCE_AUDIT.md).
+  Evaluated libraries remain optional sources/adapters, never a vendored default.
+- Explicit OpenPencil companion: use the primary route's
+  [workbench method](.agents/skills/openpencil-workbench/SKILL.md).
+- Read-only accumulated-state audit: use
+  [audit-design-system](.agents/skills/audit-design-system/SKILL.md).
+- Repository instruction, documentation, or engine maintenance: use accepted
+  inputs, affected sources, and the [change discipline](docs/contract.md#decision-change-and-handback-discipline).
+  Do not preload designs or caller/owner context, create design runs, or start
+  design production merely to maintain the repository.
 
-Use the primary ADS skill for every design-system run. It first inspects
-relevant records in `workspace/designs/<slug>/history/runs.jsonl`, requires an
-explicit selected slug, routes preview and review, and records output/proof plus
-failure/recovery relations under that same slug.
-
-`DESIGN.md` is always the canonical human-readable visual direction. Optional
-assets, previews, tokens, exports, and editable sources remain referenced
-companions. The ledger stores small references and structured facts, never raw requests,
-credentials, or a second database. A failed run remains evidence; a recovery
-is a new run pointing to that predecessor.
-
-Every cross-owner delivery adds the versioned `HANDOFF.md` Markdown binder. It
-records stable identity/revision, receiving owner/outcome, source revision,
-included relative paths and integrity hashes, provenance/licensing, review,
-limitations, and explicit acceptance. An explicitly selected creative route
-may add an optional OpenPencil `.op` source and reviewed PNG/SVG exports;
-minimal handoff requires only `BRIEF.md`, canonical `DESIGN.md`, PASS review
-evidence, the binder, and an explicit receiving owner. Preview, individual
-assets, token/theme exports, and OpenPencil files are included only when
-deliberately selected; the route remains green without their tools.
-
-The brief selects review mode exactly as `independent` or `owner` and declares
-a non-empty `Review owner` distinct from the receiving project or repository.
-The evidence reviewer must match that declared identity and record `PASS`, the
-current `DESIGN.md` SHA-256, and each selected pre-existing source-companion
-path/hash before handoff generation. Independent review is sufficient when
-selected; owner mode stops `waiting-owner` until that exact Review owner makes
-the bound decision. Deterministic CSS/token/Tailwind exports are derived from
-the reviewed `DESIGN.md` and integrity-hashed in the generated binder rather
-than represented as pre-existing reviewed files. Receiver acceptance remains
-separate. A receiver copies its accepted immutable snapshot, never live-syncs
-ADS, and never creates an automatic recursive sibling request.
-
-When OpenPencil is selected, the ADS-local workbench starts verified v0.8.4
-release bytes on strict `127.0.0.1`, returns a machine-readable URL for the
-Codex-compatible built-in browser, provides the `/pkg/canvaskit/*`
-compatibility route, and owns bounded status/log/stop cleanup. It never invokes
-an OS browser and does not make OpenPencil a required or vendored runtime.
-
-The ADS-local `audit-design-system` route checks accumulated drift without
-mutation. It is separate from deterministic checks and per-design Review and
-returns exactly `PASS`, `FAIL`, or `BLOCKED`.
-
-## Design collection workflow
-
-`main` owns the collection index. Branches and worktrees are temporary
-isolation for review; they are not a permanent home for a design. A clean
-checkout can use the standard-library tracer to create or resume one selected
-design, preview and review it, and append its design-local run relation.
-
-## Source policy
-
-HeroUI, Origin UI/Originkit, ThreeUI, and DesEngs are evaluated sources or
-optional adapters. They are not a vendored default library. Each choice is
-recorded with a revision, license signal, accessibility and framework fit,
-maintenance signal, and visual reason in `docs/SOURCE_AUDIT.md`. The carried
-Resources example proves one small, ADS-owned adapter integration without
-adding a dependency.
+`DESIGN.md` remains canonical; previews, assets, tokens and tool sources are
+optional companions. The selected design owns its small reference-only ledger;
+failed runs remain evidence and recovery appends a related new run. Curated and
+recovered material retains provenance. `main` owns the collection index;
+branches and worktrees are temporary review isolation.
 
 ## Capability and sibling boundaries
 
@@ -136,26 +101,24 @@ runtime protocol, registry, shared cross-System data model, duplicated ACS
 truth, or copied external skill catalog. Preserve the local design and review
 skills as repeatable internal methods.
 
-## Validation and delivery
+## Completion, validation, and delivery
 
-From the repository root:
+Complete the accepted local change, relevant checks, in-scope fixes, and final
+diff/artifact inspection in the current task. Existing action and destination
+authority carries across phases; do not request it again merely to implement,
+fix a finding, or enter Review/Ship. A real missing decision, selected owner
+review, required unavailable capability, or new action/destination still gates
+its dependent work. Continue independent authorized work while that gate waits.
+A delegated worker returns its scoped result to the lead for acceptance.
 
-```sh
-npm install
-npm run check
-npm test
-npm run trace -- --root /tmp/ads-proof --slug clean-clone-proof --source-decision --preview --review --curate
-npm run trace:handoff -- --openpencil-tool <verified-op-path>
-npm run trace:audit
-npm run handoff -- --design gustav-social-banner-r1 --output handoffs/example --receiving-owner "Agentic Design System"
-```
+For repository edits, run `npm run check` and `npm test` when applicable with
+the existing toolchain. [Validation](docs/validation.md) owns conditional
+tracers, source/handoff proof and browser inspection. Use disposable roots for
+lifecycle fixtures and preserve active selected-design evidence. Instruction
+maintenance needs no live editor, production launch, or network installation.
+Repeat checks after changes or failures that invalidate their evidence.
 
-Exercise lifecycle tracers in disposable roots, preserving active selected
-design evidence. When an HTML preview is selected, inspect its relevant
-viewports, keyboard focus, reduced motion, states, and links; desktop and mobile
-checks apply to responsive surfaces. Direction-only outcomes require no HTML
-preview or browser proof, but cannot establish the adaptive route's rendered
-proof for new source adoption. Repository rename, commit, push, issue,
-pull-request, and GitHub setting changes require separately authorized Ship
-after lead review. Local Build authorization does not authorize external
-delivery actions.
+Repository rename, commit, push, issue, pull-request, and GitHub setting changes
+require action-specific Ship authority and lead review when delegated. Local
+Build authorization alone does not grant delivery. Keep final changes
+uncommitted when the caller retains delivery.

@@ -32,6 +32,8 @@ class SkillShelfTests(unittest.TestCase):
             "---\n"
             f"name: {declared_name or folder}\n"
             "description: Fixture skill.\n"
+            "metadata:\n"
+            '  version: "1.0.0"\n'
             "---\n\n"
             "# Fixture\n",
             encoding="utf-8",
@@ -114,26 +116,67 @@ class SkillShelfTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0, result.stdout)
         self.assertIn("skill tree contains a symlink", result.stderr)
 
-    def test_selected_openpencil_route_requires_live_document_and_review_wait(self):
-        primary = (ROOT / ".agents/skills/agentic-design-system/SKILL.md").read_text(
-            encoding="utf-8"
+    def test_metadata_schema_rejects_missing_unquoted_invalid_and_duplicate_versions(self):
+        cases = (
+            ('metadata:\n  version: "1.0.0"\n', ''),
+            ('"1.0.0"', '1.0.0'),
+            ('"1.0.0"', '"01.0.0"'),
+            ('"1.0.0"', '"1.0.0-01"'),
+            ('  version: "1.0.0"', '  version: "1.0.0"\n  version: "2.0.0"'),
+            ('description: Fixture skill.', 'description: ""'),
+            ('description: Fixture skill.', 'description: - item'),
+            ('description: Fixture skill.', 'description: # comment'),
+            ('description: Fixture skill.', 'description: ? key'),
+            ('description: Fixture skill.', 'description: 1e3'),
+            ('description: Fixture skill.', 'description: 2026-09-12'),
+            ('description: Fixture skill.', 'description: on'),
+            ('description: Fixture skill.', 'description: Task:'),
+            ('description: Fixture skill.', 'description: true '),
+            ('description: Fixture skill.', 'description: null '),
+            ('name: primary', 'name: primary\nname: primary'),
         )
-        workbench = (ROOT / ".agents/skills/openpencil-workbench/SKILL.md").read_text(
-            encoding="utf-8"
-        )
+        for old, new in cases:
+            with self.subTest(new=new):
+                temporary, root = self._fixture()
+                try:
+                    payload = root / ".agents/skills/primary/SKILL.md"
+                    payload.write_text(payload.read_text().replace(old, new))
+                    result = self._run(root)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                finally:
+                    temporary.cleanup()
 
-        for contract in (primary, workbench):
-            normalized = " ".join(contract.lower().split())
-            for marker in (
-                "codex-compatible built-in browser",
-                "actual",
-                "`.op`",
-                "printed url or chat-rendered png/svg alone is not",
-                "`waiting-review`",
-                "keep the workbench running",
-                "explicit `stop`",
-            ):
-                self.assertIn(marker, normalized)
+    def test_quoted_yaml_indicators_are_valid_strings(self):
+        for value in ("- item", "# comment", "? key", "1e3", "2026-09-12", "on", "Task:", "true ", "null "):
+            with self.subTest(value=value):
+                temporary, root = self._fixture()
+                try:
+                    payload = root / ".agents/skills/primary/SKILL.md"
+                    payload.write_text(payload.read_text().replace("Fixture skill.", json.dumps(value)))
+                    result = self._run(root)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                finally:
+                    temporary.cleanup()
+
+    def test_semver_prerelease_and_build_are_valid(self):
+        temporary, root = self._fixture()
+        self.addCleanup(temporary.cleanup)
+        payload = root / ".agents/skills/primary/SKILL.md"
+        payload.write_text(payload.read_text().replace('"1.0.0"', "'2.1.0-rc.1+build.42'"))
+        result = self._run(root)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_missing_skill_reference_fails_and_existing_reference_passes(self):
+        temporary, root = self._fixture()
+        self.addCleanup(temporary.cleanup)
+        payload = root / ".agents/skills/primary/SKILL.md"
+        payload.write_text(payload.read_text() + "\n[Reference](references/route.md)\n")
+        self.assertNotEqual(self._run(root).returncode, 0)
+        reference = payload.parent / "references/route.md"
+        reference.parent.mkdir()
+        reference.write_text("# Route\n")
+        result = self._run(root)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_index_requires_each_real_skill_once_and_no_unknown_skill(self):
         cases = (

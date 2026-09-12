@@ -1,6 +1,8 @@
 ---
 name: design-solution
-description: Internal design method for turning a resolved ADS brief into a canonical portable DESIGN.md and inspectable preview for websites, applications, workspaces, dashboards, reports, slides, or content visuals. Use through the Agentic Design System primary route.
+description: Author or revise a selected ADS DESIGN.md and optional preview through the primary ADS route.
+metadata:
+  version: "1.0.0"
 ---
 
 # Design solution — internal method
@@ -65,6 +67,10 @@ companions only when selected for the outcome. For an HTML preview:
    decorative screenshots.
 4. Inspect the selected surface's relevant viewports (desktop and mobile for
    responsive work), then run applicable repository checks.
+
+Complete the selected direction and companions, correct in-scope review
+findings, and refresh affected proof before handback. Reuse accepted decisions
+and action authority; editing reviewed bytes reopens their Review.
 
 ## Hand off
 

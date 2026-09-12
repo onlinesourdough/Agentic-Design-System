@@ -10,6 +10,7 @@ import {
 } from "node:path";
 import { spawnSync } from "node:child_process";
 import { listDesigns, resolveDesign } from "./designs.mjs";
+import { validateSkillMetadata } from "./skill-metadata.mjs";
 
 const root = resolve(
   process.argv.includes("--root")
@@ -61,6 +62,7 @@ const requiredPaths = [
   "workspace/designs/README.md",
   "workspace/learning",
   "workspace/engine/checks.mjs",
+  "workspace/engine/skill-metadata.mjs",
   "workspace/engine/create-handoff.mjs",
   "workspace/engine/openpencil-workbench.mjs",
   "workspace/engine/handoff_tracer.mjs",
@@ -96,35 +98,6 @@ function read(path) {
   }
 }
 
-function readSkillName(path) {
-  const lines = read(path).split(/\r?\n/);
-  if (lines[0] !== "---") {
-    fail(`${rel(path)} has malformed frontmatter`);
-    return null;
-  }
-  const closing = lines.indexOf("---", 1);
-  if (closing === -1) {
-    fail(`${rel(path)} has malformed frontmatter`);
-    return null;
-  }
-  const names = lines
-    .slice(1, closing)
-    .map((line) => line.match(/^name:\s*(.*?)\s*$/))
-    .filter(Boolean)
-    .map((match) => match[1]);
-  if (names.length !== 1) {
-    fail(`${rel(path)} must have exactly one frontmatter name`);
-    return null;
-  }
-  const quoted = names[0].match(/^(?:"([^"]+)"|'([^']+)')$/);
-  const name = quoted ? (quoted[1] ?? quoted[2]) : names[0];
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) {
-    fail(`${rel(path)} has an invalid frontmatter name`);
-    return null;
-  }
-  return name;
-}
-
 function checkSkills() {
   const shelf = join(root, ".agents/skills");
   if (!existsSync(shelf)) {
@@ -148,7 +121,14 @@ function checkSkills() {
       }
       if (entry.isDirectory()) {
         inspect(path);
-      } else if (entry.isFile() && entry.name === "SKILL.md") {
+      } else if (entry.isFile() && entry.name.endsWith(".md")) {
+        for (const match of read(path).matchAll(/\[[^\]]*\]\(([^)\s]+)\)/g)) {
+          const target = match[1].split(/[?#]/, 1)[0];
+          if (!target || /^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
+          if (!existsSync(resolve(dirname(path), target)))
+            fail(`${rel(path)} links to missing ${target}`);
+        }
+        if (entry.name !== "SKILL.md") continue;
         if (pathRel.split(sep).length !== 2)
           fail(`nested SKILL.md is not allowed: .agents/skills/${pathRel}`);
       }
@@ -179,11 +159,8 @@ function checkSkills() {
       fail(`direct skill payload is not a regular file: ${rel(path)}`);
       continue;
     }
-    const declaredName = readSkillName(path);
-    if (declaredName !== null && declaredName !== skill)
-      fail(
-        `${rel(path)} frontmatter name ${declaredName} does not match folder ${skill}`,
-      );
+    for (const error of validateSkillMetadata(read(path), skill))
+      fail(`${rel(path)} ${error}`);
   }
 
   const indexPath = join(shelf, "README.md");

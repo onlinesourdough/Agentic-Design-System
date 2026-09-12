@@ -1,6 +1,8 @@
 ---
 name: audit-design-system
-description: Read-only ADS-local route for checking accumulated portable-design, handoff, ownership-boundary, and evidence drift in an explicit scope.
+description: Audit accumulated ADS design and handoff evidence in an explicit repository or workspace scope without mutation.
+metadata:
+  version: "1.0.0"
 ---
 
 # Audit Agentic Design System

@@ -120,7 +120,7 @@ the card itself never becomes the outcome.
 
 ## Review evidence
 
-Keep route evidence in the Codex conversation for the current task: name the
+Keep route evidence in the calling conversation for the current task: name the
 brief, selected mode, higher-precedence evidence, any bounded discovery or
 cards shown, and the resulting direction. Do not create an executable route
 model, schema, registry, or durable baseline selection store. Review the

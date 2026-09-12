@@ -276,3 +276,15 @@ the primary skill route, and read returned paths and proof. ADS does not import
 or auto-run AIOS, APT, ACS, another System, a shared package, runtime protocol,
 registry, MCP, central database, shared state, or synchronized cross-System
 data model.
+
+## Maintenance completion
+
+Repository maintenance follows accepted inputs and affected sources without
+activating a selected design, reading unrelated owner data or starting editors.
+Complete local implementation, relevant checks, in-scope fixes and final diff
+inspection under existing action/destination authority. Phase transitions do
+not require renewed authorization. Selected owner review, changed reviewed
+bytes, receiver acceptance and new delivery actions retain their actual gates.
+A bounded worker returns the candidate and evidence for lead acceptance; it
+does not claim parent completion. Repeat proof when changes or failures make
+prior evidence stale, using disposable fixtures for instruction/engine checks.

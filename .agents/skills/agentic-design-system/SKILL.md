@@ -1,11 +1,21 @@
 ---
 name: agentic-design-system
-description: Create, review, or hand off one explicitly selected portable visual direction in ADS. DESIGN.md remains canonical; optional previews, assets, and OpenPencil sources stay design-local companions.
+description: Create, revise, review, or hand off one selected ADS visual direction. Excludes repository maintenance and receiving implementation.
+metadata:
+  version: "1.0.0"
 ---
 
 # Agentic Design System
 
 Use this public ADS route for a resolved visual-direction request across websites, applications, dashboards, reports, slides, or content surfaces. It does not implement the receiving project or produce/publish ACS content.
+
+Repository maintenance follows `AGENTS.md` and the change discipline; it does
+not activate this design route. Preserve the caller's accepted scope and action
+authority across authoring, fixes, Review and requested handoff. Complete the
+selected artifacts, relevant proof and authorized corrections before returning;
+selected owner Review and receiver acceptance remain distinct gates. If Review
+finds a defect, return to authoring and refresh affected hashes/evidence. Do not
+repeat passing checks unless a change or finding invalidates them.
 
 ## Required-read footprint
 
@@ -27,7 +37,11 @@ Read only the selected design and the route-specific method; do not preload othe
 3. Use `$design-solution` only if authoring or revising the direction/preview is needed. Preserve resolved facts. `DESIGN.md` remains the portable source of visual truth.
 4. Preview with `npm run preview -- --design <slug>` only when an HTML surface is selected. Inspect its relevant desktop/mobile, focus, reduced-motion, and selected states. Direction-only work needs no HTML or browser, but cannot substitute for rendered-task proof when new source adoption is selected. Use `$review-design` without editing. Its reviewer must match the brief’s Review owner and bind the current DESIGN SHA-256 plus every selected pre-existing companion hash. Owner mode returns `waiting-owner` until that identity acts.
 5. For cross-owner delivery, first read [the canonical handoff contract](../../../docs/contract.md#cross-owner-and-optional-native-handoff) and [binder/evidence format](../../../docs/HANDOFF_TEMPLATE.md), then run `npm run handoff -- --design <slug> --output handoffs/<revision> --receiving-owner <owner>`. They own the exact review, integrity, rights, and acceptance gates; the command generates the immutable `ADS-HANDOFF/1` binder. Receiver acceptance is a separate `PENDING` decision.
-6. Use `$openpencil-workbench` only when the brief deliberately selects an OpenPencil companion. It starts verified v0.8.4 bytes at strict loopback, opens the existing selected document in the Codex-compatible built-in browser, and proves that the actual editable `.op` document is visible through the supervised surface. A printed URL or chat-rendered PNG/SVG alone is not live-surface proof. Do not invent a canvas API, use an OS browser, or claim native editing when the supervised surface is absent. Fresh sessions seed English (`en-US`) before upstream UI initialization. Keep the workbench running, with its machine-readable URL, when the selected outcome is `waiting-review`; cleanup is a later explicit `stop`; otherwise stop it after proof.
+6. Use [$openpencil-workbench](../openpencil-workbench/SKILL.md) only when the
+   brief deliberately selects an OpenPencil companion. That method owns verified
+   release bytes, live editable-document proof, save/export integrity, locale,
+   and cleanup. Its `waiting-review` surface remains open until explicit stop;
+   unavailable companion tooling does not invalidate the portable route.
 7. For a defect correction, apply the [decision, change, and handback discipline](../../../docs/contract.md#decision-change-and-handback-discipline) and retain the required behavior and regression evidence in the existing selected-design records. Append one small run record only under the selected design’s history. A recovery is a new run linked to its failed predecessor. Recovered snapshots retain their original provenance and acceptance state; they are not fresh review evidence.
 
 ## Boundaries

@@ -27,3 +27,18 @@ Shared Spec, Build, Review and Ship come from the installed AIOS plugin.
 This shelf contains specialist methods only; a domain review or audit adds
 local criteria without copying the generic lifecycle. Direct tasks use the
 current session; no lead/worker launch is required merely to enter this System.
+
+Each maintained skill declares quoted SemVer under `metadata.version`, initially
+`"1.0.0"`. Version a skill independently of the repository/package: patch for
+compatible corrections or clarifications, minor for compatible capability or
+routing additions, major for incompatible scope, authority, or output changes.
+A substantive change to its owned references counts as a skill change. Leave
+unaffected skills at their current versions. Local checks require unique names,
+non-empty descriptions, quoted SemVer, and a complete linked shelf inventory.
+The maintained frontmatter uses one-line scalar strings and a two-space-indented
+`metadata` mapping; the zero-dependency validator checks this explicit subset.
+
+The author validator uses a conservative one-line YAML string profile. Unquoted
+root values begin with a letter; quote numeric or indicator-leading strings.
+Metadata values are quoted strings. Unsupported YAML is rejected, and native
+loader validation remains separate.

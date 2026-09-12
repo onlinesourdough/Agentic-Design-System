@@ -1,6 +1,8 @@
 ---
 name: review-design
-description: Internal review method for a canonical portable DESIGN.md, selected companions, preview, ownership boundary, and cross-owner acceptance readiness. Use through the Agentic Design System primary route.
+description: Review one ADS direction and selected companions against its brief and handoff gates without editing.
+metadata:
+  version: "1.0.0"
 ---
 
 # Review design — internal method
@@ -85,6 +87,10 @@ receiver acceptance remains a separate post-generation decision.
     discipline](../../../docs/contract.md#decision-change-and-handback-discipline).
     Reject an unsubstantiated correction, a green-by-exemption change, or
     secrets/private source material outside its permitted scope.
+
+Return findings to the primary route for authorized correction and re-review
+of affected bytes; this read-only method does not make those edits. Preserve
+any still-valid evidence and the brief's selected reviewer/acceptance gates.
 
 Return:
 

@@ -1,6 +1,8 @@
 ---
 name: openpencil-workbench
-description: Internal ADS method for opening a selected editable .op source in the verified OpenPencil v0.8.4 web canvas through a strict loopback URL owned by the calling harness.
+description: Open and verify an explicitly selected ADS .op companion in the pinned OpenPencil loopback workbench.
+metadata:
+  version: "1.0.0"
 ---
 
 # OpenPencil workbench — internal method
