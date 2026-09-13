@@ -1,169 +1,32 @@
-![Agentic Design System](docs/assets/branding/ads-banner-1536x512.png)
-
-<a href="docs/assets/branding/ads-icon-512.png"><img src="docs/assets/branding/ads-icon-512.png" alt="ADS icon" width="64" height="64" /></a>
-
-![Agentic Design System route](docs/assets/agentic-design-system-overview.svg)
-
 # Agentic Design System
 
-Agentic Design System (ADS) turns resolved intent into an approved, portable
-visual design direction whose required artifact is `DESIGN.md`, with optional
-assets and tool-native sources bound by a reviewed cross-owner handoff. It
-serves websites, applications, dashboards, reports, slides, marketing/content
-surfaces, and other visual outcomes. It is a repeatable standalone work surface,
-not a project template, receiving implementation, or installed runtime library.
+The maintained methods now belong to [AIOS](https://github.com/onlinesourdough/AIOS-Plugin)
+0.9.0: **design, review-design and openpencil-workbench**. Install AIOS through the native app you use.
+New working material stays in the current project's `design/` directory,
+created when needed. No separate ADS checkout is required.
 
-```text
-selected design → brief → canonical DESIGN.md → selected preview → review → evidence → handoff
-                                      ↘ cross-owner HANDOFF.md + optional companions
-accumulated truth ─────────────────────→ read-only periodic audit
-```
+This repository preserves existing work, evidence and recovery material. It no
+longer exposes local skills or accepts new shared-method development. Its
+remaining source and historical documents describe the standalone version;
+they are not the current AIOS contract.
 
-The durable model is small:
+## Existing work and access
 
-```text
-workspace/designs/<slug>/  one selected design, state, history, evidence, companions
-workspace/engine/          optional preview, lint, handoff, trace, and audit implementation
-docs/                      contract, source audit, architecture, validation, references
-```
+Keep existing files and accepted identities intact. Use the current task's
+actual project context when continuing work; adopting AIOS does not move or
+overwrite a workspace. Back up tracked, ignored and untracked work before any
+separately authorized checkout cleanup. Git cannot restore files it never stored.
 
-## Start locally
+AIOS is currently available by invitation. This public repository does not
+grant access to it. The last standalone version remains available at
+[52322ed](https://github.com/onlinesourdough/Agentic-Design-System/tree/52322edeb796bfc47e65b0f2561a90305b998557).
+Use a separate checkout at that exact revision when the old workflow is needed;
+do not reset a working checkout containing unfinished work. That revision also
+retains the previous skills, tool commands, tests and dependency definitions.
 
-```sh
-npm install
-npm run preview
-```
+## Method ownership
 
-Pass one selected design slug after `--` to preview its surface, for example:
-
-```sh
-npm run preview -- --design gustav-social-banner-r1
-npm run preview -- --design onlinesourdough-resources
-```
-
-The [local skill index](.agents/skills/README.md) is the ownership map for
-ADS-specific, repeatable methods. The primary agent entry is
-[`agentic-design-system`](.agents/skills/agentic-design-system/SKILL.md). It
-inspects only the selected design’s prior runs, works in `workspace/designs/<slug>/`, and routes the internal
-[`design-solution`](.agents/skills/design-solution/SKILL.md) and
-[`review-design`](.agents/skills/review-design/SKILL.md) methods. Those methods
-remain separate so a design can be authored and reviewed without duplicating
-the System route. The ADS-local
-[`audit-design-system`](.agents/skills/audit-design-system/SKILL.md) method
-checks accumulated drift without repairing or creating anything. Global and
-cross-project skills are installed by the calling plugin or harness and do not
-become ADS-owned files.
-
-## Verify a route
-
-```sh
-npm run check
-npm test
-npm run trace -- --slug clean-clone-proof --source-decision --preview --review --curate
-npm run trace:audit
-npm run handoff -- --design gustav-social-banner-r1 --output handoffs/example --receiving-owner "Agentic Design System"
-```
-
-The tracer uses only the standard library. It can also prove a recoverable
-failure relation:
-
-```sh
-npm run trace -- --slug recovery-proof --simulate-failure
-npm run trace -- --slug recovery-proof --recover --preview --review --curate
-```
-
-Use a temporary checkout for those demonstrations when the operational ledger
-should remain empty in the working tree. See [`docs/validation.md`](docs/validation.md)
-for the clean-clone recipe.
-
-## Portable and optional native handoff
-
-`DESIGN.md` is always the canonical portable, human-readable source of visual
-truth. HTML previews, tokens, assets, exports, and editable sources are optional
-referenced companions and never replace it. When delivery crosses an owner
-boundary, generated `HANDOFF.md` uses the versioned
-[`ADS-HANDOFF/1` Markdown contract](docs/HANDOFF_TEMPLATE.md): stable
-identity/revision, receiving owner/outcome, source revision, included relative
-paths and SHA-256 values, provenance/licensing, review, limitations, and
-explicit acceptance. Accepted snapshots are immutable; later ADS revisions
-require a new handoff and re-acceptance rather than live synchronization.
-
-The brief selects `independent` or `owner` review and declares a non-empty
-`Review owner` separately from the receiving project. Evidence names a reviewer
-matching that identity, binds the reviewed `DESIGN.md`, and lists each selected
-pre-existing source-companion hash. Independent PASS is sufficient when
-selected; owner mode returns `waiting-owner` until that exact Review owner
-decides. Selected CSS/token/Tailwind outputs are deterministic derivatives of
-the reviewed DESIGN hash and are integrity-bound in the generated binder, not
-listed as files that Review supposedly saw before generation. Receiver
-acceptance remains separate. A receiver copies its accepted snapshot and never
-live-syncs or recursively invokes ADS.
-
-A minimal handoff copies only `BRIEF.md`, canonical `DESIGN.md`, and PASS
-`REVIEW.md` or `proof.json` evidence, then generates `HANDOFF.md`. Add
-`--preview`, repeatable `--asset <assets/path>`, or repeatable
-`--export <css|tokens|tailwind>` only when that companion is selected for the
-receiving outcome. Export tooling is not needed when no export is selected.
-
-A creative route adds `.op` and reviewed PNG/SVG files only when explicitly
-selected. Tool unavailability is visible and falls back to the required
-portable handoff plus any independently selected companions without changing
-its source. Every handoff command requires a non-empty explicit
-`--receiving-owner`; receiving outcome and rights data come from the reviewed
-human-readable `BRIEF.md`, not a cross-System schema.
-
-Run the native success/fallback tracer with a temporary verified v0.8.4 CLI:
-
-```sh
-npm run trace:handoff -- --openpencil-tool <verified-op-path>
-```
-
-For supervised native review, `npm run openpencil -- start ...` launches the
-verified v0.8.4 web canvas on strict `127.0.0.1` and prints a URL for the
-Codex-compatible built-in browser. `status`, bounded `logs`, `check`, and
-`stop` provide deterministic proof and cleanup; no OS browser is invoked and no
-OpenPencil runtime is vendored. See [`docs/validation.md`](docs/validation.md).
-
-## Periodic read-only audit
-
-`npm run check` is deterministic validation and `review-design` evaluates
-one design. The periodic audit instead reads accumulated ADS truth, source and
-license proof, handoff optionality, run evidence, failures/recovery, stale
-routes, and unavailable evidence:
-
-```sh
-npm run audit -- --scope repository
-npm run trace:audit
-```
-
-It returns exactly `PASS`, `FAIL`, or `BLOCKED` and never repairs,
-exports, promotes, creates an issue, or appends a run.
-
-## Design collection
-
-The [design collection](workspace/designs/index.html) is the one durable entry
-point for selected and curated work. Each slug keeps its own brief, portable
-`DESIGN.md`, local preview, companions, evidence, and optional handoffs. The
-Resources direction also proves the selected dependency-free disclosure adapter
-in `workspace/designs/onlinesourdough-resources/assets/adapters/`.
-
-## References and ownership
-
-Google Design.md remains the pinned format and export tool. The source audit
-records what was learned from external design repositories and why no one
-external UI library becomes the ADS default. Preserved historical references
-are under [`docs/references/preserved`](docs/references/preserved/), clearly
-separate from the active collection.
-
-ADS owns visual direction, visual hierarchy, brand/style/voice expression,
-composition, typography, color, imagery, interaction/motion direction, and
-selected reusable visual assets. The receiving Project owns implementation
-after acceptance. ACS owns editorial/content production, edit/render execution,
-packaging, and publication. Either sibling may be entered first or run alone;
-crossing the boundary returns a bounded sibling-route suggestion to the current
-caller and never auto-runs a deterministic ADS-to-ACS chain.
-
-ADS can be used entirely on its own. Another System may pass ordinary resolved
-context and read returned paths and proof, but no AIOS, APT, ACS, service,
-database, runtime protocol, registry, shared state, or synchronized contract is
-needed to run this repository.
+Design and content keep their domain judgment, provenance and review in AIOS's
+skills and focused references. Small helpers travel with the skills. External
+editors retain their own installation and runtime. The native app owns projects,
+sessions, tools and permissions. Changes to shared methods belong in AIOS.
