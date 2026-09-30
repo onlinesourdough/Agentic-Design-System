@@ -1,7 +1,12 @@
 # Agentic Design System
 
+> Archived on September 30, 2026. The standalone system is retired because its
+> methods now live as independent skill chains in
+> [AIOS-Plugin](https://github.com/onlinesourdough/AIOS-Plugin). This repository
+> remains available as historical and recovery material.
+
 The maintained methods now belong to [AIOS](https://github.com/onlinesourdough/AIOS-Plugin)
-0.9.0: **design, review-design and openpencil-workbench**. Install AIOS through the native app you use.
+as skill chains: **design, review-design and openpencil-workbench**. Install AIOS through the native app you use.
 New working material stays in the current project's `design/` directory,
 created when needed. No separate ADS checkout is required.
 
@@ -17,8 +22,8 @@ actual project context when continuing work; adopting AIOS does not move or
 overwrite a workspace. Back up tracked, ignored and untracked work before any
 separately authorized checkout cleanup. Git cannot restore files it never stored.
 
-AIOS is currently available by invitation. This public repository does not
-grant access to it. The last standalone version remains available at
+AIOS-Plugin is public; see its README for installation through your native app.
+The last standalone version remains available at
 [52322ed](https://github.com/onlinesourdough/Agentic-Design-System/tree/52322edeb796bfc47e65b0f2561a90305b998557).
 Use a separate checkout at that exact revision when the old workflow is needed;
 do not reset a working checkout containing unfinished work. That revision also
